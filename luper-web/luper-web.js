@@ -24,6 +24,8 @@
  *           https://github.com/oortcloud/meteorite
  *        5. Explore the Atmosphere, which is Meteorite's
  *           package directory: https://atmosphere.meteor.com/
+ *  NOTE: Meteorite doesn't work properly on Windows yet.
+ *        If you must develop on Windows, you'll need a Linux VM.
  *
  *  I plan to use meteor-router to expose the MongoDB database with
  *  an authenticated REST interface that the Android client can
