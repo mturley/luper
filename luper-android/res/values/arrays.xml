@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string-array name="locations">
+		<item>Sequences</item>
+		<item>Friends</item>
+		<item >Settings</item>
+	</string-array>
+
+</resources>

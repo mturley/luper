@@ -1,0 +1,30 @@
+<head>
+  <title>luper-web</title>
+</head>
+
+<body>
+  {{> body}}
+</body>
+
+<template name="body">
+  {{#unless loggedIn}}
+    {{> login}}
+  {{else}}
+    {{> dashboard}}
+  {{/unless}}
+</template>
+
+<template name="login">
+  <div class="vcenter">
+    <h1>luper-web</h1>
+    <h3>this webapp does not do anything yet. but you can log in!</h3>
+    {{loginButtons}}
+  </div>
+</template>
+
+<template name="dashboard">
+  <div class="vcenter">
+    {{loginButtons}}
+    <h1>luper-web dashboard [TODO]</h1>
+  </div>
+</template>
