@@ -12,6 +12,8 @@
 
 package com.teamluper.luper;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.TextView;
 import com.actionbarsherlock.app.ActionBar;
@@ -35,11 +37,20 @@ public class LuperApp extends SherlockActivity implements TabListener {
   @RestService
   RestClient restClient;
   private String[] locations;
+  
+  // Additional local variables
+  AccountManager am;
  
   @AfterViews
   void afterViews() {
     locations = getResources().getStringArray(R.array.locations);
     configureActionBar();
+    am = AccountManager.get(this);
+    Account[] accounts = am.getAccountsByType("com.google");
+    System.out.println("== LUPER ACCOUNTS TESTING ==  found "+accounts.length+" accounts");
+    for(int i=0; i<accounts.length; i++) {
+      System.out.println(accounts[i].toString());
+    }
   }
 
   @UiThread
