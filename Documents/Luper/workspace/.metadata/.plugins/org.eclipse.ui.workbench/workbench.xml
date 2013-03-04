@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="25" version="2.0">
+<workbench progressCount="27" version="2.0">
 <workbenchAdvisor/>
-<window height="768" width="1024" x="64" y="23">
+<window height="768" width="1024" x="227" y="22">
 <fastViewData fastViewLocation="1024"/>
 <perspectiveBar>
 <itemSize x="250"/>
@@ -37,6 +37,8 @@
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
 <part id="1"/>
+<part id="2"/>
+<part id="3"/>
 </presentation>
 </folder>
 </info>
@@ -45,8 +47,14 @@
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Luper/src/com/teamluper/luper/LuperApp.java"/>
 <editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="58"/>
 </editor>
-<editor activePart="true" focus="true" id="com.android.ide.eclipse.editors.CommonXmlEditor" name="activity_main.xml" partName="activity_main.xml" path="/Users/xianchen/Documents/Luper/workspace/test/res/layout/activity_main.xml" title="activity_main.xml" tooltip="test/res/layout/activity_main.xml" workbook="DefaultEditorWorkbook">
+<editor id="com.android.ide.eclipse.editors.CommonXmlEditor" name="activity_main.xml" partName="activity_main.xml" path="/Users/xianchen/Documents/Luper/workspace/test/res/layout/activity_main.xml" title="activity_main.xml" tooltip="test/res/layout/activity_main.xml" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/test/res/layout/activity_main.xml"/>
+</editor>
+<editor activePart="true" focus="true" id="com.android.ide.eclipse.editors.CommonXmlEditor" name="activity_main.xml" partName="activity_main.xml" path="/Users/xianchen/Documents/Luper/workspace/luper/luper-android/res/layout/activity_main.xml" title="activity_main.xml" tooltip="Luper/res/layout/activity_main.xml" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Luper/res/layout/activity_main.xml"/>
+</editor>
+<editor id="com.android.ide.eclipse.editors.CommonXmlEditor" name="fragment_sample.xml" partName="fragment_sample.xml" path="/Users/xianchen/Documents/Luper/workspace/luper/luper-android/res/layout/fragment_sample.xml" title="fragment_sample.xml" tooltip="Luper/res/layout/fragment_sample.xml" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Luper/res/layout/fragment_sample.xml"/>
 </editor>
 </editors>
 <views>
@@ -64,7 +72,7 @@
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
 <expanded>
-<category IMemento.internal.id="Errors (3 items)"/>
+<category IMemento.internal.id="Warnings (18 items)"/>
 </expanded>
 <columnWidths org.eclipse.ui.ide.locationField="90" org.eclipse.ui.ide.markerType="90" org.eclipse.ui.ide.pathField="120" org.eclipse.ui.ide.resourceField="90" org.eclipse.ui.ide.severityAndDescriptionField="300"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
@@ -312,6 +320,8 @@
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.CommonXmlEditor" path="/Luper/res/values-v11/styles.xml"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Luper/src/com/teamluper/luper/LuperApp.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.CommonXmlEditor" path="/test/res/layout/activity_main.xml"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.CommonXmlEditor" path="/Luper/res/layout/activity_main.xml"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.CommonXmlEditor" path="/Luper/res/layout/fragment_sample.xml"/>
 </editors>
 <item historyLabel="activity_main.xml" index="0"/>
 <item historyLabel="main.xml" index="1"/>
@@ -324,7 +334,10 @@
 <item historyLabel="LuperApp.java" index="4">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item active="true" historyLabel="activity_main.xml" index="5"/>
+<item historyLabel="activity_main.xml" index="5"/>
+<item historyLabel="activity_main.xml" index="6"/>
+<item historyLabel="fragment_sample.xml" index="7"/>
+<item active="true" historyLabel="activity_main.xml" index="6"/>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
 </page>
@@ -343,6 +356,21 @@
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="ic_launcher.png" tooltip="Luper/res/drawable-xhdpi/ic_launcher.png">
+<persistable path="/Luper/res/drawable-xhdpi/ic_launcher.png"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.CommonXmlEditor" name="fragment_sample.xml" tooltip="Luper/res/layout/fragment_sample.xml">
+<persistable path="/Luper/res/layout/fragment_sample.xml"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="ic_launcher.png" tooltip="Luper/res/drawable-mdpi/ic_launcher.png">
+<persistable path="/Luper/res/drawable-mdpi/ic_launcher.png"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="ic_action_search.png" tooltip="Luper/res/drawable-mdpi/ic_action_search.png">
+<persistable path="/Luper/res/drawable-mdpi/ic_action_search.png"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.CommonXmlEditor" name="activity_main.xml" tooltip="Luper/res/layout/activity_main.xml">
+<persistable path="/Luper/res/layout/activity_main.xml"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.CommonXmlEditor" name="activity_main.xml" tooltip="test/res/layout/activity_main.xml">
 <persistable path="/test/res/layout/activity_main.xml"/>
 </file>
@@ -355,14 +383,8 @@
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.CommonXmlEditor" name="main.xml" tooltip="Luper/res/menu/main.xml">
 <persistable path="/Luper/res/menu/main.xml"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="ic_launcher.png" tooltip="Luper/res/drawable-mdpi/ic_launcher.png">
-<persistable path="/Luper/res/drawable-mdpi/ic_launcher.png"/>
-</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="ic_launcher.png" tooltip="Luper/res/drawable-hdpi/ic_launcher.png">
 <persistable path="/Luper/res/drawable-hdpi/ic_launcher.png"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.android.ide.eclipse.editors.CommonXmlEditor" name="activity_main.xml" tooltip="Luper/res/layout/activity_main.xml">
-<persistable path="/Luper/res/layout/activity_main.xml"/>
 </file>
 </mruList>
 </workbench>
