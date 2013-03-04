@@ -1,14 +1,4 @@
 INDEX VERSION 1.126+/Users/xianchen/Documents/Luper/workspace/.metadata/.plugins/org.eclipse.jdt.core
-1628266423.index
-1050982210.index
-3352089835.index
-563482302.index
-452201925.index
-3904870802.index
-779750351.index
 2089348824.index
-4072042488.index
-1243063484.index
 954647634.index
-3485171868.index
-1636584281.index
+1050982210.index
