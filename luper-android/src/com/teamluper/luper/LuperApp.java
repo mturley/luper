@@ -17,6 +17,8 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
@@ -84,6 +86,7 @@ public class LuperApp extends SherlockActivity implements TabListener {
   @Override
   public void onTabSelected(Tab tab, FragmentTransaction ft) {
     // stub function!  TODO implement me
+    Toast.makeText(getApplicationContext(), "TODO: CHANGE TAB TO "+tab.getText(), Toast.LENGTH_SHORT).show();
   }
   @Override
   public void onTabUnselected(Tab tab, FragmentTransaction ft) {
