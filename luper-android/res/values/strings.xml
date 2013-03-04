@@ -6,5 +6,6 @@
     <string name="menu_settings">Settings</string>
     <string name="title_activity_audio_recorder_test">AudioRecorderTest</string>
     <string name="action_settings">Settings</string>
+    <string name="button_record">Record!</string>
 
 </resources>
