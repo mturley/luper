@@ -10,4 +10,13 @@
 		android:layout_centerInParent="true"
 		android:text="@string/hello_world" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/hello"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:onClick="startRecording"
+        android:text="@string/button_record" />
+
 </RelativeLayout>

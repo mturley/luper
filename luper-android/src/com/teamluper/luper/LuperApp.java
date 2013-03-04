@@ -15,7 +15,9 @@ package com.teamluper.luper;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +26,7 @@ import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
+import com.teamluper.luper.AudioRecorderTest;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EActivity;
@@ -95,5 +98,11 @@ public class LuperApp extends SherlockActivity implements TabListener {
   @Override
   public void onTabReselected(Tab tab, FragmentTransaction ft) {
     // stub function! TODO implement me
+  }
+  
+  //method to navigate to the audiorecorder activity
+  public void startRecording(View view){
+  	Intent intent = new Intent(this, AudioRecorderTest.class);
+  	startActivity(intent);
   }
 }
