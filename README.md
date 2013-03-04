@@ -4,11 +4,6 @@ CS320 Spring 2013 Software Engineering Project: Luper
 This is the source code for the Luper android application and
 accompanying database server and web client.
 
-So far, this code is Mike Turley and anyone who feels like joining, tinkering with tools and ideas for certain implementation details with a naive knowledge of the final architecture.
------------------------------------------
-
-Most if not all of what I'm writing now will be refactored by the group, and any of it is subject to being dropped if the group determines there's a better solution.
-
 Alpha Release Deadline: March 5, 2013
 -------------------------------------
 
