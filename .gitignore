@@ -1,5 +1,8 @@
 .apt_generated/
 luper-android/bin/
 luper-android/gen/
+luper-android/local.properties
 actionbarsherlock/bin/
 actionbarsherlock/gen/
+*.dex
+*.class
