@@ -1,0 +1,27 @@
+body{
+	margin:0;
+	background: #443e3a;
+	font-family:"Times New Roman", Times, serif;
+	color:#000;
+}
+
+a,a:link,a:active,a:visited{
+	color:#000;
+	text-decoration:none;
+	}
+
+a:hover{
+	text-decoration:underline;
+	}
+
+
+#content{
+	margin:10;
+	background:#e6e2d9;
+	padding: 12px 10px 12px 10px;
+	font-size: 13pt;
+	border:solid 1px #6a8f01;
+	-webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
