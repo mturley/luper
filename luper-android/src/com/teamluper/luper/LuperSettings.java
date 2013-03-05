@@ -1,5 +1,7 @@
 package com.teamluper.luper;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -56,11 +58,22 @@ public class LuperSettings extends SherlockPreferenceActivity {
   
   @RestService
   LuperRestClient rest;
+  
+  AccountManager am;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setupActionBar();
+  }
+  
+  @Override
+  protected void onResume() {
+    super.onResume();
+    if(!testAccounts()) {
+      alertDialog("Warning: since your device is not logged into a google account," +
+      		        " your settings will not be saved to the server properly.");
+    }
   }
 
   /**
@@ -223,6 +236,16 @@ public class LuperSettings extends SherlockPreferenceActivity {
       // guidelines.
       bindPreferenceSummaryToValue(findPreference("example_list"));
     }
+  }
+  
+  boolean testAccounts() {
+    if(am == null) am = AccountManager.get(this);
+    Account[] accounts = am.getAccountsByType("com.google");
+    System.out.println("== LUPER ACCOUNTS TESTING ==  found "+accounts.length+" accounts");
+    for(int i=0; i<accounts.length; i++) {
+      System.out.println(accounts[i].toString());
+    }
+    return accounts.length >= 1;
   }
   
   @UiThread

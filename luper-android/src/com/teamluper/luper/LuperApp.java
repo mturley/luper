@@ -58,7 +58,13 @@ public class LuperApp extends SherlockActivity implements TabListener {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    testRestAPI();
+    alertDialog("Welcome to our (almost) featureless Alpha Release!  " +
+          "Check out the Settings and try the Database and Recorder tests.");
+  }
+  
+  @Override
+  protected void onResume() {
+    super.onResume();
     testAccounts();
   }
  
@@ -115,14 +121,12 @@ public class LuperApp extends SherlockActivity implements TabListener {
   }
   
   @Background
-  void testRestAPI() {
+  public void testRestAPI(View view) {
     try {
       String t = rest.getTestString();
       alertDialog("Database Connection Test PASS!\n" +
           "Request: GET http://teamluper.com/api/test\n" +
-          "Response: '"+t+"'\n\n" +
-          "Welcome to our (almost) featureless Alpha Release!  " +
-          "Check out the Settings and try the Record button.");
+          "Response: '"+t+"'");
     } catch(HttpClientErrorException e) {
       alertDialog("Database Connection Test FAIL!\n" + e.toString());
     }
@@ -130,7 +134,7 @@ public class LuperApp extends SherlockActivity implements TabListener {
   
   @Background
   void testAccounts() {
-    am = AccountManager.get(this);
+    if(am == null) am = AccountManager.get(this);
     Account[] accounts = am.getAccountsByType("com.google");
     System.out.println("== LUPER ACCOUNTS TESTING ==  found "+accounts.length+" accounts");
     for(int i=0; i<accounts.length; i++) {
