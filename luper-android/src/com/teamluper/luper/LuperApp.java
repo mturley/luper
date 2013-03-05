@@ -118,13 +118,13 @@ public class LuperApp extends SherlockActivity implements TabListener {
   void testRestAPI() {
     try {
       String t = rest.getTestString();
-      alertDialog("Server Connection Test PASS!\n" +
-          "Request: GET http://www.teamluper.com/api/test\n" +
+      alertDialog("Database Connection Test PASS!\n" +
+          "Request: GET http://teamluper.com/api/test\n" +
           "Response: '"+t+"'\n\n" +
           "Welcome to our (almost) featureless Alpha Release!  " +
           "Check out the Settings and try the Record button.");
     } catch(HttpClientErrorException e) {
-      alertDialog("Server Connection Test FAIL!\n" + e.toString());
+      alertDialog("Database Connection Test FAIL!\n" + e.toString());
     }
   }
   
