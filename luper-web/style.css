@@ -20,8 +20,33 @@ a:hover{
 	background:#e6e2d9;
 	padding: 12px 10px 12px 10px;
 	font-size: 13pt;
-	border:solid 1px #6a8f01;
+	border:solid 1px #fff;
 	-webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
+}
+#header{
+	margin:10;
+	height:64px;
+	background:#e6e2d9;
+	border:solid 1px #fff;
+	-webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+	text-align:center;
+}
+.active{
+	background:#ccc;
+}
+
+button {
+	height:64px;
+	padding-left:20px;
+	padding-right:20px;
+	font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	line-height:1.5em;
+	font-size:13pt;
+	border:none;
+	background:none;
+
 }
