@@ -20,7 +20,7 @@ $api->get('/test', function() use ($api) {
     $numReds = $db->query("SELECT COUNT(*) AS numReds FROM Users
                            WHERE favColor = 'red'")->fetchObject()->numReds;
     echo "Success!  Here's some data from the database: there are currently ".$numUsers
-        ." registered users, and ".$numReds." users have 'red' as their favorite color.";
+        ." registered users, and ".$numReds." of them have their favColor preference set to \"red\".";
   } catch(PDOException $e) {
     $api->halt(500,$e->getMessage());
   }
