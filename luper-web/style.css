@@ -28,7 +28,7 @@ h1, h2 {
 }
 
 #content {
-	margin:10;
+	margin: 15px 0;
 	background:#e6e2d9;
 	padding: 12px 10px 12px 10px;
 	font-size: 13pt;
@@ -50,7 +50,7 @@ h1, h2 {
 }
 
 #header {
-	margin:10;
+	margin:15px 0;
 	height:64px;
 	background:#e6e2d9;
 	border:solid 1px #fff;
@@ -85,4 +85,9 @@ h1, h2 {
 ol.leftalign { 
 	text-align: left;
 	font-size: 20px;
+}
+
+#footer {
+	text-align: center;
+	color: #FFF;
 }
