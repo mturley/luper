@@ -6,3 +6,4 @@ actionbarsherlock/bin/
 actionbarsherlock/gen/
 *.dex
 *.class
+*.DS_Store
