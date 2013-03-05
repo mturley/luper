@@ -8,14 +8,26 @@ body{
 a,a:link,a:active,a:visited{
 	color:#000;
 	text-decoration:none;
-	}
-
+}
 a:hover{
 	text-decoration:underline;
-	}
+}
 
+h1, h2 {
+	margin: 4px;
+	padding: 0;
+}
 
-#content{
+.darkred {
+	color: rgb(177,0,0);
+}
+
+#container {
+	width: 80%;
+	margin: auto;
+}
+
+#content {
 	margin:10;
 	background:#e6e2d9;
 	padding: 12px 10px 12px 10px;
@@ -27,13 +39,17 @@ a:hover{
   overflow: hidden;
 }
 
-
 .halfcolumn {
 	float: left;
 	width: 50%;
 }
 
-#header{
+.fullcolumn {
+	width: 100%;
+	clear: both;
+}
+
+#header {
 	margin:10;
 	height:64px;
 	background:#e6e2d9;
@@ -43,11 +59,11 @@ a:hover{
     border-radius: 10px;
 	text-align:center;
 }
-.active{
+#header .active {
 	background:#ccc;
 }
 
-button {
+#header button {
 	height:64px;
 	padding-left:20px;
 	padding-right:20px;
@@ -56,16 +72,14 @@ button {
 	font-size:13pt;
 	border:none;
 	background:none;
-
 }
 
 #appicon {
 	margin: 10px;
 }
 
-h1, h2 {
-	margin: 4px;
-	padding: 0;
+#downloadlink {
+	font-size: 24px;
 }
 
 ol.leftalign { 
