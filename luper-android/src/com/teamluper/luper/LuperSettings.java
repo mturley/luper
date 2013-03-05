@@ -7,6 +7,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.Configuration;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -47,7 +49,8 @@ import com.teamluper.luper.rest.LuperRestClient;
  * API Guide</a> for more information on developing a Settings UI.
  */
 @EActivity
-public class LuperSettings extends SherlockPreferenceActivity {
+public class LuperSettings extends SherlockPreferenceActivity
+                           implements OnSharedPreferenceChangeListener {
   /**
    * Determines whether to always show the simplified settings UI, where
    * settings are presented in a single list. When false, settings are shown as
@@ -74,6 +77,15 @@ public class LuperSettings extends SherlockPreferenceActivity {
       alertDialog("Warning: since your device is not logged into a google account," +
       		        " your settings will not be saved to the server properly.");
     }
+    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+    prefs.registerOnSharedPreferenceChangeListener(this);
+  }
+  
+  @Override
+  protected void onPause() {
+    super.onPause();
+    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+    prefs.unregisterOnSharedPreferenceChangeListener(this);
   }
 
   /**
@@ -131,7 +143,7 @@ public class LuperSettings extends SherlockPreferenceActivity {
     // Bind the summaries of EditText/List/Dialog/Ringtone preferences to
     // their values. When their values change, their summaries are updated
     // to reflect the new value, per the Android Design guidelines.
-    bindPreferenceSummaryToValue(findPreference("example_list"));
+    bindPreferenceSummaryToValue(findPreference("pref_favColor"));
   }
 
   /** {@inheritDoc} */
@@ -194,6 +206,7 @@ public class LuperSettings extends SherlockPreferenceActivity {
         // simple string representation.
         preference.setSummary(stringValue);
       }
+      
       return true;
     }
   };
@@ -234,7 +247,7 @@ public class LuperSettings extends SherlockPreferenceActivity {
       // to their values. When their values change, their summaries are
       // updated to reflect the new value, per the Android Design
       // guidelines.
-      bindPreferenceSummaryToValue(findPreference("example_list"));
+      bindPreferenceSummaryToValue(findPreference("pref_favColor"));
     }
   }
   
@@ -249,7 +262,7 @@ public class LuperSettings extends SherlockPreferenceActivity {
   }
   
   @UiThread
-  void toastMessage(String message) {
+  public void toastMessage(String message) {
     Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
   }
   
@@ -264,5 +277,11 @@ public class LuperSettings extends SherlockPreferenceActivity {
       }
     })
     .show();
+  }
+
+  @Override
+  public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
+      String key) {
+    toastMessage("TODO: Save new "+key+" preference value to server!");
   }
 }

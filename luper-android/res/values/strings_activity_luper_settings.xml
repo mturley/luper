@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="title_activity_luper_settings">Luper Settings</string>
+    <string name="title_activity_luper_settings">Lüper Settings</string>
 
     <!-- Strings related to Settings -->
 
@@ -21,13 +21,13 @@
         <item>Violet</item>
     </string-array>
     <string-array name="pref_example_list_values">
-        <item>r</item>
-        <item>o</item>
-        <item>y</item>
-        <item>g</item>
-        <item>b</item>
-        <item>i</item>
-        <item>v</item>
+        <item>red</item>
+        <item>orange</item>
+        <item>yellow</item>
+        <item>green</item>
+        <item>blue</item>
+        <item>indigo</item>
+        <item>violet</item>
     </string-array>
 
 </resources>

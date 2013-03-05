@@ -2,7 +2,7 @@
 
     <CheckBoxPreference
         android:defaultValue="true"
-        android:key="example_checkbox"
+        android:key="pref_isAwesome"
         android:summary="@string/pref_description_awesome"
         android:title="@string/pref_title_awesome" />
 
@@ -15,7 +15,7 @@
         android:defaultValue="-1"
         android:entries="@array/pref_example_list_titles"
         android:entryValues="@array/pref_example_list_values"
-        android:key="example_list"
+        android:key="pref_favColor"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
         android:title="@string/pref_title_favorite_color" />
