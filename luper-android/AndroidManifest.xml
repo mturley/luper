@@ -30,18 +30,18 @@
         <activity
             android:name="com.teamluper.luper.AudioRecorderTest"
             android:label="@string/title_activity_audio_recorder_test"
-            android:parentActivityName="com.teamluper.luper.LuperApp" >
+            android:parentActivityName="com.teamluper.luper.LuperApp_" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.teamluper.luper.LuperApp" />
+                android:value="com.teamluper.luper.LuperApp_" />
         </activity>
         <activity
-            android:name="com.teamluper.luper.LuperSettings"
+            android:name="com.teamluper.luper.LuperSettings_"
             android:label="@string/title_activity_luper_settings"
-            android:parentActivityName="com.teamluper.luper.LuperApp" >
+            android:parentActivityName="com.teamluper.luper.LuperApp_" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.teamluper.luper.LuperApp" />
+                android:value="com.teamluper.luper.LuperApp_" />
         </activity>
     </application>
 

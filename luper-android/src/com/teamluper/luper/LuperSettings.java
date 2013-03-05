@@ -22,6 +22,9 @@ import java.util.List;
 
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.MenuItem;
+import com.googlecode.androidannotations.annotations.EActivity;
+import com.googlecode.androidannotations.annotations.rest.RestService;
+import com.teamluper.luper.rest.LuperRestClient;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -34,6 +37,7 @@ import com.actionbarsherlock.view.MenuItem;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  */
+@EActivity
 public class LuperSettings extends SherlockPreferenceActivity {
   /**
    * Determines whether to always show the simplified settings UI, where
@@ -42,6 +46,9 @@ public class LuperSettings extends SherlockPreferenceActivity {
    * on tablets.
    */
   private static final boolean ALWAYS_SIMPLE_PREFS = false;
+  
+  @RestService
+  LuperRestClient rest;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +69,7 @@ public class LuperSettings extends SherlockPreferenceActivity {
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-    /*switch (item.getItemId()) {
+    switch (item.getItemId()) {
     case android.R.id.home:
       // This ID represents the Home or Up button. In the case of this
       // activity, the Up button is shown. Use NavUtils to allow users
@@ -75,7 +82,7 @@ public class LuperSettings extends SherlockPreferenceActivity {
       // that hierarchy.
       NavUtils.navigateUpFromSameTask(this);
       return true;
-    }*/
+    }
     return super.onOptionsItemSelected(item);
   }
 

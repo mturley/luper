@@ -35,7 +35,7 @@ import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.UiThread;
 import com.googlecode.androidannotations.annotations.ViewById;
 import com.googlecode.androidannotations.annotations.rest.RestService;
-import com.teamluper.luper.rest.RestClient;
+import com.teamluper.luper.rest.LuperRestClient;
 
 @EActivity(R.layout.activity_main)
 public class LuperApp extends SherlockActivity implements TabListener {
@@ -43,7 +43,7 @@ public class LuperApp extends SherlockActivity implements TabListener {
   @ViewById
   TextView hello;
   @RestService
-  RestClient restClient;
+  LuperRestClient restClient;
   private String[] locations;
   
   // Additional local variables
@@ -106,7 +106,7 @@ public class LuperApp extends SherlockActivity implements TabListener {
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     if(item.getItemId() == R.id.menu_settings) {
-      Intent intent = new Intent(this, LuperSettings.class);
+      Intent intent = new Intent(this, LuperSettings_.class);
       startActivity(intent);
     }
     return true;
