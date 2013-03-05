@@ -3,8 +3,8 @@
 
 	<string-array name="locations">
 		<item>Sequences</item>
-		<item>Friends</item>
-		<item >Settings</item>
+		<item>and Friends</item>
+		<item>and Stuff</item>
 	</string-array>
 
 </resources>

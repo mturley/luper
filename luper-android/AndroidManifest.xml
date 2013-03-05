@@ -10,7 +10,6 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
@@ -31,6 +30,14 @@
         <activity
             android:name="com.teamluper.luper.AudioRecorderTest"
             android:label="@string/title_activity_audio_recorder_test"
+            android:parentActivityName="com.teamluper.luper.LuperApp" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.teamluper.luper.LuperApp" />
+        </activity>
+        <activity
+            android:name="com.teamluper.luper.LuperSettings"
+            android:label="@string/title_activity_luper_settings"
             android:parentActivityName="com.teamluper.luper.LuperApp" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

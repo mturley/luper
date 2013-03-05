@@ -1,0 +1,33 @@
+<resources>
+
+    <string name="title_activity_luper_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+    <string name="pref_title_awesome">Are you awesome?</string>
+    <string name="pref_description_awesome">Y/N</string>
+    <string name="pref_title_favorite_color">Favorite Color</string>
+
+    <string-array name="pref_example_list_titles">
+        <item>Red</item>
+        <item>Orange</item>
+        <item>Yellow</item>
+        <item>Green</item>`
+        <item>Blue</item>
+        <item>Indigo</item>
+        <item>Violet</item>
+    </string-array>
+    <string-array name="pref_example_list_values">
+        <item>r</item>
+        <item>o</item>
+        <item>y</item>
+        <item>g</item>
+        <item>b</item>
+        <item>i</item>
+        <item>v</item>
+    </string-array>
+
+</resources>

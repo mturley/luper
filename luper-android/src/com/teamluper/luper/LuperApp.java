@@ -26,6 +26,8 @@ import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.teamluper.luper.AudioRecorderTest;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.Background;
@@ -72,7 +74,8 @@ public class LuperApp extends SherlockActivity implements TabListener {
   
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    getSupportMenuInflater();
+    MenuInflater inf = getSupportMenuInflater();
+    inf.inflate(R.menu.activity_main, menu);
     return true;
   }
 
@@ -98,6 +101,15 @@ public class LuperApp extends SherlockActivity implements TabListener {
   @Override
   public void onTabReselected(Tab tab, FragmentTransaction ft) {
     // stub function! TODO implement me
+  }
+  
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    if(item.getItemId() == R.id.menu_settings) {
+      Intent intent = new Intent(this, LuperSettings.class);
+      startActivity(intent);
+    }
+    return true;
   }
   
   //method to navigate to the audiorecorder activity

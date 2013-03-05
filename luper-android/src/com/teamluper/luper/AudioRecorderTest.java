@@ -10,7 +10,6 @@
  */
 package com.teamluper.luper;
 
-import android.app.Activity;
 import android.widget.LinearLayout;
 import android.os.Bundle;
 import android.os.Environment;
@@ -25,8 +24,10 @@ import android.media.MediaPlayer;
 
 import java.io.IOException;
 
+import com.actionbarsherlock.app.SherlockActivity;
 
-public class AudioRecorderTest extends Activity
+
+public class AudioRecorderTest extends SherlockActivity
 {
     private static final String LOG_TAG = "AudioRecorderTest";
     private static String mFileName = null;
