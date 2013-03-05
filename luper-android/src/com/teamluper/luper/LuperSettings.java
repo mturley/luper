@@ -1,7 +1,10 @@
 package com.teamluper.luper;
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.res.Configuration;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -16,13 +19,17 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
+import android.widget.Toast;
 import android.support.v4.app.NavUtils;
 
 import java.util.List;
 
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.MenuItem;
+import com.googlecode.androidannotations.annotations.AfterViews;
+import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EActivity;
+import com.googlecode.androidannotations.annotations.UiThread;
 import com.googlecode.androidannotations.annotations.rest.RestService;
 import com.teamluper.luper.rest.LuperRestClient;
 
@@ -217,5 +224,22 @@ public class LuperSettings extends SherlockPreferenceActivity {
       bindPreferenceSummaryToValue(findPreference("example_list"));
     }
   }
-
+  
+  @UiThread
+  void toastMessage(String message) {
+    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+  }
+  
+  @UiThread
+  void alertDialog(String message) {
+    new AlertDialog.Builder(this)
+    .setCancelable(false)
+    .setMessage(message)
+    .setPositiveButton("OK", new OnClickListener() {
+      public void onClick(DialogInterface dialog, int which) {
+        // do nothing
+      }
+    })
+    .show();
+  }
 }

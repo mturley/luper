@@ -13,9 +13,15 @@
 
 package com.teamluper.luper;
 
+import org.springframework.web.client.HttpClientErrorException;
+
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnClickListener;
+import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.TextView;
@@ -43,33 +49,23 @@ public class LuperApp extends SherlockActivity implements TabListener {
   @ViewById
   TextView hello;
   @RestService
-  LuperRestClient restClient;
+  LuperRestClient rest;
   private String[] locations;
   
   // Additional local variables
   AccountManager am;
+  
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    testRestAPI();
+    testAccounts();
+  }
  
   @AfterViews
   void afterViews() {
     locations = getResources().getStringArray(R.array.locations);
     configureActionBar();
-    am = AccountManager.get(this);
-    Account[] accounts = am.getAccountsByType("com.google");
-    System.out.println("== LUPER ACCOUNTS TESTING ==  found "+accounts.length+" accounts");
-    for(int i=0; i<accounts.length; i++) {
-      System.out.println(accounts[i].toString());
-    }
-  }
-
-  @UiThread
-  void doSomethingElseOnUiThread() {
-    hello.setText("Hi!");
-  }
-
-  @Background
-  void doSomethingInBackground() {
-    restClient.main();
-    doSomethingElseOnUiThread();
   }
   
   @Override
@@ -113,8 +109,50 @@ public class LuperApp extends SherlockActivity implements TabListener {
   }
   
   //method to navigate to the audiorecorder activity
-  public void startRecording(View view){
+  public void startRecording(View view) {
   	Intent intent = new Intent(this, AudioRecorderTest.class);
   	startActivity(intent);
+  }
+  
+  @Background
+  void testRestAPI() {
+    try {
+      String t = rest.getTestString();
+      alertDialog("Server Connection Test PASS!\n" +
+          "Request: GET http://www.teamluper.com/api/test\n" +
+          "Response: '"+t+"'\n\n" +
+          "Welcome to our (almost) featureless Alpha Release!  " +
+          "Check out the Settings and try the Record button.");
+    } catch(HttpClientErrorException e) {
+      alertDialog("Server Connection Test FAIL!\n" + e.toString());
+    }
+  }
+  
+  @Background
+  void testAccounts() {
+    am = AccountManager.get(this);
+    Account[] accounts = am.getAccountsByType("com.google");
+    System.out.println("== LUPER ACCOUNTS TESTING ==  found "+accounts.length+" accounts");
+    for(int i=0; i<accounts.length; i++) {
+      System.out.println(accounts[i].toString());
+    }
+  }
+  
+  @UiThread
+  void toastMessage(String message) {
+    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+  }
+  
+  @UiThread
+  void alertDialog(String message) {
+    new AlertDialog.Builder(this)
+    .setCancelable(false)
+    .setMessage(message)
+    .setPositiveButton("OK", new OnClickListener() {
+      public void onClick(DialogInterface dialog, int which) {
+        // do nothing
+      }
+    })
+    .show();
   }
 }
