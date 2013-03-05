@@ -24,7 +24,15 @@ a:hover{
 	-webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
+  overflow: hidden;
 }
+
+
+.halfcolumn {
+	float: left;
+	width: 50%;
+}
+
 #header{
 	margin:10;
 	height:64px;
@@ -49,4 +57,18 @@ button {
 	border:none;
 	background:none;
 
+}
+
+#appicon {
+	margin: 10px;
+}
+
+h1, h2 {
+	margin: 4px;
+	padding: 0;
+}
+
+ol.leftalign { 
+	text-align: left;
+	font-size: 20px;
 }
