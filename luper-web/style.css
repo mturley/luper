@@ -24,6 +24,7 @@ h1, h2 {
 
 #container {
 	width: 80%;
+	min-width: 930px;
 	margin: auto;
 }
 
@@ -47,6 +48,7 @@ h1, h2 {
 .fullcolumn {
 	width: 100%;
 	clear: both;
+	min-width: 930px;
 }
 
 #header {
