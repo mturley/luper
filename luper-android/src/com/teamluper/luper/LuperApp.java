@@ -13,16 +13,23 @@
 
 package com.teamluper.luper;
 
+import java.util.ArrayList;
+
 import org.springframework.web.client.HttpClientErrorException;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +38,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
 import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -43,14 +51,20 @@ import com.googlecode.androidannotations.annotations.ViewById;
 import com.googlecode.androidannotations.annotations.rest.RestService;
 import com.teamluper.luper.rest.LuperRestClient;
 
-@EActivity(R.layout.activity_main)
-public class LuperApp extends SherlockActivity implements TabListener {
+import com.teamluper.luper.TabHomeFragment;
+import com.teamluper.luper.TabProjectsFragment;
+import com.teamluper.luper.TabFriendsFragment;
+
+@EActivity
+public class LuperApp extends SherlockFragmentActivity {
   
   @ViewById
   TextView hello;
   @RestService
   LuperRestClient rest;
-  private String[] locations;
+  
+  ViewPager mViewPager;
+  TabsAdapter mTabsAdapter;
   
   // Additional local variables
   AccountManager am;
@@ -58,6 +72,23 @@ public class LuperApp extends SherlockActivity implements TabListener {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    
+    mViewPager = new ViewPager(this);
+    mViewPager.setId(R.id.tabcontentpager);
+    setContentView(mViewPager);
+    
+    final ActionBar bar = getSupportActionBar();
+    bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+    
+    mTabsAdapter = new TabsAdapter(this, mViewPager);
+    mTabsAdapter.addTab(bar.newTab().setText(""+"Home"),
+        TabHomeFragment.class, null);
+    mTabsAdapter.addTab(bar.newTab().setText(""+"Projects"),
+        TabProjectsFragment.class, null);
+    mTabsAdapter.addTab(bar.newTab().setText(""+"Friends"),
+        TabFriendsFragment.class, null);
+    
+    mViewPager.setAdapter(mTabsAdapter);
     alertDialog("Welcome to our (almost) featureless Alpha Release!  " +
           "Check out the Settings and try the Database and Recorder tests.");
   }
@@ -67,42 +98,12 @@ public class LuperApp extends SherlockActivity implements TabListener {
     super.onResume();
     testAccounts();
   }
- 
-  @AfterViews
-  void afterViews() {
-    locations = getResources().getStringArray(R.array.locations);
-    configureActionBar();
-  }
-  
+
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     MenuInflater inf = getSupportMenuInflater();
     inf.inflate(R.menu.activity_main, menu);
     return true;
-  }
-
-  private void configureActionBar() {
-    getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-    for (String location: locations) {
-      Tab tab = getSupportActionBar().newTab();
-      tab.setText(location);
-      tab.setTabListener(this);
-      getSupportActionBar().addTab(tab);
-    }
-  }
-  
-  @Override
-  public void onTabSelected(Tab tab, FragmentTransaction ft) {
-    // stub function!  TODO implement me
-    Toast.makeText(getApplicationContext(), "TODO: CHANGE TAB TO "+tab.getText(), Toast.LENGTH_SHORT).show();
-  }
-  @Override
-  public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-    // stub function!  TODO implement me
-  }
-  @Override
-  public void onTabReselected(Tab tab, FragmentTransaction ft) {
-    // stub function! TODO implement me
   }
   
   @Override
@@ -158,5 +159,85 @@ public class LuperApp extends SherlockActivity implements TabListener {
       }
     })
     .show();
+  }
+  
+  // TabsAdapter class copied from developer.android.com
+  public static class TabsAdapter extends FragmentPagerAdapter
+  implements ActionBar.TabListener, ViewPager.OnPageChangeListener {
+    private final Context mContext;
+    private final ActionBar mActionBar;
+    private final ViewPager mViewPager;
+    private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
+
+    static final class TabInfo { 
+      private final Class<?> clss;
+      private final Bundle args;
+
+      TabInfo(Class<?> _class, Bundle _args) {
+        clss = _class;
+        args = _args;
+      }
+    }
+
+    public TabsAdapter(SherlockFragmentActivity activity, ViewPager pager) {
+      super(activity.getSupportFragmentManager());
+      mContext = activity;
+      mActionBar = activity.getSupportActionBar();
+      mViewPager = pager;
+      mViewPager.setAdapter(this);
+      mViewPager.setOnPageChangeListener(this);
+    }
+
+    public void addTab(ActionBar.Tab tab, Class<?> clss, Bundle args) {
+      TabInfo info = new TabInfo(clss, args);
+      tab.setTag(info);
+      tab.setTabListener(this);
+      mTabs.add(info);
+      mActionBar.addTab(tab);
+      notifyDataSetChanged();
+    }
+
+    @Override
+    public int getCount() {
+      return mTabs.size();
+    }
+    
+    @Override
+    public Fragment getItem(int position) {
+      TabInfo info = mTabs.get(position);
+      return Fragment.instantiate(mContext, info.clss.getName(), info.args);
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+      mActionBar.setSelectedNavigationItem(position);
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+    }
+
+    @Override
+    public void onTabSelected(Tab tab, FragmentTransaction ft) {
+      mViewPager.setCurrentItem(tab.getPosition());
+      Object tag = tab.getTag();
+      for (int i=0; i<mTabs.size(); i++) {
+        if (mTabs.get(i) == tag) {
+          mViewPager.setCurrentItem(i);
+        }
+      }
+    }
+
+    @Override
+    public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+    }
+
+    @Override
+    public void onTabReselected(Tab tab, FragmentTransaction ft) {
+    }
   }
 }
