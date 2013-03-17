@@ -1,4 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+  <string-array name="projects_dummy_list">
+      <item>Superfake Project</item>
+      <item>Another Fake Project</item>
+      <item>These are just in arrays.xml</item>
+      <item>but eventually</item>
+      <item>they will be real projects</item>
+      <item>from the database.</item>
+      <item>I\'m adding a bunch</item>
+      <item>of these empty items</item>
+      <item>so the list is</item>
+      <item>big enough</item>
+      <item>to scroll</item>
+      <item>and I can test</item>
+      <item>the scrolling</item>
+      <item>of this list</item>
+  </string-array>
+  <string-array name="friends_dummy_list">
+      <item>John Doe</item>
+      <item>Jane Doe</item>
+      <item>And Other People</item>
+      <item>From your friends list</item>
+      <item>Which is totally not fake</item>
+      <item>And defined as a list</item>
+      <item>of flat strings in arrays.xml</item>
+      <item>I\'m adding a bunch</item>
+      <item>of these empty items</item>
+      <item>so the list is</item>
+      <item>big enough</item>
+      <item>to scroll</item>
+      <item>and I can test</item>
+      <item>the scrolling</item>
+      <item>of this list</item>
+  </string-array>
 </resources>

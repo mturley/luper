@@ -45,9 +45,7 @@ import com.teamluper.luper.rest.LuperRestClient;
 // @EActivity = "Enhanced Activity", which turns on AndroidAnnotations features
 @EActivity
 public class LuperApp extends SherlockFragmentActivity {
-  
-  @ViewById
-  TextView hello;
+
   @RestService
   LuperRestClient rest;
   

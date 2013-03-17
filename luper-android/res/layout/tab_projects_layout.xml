@@ -3,11 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
     
-    <TextView
-        android:id="@+id/hello"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="PROJECTS GO HERE" />
+    <ListView
+        android:id="@+id/listView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:entries="@array/projects_dummy_list" >
+    </ListView>
 
 </RelativeLayout>
