@@ -1,3 +1,9 @@
+// AudioRecorderTest.java
+// ----------------------
+
+// this is an artifact from our Alpha release, and this code will likely end up
+// somewhere else, particularly in whatever recording module we develop.
+
 /*
  * The application needs to have the permission to write to external storage
  * if the output file is written to the external storage, and also the
@@ -16,7 +22,6 @@ import android.os.Environment;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.content.Context;
 import android.util.Log;
 import android.media.MediaRecorder;
@@ -149,6 +154,9 @@ public class AudioRecorderTest extends SherlockActivity
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
 
+        // this LinearLayout is used in place of an XML file.
+        // Android lets you do your layouts either programattically like this,
+        // or with an XML file.
         LinearLayout ll = new LinearLayout(this);
         mRecordButton = new RecordButton(this);
         ll.addView(mRecordButton,

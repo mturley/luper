@@ -38,16 +38,9 @@ import com.googlecode.androidannotations.annotations.UiThread;
 import com.googlecode.androidannotations.annotations.ViewById;
 import com.googlecode.androidannotations.annotations.rest.RestService;
 
-// import for the SpringFramework REST dependency
+// imports for the SpringFramework REST dependency
 import org.springframework.web.client.HttpClientErrorException;
-
-// imports from within the rest of the Luper project
 import com.teamluper.luper.rest.LuperRestClient;
-import com.teamluper.luper.AudioRecorderTest;
-import com.teamluper.luper.TabsAdapter;
-import com.teamluper.luper.TabHomeFragment;
-import com.teamluper.luper.TabProjectsFragment;
-import com.teamluper.luper.TabFriendsFragment;
 
 // @EActivity = "Enhanced Activity", which turns on AndroidAnnotations features
 @EActivity
