@@ -44,6 +44,7 @@ public class AudioRecorderTest extends SherlockActivity
     private MediaPlayer   mPlayer = null;
 
     private void onRecord(boolean start) {
+
         if (start) {
             startRecording();
         } else {
@@ -76,6 +77,10 @@ public class AudioRecorderTest extends SherlockActivity
     }
 
     private void startRecording() {
+    	//Sets the name of the file when you start recording as opposed to when you click "Audio Record Test" from the main screen
+        mFileName = Environment.getExternalStorageDirectory()+"/LuperApp/Clips";
+        mFileName += "/clip_" + System.currentTimeMillis() +".3gp";
+        
         mRecorder = new MediaRecorder();
         System.out.println("here");
         mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
@@ -145,9 +150,9 @@ public class AudioRecorderTest extends SherlockActivity
     }
 
     public AudioRecorderTest() {
-        mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
-        //System.out.println(mFileName);
-        mFileName += "/audiorecordtest.3gp";
+    	mFileName = null;
+        //mFileName = Environment.getExternalStorageDirectory()+"/LuperApp/Clips";
+        //mFileName += "/clip_" + System.currentTimeMillis() +".3gp";
     }
 
     @Override

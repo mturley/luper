@@ -10,6 +10,9 @@
 package com.teamluper.luper;
 
 // imports from the core android API
+import java.io.File;
+import android.os.Environment;
+
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.AlertDialog;
@@ -67,6 +70,13 @@ public class LuperApp extends SherlockFragmentActivity {
     
     final ActionBar bar = getSupportActionBar();
     bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS); // Gives us Tabs!
+    
+    //Creates a folder for Luper and associated clips and projects
+    File nfile=new File(Environment.getExternalStorageDirectory()+"/LuperApp/Clips");
+    File mfile=new File(Environment.getExternalStorageDirectory()+"/LuperApp/Projects");
+    nfile.mkdir();
+    mfile.mkdir();
+    
     
     // now we set up the TabsAdapter, which is a special class borrowed from Google.
     // TabsAdapter.java takes care of all the guts of the Tab interactions, and
