@@ -151,8 +151,12 @@ public class AudioRecorderTest extends SherlockActivity
 
     public AudioRecorderTest() {
     	mFileName = null;
-        //mFileName = Environment.getExternalStorageDirectory()+"/LuperApp/Clips";
-        //mFileName += "/clip_" + System.currentTimeMillis() +".3gp";
+    	/*Tabbed this out because it is useless to do here as we want to create multiple clips when record is pressed, not overwrite them
+    	 * 
+         *mFileName = Environment.getExternalStorageDirectory()+"/LuperApp/Clips";
+         *mFileName += "/clip_" + System.currentTimeMillis() +".3gp";
+         * 
+         */
     }
 
     @Override
