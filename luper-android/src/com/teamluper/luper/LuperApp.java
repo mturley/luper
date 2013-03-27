@@ -126,6 +126,13 @@ public class LuperApp extends SherlockFragmentActivity {
     }
   }
   
+  // Just here until it gets moved to Project Tab
+  @Background
+  public void exampleProject(View view) {
+		  Intent intent = new Intent(this, ExampleProject.class);
+		  startActivity(intent);
+  }
+  
   // this will be removed too, it's checking the google account that the
   // device's user is already logged in with.  We'll likely ditch this in favor
   // of a Facebook-based login solution.

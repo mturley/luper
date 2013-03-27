@@ -43,6 +43,15 @@
         android:gravity="center"
         android:onClick="startRecording"
         android:text="@string/button_record" />
+    <Button 
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button1"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:onClick="exampleProject"
+        android:text="@string/button_project"/>
 
     <TextView
         android:id="@+id/textView1"
