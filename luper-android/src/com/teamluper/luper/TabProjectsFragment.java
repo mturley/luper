@@ -16,4 +16,5 @@ public class TabProjectsFragment extends Fragment {
     if(vg == null) return null;
     return (RelativeLayout)infl.inflate(R.layout.tab_projects_layout, vg, false);
   }
+  
 }
