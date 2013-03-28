@@ -44,6 +44,7 @@
                 android:value="com.teamluper.luper.LuperApp_" />
         </activity>
         <activity android:name="com.teamluper.luper.ExampleProject" android:label="@string/title_activity_example_project" android:parentActivityName="com.teamluper.luper.LuperApp_"></activity>
+        <activity android:name="com.teamluper.luper.Test" android:label="TESTME" android:parentActivityName="com.teamluper.luper.LuperApp_"></activity>
     </application>
 
 </manifest>
