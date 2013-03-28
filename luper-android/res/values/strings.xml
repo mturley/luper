@@ -13,11 +13,19 @@
     <string name="button_record">Audio Recorder Test</string>
     <string name="button_dbtest">Remote DB Test Query</string>
     <string name="button_project">Dummy Project</string>
+    <string name="button_menutest">Popup Test</string>
     <string name="tryswiping">
         Try swiping from left to right!  Because of the way Mike implemented TabsAdapter.java, we can switch tabs that way too.
     </string>
     <string name="project_welcome">
         This activity will never become our "Active Project," complete with tracks, buttons galore, and loops, naturally.
     </string>
-
+    
+  <string name="button1">button1</string>
+  <string name="button2">button2</string>
+   <string name="button3">button3</string>
+  <string name="button4">button4</string>
+  <string name="button5">button5</string>
+  <string name="button6">button6</string>
+    
 </resources>
