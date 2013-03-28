@@ -26,6 +26,7 @@ import android.content.Context;
 import android.util.Log;
 import android.media.MediaRecorder;
 import android.media.MediaPlayer;
+import com.teamluper.luper.Clip;
 
 import java.io.IOException;
 
@@ -87,6 +88,7 @@ public class AudioRecorderTest extends SherlockActivity
         System.out.println("and here");
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         mRecorder.setOutputFile(mFileName);
+        //Clip newClip = new Clip(mFileName); mfilname --> string, needs a file?
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
         try {
