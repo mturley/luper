@@ -26,7 +26,7 @@ import android.content.Context;
 import android.util.Log;
 import android.media.MediaRecorder;
 import android.media.MediaPlayer;
-import com.teamluper.luper.Clip;
+//import com.teamluper.luper.Clip;
 
 import java.io.IOException;
 
