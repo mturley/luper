@@ -12,7 +12,7 @@ import java.io.File;
 import android.media.MediaPlayer;
 
 public class Clip {
-	File name = null;
+	String name = null;
 	int begin, end, length;
 	
 	//needs an array of attributes/filters/modifications?
@@ -23,7 +23,7 @@ public class Clip {
 		begin = 0;
 		end = length;
 	}
-	public Clip(File cName)
+	public Clip(String cName)
 	{
 		name = cName;
 		length = 0;
@@ -31,7 +31,7 @@ public class Clip {
 		end = length;
 	}
 	//Getters and setters for the fields
-	public File getClip()
+	public String getClip()
 	{
 		return name;
 	}
@@ -43,7 +43,7 @@ public class Clip {
 	{
 		return end;
 	}
-	public void setClip(File cName)
+	public void setClip(String cName)
 	{
 		name = cName;
 	}
@@ -75,10 +75,10 @@ public class Clip {
 		length = end-begin;
 		return length;
 	}
-	//returns the clips path and save location as a string
+	/*//returns the clips path and save location as a string
 	public String getClipPath()
 	{
 		String path = this.name.getPath();
 		return path;
-	}
+	}*/
 }
