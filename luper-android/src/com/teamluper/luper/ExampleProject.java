@@ -7,6 +7,7 @@ import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -18,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.support.v4.app.Fragment;
@@ -47,21 +49,38 @@ public class ExampleProject extends SherlockActivity {
         pText.setTextColor(0xFF000000);
         pText.setGravity(Gravity.CENTER_HORIZONTAL);
         pText.setTextSize(20f);
+        pText.setMaxHeight(200);
         pText.setText("\nThis is our dummy Project. For now, it's pretty boring. But soon it will be loaded with bells, whistles, gizmos, and loops, naturally.\n");
 
         
-        /*TextView bottomText = new TextView(this);
+        TextView bottomText = new TextView(this);
         bottomText.setTextColor(0xFF000000);
         bottomText.setGravity(Gravity.BOTTOM);
         bottomText.setTextSize(20f);
-        bottomText.setText("Bottom  shtuff");*/
-
-        // this LinearLayout is used in place of an XML file.
-        // Android lets you do your layouts either programattically like this,
-        // or with an XML file.
-        LinearLayout layout = new LinearLayout(this);
+        bottomText.setGravity(300);
+        bottomText.setMaxHeight(100);
+        bottomText.setText("Bottom  shtuff");
+        
+        ImageView add = new ImageView(this);
+        add.setImageResource(R.drawable.add);
+        
+        //creating a random layout
+        RelativeLayout layout = new RelativeLayout(this);
+        
+        //setting positions of text
+        RelativeLayout.LayoutParams params0 = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        params0.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
+        pText.setLayoutParams(params0);
         layout.addView(pText);
+        
+        RelativeLayout.LayoutParams params1 = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        params1.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
+        bottomText.setLayoutParams(params1);
         layout.addView(bottomText);
+
+        add.setLayoutParams(params1);
+        layout.addView(add);
+        
         setContentView(layout);
         
         
@@ -71,5 +90,7 @@ public class ExampleProject extends SherlockActivity {
     public void onPause() {
         super.onPause();
     }
+    
+    
 
 }
