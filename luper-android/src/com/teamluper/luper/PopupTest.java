@@ -36,9 +36,11 @@ public class PopupTest extends SherlockActivity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         switch(item.getItemId()) {
-        case R.id.menu_delete:
-            return true;
         case R.id.menu_edit:
+            return true;
+        case R.id.menu_share:
+            return true;
+        case R.id.menu_delete:
             return true;
         }
         return super.onContextItemSelected(item);
