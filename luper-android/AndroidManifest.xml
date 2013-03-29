@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.teamluper.luper.AudioRecorderTest"
+            android:name="com.teamluper.luper.AudioRecorderTest_"
             android:label="@string/title_activity_audio_recorder_test"
             android:parentActivityName="com.teamluper.luper.LuperApp_" >
             <meta-data

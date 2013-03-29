@@ -22,17 +22,21 @@ import android.os.Environment;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.view.View;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.util.Log;
 import android.media.MediaRecorder;
 import android.media.MediaPlayer;
-//import com.teamluper.luper.Clip;
 
 import java.io.IOException;
 
 import com.actionbarsherlock.app.SherlockActivity;
+import com.googlecode.androidannotations.annotations.EActivity;
+import com.googlecode.androidannotations.annotations.UiThread;
 
-
+@EActivity
 public class AudioRecorderTest extends SherlockActivity
 {
     private static final String LOG_TAG = "AudioRecorderTest";
@@ -88,7 +92,7 @@ public class AudioRecorderTest extends SherlockActivity
         System.out.println("and here");
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         mRecorder.setOutputFile(mFileName);
-        //Clip newClip = new Clip(mFileName); mfilname --> string, needs a file?
+      
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
         try {
@@ -104,6 +108,13 @@ public class AudioRecorderTest extends SherlockActivity
     private void stopRecording() {
         mRecorder.stop();
         mRecorder.release();
+        Clip newClip = new Clip(mFileName); 
+        try {
+			newClip.getLength();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+        alertDialog("Clip Created! It's location and name is: " + newClip.name + "   And The clip's length is: " + newClip.length);
         mRecorder = null;
     }
 
@@ -197,4 +208,17 @@ public class AudioRecorderTest extends SherlockActivity
             mPlayer = null;
         }
     }
+    @UiThread
+    void alertDialog(String message) {
+      new AlertDialog.Builder(this)
+      .setCancelable(false)
+      .setMessage(message)
+      .setPositiveButton("OK", new OnClickListener() {
+        public void onClick(DialogInterface dialog, int which) {
+          // do nothing
+        }
+      })
+      .show();
+    }
+
 }
