@@ -10,6 +10,9 @@
 package com.teamluper.luper;
 
 // imports from the core android API
+import java.io.File;
+import android.os.Environment;
+
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.AlertDialog;
@@ -68,6 +71,13 @@ public class LuperApp extends SherlockFragmentActivity {
     final ActionBar bar = getSupportActionBar();
     bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS); // Gives us Tabs!
     
+    //Creates a folder for Luper and associated clips and projects
+    File nfile=new File(Environment.getExternalStorageDirectory()+"/LuperApp/Clips");
+    File mfile=new File(Environment.getExternalStorageDirectory()+"/LuperApp/Projects");
+    nfile.mkdir();
+    mfile.mkdir();
+    
+    
     // now we set up the TabsAdapter, which is a special class borrowed from Google.
     // TabsAdapter.java takes care of all the guts of the Tab interactions, and
     // links it with our ViewPager for us.  The code below is all we need to
@@ -109,7 +119,7 @@ public class LuperApp extends SherlockFragmentActivity {
   
   //method to navigate to the audiorecorder activity
   public void startRecording(View view) {
-  	Intent intent = new Intent(this, AudioRecorderTest.class);
+  	Intent intent = new Intent(this, AudioRecorderTest_.class);
   	startActivity(intent);
   }
   
@@ -132,6 +142,21 @@ public class LuperApp extends SherlockFragmentActivity {
 		  Intent intent = new Intent(this, ExampleProject.class);
 		  startActivity(intent);
   }
+  
+  
+  @Background
+  public void start_testmenu(View view) {
+		  Intent intent = new Intent(this, PopupTest.class);
+		  startActivity(intent);
+  }
+  
+  // code: http://www.java2s.com/Code/Android/2D-Graphics/DrawwithCanvas.htm
+  @Background
+  public void start_testcanvas(View view) {
+		  Intent intent = new Intent(this, CanvasTest.class);
+		  startActivity(intent);
+  }
+  
   
   // this will be removed too, it's checking the google account that the
   // device's user is already logged in with.  We'll likely ditch this in favor

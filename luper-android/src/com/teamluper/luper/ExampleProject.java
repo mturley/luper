@@ -1,5 +1,13 @@
 package com.teamluper.luper;
-
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -41,6 +49,9 @@ public class ExampleProject extends SherlockActivity {
         LinearLayout layout = new LinearLayout(this);
         layout.addView(pText);
         setContentView(layout);
+        
+        
+        
     }
 
     @Override

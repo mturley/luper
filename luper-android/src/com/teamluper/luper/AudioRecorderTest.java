@@ -22,7 +22,10 @@ import android.os.Environment;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.view.View;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.util.Log;
 import android.media.MediaRecorder;
 import android.media.MediaPlayer;
@@ -30,8 +33,10 @@ import android.media.MediaPlayer;
 import java.io.IOException;
 
 import com.actionbarsherlock.app.SherlockActivity;
+import com.googlecode.androidannotations.annotations.EActivity;
+import com.googlecode.androidannotations.annotations.UiThread;
 
-
+@EActivity
 public class AudioRecorderTest extends SherlockActivity
 {
     private static final String LOG_TAG = "AudioRecorderTest";
@@ -44,6 +49,7 @@ public class AudioRecorderTest extends SherlockActivity
     private MediaPlayer   mPlayer = null;
 
     private void onRecord(boolean start) {
+
         if (start) {
             startRecording();
         } else {
@@ -76,12 +82,17 @@ public class AudioRecorderTest extends SherlockActivity
     }
 
     private void startRecording() {
+    	//Sets the name of the file when you start recording as opposed to when you click "Audio Record Test" from the main screen
+        mFileName = Environment.getExternalStorageDirectory()+"/LuperApp/Clips";
+        mFileName += "/clip_" + System.currentTimeMillis() +".3gp";
+        
         mRecorder = new MediaRecorder();
         System.out.println("here");
         mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         System.out.println("and here");
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         mRecorder.setOutputFile(mFileName);
+      
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
         try {
@@ -97,6 +108,13 @@ public class AudioRecorderTest extends SherlockActivity
     private void stopRecording() {
         mRecorder.stop();
         mRecorder.release();
+        Clip newClip = new Clip(mFileName); 
+        try {
+			newClip.getLength();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+        alertDialog("Clip Created! It's location and name is: " + newClip.name + "   And The clip's length is: " + newClip.length);
         mRecorder = null;
     }
 
@@ -145,9 +163,13 @@ public class AudioRecorderTest extends SherlockActivity
     }
 
     public AudioRecorderTest() {
-        mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
-        //System.out.println(mFileName);
-        mFileName += "/audiorecordtest.3gp";
+    	mFileName = null;
+    	/*Tabbed this out because it is useless to do here as we want to create multiple clips when record is pressed, not overwrite them
+    	 * 
+         *mFileName = Environment.getExternalStorageDirectory()+"/LuperApp/Clips";
+         *mFileName += "/clip_" + System.currentTimeMillis() +".3gp";
+         * 
+         */
     }
 
     @Override
@@ -186,4 +208,17 @@ public class AudioRecorderTest extends SherlockActivity
             mPlayer = null;
         }
     }
+    @UiThread
+    void alertDialog(String message) {
+      new AlertDialog.Builder(this)
+      .setCancelable(false)
+      .setMessage(message)
+      .setPositiveButton("OK", new OnClickListener() {
+        public void onClick(DialogInterface dialog, int which) {
+          // do nothing
+        }
+      })
+      .show();
+    }
+
 }

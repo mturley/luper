@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.teamluper.luper.AudioRecorderTest"
+            android:name="com.teamluper.luper.AudioRecorderTest_"
             android:label="@string/title_activity_audio_recorder_test"
             android:parentActivityName="com.teamluper.luper.LuperApp_" >
             <meta-data
@@ -44,6 +44,9 @@
                 android:value="com.teamluper.luper.LuperApp_" />
         </activity>
         <activity android:name="com.teamluper.luper.ExampleProject" android:label="@string/title_activity_example_project" android:parentActivityName="com.teamluper.luper.LuperApp_"></activity>
+        <activity android:name="com.teamluper.luper.PopupTest" android:label="TESTME" android:parentActivityName="com.teamluper.luper.LuperApp_"></activity>
+        <activity android:name="com.teamluper.luper.CanvasTest" android:label="Canvas" android:parentActivityName="com.teamluper.luper.LuperApp_"></activity>
+        
     </application>
 
 </manifest>

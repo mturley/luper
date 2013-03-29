@@ -52,6 +52,16 @@
         android:gravity="center"
         android:onClick="exampleProject"
         android:text="@string/button_project"/>
+    
+    <Button 
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button3"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:onClick="start_testmenu"
+        android:text="@string/button_menutest"/>
 
     <TextView
         android:id="@+id/textView1"
