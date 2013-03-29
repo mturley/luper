@@ -35,7 +35,9 @@ public class CanvasTest extends Activity {
       cPaint.setColor(Color.LTGRAY);
       cPaint.setStrokeWidth(3);
 
-      setBackgroundResource(R.drawable.ic_launcher);
+      //setBackgroundResource(R.drawable.ic_launcher);
+      this.setBackgroundColor(0x0000FF00 );
+      this.invalidate();
     }
 
     @Override

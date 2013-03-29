@@ -19,7 +19,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginBottom="40dp"
+         android:layout_alignParentBottom="true"
         android:entries="@array/projects_dummy_list" >
     </ListView>
 

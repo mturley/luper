@@ -14,7 +14,7 @@
     <string name="button_dbtest">Remote DB Test Query</string>
     <string name="button_project">Dummy Project</string>
     <string name="button_menutest">Popup Test</string>
-    <string name="button_menutest">Canvas Test</string>
+    <string name="button_canvastest">Canvas Test</string>
     <string name="tryswiping">
         Try swiping from left to right!  Because of the way Mike implemented TabsAdapter.java, we can switch tabs that way too.
     </string>
