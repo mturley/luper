@@ -36,7 +36,7 @@ public class FileSelector extends Activity {
  private static final String TAG = "F_PATH";
  
  private Item[] fileList;
- private File path = new File(Environment.getExternalStorageDirectory() + "");
+ private File path = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/LuperApp/");
  private String chosenFile;
  private static final int DIALOG_LOAD_FILE = 1000;
  
