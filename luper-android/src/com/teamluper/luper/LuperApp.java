@@ -20,6 +20,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.TextView;
@@ -89,6 +90,10 @@ public class LuperApp extends SherlockFragmentActivity {
         TabProjectsFragment_.class, null);
     mTabsAdapter.addTab(bar.newTab().setText(""+"Friends"),
         TabFriendsFragment_.class, null);
+    
+    //create a directory to save in
+    File testdir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/LuperApp/");
+    testdir.mkdirs();
     
     // this Dialog should either be completely removed or changed to
     // a welcome message with a changelog or important news about updates.
