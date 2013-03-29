@@ -150,6 +150,7 @@ public class LuperApp extends SherlockFragmentActivity {
 		  startActivity(intent);
   }
   
+  // code: http://www.java2s.com/Code/Android/2D-Graphics/DrawwithCanvas.htm
   @Background
   public void start_testcanvas(View view) {
 		  Intent intent = new Intent(this, CanvasTest.class);
