@@ -17,9 +17,12 @@ package com.teamluper.luper;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import java.util.Random;
 
@@ -56,6 +59,7 @@ public class ColorChipView extends View {
 
     public ColorChipView(Context context) {
         super(context);
+    	System.out.println("ON MAKE CCV");
         init();
     }
 
@@ -90,18 +94,27 @@ public class ColorChipView extends View {
         mColor = color;
         invalidate();
     }
+    
+    public void onMeasure(int widthMeasureSpec, int heightMeasureSpec){
+    	super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
+    
+    public boolean onKeyDown (int keyCode, KeyEvent event){
+    	return super.onKeyDown(keyCode,event);
+    }
 
     @Override
     public void onDraw(Canvas c) {
-
+    	System.out.println("ON DRAW CCV");
+    	super.onDraw(c);
         int right = getWidth() - 1;
         int bottom = getHeight() - 1;
-        mPaint.setColor(r.nextInt(256));
+        mPaint.setColor(Color.BLUE);
 
         switch (mDrawStyle) {
             case UNCLICKED:
                 mPaint.setStrokeWidth(mDefStrokeWidth);
-                c.drawRect(0, 0, right, bottom, mPaint);
+                c.drawRect(100, 100, right, bottom, mPaint);
                 break;
             case CLICKED:
                 if (mBorderWidth <= 0) {

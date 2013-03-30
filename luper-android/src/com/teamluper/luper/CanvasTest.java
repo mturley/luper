@@ -29,7 +29,7 @@ public class CanvasTest extends Activity {
 
       circle = new Path();
       circle.addCircle(150, 150, 100, Direction.CW);
-
+ 
       cPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
       cPaint.setStyle(Paint.Style.STROKE);
       cPaint.setColor(Color.LTGRAY);
