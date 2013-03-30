@@ -1,3 +1,11 @@
+//This activity will activate when a button is pressed, it will open a list that 
+//shows all the files in a specified directory. For now that directory is set to
+//Environment.getExternalStorageDirectory().getAbsolutePath() + "/LuperApp/" 
+//
+//the code is a modified version of this websites tutorial:
+//http://thinkndoawesome.blogspot.com/2012/05/custom-media-player-on-android.html
+//Created by: Cam
+
 package com.teamluper.luper;
  
 import java.io.File;
@@ -19,13 +27,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
- 
-/**
- * @author kantsh
- *      This code can be used for development purposes and is free to use.
- *         Completed on Tuesday,April 24,2012
- *         mailto "kant.shashi@hotmail.com"
- */
  
 public class FileSelector extends Activity {
  ArrayList<String> str = new ArrayList<String>();
@@ -79,85 +80,14 @@ public class FileSelector extends Activity {
    String[] fList = path.list(filter);
    fileList = new Item[fList.length];
    for (int i = 0; i < fList.length; i++) {
-    fileList[i] = new Item(fList[i]); // by
-                  // default
-                  // icon
- 
+    fileList[i] = new Item(fList[i]);
+    
     // Convert into file path
     File sel = new File(path, fList[i]);
- 
-    // Set drawables
-//    if (sel.isDirectory()) {
-//     fileList[i].icon = R.drawable.directory_icon;
-//     Log.d("DIRECTORY", fileList[i].file);
-//    }
-// 
-//    // pdf format
-//    else if (sel.getName().endsWith(".pdf")) {
-//     fileList[i].icon = R.drawable.pdf_file;
-//     Log.d("FILE", fileList[i].file);
-//    }
-// 
-//    // image formats
-//    else if (sel.getName().endsWith(".jpeg")
-//      || sel.getName().endsWith(".jpg")) {
-//     fileList[i].icon = R.drawable.jpg_file;
-//     Log.d("FILE", fileList[i].file);
-//    } else if (sel.getName().endsWith(".gif")) {
-//     fileList[i].icon = R.drawable.gif;
-//     Log.d("FILE", fileList[i].file);
-//    }
-// 
-//    // audio and some common formats
-//    else if (sel.getName().endsWith(".mp3")
-//      || sel.getName().endsWith(".MP3")) {
-//     fileList[i].icon = R.drawable.mp3_file;
-//     Log.d("FILE", fileList[i].file);
-//    } else if (sel.getName().endsWith(".mpg")
-//      || sel.getName().endsWith(".mpeg")) {
-//     fileList[i].icon = R.drawable.mpeg_file;
-//     Log.d("FILE", fileList[i].file);
-//    } else if (sel.getName().endsWith(".avi")) {
-//     fileList[i].icon = R.drawable.avi_file;
-//     Log.d("FILE", fileList[i].file);
-//    }
-//    // all other formats for video
-//    else if (sel.getName().endsWith(".mov")
-//      || sel.getName().endsWith(".asf")
-//      || sel.getName().endsWith(".mp4")
-//      || sel.getName().endsWith(".3gp")
-//      || sel.getName().endsWith(".flv")
-//      || sel.getName().endsWith(".rm")
-//      || sel.getName().endsWith(".wmv")
-//      || sel.getName().endsWith(".mkv")) {
-//     fileList[i].icon = R.drawable.video_icon;
-//     Log.d("FILE", fileList[i].file);
-//    }
-// 
-//    // archives file formats
-//    else if (sel.getName().endsWith(".zip")
-//      || sel.getName().endsWith(".rar")
-//      || sel.getName().endsWith(".jar")
-//      || sel.getName().endsWith(".gzip")) {
-//     fileList[i].icon = R.drawable.zip_icon;
-//     Log.d("FILE", fileList[i].file);
-//    }
-// 
-//    else {
-//     Log.d("FILE", fileList[i].file);
-//    }
-   }
- 
-   // show the up symbol only when u r not at the top of the path
-//   if (!firstLvl) {
-//    Item temp[] = new Item[fileList.length + 1];
-//    for (int i = 0; i &lt; fileList.length; i++) {
-//     temp[i + 1] = fileList[i];
-//    }
-//    temp[0] = new Item("Up", R.drawable.directory_up);
-//    fileList = temp;
-//   }
-  } else {
+   }   
+  }
+  
+  else {
    Log.e(TAG, "path does not exist");
   }
  
