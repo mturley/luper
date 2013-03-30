@@ -48,6 +48,21 @@ public class ExampleProject extends Activity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         CCV = new ColorChipView(this);
         setContentView(CCV);
+        
+        MediaPlayer mp;
+        mp = MediaPlayer.create(getApplicationContext(), R.raw.beep24);
+        mp.setLooping(true);
+        try {
+			mp.prepare();
+		} catch (IllegalStateException e) {
+			System.out.println("Something fuqed up");
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("Something fuqed up");
+			e.printStackTrace();
+		}
+        mp.start();
+        
         // this LinearLayout is used in place of an XML file.
         // Android lets you do your layouts either programattically like this,
         // or with an XML file.
