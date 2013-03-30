@@ -38,14 +38,18 @@ import android.media.MediaRecorder;
 import android.media.MediaPlayer;
 
 import java.io.IOException;
+
+import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.UiThread;
 
-@EActivity
+//@EActivity
 public class AudioRecorderTest extends SherlockActivity
 {
     private static final String LOG_TAG = "AudioRecorderTest";
@@ -58,6 +62,7 @@ public class AudioRecorderTest extends SherlockActivity
     private MediaPlayer   mPlayer = null;
     
     private Button mBrowseButton = null;
+    private TextView fileSelected;
 
     private int MediaFetchResultCode = 11;
 
@@ -188,6 +193,8 @@ public class AudioRecorderTest extends SherlockActivity
         // this LinearLayout is used in place of an XML file.
         // Android lets you do your layouts either programattically like this,
         // or with an XML file.
+        LinearLayout base = new LinearLayout(this);
+        base.setOrientation(1);
         LinearLayout ll = new LinearLayout(this);
         mRecordButton = new RecordButton(this);
         ll.addView(mRecordButton,
@@ -207,7 +214,28 @@ public class AudioRecorderTest extends SherlockActivity
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
-        setContentView(ll);
+        
+        LinearLayout ll2 = new LinearLayout(this);
+        fileSelected = new AutoCompleteTextView(this);
+        ll2.addView(fileSelected,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        0));
+        base.addView(ll,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        0));
+        base.addView(ll2,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        0));
+        setContentView(base);
+        //setContentView(ll2);
+        
+        fileSelected.setHint("select a file");
         
         mBrowseButton.setOnClickListener(new View.OnClickListener() {
         	   @Override
@@ -226,7 +254,7 @@ public class AudioRecorderTest extends SherlockActivity
     	   if (resultCode == RESULT_OK) {
     	    mFileName = data.getStringExtra("fileChosen");
     	    File file = new File(mFileName);    
-    	    //fileSelected.setText(file.getName());
+    	    fileSelected.setText(file.getName());
     	    Toast.makeText(getApplicationContext(),
     	      "U have selected:" + file.getName(), Toast.LENGTH_LONG).show();
     	   }
@@ -246,7 +274,7 @@ public class AudioRecorderTest extends SherlockActivity
             mPlayer = null;
         }
     }
-    @UiThread
+    //@UiThread
     void alertDialog(String message) {
       new AlertDialog.Builder(this)
       .setCancelable(false)

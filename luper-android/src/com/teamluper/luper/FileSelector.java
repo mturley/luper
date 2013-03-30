@@ -10,8 +10,7 @@ package com.teamluper.luper;
  
 import java.io.File;
 import java.io.FilenameFilter;
-import java.util.ArrayList;
- 
+import java.util.ArrayList; 
 //import com.teamluper.LuperApp.R;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -65,6 +64,7 @@ public class FileSelector extends Activity {
  
   // Checks whether path exists
   if (path.exists()) {
+	  
    // create a filter that helps to look for files directories and
    // hidden files
    FilenameFilter filter = new FilenameFilter() {
@@ -100,10 +100,6 @@ public class FileSelector extends Activity {
     View view = super.getView(position, convertView, parent);
     TextView textView = (TextView) view
       .findViewById(android.R.id.text1);
- 
-    // put the image on the text view
-//    textView.setCompoundDrawablesWithIntrinsicBounds(
-//      fileList[position].icon, 0, 0, 0);
  
     // add margin between image and text (support various screen
     // densities)
@@ -201,12 +197,12 @@ public class FileSelector extends Activity {
       // Toast.makeText(getBaseContext(),
       // returnVal,Toast.LENGTH_LONG).show();
       finish();
-     }
- 
+     } 
     }
    });
    break;
   }
+  
   dialog = builder.show();
   return dialog;
  }
