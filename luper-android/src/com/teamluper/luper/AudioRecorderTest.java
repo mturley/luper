@@ -49,7 +49,7 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.UiThread;
 
-//@EActivity
+@EActivity
 public class AudioRecorderTest extends SherlockActivity
 {
     private static final String LOG_TAG = "AudioRecorderTest";
@@ -133,6 +133,7 @@ public class AudioRecorderTest extends SherlockActivity
 			e1.printStackTrace();
 		}
         alertDialog("Clip Created! It's location and name is: " + newClip.name + "   And The clip's length is: " + newClip.length);
+        fileSelected.setText(mFileName);
         mRecorder = null;
     }
 
@@ -274,7 +275,7 @@ public class AudioRecorderTest extends SherlockActivity
             mPlayer = null;
         }
     }
-    //@UiThread
+    @UiThread
     void alertDialog(String message) {
       new AlertDialog.Builder(this)
       .setCancelable(false)
