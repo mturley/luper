@@ -16,9 +16,16 @@
  */
 package com.teamluper.luper;
 
-import android.widget.LinearLayout;
+import java.io.File;
+import java.io.IOException;
+import android.content.Context;
+import android.content.Intent;
+import android.media.MediaPlayer;
+import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.view.View;
@@ -31,6 +38,8 @@ import android.media.MediaRecorder;
 import android.media.MediaPlayer;
 
 import java.io.IOException;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.googlecode.androidannotations.annotations.EActivity;
@@ -47,6 +56,10 @@ public class AudioRecorderTest extends SherlockActivity
 
     private PlayButton   mPlayButton = null;
     private MediaPlayer   mPlayer = null;
+    
+    private Button mBrowseButton = null;
+
+    private int MediaFetchResultCode = 11;
 
     private void onRecord(boolean start) {
 
@@ -87,9 +100,9 @@ public class AudioRecorderTest extends SherlockActivity
         mFileName += "/clip_" + System.currentTimeMillis() +".3gp";
         
         mRecorder = new MediaRecorder();
-        System.out.println("here");
+        //System.out.println("here");
         mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        System.out.println("and here");
+        //System.out.println("and here");
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         mRecorder.setOutputFile(mFileName);
       
@@ -163,13 +176,9 @@ public class AudioRecorderTest extends SherlockActivity
     }
 
     public AudioRecorderTest() {
-    	mFileName = null;
-    	/*Tabbed this out because it is useless to do here as we want to create multiple clips when record is pressed, not overwrite them
-    	 * 
-         *mFileName = Environment.getExternalStorageDirectory()+"/LuperApp/Clips";
-         *mFileName += "/clip_" + System.currentTimeMillis() +".3gp";
-         * 
-         */
+        mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/LuperApp/";
+        //System.out.println(mFileName);
+        mFileName += System.currentTimeMillis() + ".3gp";
     }
 
     @Override
@@ -192,8 +201,37 @@ public class AudioRecorderTest extends SherlockActivity
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 0));
+        mBrowseButton = new Button(this);
+        ll.addView(mBrowseButton,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        0));
         setContentView(ll);
+        
+        mBrowseButton.setOnClickListener(new View.OnClickListener() {
+        	   @Override
+        	   public void onClick(View v) {
+        	    Intent intent = new Intent(AudioRecorderTest.this, FileSelector.class);
+        	    AudioRecorderTest.this.startActivityForResult(intent, MediaFetchResultCode);
+        	   }
+        	  });
+        mBrowseButton.setText("Browse");
     }
+    
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	  // TODO Auto-generated method stub
+    	  super.onActivityResult(requestCode, resultCode, data);
+    	  if (requestCode == MediaFetchResultCode) {
+    	   if (resultCode == RESULT_OK) {
+    	    mFileName = data.getStringExtra("fileChosen");
+    	    File file = new File(mFileName);    
+    	    //fileSelected.setText(file.getName());
+    	    Toast.makeText(getApplicationContext(),
+    	      "U have selected:" + file.getName(), Toast.LENGTH_LONG).show();
+    	   }
+    	  }
+    	 }
 
     @Override
     public void onPause() {
