@@ -124,7 +124,7 @@ public class LuperApp extends SherlockFragmentActivity {
   
   //method to navigate to the audiorecorder activity
   public void startRecording(View view) {
-  	Intent intent = new Intent(this, AudioRecorderTest.class);
+  	Intent intent = new Intent(this, AudioRecorderTest_.class);
   	startActivity(intent);
   }
   
