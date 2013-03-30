@@ -29,12 +29,6 @@ public class CanvasTest extends Activity {
 
       circle = new Path();
       circle.addCircle(150, 150, 100, Direction.CW);
-<<<<<<< HEAD
- 
-=======
-
-
->>>>>>> bea36a22ca473b2b8495bd0dd85ec88733d28453
       cPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
       cPaint.setStyle(Paint.Style.STROKE);
       cPaint.setColor(Color.LTGRAY);
