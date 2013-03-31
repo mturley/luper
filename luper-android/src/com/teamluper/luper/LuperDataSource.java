@@ -38,7 +38,9 @@ public class LuperDataSource {
   public Sequence createSequence(String title) {
     if(title == "") title = "Untitled";
     ContentValues values = new ContentValues();
+    values.put("ownerUserID", 0);
     values.put("title", title);
+    values.put("isDirty", 1);
     long insertId = database.insert("Sequences", null, values);
     Cursor cursor = database.query("Sequences", null,
         "_id = " + insertId, null, null, null, null);

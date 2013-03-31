@@ -33,7 +33,6 @@ public class TabProjectsFragment extends Fragment {
     ListView projectsListView = (ListView) view.findViewById(R.id.projectsListView);
     projectsListView.setAdapter(adapter);
     projectsListView.setEmptyView(view.findViewById(R.id.projectsListEmptyText));
-    
     return (RelativeLayout) view;
   }
   

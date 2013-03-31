@@ -21,9 +21,10 @@ public class LuperSQLiteHelper extends SQLiteOpenHelper {
   @Override
   public void onCreate(SQLiteDatabase database) {
     InputStream in = context.getResources().openRawResource(R.raw.create_sqlite_tables);
-    java.util.Scanner s = new java.util.Scanner(in).useDelimiter("\\A");
-    String sql = s.hasNext() ? s.next() : "";
-    database.execSQL(sql);
+    java.util.Scanner s = new java.util.Scanner(in).useDelimiter(";");
+    while(s.hasNext()) {
+      database.execSQL(s.next());
+    }
   }
   
   @Override
@@ -32,9 +33,11 @@ public class LuperSQLiteHelper extends SQLiteOpenHelper {
         "Upgrading database from version " + oldVersion + " to "
             + newVersion + ", which will destroy all old data");
     InputStream in = context.getResources().openRawResource(R.raw.drop_sqlite_tables);
-    java.util.Scanner s = new java.util.Scanner(in).useDelimiter("\\A");
+    java.util.Scanner s = new java.util.Scanner(in).useDelimiter(";");
     String sql = s.hasNext() ? s.next() : "";
-    db.execSQL(sql);
+    while(s.hasNext()) {
+      db.execSQL(s.next());
+    }
     onCreate(db);
   }
   
