@@ -9,12 +9,12 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
-public class SequencesDataSource {
+public class DataSourceSequences {
   // Database fields
   private SQLiteDatabase database;
   private LuperSQLiteHelper dbHelper;
 
-  public SequencesDataSource(Context context) {
+  public DataSourceSequences(Context context) {
     dbHelper = new LuperSQLiteHelper(context);
   }
 
