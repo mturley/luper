@@ -4,7 +4,7 @@
 //
 //the code is a modified version of this websites tutorial:
 //http://thinkndoawesome.blogspot.com/2012/05/custom-media-player-on-android.html
-//Created by: Cam
+//Created by: Cam 3/28/13
 
 package com.teamluper.luper;
  
