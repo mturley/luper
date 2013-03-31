@@ -4,6 +4,8 @@ luper-android/gen/
 luper-android/local.properties
 actionbarsherlock/bin/
 actionbarsherlock/gen/
+actionbarsherlock/project.properties
+luper-android/project.properties
 *.dex
 *.class
 *.DS_Store
