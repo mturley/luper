@@ -18,11 +18,11 @@ import android.accounts.AccountManager;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -94,10 +94,6 @@ public class LuperApp extends SherlockFragmentActivity {
     //create a directory to save in
     File testdir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/LuperApp/");
     testdir.mkdirs();
-    
-    // this Dialog should either be completely removed or changed to
-    // a welcome message with a changelog or important news about updates.
-    alertDialog("Welcome to our Beta!  This app is a work in progress.");
   }
   
   @Override
@@ -110,11 +106,26 @@ public class LuperApp extends SherlockFragmentActivity {
   public boolean onCreateOptionsMenu(Menu menu) {
     MenuInflater inf = getSupportMenuInflater();
     inf.inflate(R.menu.activity_main, menu);
-    return true;
+    
+    // because one of the action items is a custom view,
+    // we need the next few lines to force it to use onOptionsItemSelected
+    // when it's clicked.
+    final MenuItem item = menu.findItem(R.id.menu_new_project);
+    item.getActionView().setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        onOptionsItemSelected(item);
+      }
+    });
+    
+    return super.onCreateOptionsMenu(menu);
   }
   
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
+    if(item.getItemId() == R.id.menu_new_project) {
+      alertDialog("New Project Time! (TODO)");
+    }
     if(item.getItemId() == R.id.menu_settings) {
       Intent intent = new Intent(this, LuperSettings_.class);
       startActivity(intent);
@@ -190,7 +201,7 @@ public class LuperApp extends SherlockFragmentActivity {
     new AlertDialog.Builder(this)
     .setCancelable(false)
     .setMessage(message)
-    .setPositiveButton("OK", new OnClickListener() {
+    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface dialog, int which) {
         // do nothing
       }

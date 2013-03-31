@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/menu_new_project"
+    android:clickable="true"
+    android:background="@drawable/custom_action_bg"
+    style="@style/CustomBigActionButton" >
+    
+    <ImageView
+        android:src="@drawable/ic_content_new"
+        style="@style/CustomBigActionButtonImage" />
+    <TextView
+        android:text="@string/menu_new_project"
+        style="@style/CustomBigActionButtonText" />
+    
+</LinearLayout>

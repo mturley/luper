@@ -43,7 +43,7 @@ public class DataSourceSequences {
 
   public void deleteSequence(Sequence sequence) {
     long id = sequence.getId();
-    System.out.println("Comment deleted with id: " + id);
+    System.out.println("Sequence deleted with id: " + id);
     database.delete("Sequences", "_id = " + id, null);
   }
 
