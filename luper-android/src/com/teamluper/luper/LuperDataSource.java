@@ -12,12 +12,12 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
-public class DataSourceSequences {
+public class LuperDataSource {
   // Database fields
   private SQLiteDatabase database;
   private LuperSQLiteHelper dbHelper;
 
-  public DataSourceSequences(Context context) {
+  public LuperDataSource(Context context) {
     dbHelper = new LuperSQLiteHelper(context);
   }
 
@@ -61,6 +61,10 @@ public class DataSourceSequences {
     // Make sure to close the cursor
     cursor.close();
     return sequences;
+  }
+  
+  public void dropAllData() {
+    dbHelper.onUpgrade(database, 0, 1);
   }
 
   private Sequence cursorToSequence(Cursor cursor) {

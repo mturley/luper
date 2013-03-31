@@ -72,5 +72,15 @@
         android:gravity="center"
         android:onClick="start_testcanvas"
         android:text="@string/button_canvastest"/>
+    
+    <Button 
+        android:id="@+id/button6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button5"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:onClick="dropAllData"
+        android:text="Erase All SQLite Data"/>
 
 </RelativeLayout>

@@ -1,4 +1,4 @@
 create table Sequences (
-  _id int primary key autoincrement,
+  _id integer primary key autoincrement,
   title text not null
 );

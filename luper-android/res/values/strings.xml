@@ -20,4 +20,5 @@
     <string name="project_welcome">
         This activity will never become our "Active Project," complete with tracks, buttons galore, and loops, naturally.
     </string>
+    <string name="projects_list_empty">No Projects Here!</string>
 </resources>
