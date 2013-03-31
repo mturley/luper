@@ -6,6 +6,7 @@
     <string name="welcomebody">
         This home screen will probably be removed. \n But for now, it\'s a great place to put random unfinished features in buttons like these:
     </string>
+    <string name="menu_new_project">New Project</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_audio_recorder_test">Audio Recorder Test</string>
     <string name="title_activity_example_project"></string>
@@ -16,10 +17,8 @@
     <string name="button_project">Dummy Project</string>
     <string name="button_menutest">Popup Test</string>
     <string name="button_canvastest">Canvas Test</string>
-    <string name="tryswiping">
-        Try swiping from left to right!  Because of the way Mike implemented TabsAdapter.java, we can switch tabs that way too!
-    </string>
     <string name="project_welcome">
         This activity will never become our "Active Project," complete with tracks, buttons galore, and loops, naturally.
     </string>
+    <string name="projects_list_empty">No Projects Here!</string>
 </resources>

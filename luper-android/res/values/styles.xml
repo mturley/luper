@@ -1,5 +1,33 @@
 <resources>
-
-			<style name="AppTheme" parent="@style/Theme.Luper" />
+		<style name="AppTheme" parent="@style/Theme.Luper" />
+		
+		<!--
+		  The following 3 styles are based on EditEventCustomActionButton
+		  from the Google Calendar for Android source code available here:
+		  https://android.googlesource.com/platform/packages/apps/Calendar/+/master/res/values/styles.xml
+		-->
+		<style name="CustomBigActionButton" parent="android:style/Widget.Holo.ActionButton">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:focusable">true</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+    <style name="CustomBigActionButtonImage">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:padding">4dp</item>
+    </style>
+    <style name="CustomBigActionButtonText">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textAppearance">?android:attr/actionMenuTextAppearance</item>
+        <item name="android:textColor">?android:attr/actionMenuTextColor</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">none</item>
+        <item name="android:padding">4dp</item>
+    </style>
+			
 
 </resources>

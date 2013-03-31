@@ -13,22 +13,22 @@ import android.media.MediaPlayer;
 
 public class Clip {
 	String name = null;
-	int begin, end, length;
+	int begin, end, duration;
 	
 	//needs an array of attributes/filters/modifications?
 	public Clip()
 	{
 		name = null;
-		length = 0;
+		duration = 0;
 		begin = 0;
-		end = length;
+		end = duration;
 	}
 	public Clip(String cName)
 	{
 		name = cName;
-		length = 0;
+		duration = 0;
 		begin = 0;
-		end = length;
+		end = duration;
 	}
 	//Getters and setters for the fields
 	public String getClip()
@@ -56,7 +56,7 @@ public class Clip {
 		end = stop;
 	}
 	//Extra length method using mediaplayer which oddly uses an integer for the duration
-	public void getLength() throws IOException
+	public void getDuration() throws IOException
 	{
 		MediaPlayer mp = new MediaPlayer();
 		FileInputStream fs;
@@ -65,15 +65,15 @@ public class Clip {
 		fd = fs.getFD();
 		mp.setDataSource(fd);
 		mp.prepare();
-		int len = mp.getDuration();
+		int length = mp.getDuration();
 		mp.release();
-		length = len;
+		duration = length;
 	}
 	//calculates the total playing length of the clip as an int, keeping in line with getDuration
 	public int calcLength()
 	{
-		length = end-begin;
-		return length;
+		duration = end-begin;
+		return duration;
 	}
 	/*//returns the clips path and save location as a string
 	public String getClipPath()

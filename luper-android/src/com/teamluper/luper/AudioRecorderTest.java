@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
@@ -42,6 +43,7 @@ import java.io.IOException;
 import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,7 +51,7 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.UiThread;
 
-//@EActivity
+@EActivity
 public class AudioRecorderTest extends SherlockActivity
 {
     private static final String LOG_TAG = "AudioRecorderTest";
@@ -63,6 +65,8 @@ public class AudioRecorderTest extends SherlockActivity
     
     private Button mBrowseButton = null;
     private TextView fileSelected;
+    
+    private AudioManager audioManager;
 
     private int MediaFetchResultCode = 11;
 
@@ -128,11 +132,12 @@ public class AudioRecorderTest extends SherlockActivity
         mRecorder.release();
         Clip newClip = new Clip(mFileName); 
         try {
-			newClip.getLength();
+			newClip.getDuration();
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-        alertDialog("Clip Created! It's location and name is: " + newClip.name + "   And The clip's length is: " + newClip.length);
+        alertDialog("Clip Created! It's location and name is: " + newClip.name + "   And The clip's length is: " + newClip.duration);
+        fileSelected.setText(mFileName);
         mRecorder = null;
     }
 
@@ -222,6 +227,13 @@ public class AudioRecorderTest extends SherlockActivity
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
+        LinearLayout ll3 = new LinearLayout(this);
+        SeekBar volBar = new SeekBar(this);
+        ll3.addView(volBar,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        0));
         base.addView(ll,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -229,11 +241,16 @@ public class AudioRecorderTest extends SherlockActivity
                         0));
         base.addView(ll2,
                 new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
+        base.addView(ll3,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        0));
+        
         setContentView(base);
-        //setContentView(ll2);
         
         fileSelected.setHint("select a file");
         
@@ -245,10 +262,24 @@ public class AudioRecorderTest extends SherlockActivity
         	   }
         	  });
         mBrowseButton.setText("Browse");
+        
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        int curVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        volBar.setMax(maxVolume);
+        volBar.setProgress(curVolume);
+        volBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+			public void onStopTrackingTouch(SeekBar seekBar) {}
+			public void onStartTrackingTouch(SeekBar seekBar) {}
+			
+			public void onProgressChanged(SeekBar seekBar, int progress,
+					boolean fromUser) {
+				audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
+			}
+		});
     }
     
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    	  // TODO Auto-generated method stub
     	  super.onActivityResult(requestCode, resultCode, data);
     	  if (requestCode == MediaFetchResultCode) {
     	   if (resultCode == RESULT_OK) {
@@ -256,7 +287,7 @@ public class AudioRecorderTest extends SherlockActivity
     	    File file = new File(mFileName);    
     	    fileSelected.setText(file.getName());
     	    Toast.makeText(getApplicationContext(),
-    	      "U have selected:" + file.getName(), Toast.LENGTH_LONG).show();
+    	      "You have selected:" + file.getName(), Toast.LENGTH_LONG).show();
     	   }
     	  }
     	 }
@@ -274,7 +305,7 @@ public class AudioRecorderTest extends SherlockActivity
             mPlayer = null;
         }
     }
-    //@UiThread
+    @UiThread
     void alertDialog(String message) {
       new AlertDialog.Builder(this)
       .setCancelable(false)
