@@ -1,5 +1,8 @@
 package com.teamluper.luper;
 
+// TODO: generalize this to all database tables, and do something more clever with the cursors.
+// TODO: instead of selection by id, use composite key of id and ownerUserId
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,59 +28,45 @@ public class DataSourceSequences {
   public void close() {
     dbHelper.close();
   }
-  
-  // TODO adapt the following code to our needs
 
   public Sequence createSequence(String title) {
-    /*ContentValues values = new ContentValues();
-    values.put(MySQLiteHelper.COLUMN_COMMENT, comment);
-    long insertId = database.insert(MySQLiteHelper.TABLE_COMMENTS, null,
-        values);
-    Cursor cursor = database.query(MySQLiteHelper.TABLE_COMMENTS,
-        allColumns, MySQLiteHelper.COLUMN_ID + " = " + insertId, null,
-        null, null, null);
+    ContentValues values = new ContentValues();
+    values.put("title", title);
+    long insertId = database.insert("Sequences", null, values);
+    Cursor cursor = database.query("Sequences", null,
+        "_id = " + insertId, null, null, null, null);
     cursor.moveToFirst();
-    Comment newComment = cursorToComment(cursor);
+    Sequence newSequence = cursorToSequence(cursor);
     cursor.close();
-    return newComment;
-    */
-    return null;
+    return newSequence;
   }
 
   public void deleteSequence(Sequence sequence) {
-    /*
-    long id = comment.getId();
+    long id = sequence.getId();
     System.out.println("Comment deleted with id: " + id);
-    database.delete(MySQLiteHelper.TABLE_COMMENTS, MySQLiteHelper.COLUMN_ID
-        + " = " + id, null);
-    */
+    database.delete("Sequences", "_id = " + id, null);
   }
 
-  /*
-  public List<Comment> getAllComments() {
-    List<Comment> comments = new ArrayList<Comment>();
+  public List<Sequence> getAllSequences() {
+    List<Sequence> sequences = new ArrayList<Sequence>();
 
-    Cursor cursor = database.query(MySQLiteHelper.TABLE_COMMENTS,
-        allColumns, null, null, null, null, null);
-
+    Cursor cursor = database.query("Sequences", null, null,
+        null, null, null, null);
     cursor.moveToFirst();
     while (!cursor.isAfterLast()) {
-      Comment comment = cursorToComment(cursor);
-      comments.add(comment);
+      Sequence sequence = cursorToSequence(cursor);
+      sequences.add(sequence);
       cursor.moveToNext();
     }
     // Make sure to close the cursor
     cursor.close();
-    return comments;
+    return sequences;
   }
-  */
 
-  /*
-  private Comment cursorToComment(Cursor cursor) {
-    Comment comment = new Comment();
-    comment.setId(cursor.getLong(0));
-    comment.setComment(cursor.getString(1));
-    return comment;
+  private Sequence cursorToSequence(Cursor cursor) {
+    Sequence sequence = new Sequence();
+    sequence.setId(cursor.getLong(0));
+    sequence.setTitle(cursor.getString(1));
+    return sequence;
   }
-  */
 }
