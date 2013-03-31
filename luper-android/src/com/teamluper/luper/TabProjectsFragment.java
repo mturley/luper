@@ -21,6 +21,7 @@ public class TabProjectsFragment extends Fragment {
     if(vg == null) return null;
     
     LuperApp app = (LuperApp) getActivity();
+
     View view = infl.inflate(R.layout.tab_projects_layout, vg, false);
 
     List<Sequence> allSequences = app.dataSource.getAllSequences();

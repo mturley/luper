@@ -37,4 +37,8 @@ public class LuperSQLiteHelper extends SQLiteOpenHelper {
     db.execSQL(sql);
     onCreate(db);
   }
+  
+  public int getVersion() {
+    return DATABASE_VERSION;
+  }
 }

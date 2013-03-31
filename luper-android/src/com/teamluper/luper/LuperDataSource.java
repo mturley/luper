@@ -11,14 +11,20 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class LuperDataSource {
   // Database fields
   private SQLiteDatabase database;
   private LuperSQLiteHelper dbHelper;
+  private long activeUserID; // TODO change this on register / login
 
   public LuperDataSource(Context context) {
+    this(context, -1);
+  }
+  public LuperDataSource(Context context, long userID) {
     dbHelper = new LuperSQLiteHelper(context);
+    activeUserID = userID;
   }
 
   public void open() throws SQLException {
@@ -30,6 +36,7 @@ public class LuperDataSource {
   }
 
   public Sequence createSequence(String title) {
+    if(title == "") title = "Untitled";
     ContentValues values = new ContentValues();
     values.put("title", title);
     long insertId = database.insert("Sequences", null, values);
@@ -63,14 +70,22 @@ public class LuperDataSource {
     return sequences;
   }
   
-  public void dropAllData() {
-    dbHelper.onUpgrade(database, 0, 1);
-  }
-
   private Sequence cursorToSequence(Cursor cursor) {
-    Sequence sequence = new Sequence();
-    sequence.setId(cursor.getLong(0));
-    sequence.setTitle(cursor.getString(1));
+    Sequence sequence = new Sequence(this, false);
+    sequence.setId(cursor.getLong(cursor.getColumnIndex("_id")));
+    sequence.setOwnerUserID(cursor.getLong(cursor.getColumnIndex("ownerUserID")));
+    sequence.setTitle(cursor.getString(cursor.getColumnIndex("title")));
+    sequence.setSharingLevel(cursor.getInt(cursor.getColumnIndex("sharingLevel")));
+    sequence.setPlaybackOptions(cursor.getString(cursor.getColumnIndex("playbackOptions")));
+    sequence.setDirty(cursor.getInt(cursor.getColumnIndex("isDirty")) == 1);
+    sequence.setAutoSaveEnabled(true);
     return sequence;
   }
+  
+  // PROCEED WITH CAUTION, THIS DOES EXACTLY WHAT IT SOUNDS LIKE
+  public void dropAllData() {
+    // forces a drop and recreate of all tables
+    dbHelper.onUpgrade(database, 0, dbHelper.getVersion());
+  }
+
 }
