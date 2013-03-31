@@ -1,4 +1,4 @@
-create table foo (
+create table Sequences (
   _id int primary key autoincrement,
-  comment text not null
+  title text not null
 );
