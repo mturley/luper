@@ -42,6 +42,7 @@ import java.io.IOException;
 import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -223,6 +224,13 @@ public class AudioRecorderTest extends SherlockActivity
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
+        LinearLayout ll3 = new LinearLayout(this);
+        SeekBar volBar = new SeekBar(this);
+        ll3.addView(volBar,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        0));
         base.addView(ll,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -230,11 +238,16 @@ public class AudioRecorderTest extends SherlockActivity
                         0));
         base.addView(ll2,
                 new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
+        base.addView(ll3,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        0));
+        
         setContentView(base);
-        //setContentView(ll2);
         
         fileSelected.setHint("select a file");
         
@@ -257,7 +270,7 @@ public class AudioRecorderTest extends SherlockActivity
     	    File file = new File(mFileName);    
     	    fileSelected.setText(file.getName());
     	    Toast.makeText(getApplicationContext(),
-    	      "U have selected:" + file.getName(), Toast.LENGTH_LONG).show();
+    	      "You have selected:" + file.getName(), Toast.LENGTH_LONG).show();
     	   }
     	  }
     	 }
