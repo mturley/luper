@@ -106,7 +106,7 @@ public class TrackView extends ViewGroup{
         int bottom = getHeight() - 1;
 
       /*  switch (mDrawStyle) {
-            case UNCLICKED:
+            case CLICKED:
                 mPaint.setStrokeWidth(mDefStrokeWidth);
                 c.drawRect(100, 100, right, bottom, mPaint);
                 break;

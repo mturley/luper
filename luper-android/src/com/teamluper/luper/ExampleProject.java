@@ -50,7 +50,7 @@ public class ExampleProject extends Activity {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        CCV = new ColorChipView(this);
+        CCV = new ColorChipView(this, Color.BLUE);
         setContentView(CCV);
         
         
@@ -76,11 +76,10 @@ public class ExampleProject extends Activity {
 
 	    public ProjectView(Context context) {
 	      super(context);
-	      chip = new ColorChipView(context);
+	      chip = new ColorChipView(context, Integer.parseInt("CCCCCC",16));
 	      chip.setDrawStyle(1);
 	      chip.setLayoutParams(new LayoutParams(500, 500));
-	      this.invalidate();
-	      
+	      this.invalidate();    
 	      
 	        
 //	      int color = Color.BLUE; 
@@ -94,18 +93,23 @@ public class ExampleProject extends Activity {
 //	      cPaint.setStrokeWidth(3);
 
 	    }
+	    
+	    
+	    private OnClickListener onClickListener = new OnClickListener() {
+		    @Override
+		    public void onClick(final View v) {
+		    	(chip.mPaint).setColor(Integer.parseInt("ffffff",16));
+		    }
+		};
 
 	    @Override
-	    protected void onDraw(Canvas canvas) {
+	    protected void onDraw(final Canvas canvas) {
 	      super.onDraw(canvas);
 	      chip.onDraw(canvas);
-	      ;
-	    }
+	      chip.setOnClickListener(onClickListener);
 	  }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
+	    
+	    
+	}    
 
 }

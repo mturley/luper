@@ -49,7 +49,7 @@ public class ColorChipView extends View {
 
     private int mDrawStyle = UNCLICKED;
     private float mDefStrokeWidth;
-    private Paint mPaint;
+    public Paint mPaint;
 
     private static final int DEF_BORDER_WIDTH = 4;
 
@@ -57,9 +57,10 @@ public class ColorChipView extends View {
 
     int mColor;
 
-    public ColorChipView(Context context) {
+    public ColorChipView(Context context, int color) {
         super(context);
     	System.out.println("ON MAKE CCV");
+    	mColor = color;
         init();
     }
 
@@ -90,6 +91,7 @@ public class ColorChipView extends View {
         }
     }
 
+
     public void setColor(int color) {
         mColor = color;
         invalidate();
@@ -109,7 +111,7 @@ public class ColorChipView extends View {
     	super.onDraw(c);
         int right = getWidth() - 1;
         int bottom = getHeight() - 1;
-        mPaint.setColor(Color.BLUE);
+        //mPaint.setColor(Color.BLUE);
 
         switch (mDrawStyle) {
             case UNCLICKED:
