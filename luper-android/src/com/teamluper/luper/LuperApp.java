@@ -11,6 +11,7 @@ package com.teamluper.luper;
 
 // imports from the core android API
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import android.os.Environment;
@@ -24,6 +25,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -79,6 +81,29 @@ public class LuperApp extends SherlockFragmentActivity {
     dataSource = new LuperDataSource(this);
     dataSource.open();
     
+    // TEMPORARY: testing the readability of the database source file
+    /*
+    File dbFile = getDatabasePath("luperlocal.db");
+    String dbFilePath = dbFile.getAbsolutePath();
+    Log.i("SQLITE DATABASE PATH: ", dbFilePath);
+    String rawDatabase = "failed";
+    try {
+      java.io.InputStream in = new java.io.FileInputStream(dbFilePath);
+      java.io.OutputStream out = new java.io.FileOutputStream(Environment.getExternalStorageDirectory()+"/LuperApp/sqlite_backup.db");
+      byte[] buffer = new byte[1024];
+      int length;
+      while ((length = in.read(buffer))>0) {
+        out.write(buffer, 0, length);
+      }
+      //Close the streams
+      out.flush();
+      out.close();
+      in.close();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    Log.i("backup",Environment.getExternalStorageDirectory()+"/LuperApp/sqlite_backup.db");
+    */
     
     final ActionBar bar = getSupportActionBar();
     bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS); // Gives us Tabs!
