@@ -65,7 +65,7 @@ public class TrackView extends ViewGroup{
 
     private void init() {
         mPaint = new Paint();
-        mDefStrokeWidth = mPaint.getStrokeWidth();
+       // mDefStrokeWidth = mPaint.getStrokeWidth();
         mPaint.setStyle(Style.FILL_AND_STROKE);
     }
 
@@ -74,7 +74,7 @@ public class TrackView extends ViewGroup{
         if (style != CLICKED && style != UNCLICKED) {
             return;
         }
-        mDrawStyle = style;
+        //mDrawStyle = style;
         invalidate();
     }
 
@@ -105,7 +105,7 @@ public class TrackView extends ViewGroup{
         int right = getWidth() - 1;
         int bottom = getHeight() - 1;
 
-        switch (mDrawStyle) {
+      /*  switch (mDrawStyle) {
             case UNCLICKED:
                 mPaint.setStrokeWidth(mDefStrokeWidth);
                 c.drawRect(100, 100, right, bottom, mPaint);
@@ -139,7 +139,7 @@ public class TrackView extends ViewGroup{
                 lines [ptr++] = bottom;
                 c.drawLines(lines, mPaint);
                 break;
-        }
+        }*/
     }
 
 	@Override

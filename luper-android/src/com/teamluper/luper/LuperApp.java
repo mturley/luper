@@ -229,6 +229,12 @@ public class LuperApp extends SherlockFragmentActivity {
 		  startActivity(intent);
   }
   
+  @Background
+  public void start_testloop(View view) {
+		  Intent intent = new Intent(this, LoopTest.class);
+		  startActivity(intent);
+  }
+  
   
   // this will be removed too, it's checking the google account that the
   // device's user is already logged in with.  We'll likely ditch this in favor

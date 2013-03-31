@@ -41,17 +41,93 @@ import com.teamluper.luper.AudioRecorderTest.PlayButton;
 import com.teamluper.luper.AudioRecorderTest.RecordButton;
 
 @SuppressLint("WrongCall")
-public class ExampleProject extends Activity {
+public class LoopTest extends Activity {
 	ArrayList<Clip> cliplist = new ArrayList<Clip>();
 	ColorChipView CCV;
 	
-	
+	private OnClickListener onClickListener = new OnClickListener() {
+	    @Override
+	    public void onClick(final View v) {
+	    	MediaPlayer mp2;
+	        mp2 = MediaPlayer.create(getApplicationContext(), R.raw.button10);
+	        mp2.setLooping(true);
+	        try {
+				mp2.prepare();
+			} catch (IllegalStateException e) {
+				System.out.println("Something fuqed up");
+				e.printStackTrace();
+			} catch (IOException e) {
+				System.out.println("Something fuqed up");
+				e.printStackTrace();
+			}
+	        mp2.start();
+	    }
+	};
+    
 	@Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         CCV = new ColorChipView(this);
         setContentView(CCV);
+        
+        TextView pText = new TextView(this);
+        pText.setTextColor(0xFF000000);
+        pText.setGravity(Gravity.CENTER_HORIZONTAL);
+        pText.setTextSize(20f);
+        pText.setMaxHeight(200);
+        pText.setText("\nThis is our dummy Project. For now, it's pretty boring. But soon it will be loaded with bells, whistles, gizmos, and loops, naturally.\n");
+
+        
+        TextView bottomText = new TextView(this);
+        bottomText.setTextColor(0xFF000000);
+        bottomText.setGravity(Gravity.BOTTOM);
+        bottomText.setTextSize(20f);
+        bottomText.setGravity(300);
+        bottomText.setMaxHeight(100);
+        bottomText.setText("Bottom  shtuff");
+        
+        Button ply = new Button(this);
+        ply.setOnClickListener(onClickListener);
+        
+        //creating a random layout
+        RelativeLayout layout = new RelativeLayout(this);
+        
+        //setting positions of text
+        RelativeLayout.LayoutParams params0 = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        params0.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
+        pText.setLayoutParams(params0);
+        layout.addView(pText);
+        
+        RelativeLayout.LayoutParams params1 = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        params1.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
+        bottomText.setLayoutParams(params1);
+        layout.addView(bottomText);
+
+        ply.setLayoutParams(params1);
+        layout.addView(ply);
+        
+        setContentView(layout);
+        
+        MediaPlayer mp;
+        mp = MediaPlayer.create(getApplicationContext(), R.raw.beep24);
+        mp.setLooping(true);
+        try {
+			mp.prepare();
+		} catch (IllegalStateException e) {
+			System.out.println("Something fuqed up");
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("Something fuqed up");
+			e.printStackTrace();
+		}
+        mp.start();
+        
+        
+        
+        
+        
+        
         
         
         // this LinearLayout is used in place of an XML file.
