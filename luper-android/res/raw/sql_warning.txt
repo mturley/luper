@@ -1,0 +1,17 @@
+WARNING: DO NOT EXECUTE
+
+The two SQL files in this directory:
+
+  create_sqlite_tables.sql and
+  drop_sqlite_tables.sql
+
+are DESTRUCTIVE if executed as SQL queries.
+Both scripts will destroy all tables matching the names used in Luper,
+and then after that the create_ script will create new empty tables.
+
+These scripts are to be accessed by LuperSQLiteHelper.java in the
+onCreate and onUpgrade methods, respectively.  If executed outside
+of this context, they will DELETE ALL THE DATA IN THE DATABASE.
+
+Thanks,
+Mike
