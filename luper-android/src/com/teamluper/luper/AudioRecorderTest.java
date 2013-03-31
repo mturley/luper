@@ -132,11 +132,11 @@ public class AudioRecorderTest extends SherlockActivity
         mRecorder.release();
         Clip newClip = new Clip(mFileName); 
         try {
-			newClip.getLength();
+			newClip.getDuration();
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-        alertDialog("Clip Created! It's location and name is: " + newClip.name + "   And The clip's length is: " + newClip.length);
+        alertDialog("Clip Created! It's location and name is: " + newClip.name + "   And The clip's length is: " + newClip.duration);
         fileSelected.setText(mFileName);
         mRecorder = null;
     }
@@ -280,7 +280,6 @@ public class AudioRecorderTest extends SherlockActivity
     }
     
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    	  // TODO Auto-generated method stub
     	  super.onActivityResult(requestCode, resultCode, data);
     	  if (requestCode == MediaFetchResultCode) {
     	   if (resultCode == RESULT_OK) {

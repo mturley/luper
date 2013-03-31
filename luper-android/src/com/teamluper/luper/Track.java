@@ -11,10 +11,12 @@ import java.util.ArrayList;
 public class Track {
 	String ID = null;
 	ArrayList <Clip>clips = new ArrayList<Clip>();
+	long duration;
 	//volume? an int?
 	
 	public Track(){
 		ID = null;
+		duration = 0;
 		//clips?
 	}
 	
@@ -32,7 +34,17 @@ public class Track {
 	public ArrayList<Clip> getClips(){
 		return this.clips;
 	}
-	
+	//gets the track length by calculating the length of all the clips it contains
+	public void getTrackLength()
+	{
+		long sum = 0;
+		for(Clip c:clips)
+		{
+			
+			sum+=c.duration;
+		}
+		duration = sum;
+	}
 	//a method that will allow you to add a clip to the track
 	public void putClip(int start, Clip clip){
 //		not sure how to do this, were going to need to find 
