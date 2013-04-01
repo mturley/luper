@@ -89,9 +89,9 @@ public class ExampleProject extends SherlockActivity {
         base.setOrientation(LinearLayout.VERTICAL);
         RelativeLayout track1 = new RelativeLayout(this);
         RelativeLayout track2 = new RelativeLayout(this);
+        
         track1.setPadding(20,20,20,10);
         track2.setPadding(20,20,20,10);
-
         
         //ColorChipView chip1 = new ColorChipView(this, clip1);
         //ColorChipView chip2 = new ColorChipView(this, clip2);
@@ -104,11 +104,17 @@ public class ExampleProject extends SherlockActivity {
         track2.addView(chip2);
         
         TextView track1_text = new TextView(this);
-        track1_text.setText("Clip 1 length: " +clip1.duration);
+        track1_text.setText(" Clip 1 \n Length: " +clip1.duration+ " ms"); //FIX ME
         track1.addView(track1_text);
         TextView track2_text = new TextView(this);
-        track2_text.setText("Clip 2 length: " +clip2.duration);
+        track2_text.setText(" Clip 2 \n Length: " +clip2.duration+ " ms"); //FIX ME
         track2.addView(track2_text);
+        
+        TextView timelinetxt = new TextView(this);
+        timelinetxt.setText(" __|__________________|___________________|___________________|___________________|__________\n" +
+        		"     0                             250                             500                             750                             1000 ms");
+      
+        base.addView(timelinetxt);
         
         base.addView(track1,
                 new RelativeLayout.LayoutParams(
