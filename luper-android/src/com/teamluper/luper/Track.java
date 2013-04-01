@@ -41,12 +41,6 @@ public class Track {
 	  this.id = id;
 	}
 	
-	//SIZE
-	public int size()
-	{
-		return clips.size();
-	}
-	
 	public long getOwnerUserID() { return ownerUserID; }
 	public void setOwnerUserID(long ownerUserID) {
     this.ownerUserID = ownerUserID;
