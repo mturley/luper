@@ -68,8 +68,8 @@ public class LoopTest extends Activity {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        CCV = new ColorChipView(this, Color.BLUE);
-        setContentView(CCV);
+        //CCV = new ColorChipView(this, Color.BLUE); // FIXME BAD CALL, ColorChipView's constructor doesn't take a Color
+        //setContentView(CCV);
         
         TextView pText = new TextView(this);
         pText.setTextColor(0xFF000000);
@@ -152,9 +152,9 @@ public class LoopTest extends Activity {
 
 	    public ProjectView(Context context) {
 	      super(context);
-	      chip = new ColorChipView(context, Color.BLUE);
+	      /*chip = new ColorChipView(context, Color.BLUE); // FIXME BAD CALL, ColorChipView's constructor doesn't take a Color
 	      chip.setDrawStyle(1);
-	      chip.setLayoutParams(new LayoutParams(500, 500));
+	      chip.setLayoutParams(new LayoutParams(500, 500)); */
 	      this.invalidate();
 	      
 	      
@@ -174,7 +174,7 @@ public class LoopTest extends Activity {
 	    @Override
 	    protected void onDraw(Canvas canvas) {
 	      super.onDraw(canvas);
-	      chip.onDraw(canvas);
+	      //chip.onDraw(canvas);  // FIXME BAD CALL, should probably be .draw()
 	      ;
 	    }
 	  }
