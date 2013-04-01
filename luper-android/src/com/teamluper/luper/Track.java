@@ -3,47 +3,86 @@
 //adjustable at a track level as well. 
 //
 //Created by: Cam 3/30/13
+//Adapted by: Mike 4/1/13
 
 package com.teamluper.luper;
 
 import java.util.ArrayList;
 
-public class Track 
-{
-	String ID = null;
+public class Track {
+  // Mike's database field variables
+	private long id;
+	private long ownerUserID;
+	private long parentSequenceID;
+	private boolean isMuted;
+	private boolean isLocked;
+	private String playbackOptions;
+	private boolean isDirty; // dirty = contains unsynced changes
+	
+	// Mike's database access variables
+	private LuperDataSource dataSource;
+	private boolean autoSaveEnabled;
+	
+	// Cam's variables
 	ArrayList <Clip>clips = new ArrayList<Clip>();
 	String[] playBackList;
 	long duration;
-	//volume? an int?
+	// volume? an int?
 	
-	public Track()
-	{
-		ID = null;
-		duration = 0;
-		//clips?
+	// Mike's constructor
+	public Track(LuperDataSource dataSource, boolean autoSaveEnabled) {
+	  this.dataSource = dataSource;
+	  this.autoSaveEnabled = autoSaveEnabled;
+	}
+	// temporary constructor for compatability with other files
+	public Track() {
+	  this.dataSource = null;
+	  this.autoSaveEnabled = false;
 	}
 	
-	//do we need another constructor? are we going to be passing
-	//anything into the constructor?
-	
-	public String getID()
-	{
-		return this.ID;
+	// Mike's getters and setters for database abstraction
+	public long getId() { return id; }
+	public void setId(long id) {
+	  this.id = id;
 	}
 	
-	public void setID(String newID)
-	{
-		this.ID = newID;
+	public long getOwnerUserID() { return ownerUserID; }
+	public void setOwnerUserID(long ownerUserID) {
+    this.ownerUserID = ownerUserID;
 	}
-	
-	//SIZE
-	public int size()
-	{
-		return clips.size();
-	}
-	
-	public ArrayList<Clip> getClips()
-	{
+	public long getParentSequenceID() { return parentSequenceID; }
+  public void setParentSequenceID(long parentSequenceID) {
+    this.parentSequenceID = parentSequenceID;
+  }
+	public boolean isMuted() { return isMuted; }
+  public void setMuted(boolean isMuted) {
+    this.isMuted = isMuted;
+  }
+  public boolean isLocked() { return isLocked; }
+  public void setLocked(boolean isLocked) {
+    this.isLocked = isLocked;
+  }
+  public String getPlaybackOptions() { return playbackOptions; }
+  public void setPlaybackOptions(String playbackOptions) {
+    this.playbackOptions = playbackOptions;
+  }
+  public boolean isDirty() { return isDirty; }
+  public void setDirty(boolean isDirty) {
+    this.isDirty = isDirty;
+  }
+
+  public boolean isAutoSaveEnabled() { return autoSaveEnabled; }
+  public void setAutoSaveEnabled(boolean autoSaveEnabled) {
+    this.autoSaveEnabled = autoSaveEnabled;
+  }
+  
+  //SIZE
+  public int size()
+  {
+    return clips.size();
+  }
+
+  public ArrayList<Clip> getClips() {
 		return this.clips;
 	}
 	public void createPBList()
@@ -54,14 +93,14 @@ public class Track
 		}
 	}
 	//gets the track length by calculating the length of all the clips it contains
-	public void getTrackLength()
+	public long getTrackLength()
 	{
 		long sum = 0;
 		for(Clip c:clips)
 		{
 			sum+=c.duration;
 		}
-		duration = sum;
+		return sum;
 	}
 	
 	//gets the clip at the end of the track
@@ -90,6 +129,10 @@ public class Track
 //		not sure how to do this, were going to need to find 
 //		out what the start time is then add the clip to the 
 //		array at the appropriate place
+	  
+	  // yeah, i think this is going to be straightforward but only once
+	  // i finish implementing everything else from the database -Mike
+	  
 		int i = 0;
 		for(Clip c : clips)
 		{
@@ -116,6 +159,7 @@ public class Track
 //	will be used to select a portion of the track, then duplicate
 //	that part 'howMany' times
 //  TIMES NEED TO BE FIXED - USE MIKE'S DUPLICATE
+	// i'm leaving this one on the back burner for now, for after beta -Mike
 	public void duplicate(int start, int end, int howMany)
 	{
 		ArrayList<Clip> clist = new ArrayList<Clip>();

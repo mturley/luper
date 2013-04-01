@@ -12,19 +12,46 @@ import java.io.File;
 import android.media.MediaPlayer;
 
 public class Clip {
+  // Mike's database field variables
+  private long id;
+  private long ownerUserID;
+  private long parentTrackID;
+  private long audioFileID;
+  private int startTime;
+  private int durationMS;
+  private int loopCount;
+  private boolean isLocked;
+  private String playbackOptions;
+  private boolean isDirty; // dirty = contains unsynced changes
+  
+  // Mike's database access variables
+  private LuperDataSource dataSource;
+  private boolean autoSaveEnabled;
+  
+  // Brad's variables
 	String name = null;
-	int begin, end, duration;
+	int begin, end, duration; // FIXME these will need to be removed and instead the above stuff used
 	
 	//needs an array of attributes/filters/modifications?
-	public Clip()
-	{
+	// yeah, eventually playbackOptions will be that -Mike
+	public Clip(LuperDataSource dataSource, boolean autoSaveEnabled) {
 		name = null;
-		duration = 0;
+		durationMS = 0;
 		begin = 0;
 		end = duration;
 	}
+	public Clip() {
+	  dataSource = null;
+	  autoSaveEnabled = false;
+	  name = null;
+	  duration = 0;
+	  begin = 0;
+	  end = duration;
+	}
 	public Clip(String cName)
 	{
+	  dataSource = null;
+	  autoSaveEnabled = false;
 		name = cName;
 		duration = 0;
 		begin = 0;

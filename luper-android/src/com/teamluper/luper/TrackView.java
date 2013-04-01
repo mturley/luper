@@ -39,7 +39,7 @@ import java.util.ArrayList;
  * according to the event's status.
  *
  */
-public class TrackView extends ViewGroup{
+public class TrackView extends ViewGroup {
 
 	//a tag for XML layouts, Manifest
     private static final String TAG = "TrackView";
