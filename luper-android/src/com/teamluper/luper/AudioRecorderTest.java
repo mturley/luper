@@ -91,6 +91,14 @@ public class AudioRecorderTest extends SherlockActivity
             stopPlaying();
         }
     }
+    
+    private void onPlayTrack(boolean start) {
+        if (start) {
+            startPlayingTrack();
+        } else {
+            stopPlayingTrack();
+        }
+    }
 
     private void startPlaying() {
     	
@@ -105,6 +113,23 @@ public class AudioRecorderTest extends SherlockActivity
     }
 
     private void stopPlaying() {
+        mPlayer.release();
+        mPlayer = null;
+    }
+    
+    private void startPlayingTrack() {
+    	
+        mPlayer = new MediaPlayer();
+        try {
+            mPlayer.setDataSource(mFileName);
+            mPlayer.prepare();
+            mPlayer.start();
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "prepare() failed1");
+        }
+    }
+
+    private void stopPlayingTrack() {
         mPlayer.release();
         mPlayer = null;
     }
@@ -197,17 +222,17 @@ public class AudioRecorderTest extends SherlockActivity
         }
     }
     class playTrackButton extends Button {
-        boolean mStartRecording = true;
+        boolean mStartPlayingTrack = true;
 
         OnClickListener clicker = new OnClickListener() {
             public void onClick(View v) {
-                onRecord(mStartRecording);
-                if (mStartRecording) {
+                onPlayTrack(mStartPlayingTrack);
+                if (mStartPlayingTrack) {
                     setText("Stop Track");
                 } else {
                     setText("Start Track");
                 }
-                mStartRecording = !mStartRecording;
+                mStartPlayingTrack = !mStartPlayingTrack;
             }
         };
 
