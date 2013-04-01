@@ -67,7 +67,7 @@ public class ExampleProject extends SherlockActivity {
         
         
         /* TESTS FUNCTIONALLITY OF THE TRACK VIEW RENDERING */
-        Clip clip1 = new Clip(); clip1.begin = 50; clip1.end = 100; clip1.length = 50;
+        Clip clip1 = new Clip(); clip1.begin = 50; clip1.end = 100; clip1.duration = 50;
         clips.add(clip1);
         TV = new TrackView(this, clips);
         setContentView(TV);
