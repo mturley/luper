@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/edit"
+    android:id="@+id/volume"
     android:clickable="true"
     android:background="@drawable/custom_action_bg"
     style="@style/CustomBigActionButton" >
     
     <ImageView
-        android:src="@drawable/edit"
+        android:src="@drawable/volume_control"
         style="@style/CustomBigActionButtonImage" />
     <TextView
-        android:text="@string/edit"
+        android:text="@string/volume"
         style="@style/CustomBigActionButtonText" />
 
 </LinearLayout>

@@ -100,7 +100,7 @@ public class ExampleProject extends SherlockActivity {
 	    // because one of the action items is a custom view,
 	    // we need the next few lines to force it to use onOptionsItemSelected
 	    // when it's clicked.
-	    final MenuItem item = menu.findItem(R.id.edit);
+	    final MenuItem item = menu.findItem(R.id.add);
 	    item.getActionView().setOnClickListener(new OnClickListener() {
 	      @Override
 	      public void onClick(View v) {
