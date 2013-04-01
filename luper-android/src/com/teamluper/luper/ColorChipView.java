@@ -23,11 +23,11 @@ import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
+
 import java.util.Random;
-
-
-
 
 /**
  * A custom view for a color chip for an event that can be drawn differently
@@ -46,10 +46,11 @@ public class ColorChipView extends View {
     public static final int CLICKED = 0;
     public static final int UNCLICKED = 1;
     Random r = new Random();
-
+    
+    Clip associated;
     private int mDrawStyle = UNCLICKED;
     private float mDefStrokeWidth;
-    public Paint mPaint;
+    private Paint mPaint;
 
     private static final int DEF_BORDER_WIDTH = 4;
 
@@ -57,10 +58,9 @@ public class ColorChipView extends View {
 
     int mColor;
 
-    public ColorChipView(Context context, int color) {
+    public ColorChipView(Context context) {
         super(context);
     	System.out.println("ON MAKE CCV");
-    	mColor = color;
         init();
     }
 
@@ -68,11 +68,18 @@ public class ColorChipView extends View {
         super(context, attrs);
         init();
     }
-
+    
+    public ColorChipView(Context context, Clip c) {
+        super(context);
+        associated = c;
+        init();
+    }
     private void init() {
         mPaint = new Paint();
         mDefStrokeWidth = mPaint.getStrokeWidth();
         mPaint.setStyle(Style.FILL_AND_STROKE);
+        
+        this.setLayoutParams(new LayoutParams(associated.length, getHeight()));
     }
 
 
@@ -91,12 +98,12 @@ public class ColorChipView extends View {
         }
     }
 
-
     public void setColor(int color) {
         mColor = color;
         invalidate();
     }
     
+	
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec){
     	super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
@@ -104,27 +111,29 @@ public class ColorChipView extends View {
     public boolean onKeyDown (int keyCode, KeyEvent event){
     	return super.onKeyDown(keyCode,event);
     }
-
+    
     @Override
     public void onDraw(Canvas c) {
     	System.out.println("ON DRAW CCV");
     	super.onDraw(c);
-        int right = getWidth() - 1;
-        int bottom = getHeight() - 1;
-        //mPaint.setColor(Color.BLUE);
+    	int left = associated.begin;
+		int top = 10;
+        int right = associated.end;
+        int bottom = getHeight();
+        mPaint.setColor(Color.BLUE);
 
         switch (mDrawStyle) {
             case UNCLICKED:
                 mPaint.setStrokeWidth(mDefStrokeWidth);
-                c.drawRect(100, 100, right, bottom, mPaint);
+                c.drawRect(left, top, right, bottom, mPaint);
                 break;
             case CLICKED:
                 if (mBorderWidth <= 0) {
                     return;
                 }
                 int halfBorderWidth = mBorderWidth / 2;
-                int top = halfBorderWidth;
-                int left = halfBorderWidth;
+                top = halfBorderWidth;
+                left = halfBorderWidth;
                 mPaint.setStrokeWidth(mBorderWidth);
 
                 float[] lines = new float[16];

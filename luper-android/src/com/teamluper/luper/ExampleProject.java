@@ -1,6 +1,8 @@
 package com.teamluper.luper;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -12,16 +14,15 @@ import android.graphics.Path.Direction;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
@@ -35,81 +36,52 @@ import android.media.MediaPlayer;
 import java.util.*;
 import java.io.IOException;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.googlecode.androidannotations.annotations.EFragment;
 import com.teamluper.luper.AudioRecorderTest.PlayButton;
 import com.teamluper.luper.AudioRecorderTest.RecordButton;
+import com.teamluper.luper.CanvasTest.GraphicsView;
 
-@SuppressLint("WrongCall")
-public class ExampleProject extends Activity {
-	ArrayList<Clip> cliplist = new ArrayList<Clip>();
-	ColorChipView CCV;
+
+public class ExampleProject extends SherlockActivity {
+	ActionBar AB;
+	//ProjectFragment PF;
 	
+	ColorChipView CCV;
+	ArrayList<Clip> clips = new ArrayList<Clip>();
+	TrackView TV;
 	
 	@Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        CCV = new ColorChipView(this, Color.BLUE);
-        setContentView(CCV);
+        AB = getSupportActionBar();
         
         
-        // this LinearLayout is used in place of an XML file.
-        // Android lets you do your layouts either programattically like this,
-        // or with an XML file.
-//        ll = new LinearLayout(this);
-//        pText = new TextView(this);
-//        pText.setTextColor(0xFF000000);
-//        pText.setGravity(Gravity.CENTER_HORIZONTAL);
-//        pText.setTextSize(20f);
-//        pText.setText("\nThis is our dummy Project. For now, it's pretty boring. But soon it will be loaded with bells, whistles, gizmos, and loops, naturally.\n");
-
-//        ProjectView PV = new ProjectView(this);
-//        layout.addView(PV);
-
-         
+        /* TESTS FUNCTIONALITY OF THE COLOR CHIP RENDERING*/
+        
+//        CCV = new ColorChipView(this,clip1);
+//        setContentView(CCV);
+        
+        
+        
+        /* TESTS FUNCTIONALLITY OF THE TRACK VIEW RENDERING */
+        Clip clip1 = new Clip(); clip1.begin = 50; clip1.end = 100; clip1.length = 50;
+        clips.add(clip1);
+        TV = new TrackView(this, clips);
+        setContentView(TV);
+		
+        
+        /*
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        PF = new ProjectFragment();
+        fragmentTransaction.add(PF, "example_tag");
+        fragmentTransaction.commit();
+        */
+        
+       
+   
     }
-	static public class ProjectView extends View {
-//		ArrayList<ColorChipView> chipList = new ArrayList<ColorChipView>();
-		ColorChipView chip;
-		protected Canvas canvas;
-
-	    public ProjectView(Context context) {
-	      super(context);
-	      chip = new ColorChipView(context, Integer.parseInt("CCCCCC",16));
-	      chip.setDrawStyle(1);
-	      chip.setLayoutParams(new LayoutParams(500, 500));
-	      this.invalidate();    
-	      
-	        
-//	      int color = Color.BLUE; 
-
-//	      circle = new Path();
-//	      circle.addCircle(150, 150, 100, Direction.CW);
-
-//	      cPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-//	      cPaint.setStyle(Paint.Style.STROKE);
-//	      cPaint.setColor(Color.LTGRAY);
-//	      cPaint.setStrokeWidth(3);
-
-	    }
-	    
-	    
-	    private OnClickListener onClickListener = new OnClickListener() {
-		    @Override
-		    public void onClick(final View v) {
-		    	(chip.mPaint).setColor(Integer.parseInt("ffffff",16));
-		    }
-		};
-
-	    @Override
-	    protected void onDraw(final Canvas canvas) {
-	      super.onDraw(canvas);
-	      chip.onDraw(canvas);
-	      chip.setOnClickListener(onClickListener);
-	  }
-	    
-	    
-	}    
-
 }
