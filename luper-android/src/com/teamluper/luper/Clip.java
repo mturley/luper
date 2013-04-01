@@ -36,7 +36,7 @@ public class Clip {
 	// yeah, eventually playbackOptions will be that -Mike
 	public Clip(LuperDataSource dataSource, boolean autoSaveEnabled) {
 		name = null;
-		durationMS = 0;
+		setDurationMS(0);
 		begin = 0;
 		end = duration;
 	}
@@ -102,6 +102,66 @@ public class Clip {
 			duration = 0;
 		}
 		return duration;
+	}
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+	public long getOwnerUserID() {
+		return ownerUserID;
+	}
+	public void setOwnerUserID(long ownerUserID) {
+		this.ownerUserID = ownerUserID;
+	}
+	public long getParentTrackID() {
+		return parentTrackID;
+	}
+	public void setParentTrackID(long parentTrackID) {
+		this.parentTrackID = parentTrackID;
+	}
+	public long getAudioFileID() {
+		return audioFileID;
+	}
+	public void setAudioFileID(long audioFileID) {
+		this.audioFileID = audioFileID;
+	}
+	public int getStartTime() {
+		return startTime;
+	}
+	public void setStartTime(int startTime) {
+		this.startTime = startTime;
+	}
+	public int getDurationMS() {
+		return durationMS;
+	}
+	public void setDurationMS(int durationMS) {
+		this.durationMS = durationMS;
+	}
+	public int getLoopCount() {
+		return loopCount;
+	}
+	public void setLoopCount(int loopCount) {
+		this.loopCount = loopCount;
+	}
+	public boolean isLocked() {
+		return isLocked;
+	}
+	public void setLocked(boolean isLocked) {
+		this.isLocked = isLocked;
+	}
+	public String getPlaybackOptions() {
+		return playbackOptions;
+	}
+	public void setPlaybackOptions(String playbackOptions) {
+		this.playbackOptions = playbackOptions;
+	}
+	public boolean isDirty() {
+		return isDirty;
+	}
+	public void setDirty(boolean isDirty) {
+		this.isDirty = isDirty;
 	}
 	//calculates the total playing length of the clip as an int, keeping in line with getDuration
 	public int calcLength()
