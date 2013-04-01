@@ -83,6 +83,31 @@ public class LuperDataSource {
     sequence.setAutoSaveEnabled(true);
     return sequence;
   }
+  private Track cursorToTrack(Cursor cursor) {
+	    Track track = new Track(this, false);
+	    track.setId(cursor.getLong(cursor.getColumnIndex("_id")));
+	    track.setOwnerUserID(cursor.getLong(cursor.getColumnIndex("ownerUserID")));
+	    track.setParentSequenceID(cursor.getLong(cursor.getColumnIndex("parentSequenceID")));
+	    track.setMuted(cursor.getInt(cursor.getColumnIndex("isMuted")) == 1);
+	    track.setMuted(cursor.getInt(cursor.getColumnIndex("isLocked")) == 1);
+	    track.setPlaybackOptions(cursor.getString(cursor.getColumnIndex("playbackOptions")));
+	    track.setDirty(cursor.getInt(cursor.getColumnIndex("isDirty")) == 1);
+	    track.setAutoSaveEnabled(true);
+	    return track;
+	  }
+  /*private Track cursorToClip(Cursor cursor) {
+	    Clip clip = new Clip(this, false);
+	    clip.setId(cursor.getLong(cursor.getColumnIndex("_id")));
+	    clip.setOwnerUserID(cursor.getLong(cursor.getColumnIndex("ownerUserID")));
+	    clip.setParentSequenceID(cursor.getLong(cursor.getColumnIndex("parentSequenceID")));
+	    clip.setMuted(cursor.getInt(cursor.getColumnIndex("isMuted")) == 1);
+	    clip.setMuted(cursor.getInt(cursor.getColumnIndex("isLocked")) == 1);
+	    clip.setPlaybackOptions(cursor.getString(cursor.getColumnIndex("playbackOptions")));
+	    clip.setDirty(cursor.getInt(cursor.getColumnIndex("isDirty")) == 1);
+	    clip.setAutoSaveEnabled(true);
+	    return clip;
+	  }*/
+  
   
   // PROCEED WITH CAUTION, THIS DOES EXACTLY WHAT IT SOUNDS LIKE
   public void dropAllData() {
