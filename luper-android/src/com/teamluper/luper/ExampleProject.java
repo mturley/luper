@@ -83,8 +83,8 @@ public class ExampleProject extends SherlockActivity {
 		
         LinearLayout base = new LinearLayout(this);
         base.setOrientation(LinearLayout.VERTICAL);
-        LinearLayout track1 = new LinearLayout(this);
-        LinearLayout track2 = new LinearLayout(this);
+        RelativeLayout track1 = new RelativeLayout(this);
+        RelativeLayout track2 = new RelativeLayout(this);
         
         //ColorChipView chip1 = new ColorChipView(this, clip1);
         //ColorChipView chip2 = new ColorChipView(this, clip2);
@@ -97,15 +97,13 @@ public class ExampleProject extends SherlockActivity {
         track2.addView(chip2);
         
         base.addView(track1,
-                new LinearLayout.LayoutParams(
+                new RelativeLayout.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        0));
+                        ViewGroup.LayoutParams.WRAP_CONTENT));
         base.addView(track2,
-                new LinearLayout.LayoutParams(
+                new RelativeLayout.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        0));
+                        ViewGroup.LayoutParams.WRAP_CONTENT));
         
         setContentView(base);
         
