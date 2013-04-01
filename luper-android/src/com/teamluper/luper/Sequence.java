@@ -1,14 +1,15 @@
 package com.teamluper.luper;
 
 public class Sequence {
+  // database field variables
   private long id;
   private long ownerUserID;
   private String title;
   private int sharingLevel;
   private String playbackOptions;
-    // TODO this should be deserialized JSON, not a String
-  private boolean isDirty;
+  private boolean isDirty; // dirty = contains unsynced changes
   
+  // database access variables
   private LuperDataSource dataSource;
   private boolean autoSaveEnabled;
   
@@ -17,12 +18,10 @@ public class Sequence {
     this.setAutoSaveEnabled(autoSaveEnabled);
   }
   
+  // getters and setters for everything, for custom onChange-style hooks
   public long getId() { return id; }
   public void setId(long id) {
     this.id = id;
-    //if(autoSaveEnabled) {
-      
-    //}
   }
   
   public long getOwnerUserID() { return ownerUserID; }
@@ -51,7 +50,6 @@ public class Sequence {
     this.autoSaveEnabled = autoSaveEnabled;
   }
 
-  // to be used by ArrayAdapters in ListViews?
   @Override
   public String toString() {
     return title;
