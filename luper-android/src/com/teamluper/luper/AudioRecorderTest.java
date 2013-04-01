@@ -67,6 +67,8 @@ public class AudioRecorderTest extends SherlockActivity
     private Button mBrowseButton = null;
     private TextView fileSelected;
     
+    private playTrackButton mPlayTrackButton = null;
+    
     private AudioManager audioManager;
 
     private int MediaFetchResultCode = 11;
@@ -194,6 +196,27 @@ public class AudioRecorderTest extends SherlockActivity
             setOnClickListener(clicker);
         }
     }
+    class playTrackButton extends Button {
+        boolean mStartRecording = true;
+
+        OnClickListener clicker = new OnClickListener() {
+            public void onClick(View v) {
+                onRecord(mStartRecording);
+                if (mStartRecording) {
+                    setText("Stop Track");
+                } else {
+                    setText("Start Track");
+                }
+                mStartRecording = !mStartRecording;
+            }
+        };
+
+        public playTrackButton(Context ctx) {
+            super(ctx);
+            setText("Start Track");
+            setOnClickListener(clicker);
+        }
+    }
 
     public AudioRecorderTest() {
         mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/LuperApp/";
@@ -238,6 +261,7 @@ public class AudioRecorderTest extends SherlockActivity
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
+
         
         //ll2 holds the textbox to display current file to play
         LinearLayout ll2 = new LinearLayout(this);
@@ -259,12 +283,21 @@ public class AudioRecorderTest extends SherlockActivity
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
+        //ll4 holds the textbox to display current file to play
+        //create and add the play track button
+        mPlayTrackButton = new playTrackButton(this);
+        ll.addView(mPlayTrackButton,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        0));
         //testing...
-//        ll4.addView(mBrowseButton,
-//                new LinearLayout.LayoutParams(
-//                        ViewGroup.LayoutParams.WRAP_CONTENT,
-//                        ViewGroup.LayoutParams.WRAP_CONTENT,
-//                        0));
+        /*LinearLayout ll4 = new LinearLayout(this);
+        ll4.addView(mBrowseButton,
+                new LinearLayout.LayoutParams(
+                       ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        0));*/
         
         //add ll to base
         base.addView(ll,
@@ -284,6 +317,7 @@ public class AudioRecorderTest extends SherlockActivity
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
+
         //testing...
 //        base.addView(ll4,
 //                new LinearLayout.LayoutParams(
