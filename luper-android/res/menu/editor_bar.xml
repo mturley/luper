@@ -5,4 +5,28 @@
         android:showAsAction="always"
         android:actionLayout="@layout/edit_button"
         />
+    <item android:id="@+id/add"
+        android:icon="@drawable/add"
+        android:title="@string/add"
+        android:showAsAction="always"
+        android:actionLayout="@layout/add_button"
+        />
+    <item android:id="@+id/delete"
+        android:icon="@drawable/delete"
+        android:title="@string/delete"
+        android:showAsAction="always"
+        android:actionLayout="@layout/delete_button"
+        />
+    <item android:id="@+id/play"
+        android:icon="@drawable/play"
+        android:title="@string/play"
+        android:showAsAction="always"
+        android:actionLayout="@layout/play_button"
+        />
+    <item android:id="@+id/volume"
+        android:icon="@drawable/volume_control"
+        android:title="@string/volume"
+        android:showAsAction="always"
+        android:actionLayout="@layout/volume_button"
+        />
 </menu>
