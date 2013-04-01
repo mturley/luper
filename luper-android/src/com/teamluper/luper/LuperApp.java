@@ -55,7 +55,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import com.teamluper.luper.rest.LuperRestClient;
 
 // imports for Test Suite
-//import com.teamluper.luper.test.TestEffects;
+import com.teamluper.luper.test.TestEffects;
 
 // @EActivity = "Enhanced Activity", which turns on AndroidAnnotations features
 @EActivity
@@ -240,8 +240,8 @@ public class LuperApp extends SherlockFragmentActivity {
   
   @Background
   public void startAudioTest(View view) {
-	  //Intent intent = new Intent(this, TestEffects.class);
-	  //startActivity(intent);
+	  Intent intent = new Intent(this, TestEffects.class);
+	  startActivity(intent);
   }
   
   
