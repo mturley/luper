@@ -144,7 +144,7 @@ public class AudioRecorderTest extends SherlockActivity
         playBackTest.putClip(newClip);
         //playBackTest.createPBList();
         
-        alertDialog("Clip Created! The clip's length is: " + newClip.duration + "(ms). The tracks size is " + playBackTest.size() + " and it's name in the track is ..." );
+        alertDialog("Clip Created! The clip's length is: " + newClip.duration + "(ms). The tracks size is " + playBackTest.size() + " and it's name in the track is ..." + playBackTest.clips.get(0).name);
         
         fileSelected.setText(mFileName);
         mRecorder = null;
