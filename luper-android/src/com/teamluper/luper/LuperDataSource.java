@@ -84,17 +84,17 @@ public class LuperDataSource {
     return sequence;
   }
   private Track cursorToTrack(Cursor cursor) {
-	    Track track = new Track(this, false);
-	    track.setId(cursor.getLong(cursor.getColumnIndex("_id")));
-	    track.setOwnerUserID(cursor.getLong(cursor.getColumnIndex("ownerUserID")));
-	    track.setParentSequenceID(cursor.getLong(cursor.getColumnIndex("parentSequenceID")));
-	    track.setMuted(cursor.getInt(cursor.getColumnIndex("isMuted")) == 1);
-	    track.setMuted(cursor.getInt(cursor.getColumnIndex("isLocked")) == 1);
-	    track.setPlaybackOptions(cursor.getString(cursor.getColumnIndex("playbackOptions")));
-	    track.setDirty(cursor.getInt(cursor.getColumnIndex("isDirty")) == 1);
-	    track.setAutoSaveEnabled(true);
-	    return track;
-	  }
+    Track track = new Track(this, false);
+    track.setId(cursor.getLong(cursor.getColumnIndex("_id")));
+    track.setOwnerUserID(cursor.getLong(cursor.getColumnIndex("ownerUserID")));
+    track.setParentSequenceID(cursor.getLong(cursor.getColumnIndex("parentSequenceID")));
+    track.setMuted(cursor.getInt(cursor.getColumnIndex("isMuted")) == 1);
+    track.setMuted(cursor.getInt(cursor.getColumnIndex("isLocked")) == 1);
+    track.setPlaybackOptions(cursor.getString(cursor.getColumnIndex("playbackOptions")));
+    track.setDirty(cursor.getInt(cursor.getColumnIndex("isDirty")) == 1);
+    track.setAutoSaveEnabled(true);
+    return track;
+  }
   /*private Track cursorToClip(Cursor cursor) {
 	    Clip clip = new Clip(this, false);
 	    clip.setId(cursor.getLong(cursor.getColumnIndex("_id")));
