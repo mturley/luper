@@ -68,7 +68,7 @@ public class LoopTest extends Activity {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-
+        CCV = new ColorChipView(this, Color.BLUE);
         setContentView(CCV);
         
         TextView pText = new TextView(this);
@@ -152,8 +152,12 @@ public class LoopTest extends Activity {
 
 	    public ProjectView(Context context) {
 	      super(context);
-	     // chip = new ColorChipView(context);
-	    
+	      chip = new ColorChipView(context, Color.BLUE);
+	      chip.setDrawStyle(1);
+	      chip.setLayoutParams(new LayoutParams(500, 500));
+	      this.invalidate();
+	      
+	      
 	        
 //	      int color = Color.BLUE; 
 
@@ -166,6 +170,18 @@ public class LoopTest extends Activity {
 //	      cPaint.setStrokeWidth(3);
 
 	    }
-	}
+
+	    @Override
+	    protected void onDraw(Canvas canvas) {
+	      super.onDraw(canvas);
+	      chip.onDraw(canvas);
+	      ;
+	    }
+	  }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
 
 }
