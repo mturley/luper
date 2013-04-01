@@ -34,6 +34,11 @@ public class Track {
 	  this.dataSource = dataSource;
 	  this.autoSaveEnabled = autoSaveEnabled;
 	}
+	// temporary constructor for compatability with other files
+	public Track() {
+	  this.dataSource = null;
+	  this.autoSaveEnabled = false;
+	}
 	
 	// Mike's getters and setters for database abstraction
 	public long getId() { return id; }

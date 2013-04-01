@@ -30,7 +30,7 @@ public class Clip {
   
   // Brad's variables
 	String name = null;
-	//int begin, end, duration; // replacing with Mike's stuff if that's cool
+	int begin, end, duration; // FIXME these will need to be removed and instead the above stuff used
 	
 	//needs an array of attributes/filters/modifications?
 	// yeah, eventually playbackOptions will be that -Mike
@@ -40,8 +40,18 @@ public class Clip {
 		begin = 0;
 		end = duration;
 	}
+	public Clip() {
+	  dataSource = null;
+	  autoSaveEnabled = false;
+	  name = null;
+	  duration = 0;
+	  begin = 0;
+	  end = duration;
+	}
 	public Clip(String cName)
 	{
+	  dataSource = null;
+	  autoSaveEnabled = false;
 		name = cName;
 		duration = 0;
 		begin = 0;
