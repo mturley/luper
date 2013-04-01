@@ -34,6 +34,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.graphics.Color;
 import android.util.Log;
 import android.media.MediaRecorder;
 import android.media.MediaPlayer;
@@ -207,21 +208,30 @@ public class AudioRecorderTest extends SherlockActivity
         // this LinearLayout is used in place of an XML file.
         // Android lets you do your layouts either programattically like this,
         // or with an XML file.
+        
+        //base will hold the other linear layouts that hold buttons and whatnot
         LinearLayout base = new LinearLayout(this);
-        base.setOrientation(1);
+        //sets the orientation to be vertical
+        base.setOrientation(LinearLayout.VERTICAL);
+        
+        //ll holds the start recording, play, and browse buttons
         LinearLayout ll = new LinearLayout(this);
+        
+        //create and add the record button
         mRecordButton = new RecordButton(this);
         ll.addView(mRecordButton,
             new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 0));
+        //create and add the play button
         mPlayButton = new PlayButton(this);
         ll.addView(mPlayButton,
             new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 0));
+        //create and add the browse button
         mBrowseButton = new Button(this);
         ll.addView(mBrowseButton,
                 new LinearLayout.LayoutParams(
@@ -229,40 +239,67 @@ public class AudioRecorderTest extends SherlockActivity
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
         
+        //ll2 holds the textbox to display current file to play
         LinearLayout ll2 = new LinearLayout(this);
+        //create and add the file selected text field
         fileSelected = new AutoCompleteTextView(this);
         ll2.addView(fileSelected,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
+        
+        //ll3 will hold the volume bar
         LinearLayout ll3 = new LinearLayout(this);
+        //LinearLayout ll4 = new LinearLayout(this); //testing purposes
+        //create and add the volume bar
         SeekBar volBar = new SeekBar(this);
         ll3.addView(volBar,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
+        //testing...
+//        ll4.addView(mBrowseButton,
+//                new LinearLayout.LayoutParams(
+//                        ViewGroup.LayoutParams.WRAP_CONTENT,
+//                        ViewGroup.LayoutParams.WRAP_CONTENT,
+//                        0));
+        
+        //add ll to base
         base.addView(ll,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
+        //add ll2 to base
         base.addView(ll2,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
+        //add ll3 to base
         base.addView(ll3,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
-        
+        //testing...
+//        base.addView(ll4,
+//                new LinearLayout.LayoutParams(
+//                        ViewGroup.LayoutParams.MATCH_PARENT,
+//                        ViewGroup.LayoutParams.WRAP_CONTENT,
+//                        0));
+        //sets the context view to be base
         setContentView(base);
         
+        //sets the initial text in the text box
         fileSelected.setHint("select a file");
         
+        //mBrowseButton.setBackgroundColor(Color.RED);
+        //mBrowseButton.setLayoutParams(new LinearLayout.LayoutParams(50, 50));
+        
+        //allows the functionality of the browse button to start when it gets clicked
         mBrowseButton.setOnClickListener(new View.OnClickListener() {
         	   @Override
         	   public void onClick(View v) {
@@ -272,6 +309,7 @@ public class AudioRecorderTest extends SherlockActivity
         	  });
         mBrowseButton.setText("Browse");
         
+        //what we need to get the volume bar to work
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
         int curVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
@@ -288,6 +326,7 @@ public class AudioRecorderTest extends SherlockActivity
 		});
     }
     
+    //returns the correct file when you select one from the file browser
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     	  super.onActivityResult(requestCode, resultCode, data);
     	  if (requestCode == MediaFetchResultCode) {

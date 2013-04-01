@@ -75,11 +75,39 @@ public class ExampleProject extends SherlockActivity {
         
         
         /* TESTS FUNCTIONALLITY OF THE TRACK VIEW RENDERING */
-        Clip clip1 = new Clip(); clip1.begin = 50; clip1.end = 100; clip1.duration = 50;
-        clips.add(clip1);
-        TV = new TrackView(this, clips);
-        setContentView(TV);
+          Clip clip1 = new Clip(); clip1.begin = 50; clip1.end = 300; clip1.duration = 250;
+          Clip clip2 = new Clip(); clip2.begin = 350; clip2.end = 1000; clip2.duration = 650;
+//        clips.add(clip1);
+//        TV = new TrackView(this, clips);
+//        setContentView(TV);
 		
+        LinearLayout base = new LinearLayout(this);
+        base.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout track1 = new LinearLayout(this);
+        LinearLayout track2 = new LinearLayout(this);
+        
+        //ColorChipView chip1 = new ColorChipView(this, clip1);
+        //ColorChipView chip2 = new ColorChipView(this, clip2);
+        Button chip1 = new Button(this);
+        Button chip2 = new Button(this);
+        chip1.setBackgroundColor(Color.BLUE); chip1.setLayoutParams(new LinearLayout.LayoutParams(clip1.duration, 100));
+        chip2.setBackgroundColor(Color.RED); chip2.setLayoutParams(new LinearLayout.LayoutParams(clip2.duration, 100));
+        track1.addView(chip1);
+        //track1.addView(chip2);
+        track2.addView(chip2);
+        
+        base.addView(track1,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        0));
+        base.addView(track2,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        0));
+        
+        setContentView(base);
         
         /*
         FragmentManager fragmentManager = getFragmentManager();

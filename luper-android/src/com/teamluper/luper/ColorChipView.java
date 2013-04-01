@@ -25,7 +25,9 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.view.ViewGroup.MarginLayoutParams;
 
 import java.util.Random;
 
@@ -79,7 +81,7 @@ public class ColorChipView extends View {
         mDefStrokeWidth = mPaint.getStrokeWidth();
         mPaint.setStyle(Style.FILL_AND_STROKE);
         
-        this.setLayoutParams(new LayoutParams(associated.duration, getHeight()));
+        //this.setLayoutParams(new LayoutParams(associated.duration, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 
 
@@ -100,6 +102,7 @@ public class ColorChipView extends View {
 
     public void setColor(int color) {
         mColor = color;
+        //mPaint = new Paint(color);
         invalidate();
     }
     
@@ -116,10 +119,13 @@ public class ColorChipView extends View {
     public void onDraw(Canvas c) {
     	System.out.println("ON DRAW CCV");
     	super.onDraw(c);
+		//MarginLayoutParams lps = (MarginLayoutParams) this.getto    	
     	int left = associated.begin;
 		int top = 10;
+    	//int top = this.getLayoutParams().MATCH_PARENT;
         int right = associated.end;
-        int bottom = getHeight();
+        //int bottom = getHeight();
+        int bottom = 100;
         mPaint.setColor(Color.BLUE);
 
         switch (mDrawStyle) {
