@@ -13,23 +13,21 @@
         android:text="@string/welcome"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <TextView
-        android:id="@+id/welcomebody"
+    <Button
+        android:id="@+id/button8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/welcome"
         android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:text="@string/welcomebody" />
-    
+        android:onClick="startAudioTest"
+        android:text="@string/audio_test" />
+
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/welcomebody"
+        android:layout_below="@+id/button8"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
         android:gravity="center"
         android:onClick="testRestAPI"
         android:text="@string/button_dbtest" />
@@ -43,7 +41,8 @@
         android:gravity="center"
         android:onClick="startRecording"
         android:text="@string/button_record" />
-    <Button 
+
+    <Button
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -51,9 +50,9 @@
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:onClick="exampleProject"
-        android:text="@string/button_project"/>
-    
-    <Button 
+        android:text="@string/button_project" />
+
+    <Button
         android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -61,9 +60,9 @@
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:onClick="start_testmenu"
-        android:text="@string/button_menutest"/>
-    
-    <Button 
+        android:text="@string/button_menutest" />
+
+    <Button
         android:id="@+id/button5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -71,9 +70,9 @@
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:onClick="start_testcanvas"
-        android:text="@string/button_canvastest"/>
-    
-    <Button 
+        android:text="@string/button_canvastest" />
+
+    <Button
         android:id="@+id/button6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -81,9 +80,9 @@
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:onClick="dropAllData"
-        android:text="Erase All SQLite Data"/>
-    
-    <Button 
+        android:text="Erase All SQLite Data" />
+
+    <Button
         android:id="@+id/button7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -91,6 +90,6 @@
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:onClick="start_testloop"
-        android:text="@string/button_looptest"/>
+        android:text="@string/button_looptest" />
 
 </RelativeLayout>

@@ -52,6 +52,7 @@
             android:name="com.teamluper.luper.FileSelector"
             android:label="FileSelector" >
         </activity>
+        <activity android:name="com.teamluper.luper.test.TestEffects" android:label="AudioTest"></activity>
 
     </application>
 

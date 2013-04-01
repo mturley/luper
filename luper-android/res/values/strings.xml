@@ -8,6 +8,7 @@
     </string>
     <string name="menu_new_project">New Project</string>
     <string name="menu_settings">Settings</string>
+    <string name="audio_test">Run Audio Test</string>
     <string name="title_activity_audio_recorder_test">Audio Recorder Test</string>
     <string name="title_activity_example_project"></string>
     <string name="action_settings">Settings</string>
