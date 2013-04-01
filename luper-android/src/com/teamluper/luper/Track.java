@@ -12,6 +12,7 @@ public class Track
 {
 	String ID = null;
 	ArrayList <Clip>clips = new ArrayList<Clip>();
+	String[] playBackList;
 	long duration;
 	//volume? an int?
 	
@@ -35,9 +36,22 @@ public class Track
 		this.ID = newID;
 	}
 	
+	//SIZE
+	public int size()
+	{
+		return clips.size();
+	}
+	
 	public ArrayList<Clip> getClips()
 	{
 		return this.clips;
+	}
+	public void createPBList()
+	{
+		for(int i = 0; i < clips.size(); i++)
+		{
+			playBackList[i]=clips.get(i).name;
+		}
 	}
 	//gets the track length by calculating the length of all the clips it contains
 	public void getTrackLength()
@@ -49,6 +63,26 @@ public class Track
 		}
 		duration = sum;
 	}
+	
+	//gets the clip at the end of the track
+	public Clip getClip()
+	{
+		return clips.get(clips.size());
+	}
+	
+	//gets the clip at the specified index
+	public Clip getClip(int index)
+	{
+		return clips.get(index);
+	}
+	
+	//adds the clip to back of list
+	public void putClip(Clip clip)
+	{
+		clips.add(clip);
+	}
+	
+	
 	//a method that will allow you to add a clip to the track
 	//TIMES NEED TO BE FIXED
 	public void putClip(int start, Clip clip)
@@ -66,10 +100,10 @@ public class Track
 			i++;
 		}
 	}
+//  Removes a clip based on its name
 //  TIMES NEED TO BE FIXED
 	public void removeClip(Clip clip)
 	{
-		//will need to remove the clip based on its name? SURE! (Brad does the caps)
 		for(Clip c : clips)
 		{
 			if(c.name == clip.name)
@@ -109,6 +143,7 @@ public class Track
 			}
 		}
 	}
+
 	//getVolume() and setVolume() will need to be added
 
 }

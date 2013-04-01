@@ -69,6 +69,8 @@ public class AudioRecorderTest extends SherlockActivity
     private AudioManager audioManager;
 
     private int MediaFetchResultCode = 11;
+    
+    private Track playBackTest = new Track ();
 
     private void onRecord(boolean start) {
 
@@ -88,6 +90,7 @@ public class AudioRecorderTest extends SherlockActivity
     }
 
     private void startPlaying() {
+    	
         mPlayer = new MediaPlayer();
         try {
             mPlayer.setDataSource(mFileName);
@@ -130,13 +133,19 @@ public class AudioRecorderTest extends SherlockActivity
     private void stopRecording() {
         mRecorder.stop();
         mRecorder.release();
+        
         Clip newClip = new Clip(mFileName); 
+
         try {
 			newClip.getDuration();
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-        alertDialog("Clip Created! It's location and name is: " + newClip.name + "   And The clip's length is: " + newClip.duration);
+        playBackTest.putClip(newClip);
+        //playBackTest.createPBList();
+        
+        alertDialog("Clip Created! The clip's length is: " + newClip.duration + "(ms). The tracks size is " + playBackTest.size() + " and it's name in the track is ..." );
+        
         fileSelected.setText(mFileName);
         mRecorder = null;
     }
