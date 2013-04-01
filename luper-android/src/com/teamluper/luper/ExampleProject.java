@@ -14,6 +14,7 @@ import android.graphics.Path.Direction;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -24,6 +25,7 @@ import android.os.Environment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.view.View;
@@ -38,6 +40,9 @@ import java.io.IOException;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.googlecode.androidannotations.annotations.EFragment;
 import com.teamluper.luper.AudioRecorderTest.PlayButton;
 import com.teamluper.luper.AudioRecorderTest.RecordButton;
@@ -57,6 +62,9 @@ public class ExampleProject extends SherlockActivity {
         super.onCreate(icicle);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         AB = getSupportActionBar();
+        
+        final ActionBar bar = getSupportActionBar();
+        bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS); // Gives us Tabs!
         
         
         /* TESTS FUNCTIONALITY OF THE COLOR CHIP RENDERING*/
@@ -84,4 +92,22 @@ public class ExampleProject extends SherlockActivity {
        
    
     }
+	@Override
+	  public boolean onCreateOptionsMenu(Menu menu) {
+	    MenuInflater inf = getSupportMenuInflater();
+	    inf.inflate(R.menu.editor_bar, menu);
+	    
+	    // because one of the action items is a custom view,
+	    // we need the next few lines to force it to use onOptionsItemSelected
+	    // when it's clicked.
+	    final MenuItem item = menu.findItem(R.id.edit);
+	    item.getActionView().setOnClickListener(new OnClickListener() {
+	      @Override
+	      public void onClick(View v) {
+	        onOptionsItemSelected(item);
+	      }
+	    });
+	    
+	    return super.onCreateOptionsMenu(menu);
+	  }
 }

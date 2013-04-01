@@ -23,4 +23,6 @@
         This activity will never become our "Active Project," complete with tracks, buttons galore, and loops, naturally.
     </string>
     <string name="projects_list_empty">No Projects Here!</string>
+    
+    <string name="edit">Edit</string>
 </resources>
