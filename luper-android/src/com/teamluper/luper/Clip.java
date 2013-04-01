@@ -83,18 +83,25 @@ public class Clip {
 		end = stop;
 	}
 	//Extra length method using mediaplayer which oddly uses an integer for the duration
-	public void getDuration() throws IOException
+	public int getDuration()
 	{
-		MediaPlayer mp = new MediaPlayer();
-		FileInputStream fs;
-		FileDescriptor fd;
-		fs = new FileInputStream(name);
-		fd = fs.getFD();
-		mp.setDataSource(fd);
-		mp.prepare();
-		int length = mp.getDuration();
-		mp.release();
-		duration = length;
+		try {
+			MediaPlayer mp = new MediaPlayer();
+			FileInputStream fs;
+			FileDescriptor fd;
+			fs = new FileInputStream(name);
+			fd = fs.getFD();
+			mp.setDataSource(fd);
+			mp.prepare();
+			int length = mp.getDuration();
+			mp.release();
+			duration = length;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			duration = 0;
+		}
+		return duration;
 	}
 	//calculates the total playing length of the clip as an int, keeping in line with getDuration
 	public int calcLength()

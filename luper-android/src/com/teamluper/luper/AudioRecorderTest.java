@@ -139,7 +139,7 @@ public class AudioRecorderTest extends SherlockActivity
 
         try {
 			newClip.getDuration();
-		} catch (IOException e1) {
+		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
         playBackTest.putClip(newClip);

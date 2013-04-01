@@ -1,4 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/play"
+        android:icon="@drawable/play"
+        android:title="@string/play"
+        android:showAsAction="always"
+        android:actionLayout="@layout/play_button"
+        />
     <item android:id="@+id/edit"
         android:icon="@drawable/edit"
         android:title="@string/edit"
@@ -16,12 +22,6 @@
         android:title="@string/delete"
         android:showAsAction="always"
         android:actionLayout="@layout/delete_button"
-        />
-    <item android:id="@+id/play"
-        android:icon="@drawable/play"
-        android:title="@string/play"
-        android:showAsAction="always"
-        android:actionLayout="@layout/play_button"
         />
     <item android:id="@+id/volume"
         android:icon="@drawable/volume_control"

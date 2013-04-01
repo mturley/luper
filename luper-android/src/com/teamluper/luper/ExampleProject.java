@@ -61,6 +61,7 @@ public class ExampleProject extends SherlockActivity {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        
         AB = getSupportActionBar();
         
         final ActionBar bar = getSupportActionBar();
@@ -80,11 +81,17 @@ public class ExampleProject extends SherlockActivity {
 //        clips.add(clip1);
 //        TV = new TrackView(this, clips);
 //        setContentView(TV);
-		
+          
         LinearLayout base = new LinearLayout(this);
+        base.setBackgroundColor(Color.parseColor("#e2dfd8"));
+        
+        
         base.setOrientation(LinearLayout.VERTICAL);
         RelativeLayout track1 = new RelativeLayout(this);
         RelativeLayout track2 = new RelativeLayout(this);
+        track1.setPadding(20,20,20,10);
+        track2.setPadding(20,20,20,10);
+
         
         //ColorChipView chip1 = new ColorChipView(this, clip1);
         //ColorChipView chip2 = new ColorChipView(this, clip2);
@@ -95,6 +102,13 @@ public class ExampleProject extends SherlockActivity {
         track1.addView(chip1);
         //track1.addView(chip2);
         track2.addView(chip2);
+        
+        TextView track1_text = new TextView(this);
+        track1_text.setText("Clip 1 length: " +clip1.duration);
+        track1.addView(track1_text);
+        TextView track2_text = new TextView(this);
+        track2_text.setText("Clip 2 length: " +clip2.duration);
+        track2.addView(track2_text);
         
         base.addView(track1,
                 new RelativeLayout.LayoutParams(
@@ -115,18 +129,17 @@ public class ExampleProject extends SherlockActivity {
         fragmentTransaction.commit();
         */
         
-       
    
     }
+	
+	// #Creates the Actionbar 
 	@Override
 	  public boolean onCreateOptionsMenu(Menu menu) {
 	    MenuInflater inf = getSupportMenuInflater();
 	    inf.inflate(R.menu.editor_bar, menu);
 	    
-	    // because one of the action items is a custom view,
-	    // we need the next few lines to force it to use onOptionsItemSelected
-	    // when it's clicked.
-	    final MenuItem item = menu.findItem(R.id.add);
+	    // makes an onCLickListener for edit
+	    final MenuItem item = menu.findItem(R.id.edit);
 	    item.getActionView().setOnClickListener(new OnClickListener() {
 	      @Override
 	      public void onClick(View v) {
