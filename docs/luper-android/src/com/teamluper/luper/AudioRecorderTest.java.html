@@ -1,0 +1,331 @@
+<!DOCTYPE html><html><head><title>AudioRecorderTest.java</title><meta http-equiv="Content-Type" content="text/html" charset="UTF-8"><link rel="stylesheet" media="all" href="../../../../../docco.css"></head><body><div id="container"><div id="background"></div><div id="jump_to">Jump To &hellip;<div id="jump_wrapper"><div id="jump_page"><a href="../../../../../index.html" class="source"><span class="file_name">README</span></a><a href="../../../../../luper-android/src/com/teamluper/luper/Sequence.java.html" class="source "><span class="base_path">luper-android / src / com / teamluper / luper / </span><span class="file_name">Sequence.java</span></a><a href="../../../../../luper-android/src/com/teamluper/luper/AudioRecorderTest.java.html" class="source selected"><span class="base_path">luper-android / src / com / teamluper / luper / </span><span class="file_name">AudioRecorderTest.java</span></a><a href="../../../../../luper-android/src/com/teamluper/luper/TabProjectsFragment.java.html" class="source "><span class="base_path">luper-android / src / com / teamluper / luper / </span><span class="file_name">TabProjectsFragment.java</span></a><a href="../../../../../luper-android/src/com/teamluper/luper/Clip.java.html" class="source "><span class="base_path">luper-android / src / com / teamluper / luper / </span><span class="file_name">Clip.java</span></a><a href="../../../../../luper-android/src/com/teamluper/luper/CanvasTest.java.html" class="source "><span class="base_path">luper-android / src / com / teamluper / luper / </span><span class="file_name">CanvasTest.java</span></a><a href="../../../../../luper-android/src/com/teamluper/luper/Track.java.html" class="source "><span class="base_path">luper-android / src / com / teamluper / luper / </span><span class="file_name">Track.java</span></a><a href="../../../../../luper-android/src/com/teamluper/luper/ExampleProject.java.html" class="source "><span class="base_path">luper-android / src / com / teamluper / luper / </span><span class="file_name">ExampleProject.java</span></a><a href="../../../../../luper-android/src/com/teamluper/luper/LuperSQLiteHelper.java.html" class="source "><span class="base_path">luper-android / src / com / teamluper / luper / </span><span class="file_name">LuperSQLiteHelper.java</span></a><a href="../../../../../luper-android/src/com/teamluper/luper/test/TestEffects.java.html" class="source "><span class="base_path">luper-android / src / com / teamluper / luper / test / </span><span class="file_name">TestEffects.java</span></a><a href="../../../../../luper-android/src/com/teamluper/luper/ProjectView.java.html" class="source "><span class="base_path">luper-android / src / com / teamluper / luper / </span><span class="file_name">ProjectView.java</span></a><a href="../../../../../luper-android/src/com/teamluper/luper/StringCallback.java.html" class="source "><span class="base_path">luper-android / src / com / teamluper / luper / </span><span class="file_name">StringCallback.java</span></a><a href="../../../../../luper-android/src/com/teamluper/luper/User.java.html" class="source "><span class="base_path">luper-android / src / com / teamluper / luper / </span><span class="file_name">User.java</span></a><a href="../../../../../luper-android/src/com/teamluper/luper/LoopTest.java.html" class="source "><span class="base_path">luper-android / src / com / teamluper / luper / </span><span class="file_name">LoopTest.java</span></a><a href="../../../../../luper-android/src/com/teamluper/luper/TabFriendsFragment.java.html" class="source "><span class="base_path">luper-android / src / com / teamluper / luper / </span><span class="file_name">TabFriendsFragment.java</span></a><a href="../../../../../luper-android/src/com/teamluper/luper/FileSelector.java.html" class="source "><span class="base_path">luper-android / src / com / teamluper / luper / </span><span class="file_name">FileSelector.java</span></a><a href="../../../../../luper-android/src/com/teamluper/luper/LuperDataSource.java.html" class="source "><span class="base_path">luper-android / src / com / teamluper / luper / </span><span class="file_name">LuperDataSource.java</span></a><a href="../../../../../luper-android/src/com/teamluper/luper/ProjectFragment.java.html" class="source "><span class="base_path">luper-android / src / com / teamluper / luper / </span><span class="file_name">ProjectFragment.java</span></a><a href="../../../../../luper-android/src/com/teamluper/luper/PopupTest.java.html" class="source "><span class="base_path">luper-android / src / com / teamluper / luper / </span><span class="file_name">PopupTest.java</span></a><a href="../../../../../luper-android/src/com/teamluper/luper/TrackView.java.html" class="source "><span class="base_path">luper-android / src / com / teamluper / luper / </span><span class="file_name">TrackView.java</span></a><a href="../../../../../luper-android/src/com/teamluper/luper/LuperApp.java.html" class="source "><span class="base_path">luper-android / src / com / teamluper / luper / </span><span class="file_name">LuperApp.java</span></a><a href="../../../../../luper-android/src/com/teamluper/luper/TabHomeFragment.java.html" class="source "><span class="base_path">luper-android / src / com / teamluper / luper / </span><span class="file_name">TabHomeFragment.java</span></a><a href="../../../../../luper-android/src/com/teamluper/luper/AudioFile.java.html" class="source "><span class="base_path">luper-android / src / com / teamluper / luper / </span><span class="file_name">AudioFile.java</span></a><a href="../../../../../luper-android/src/com/teamluper/luper/TabsAdapter.java.html" class="source "><span class="base_path">luper-android / src / com / teamluper / luper / </span><span class="file_name">TabsAdapter.java</span></a><a href="../../../../../luper-android/src/com/teamluper/luper/ColorChipView.java.html" class="source "><span class="base_path">luper-android / src / com / teamluper / luper / </span><span class="file_name">ColorChipView.java</span></a><a href="../../../../../luper-android/src/com/teamluper/luper/rest/LuperRestClient.java.html" class="source "><span class="base_path">luper-android / src / com / teamluper / luper / rest / </span><span class="file_name">LuperRestClient.java</span></a><a href="../../../../../luper-android/src/com/teamluper/luper/LuperSettings.java.html" class="source "><span class="base_path">luper-android / src / com / teamluper / luper / </span><span class="file_name">LuperSettings.java</span></a></div></div></div><table cellpadding="0" cellspacing="0"><thead><tr><th class="docs"><h1>AudioRecorderTest.java</h1><div class="filepath">luper-android/src/com/teamluper/luper/</div></th><th class="code"></th></tr></thead><tbody><tr id="section-1"><td class="docs"><div class="pilwrap"><a href="#section-1" class="pilcrow">&#182;</a></div><h2>AudioRecorderTest.java</h2>
+</td><td class="code"><div class="highlight"><pre></pre></div></td></tr><tr id="section-2"><td class="docs"><div class="pilwrap"><a href="#section-2" class="pilcrow">&#182;</a></div><p>this is an artifact from our Alpha release, and this code will likely end up
+somewhere else, particularly in whatever recording module we develop.</p>
+</td><td class="code"><div class="highlight"><pre></pre></div></td></tr><tr id="section-3"><td class="docs"><div class="pilwrap"><a href="#section-3" class="pilcrow">&#182;</a></div><div class="dox"><div class="summary"><p>The application needs to have the permission to write to external storage<br />if the output file is written to the external storage, and also the<br />permission to record audio. These permissions must be set in the<br />application's AndroidManifest.xml file, with something like:</p></div><div class="body"><p><uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /><br /><uses-permission android:name="android.permission.RECORD_AUDIO" /></p></div></div>
+</td><td class="code"><div class="highlight"><pre><span class="kn">package</span> <span class="n">com</span><span class="o">.</span><span class="na">teamluper</span><span class="o">.</span><span class="na">luper</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.File</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.content.Context</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.content.Intent</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.media.AudioManager</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.media.MediaPlayer</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.media.MediaRecorder</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.os.Bundle</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.os.Environment</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.util.Log</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.view.View</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.view.ViewGroup</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.widget.Button</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.view.View</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.app.AlertDialog</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.content.Context</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.content.DialogInterface</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.content.DialogInterface.OnClickListener</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.graphics.Color</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.util.Log</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.media.MediaRecorder</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.media.MediaPlayer</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">android.widget.AutoCompleteTextView</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.widget.LinearLayout</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.widget.RelativeLayout</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.widget.SeekBar</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.widget.TextView</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.widget.Toast</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.actionbarsherlock.app.SherlockActivity</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.googlecode.androidannotations.annotations.EActivity</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.googlecode.androidannotations.annotations.UiThread</span><span class="o">;</span>
+
+<span class="nd">@EActivity</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AudioRecorderTest</span> <span class="kd">extends</span> <span class="n">SherlockActivity</span>
+<span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">LOG_TAG</span> <span class="o">=</span> <span class="s">&quot;AudioRecorderTest&quot;</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="n">String</span> <span class="n">mFileName</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="n">RecordButton</span> <span class="n">mRecordButton</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">MediaRecorder</span> <span class="n">mRecorder</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="n">PlayButton</span>   <span class="n">mPlayButton</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">MediaPlayer</span>   <span class="n">mPlayer</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    
+    <span class="kd">private</span> <span class="n">Button</span> <span class="n">mBrowseButton</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">TextView</span> <span class="n">fileSelected</span><span class="o">;</span>
+    
+    <span class="kd">private</span> <span class="n">AudioManager</span> <span class="n">audioManager</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">MediaFetchResultCode</span> <span class="o">=</span> <span class="mi">11</span><span class="o">;</span>
+    
+    <span class="kd">private</span> <span class="n">Track</span> <span class="n">playBackTest</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Track</span> <span class="o">();</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">onRecord</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">start</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="k">if</span> <span class="o">(</span><span class="n">start</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">startRecording</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="n">stopRecording</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">onPlay</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">start</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">start</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">startPlaying</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="n">stopPlaying</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">startPlaying</span><span class="o">()</span> <span class="o">{</span>
+      
+        <span class="n">mPlayer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MediaPlayer</span><span class="o">();</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">mPlayer</span><span class="o">.</span><span class="na">setDataSource</span><span class="o">(</span><span class="n">mFileName</span><span class="o">);</span>
+            <span class="n">mPlayer</span><span class="o">.</span><span class="na">prepare</span><span class="o">();</span>
+            <span class="n">mPlayer</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">Log</span><span class="o">.</span><span class="na">e</span><span class="o">(</span><span class="n">LOG_TAG</span><span class="o">,</span> <span class="s">&quot;prepare() failed1&quot;</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">stopPlaying</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">mPlayer</span><span class="o">.</span><span class="na">release</span><span class="o">();</span>
+        <span class="n">mPlayer</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">startRecording</span><span class="o">()</span> <span class="o">{</span></pre></div></td></tr><tr id="section-4"><td class="docs"><div class="pilwrap"><a href="#section-4" class="pilcrow">&#182;</a></div><p>Sets the name of the file when you start recording as opposed to when you click "Audio Record Test" from the main screen</p>
+</td><td class="code"><div class="highlight"><pre>        <span class="n">mFileName</span> <span class="o">=</span> <span class="n">Environment</span><span class="o">.</span><span class="na">getExternalStorageDirectory</span><span class="o">()+</span><span class="s">&quot;/LuperApp/Clips&quot;</span><span class="o">;</span>
+        <span class="n">mFileName</span> <span class="o">+=</span> <span class="s">&quot;/clip_&quot;</span> <span class="o">+</span> <span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">()</span> <span class="o">+</span><span class="s">&quot;.3gp&quot;</span><span class="o">;</span>
+        
+        <span class="n">mRecorder</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MediaRecorder</span><span class="o">();</span></pre></div></td></tr><tr id="section-5"><td class="docs"><div class="pilwrap"><a href="#section-5" class="pilcrow">&#182;</a></div><p>System.out.println("here");</p>
+</td><td class="code"><div class="highlight"><pre>        <span class="n">mRecorder</span><span class="o">.</span><span class="na">setAudioSource</span><span class="o">(</span><span class="n">MediaRecorder</span><span class="o">.</span><span class="na">AudioSource</span><span class="o">.</span><span class="na">MIC</span><span class="o">);</span></pre></div></td></tr><tr id="section-6"><td class="docs"><div class="pilwrap"><a href="#section-6" class="pilcrow">&#182;</a></div><p>System.out.println("and here");</p>
+</td><td class="code"><div class="highlight"><pre>        <span class="n">mRecorder</span><span class="o">.</span><span class="na">setOutputFormat</span><span class="o">(</span><span class="n">MediaRecorder</span><span class="o">.</span><span class="na">OutputFormat</span><span class="o">.</span><span class="na">THREE_GPP</span><span class="o">);</span>
+        <span class="n">mRecorder</span><span class="o">.</span><span class="na">setOutputFile</span><span class="o">(</span><span class="n">mFileName</span><span class="o">);</span>
+      
+        <span class="n">mRecorder</span><span class="o">.</span><span class="na">setAudioEncoder</span><span class="o">(</span><span class="n">MediaRecorder</span><span class="o">.</span><span class="na">AudioEncoder</span><span class="o">.</span><span class="na">AMR_NB</span><span class="o">);</span>
+
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">mRecorder</span><span class="o">.</span><span class="na">prepare</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+          <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+            <span class="n">Log</span><span class="o">.</span><span class="na">e</span><span class="o">(</span><span class="n">LOG_TAG</span><span class="o">,</span> <span class="s">&quot;prepare() failed2&quot;</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="n">mRecorder</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">stopRecording</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">mRecorder</span><span class="o">.</span><span class="na">stop</span><span class="o">();</span>
+        <span class="n">mRecorder</span><span class="o">.</span><span class="na">release</span><span class="o">();</span>
+        
+        <span class="n">Clip</span> <span class="n">newClip</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Clip</span><span class="o">(</span><span class="n">mFileName</span><span class="o">);</span> 
+
+        <span class="k">try</span> <span class="o">{</span>
+      <span class="n">newClip</span><span class="o">.</span><span class="na">getDuration</span><span class="o">();</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e1</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">e1</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+    <span class="o">}</span>
+        <span class="n">playBackTest</span><span class="o">.</span><span class="na">putClip</span><span class="o">(</span><span class="n">newClip</span><span class="o">);</span></pre></div></td></tr><tr id="section-7"><td class="docs"><div class="pilwrap"><a href="#section-7" class="pilcrow">&#182;</a></div><p>playBackTest.createPBList();</p>
+</td><td class="code"><div class="highlight"><pre>        
+        <span class="n">alertDialog</span><span class="o">(</span><span class="s">&quot;Clip Created! The clip&#39;s length is: &quot;</span> <span class="o">+</span> <span class="n">newClip</span><span class="o">.</span><span class="na">duration</span> <span class="o">+</span> <span class="s">&quot;(ms). The tracks size is &quot;</span> <span class="o">+</span> <span class="n">playBackTest</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; and it&#39;s name in the track is ...&quot;</span> <span class="o">+</span> <span class="n">playBackTest</span><span class="o">.</span><span class="na">clips</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">name</span><span class="o">);</span>
+        
+        <span class="n">fileSelected</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">mFileName</span><span class="o">);</span>
+        <span class="n">mRecorder</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nc">RecordButton</span> <span class="kd">extends</span> <span class="n">Button</span> <span class="o">{</span>
+        <span class="kt">boolean</span> <span class="n">mStartRecording</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+
+        <span class="n">OnClickListener</span> <span class="n">clicker</span> <span class="o">=</span> <span class="k">new</span> <span class="n">OnClickListener</span><span class="o">()</span> <span class="o">{</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">View</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">onRecord</span><span class="o">(</span><span class="n">mStartRecording</span><span class="o">);</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">mStartRecording</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">setText</span><span class="o">(</span><span class="s">&quot;Stop recording&quot;</span><span class="o">);</span>
+                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                    <span class="n">setText</span><span class="o">(</span><span class="s">&quot;Start recording&quot;</span><span class="o">);</span>
+                <span class="o">}</span>
+                <span class="n">mStartRecording</span> <span class="o">=</span> <span class="o">!</span><span class="n">mStartRecording</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">};</span>
+
+        <span class="kd">public</span> <span class="nf">RecordButton</span><span class="o">(</span><span class="n">Context</span> <span class="n">ctx</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kd">super</span><span class="o">(</span><span class="n">ctx</span><span class="o">);</span>
+            <span class="n">setText</span><span class="o">(</span><span class="s">&quot;Start recording&quot;</span><span class="o">);</span>
+            <span class="n">setOnClickListener</span><span class="o">(</span><span class="n">clicker</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nc">PlayButton</span> <span class="kd">extends</span> <span class="n">Button</span> <span class="o">{</span>
+        <span class="kt">boolean</span> <span class="n">mStartPlaying</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+
+        <span class="n">OnClickListener</span> <span class="n">clicker</span> <span class="o">=</span> <span class="k">new</span> <span class="n">OnClickListener</span><span class="o">()</span> <span class="o">{</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">View</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">onPlay</span><span class="o">(</span><span class="n">mStartPlaying</span><span class="o">);</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">mStartPlaying</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">setText</span><span class="o">(</span><span class="s">&quot;Stop playing&quot;</span><span class="o">);</span>
+                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                    <span class="n">setText</span><span class="o">(</span><span class="s">&quot;Start playing&quot;</span><span class="o">);</span>
+                <span class="o">}</span>
+                <span class="n">mStartPlaying</span> <span class="o">=</span> <span class="o">!</span><span class="n">mStartPlaying</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">};</span>
+
+        <span class="kd">public</span> <span class="nf">PlayButton</span><span class="o">(</span><span class="n">Context</span> <span class="n">ctx</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kd">super</span><span class="o">(</span><span class="n">ctx</span><span class="o">);</span>
+            <span class="n">setText</span><span class="o">(</span><span class="s">&quot;Start playing&quot;</span><span class="o">);</span>
+            <span class="n">setOnClickListener</span><span class="o">(</span><span class="n">clicker</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nf">AudioRecorderTest</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">mFileName</span> <span class="o">=</span> <span class="n">Environment</span><span class="o">.</span><span class="na">getExternalStorageDirectory</span><span class="o">().</span><span class="na">getAbsolutePath</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;/LuperApp/&quot;</span><span class="o">;</span></pre></div></td></tr><tr id="section-8"><td class="docs"><div class="pilwrap"><a href="#section-8" class="pilcrow">&#182;</a></div><p>System.out.println(mFileName);</p>
+</td><td class="code"><div class="highlight"><pre>        <span class="n">mFileName</span> <span class="o">+=</span> <span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;.3gp&quot;</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">icicle</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">icicle</span><span class="o">);</span></pre></div></td></tr><tr id="section-9"><td class="docs"><div class="pilwrap"><a href="#section-9" class="pilcrow">&#182;</a></div><p>this LinearLayout is used in place of an XML file.
+Android lets you do your layouts either programattically like this,
+or with an XML file.</p>
+</td><td class="code"><div class="highlight"><pre>        </pre></div></td></tr><tr id="section-10"><td class="docs"><div class="pilwrap"><a href="#section-10" class="pilcrow">&#182;</a></div><p>base will hold the other linear layouts that hold buttons and whatnot</p>
+</td><td class="code"><div class="highlight"><pre>        <span class="n">LinearLayout</span> <span class="n">base</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinearLayout</span><span class="o">(</span><span class="k">this</span><span class="o">);</span></pre></div></td></tr><tr id="section-11"><td class="docs"><div class="pilwrap"><a href="#section-11" class="pilcrow">&#182;</a></div><p>sets the orientation to be vertical</p>
+</td><td class="code"><div class="highlight"><pre>        <span class="n">base</span><span class="o">.</span><span class="na">setOrientation</span><span class="o">(</span><span class="n">LinearLayout</span><span class="o">.</span><span class="na">VERTICAL</span><span class="o">);</span>
+        </pre></div></td></tr><tr id="section-12"><td class="docs"><div class="pilwrap"><a href="#section-12" class="pilcrow">&#182;</a></div><p>ll holds the start recording, play, and browse buttons</p>
+</td><td class="code"><div class="highlight"><pre>        <span class="n">LinearLayout</span> <span class="n">ll</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinearLayout</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+        </pre></div></td></tr><tr id="section-13"><td class="docs"><div class="pilwrap"><a href="#section-13" class="pilcrow">&#182;</a></div><p>create and add the record button</p>
+</td><td class="code"><div class="highlight"><pre>        <span class="n">mRecordButton</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RecordButton</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+        <span class="n">ll</span><span class="o">.</span><span class="na">addView</span><span class="o">(</span><span class="n">mRecordButton</span><span class="o">,</span>
+            <span class="k">new</span> <span class="n">LinearLayout</span><span class="o">.</span><span class="na">LayoutParams</span><span class="o">(</span>
+                <span class="n">ViewGroup</span><span class="o">.</span><span class="na">LayoutParams</span><span class="o">.</span><span class="na">WRAP_CONTENT</span><span class="o">,</span>
+                <span class="n">ViewGroup</span><span class="o">.</span><span class="na">LayoutParams</span><span class="o">.</span><span class="na">WRAP_CONTENT</span><span class="o">,</span>
+                <span class="mi">0</span><span class="o">));</span></pre></div></td></tr><tr id="section-14"><td class="docs"><div class="pilwrap"><a href="#section-14" class="pilcrow">&#182;</a></div><p>create and add the play button</p>
+</td><td class="code"><div class="highlight"><pre>        <span class="n">mPlayButton</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PlayButton</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+        <span class="n">ll</span><span class="o">.</span><span class="na">addView</span><span class="o">(</span><span class="n">mPlayButton</span><span class="o">,</span>
+            <span class="k">new</span> <span class="n">LinearLayout</span><span class="o">.</span><span class="na">LayoutParams</span><span class="o">(</span>
+                <span class="n">ViewGroup</span><span class="o">.</span><span class="na">LayoutParams</span><span class="o">.</span><span class="na">WRAP_CONTENT</span><span class="o">,</span>
+                <span class="n">ViewGroup</span><span class="o">.</span><span class="na">LayoutParams</span><span class="o">.</span><span class="na">WRAP_CONTENT</span><span class="o">,</span>
+                <span class="mi">0</span><span class="o">));</span></pre></div></td></tr><tr id="section-15"><td class="docs"><div class="pilwrap"><a href="#section-15" class="pilcrow">&#182;</a></div><p>create and add the browse button</p>
+</td><td class="code"><div class="highlight"><pre>        <span class="n">mBrowseButton</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Button</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+        <span class="n">ll</span><span class="o">.</span><span class="na">addView</span><span class="o">(</span><span class="n">mBrowseButton</span><span class="o">,</span>
+                <span class="k">new</span> <span class="n">LinearLayout</span><span class="o">.</span><span class="na">LayoutParams</span><span class="o">(</span>
+                        <span class="n">ViewGroup</span><span class="o">.</span><span class="na">LayoutParams</span><span class="o">.</span><span class="na">WRAP_CONTENT</span><span class="o">,</span>
+                        <span class="n">ViewGroup</span><span class="o">.</span><span class="na">LayoutParams</span><span class="o">.</span><span class="na">WRAP_CONTENT</span><span class="o">,</span>
+                        <span class="mi">0</span><span class="o">));</span>
+        </pre></div></td></tr><tr id="section-16"><td class="docs"><div class="pilwrap"><a href="#section-16" class="pilcrow">&#182;</a></div><p>ll2 holds the textbox to display current file to play</p>
+</td><td class="code"><div class="highlight"><pre>        <span class="n">LinearLayout</span> <span class="n">ll2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinearLayout</span><span class="o">(</span><span class="k">this</span><span class="o">);</span></pre></div></td></tr><tr id="section-17"><td class="docs"><div class="pilwrap"><a href="#section-17" class="pilcrow">&#182;</a></div><p>create and add the file selected text field</p>
+</td><td class="code"><div class="highlight"><pre>        <span class="n">fileSelected</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AutoCompleteTextView</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+        <span class="n">ll2</span><span class="o">.</span><span class="na">addView</span><span class="o">(</span><span class="n">fileSelected</span><span class="o">,</span>
+                <span class="k">new</span> <span class="n">LinearLayout</span><span class="o">.</span><span class="na">LayoutParams</span><span class="o">(</span>
+                        <span class="n">ViewGroup</span><span class="o">.</span><span class="na">LayoutParams</span><span class="o">.</span><span class="na">MATCH_PARENT</span><span class="o">,</span>
+                        <span class="n">ViewGroup</span><span class="o">.</span><span class="na">LayoutParams</span><span class="o">.</span><span class="na">WRAP_CONTENT</span><span class="o">,</span>
+                        <span class="mi">0</span><span class="o">));</span>
+        </pre></div></td></tr><tr id="section-18"><td class="docs"><div class="pilwrap"><a href="#section-18" class="pilcrow">&#182;</a></div><p>ll3 will hold the volume bar</p>
+</td><td class="code"><div class="highlight"><pre>        <span class="n">LinearLayout</span> <span class="n">ll3</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinearLayout</span><span class="o">(</span><span class="k">this</span><span class="o">);</span></pre></div></td></tr><tr id="section-19"><td class="docs"><div class="pilwrap"><a href="#section-19" class="pilcrow">&#182;</a></div><p>LinearLayout ll4 = new LinearLayout(this); //testing purposes
+create and add the volume bar</p>
+</td><td class="code"><div class="highlight"><pre>        <span class="n">SeekBar</span> <span class="n">volBar</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SeekBar</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+        <span class="n">ll3</span><span class="o">.</span><span class="na">addView</span><span class="o">(</span><span class="n">volBar</span><span class="o">,</span>
+                <span class="k">new</span> <span class="n">LinearLayout</span><span class="o">.</span><span class="na">LayoutParams</span><span class="o">(</span>
+                        <span class="n">ViewGroup</span><span class="o">.</span><span class="na">LayoutParams</span><span class="o">.</span><span class="na">MATCH_PARENT</span><span class="o">,</span>
+                        <span class="n">ViewGroup</span><span class="o">.</span><span class="na">LayoutParams</span><span class="o">.</span><span class="na">WRAP_CONTENT</span><span class="o">,</span>
+                        <span class="mi">0</span><span class="o">));</span></pre></div></td></tr><tr id="section-20"><td class="docs"><div class="pilwrap"><a href="#section-20" class="pilcrow">&#182;</a></div><p>testing...
+       ll4.addView(mBrowseButton,
+               new LinearLayout.LayoutParams(
+                       ViewGroup.LayoutParams.WRAP<em>CONTENT,
+                       ViewGroup.LayoutParams.WRAP</em>CONTENT,
+                       0));</p>
+</td><td class="code"><div class="highlight"><pre>        </pre></div></td></tr><tr id="section-21"><td class="docs"><div class="pilwrap"><a href="#section-21" class="pilcrow">&#182;</a></div><p>add ll to base</p>
+</td><td class="code"><div class="highlight"><pre>        <span class="n">base</span><span class="o">.</span><span class="na">addView</span><span class="o">(</span><span class="n">ll</span><span class="o">,</span>
+                <span class="k">new</span> <span class="n">LinearLayout</span><span class="o">.</span><span class="na">LayoutParams</span><span class="o">(</span>
+                        <span class="n">ViewGroup</span><span class="o">.</span><span class="na">LayoutParams</span><span class="o">.</span><span class="na">WRAP_CONTENT</span><span class="o">,</span>
+                        <span class="n">ViewGroup</span><span class="o">.</span><span class="na">LayoutParams</span><span class="o">.</span><span class="na">WRAP_CONTENT</span><span class="o">,</span>
+                        <span class="mi">0</span><span class="o">));</span></pre></div></td></tr><tr id="section-22"><td class="docs"><div class="pilwrap"><a href="#section-22" class="pilcrow">&#182;</a></div><p>add ll2 to base</p>
+</td><td class="code"><div class="highlight"><pre>        <span class="n">base</span><span class="o">.</span><span class="na">addView</span><span class="o">(</span><span class="n">ll2</span><span class="o">,</span>
+                <span class="k">new</span> <span class="n">LinearLayout</span><span class="o">.</span><span class="na">LayoutParams</span><span class="o">(</span>
+                        <span class="n">ViewGroup</span><span class="o">.</span><span class="na">LayoutParams</span><span class="o">.</span><span class="na">MATCH_PARENT</span><span class="o">,</span>
+                        <span class="n">ViewGroup</span><span class="o">.</span><span class="na">LayoutParams</span><span class="o">.</span><span class="na">WRAP_CONTENT</span><span class="o">,</span>
+                        <span class="mi">0</span><span class="o">));</span></pre></div></td></tr><tr id="section-23"><td class="docs"><div class="pilwrap"><a href="#section-23" class="pilcrow">&#182;</a></div><p>add ll3 to base</p>
+</td><td class="code"><div class="highlight"><pre>        <span class="n">base</span><span class="o">.</span><span class="na">addView</span><span class="o">(</span><span class="n">ll3</span><span class="o">,</span>
+                <span class="k">new</span> <span class="n">LinearLayout</span><span class="o">.</span><span class="na">LayoutParams</span><span class="o">(</span>
+                        <span class="n">ViewGroup</span><span class="o">.</span><span class="na">LayoutParams</span><span class="o">.</span><span class="na">MATCH_PARENT</span><span class="o">,</span>
+                        <span class="n">ViewGroup</span><span class="o">.</span><span class="na">LayoutParams</span><span class="o">.</span><span class="na">WRAP_CONTENT</span><span class="o">,</span>
+                        <span class="mi">0</span><span class="o">));</span></pre></div></td></tr><tr id="section-24"><td class="docs"><div class="pilwrap"><a href="#section-24" class="pilcrow">&#182;</a></div><p>testing...
+       base.addView(ll4,
+               new LinearLayout.LayoutParams(
+                       ViewGroup.LayoutParams.MATCH<em>PARENT,
+                       ViewGroup.LayoutParams.WRAP</em>CONTENT,
+                       0));
+sets the context view to be base</p>
+</td><td class="code"><div class="highlight"><pre>        <span class="n">setContentView</span><span class="o">(</span><span class="n">base</span><span class="o">);</span>
+        </pre></div></td></tr><tr id="section-25"><td class="docs"><div class="pilwrap"><a href="#section-25" class="pilcrow">&#182;</a></div><p>sets the initial text in the text box</p>
+</td><td class="code"><div class="highlight"><pre>        <span class="n">fileSelected</span><span class="o">.</span><span class="na">setHint</span><span class="o">(</span><span class="s">&quot;select a file&quot;</span><span class="o">);</span>
+        </pre></div></td></tr><tr id="section-26"><td class="docs"><div class="pilwrap"><a href="#section-26" class="pilcrow">&#182;</a></div><p>mBrowseButton.setBackgroundColor(Color.RED);
+mBrowseButton.setLayoutParams(new LinearLayout.LayoutParams(50, 50));</p>
+</td><td class="code"><div class="highlight"><pre>        </pre></div></td></tr><tr id="section-27"><td class="docs"><div class="pilwrap"><a href="#section-27" class="pilcrow">&#182;</a></div><p>allows the functionality of the browse button to start when it gets clicked</p>
+</td><td class="code"><div class="highlight"><pre>        <span class="n">mBrowseButton</span><span class="o">.</span><span class="na">setOnClickListener</span><span class="o">(</span><span class="k">new</span> <span class="n">View</span><span class="o">.</span><span class="na">OnClickListener</span><span class="o">()</span> <span class="o">{</span>
+             <span class="nd">@Override</span>
+             <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">View</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
+              <span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">(</span><span class="n">AudioRecorderTest</span><span class="o">.</span><span class="na">this</span><span class="o">,</span> <span class="n">FileSelector</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+              <span class="n">AudioRecorderTest</span><span class="o">.</span><span class="na">this</span><span class="o">.</span><span class="na">startActivityForResult</span><span class="o">(</span><span class="n">intent</span><span class="o">,</span> <span class="n">MediaFetchResultCode</span><span class="o">);</span>
+             <span class="o">}</span>
+            <span class="o">});</span>
+        <span class="n">mBrowseButton</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">&quot;Browse&quot;</span><span class="o">);</span>
+        </pre></div></td></tr><tr id="section-28"><td class="docs"><div class="pilwrap"><a href="#section-28" class="pilcrow">&#182;</a></div><p>what we need to get the volume bar to work</p>
+</td><td class="code"><div class="highlight"><pre>        <span class="n">audioManager</span> <span class="o">=</span> <span class="o">(</span><span class="n">AudioManager</span><span class="o">)</span> <span class="n">getSystemService</span><span class="o">(</span><span class="n">Context</span><span class="o">.</span><span class="na">AUDIO_SERVICE</span><span class="o">);</span>
+        <span class="kt">int</span> <span class="n">maxVolume</span> <span class="o">=</span> <span class="n">audioManager</span><span class="o">.</span><span class="na">getStreamMaxVolume</span><span class="o">(</span><span class="n">AudioManager</span><span class="o">.</span><span class="na">STREAM_MUSIC</span><span class="o">);</span>
+        <span class="kt">int</span> <span class="n">curVolume</span> <span class="o">=</span> <span class="n">audioManager</span><span class="o">.</span><span class="na">getStreamVolume</span><span class="o">(</span><span class="n">AudioManager</span><span class="o">.</span><span class="na">STREAM_MUSIC</span><span class="o">);</span>
+        <span class="n">volBar</span><span class="o">.</span><span class="na">setMax</span><span class="o">(</span><span class="n">maxVolume</span><span class="o">);</span>
+        <span class="n">volBar</span><span class="o">.</span><span class="na">setProgress</span><span class="o">(</span><span class="n">curVolume</span><span class="o">);</span>
+        <span class="n">volBar</span><span class="o">.</span><span class="na">setOnSeekBarChangeListener</span><span class="o">(</span><span class="k">new</span> <span class="n">SeekBar</span><span class="o">.</span><span class="na">OnSeekBarChangeListener</span><span class="o">()</span> <span class="o">{</span>
+      <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onStopTrackingTouch</span><span class="o">(</span><span class="n">SeekBar</span> <span class="n">seekBar</span><span class="o">)</span> <span class="o">{}</span>
+      <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onStartTrackingTouch</span><span class="o">(</span><span class="n">SeekBar</span> <span class="n">seekBar</span><span class="o">)</span> <span class="o">{}</span>
+      
+      <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onProgressChanged</span><span class="o">(</span><span class="n">SeekBar</span> <span class="n">seekBar</span><span class="o">,</span> <span class="kt">int</span> <span class="n">progress</span><span class="o">,</span>
+          <span class="kt">boolean</span> <span class="n">fromUser</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">audioManager</span><span class="o">.</span><span class="na">setStreamVolume</span><span class="o">(</span><span class="n">AudioManager</span><span class="o">.</span><span class="na">STREAM_MUSIC</span><span class="o">,</span> <span class="n">progress</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+      <span class="o">}</span>
+    <span class="o">});</span>
+    <span class="o">}</span>
+    </pre></div></td></tr><tr id="section-29"><td class="docs"><div class="pilwrap"><a href="#section-29" class="pilcrow">&#182;</a></div><p>returns the correct file when you select one from the file browser</p>
+</td><td class="code"><div class="highlight"><pre>    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onActivityResult</span><span class="o">(</span><span class="kt">int</span> <span class="n">requestCode</span><span class="o">,</span> <span class="kt">int</span> <span class="n">resultCode</span><span class="o">,</span> <span class="n">Intent</span> <span class="n">data</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">onActivityResult</span><span class="o">(</span><span class="n">requestCode</span><span class="o">,</span> <span class="n">resultCode</span><span class="o">,</span> <span class="n">data</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">requestCode</span> <span class="o">==</span> <span class="n">MediaFetchResultCode</span><span class="o">)</span> <span class="o">{</span>
+         <span class="k">if</span> <span class="o">(</span><span class="n">resultCode</span> <span class="o">==</span> <span class="n">RESULT_OK</span><span class="o">)</span> <span class="o">{</span>
+          <span class="n">mFileName</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="na">getStringExtra</span><span class="o">(</span><span class="s">&quot;fileChosen&quot;</span><span class="o">);</span>
+          <span class="n">File</span> <span class="n">file</span> <span class="o">=</span> <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">mFileName</span><span class="o">);</span>    
+          <span class="n">fileSelected</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">file</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+          <span class="n">Toast</span><span class="o">.</span><span class="na">makeText</span><span class="o">(</span><span class="n">getApplicationContext</span><span class="o">(),</span>
+            <span class="s">&quot;You have selected:&quot;</span> <span class="o">+</span> <span class="n">file</span><span class="o">.</span><span class="na">getName</span><span class="o">(),</span> <span class="n">Toast</span><span class="o">.</span><span class="na">LENGTH_LONG</span><span class="o">).</span><span class="na">show</span><span class="o">();</span>
+         <span class="o">}</span>
+        <span class="o">}</span>
+       <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onPause</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">onPause</span><span class="o">();</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">mRecorder</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">mRecorder</span><span class="o">.</span><span class="na">release</span><span class="o">();</span>
+            <span class="n">mRecorder</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="k">if</span> <span class="o">(</span><span class="n">mPlayer</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">mPlayer</span><span class="o">.</span><span class="na">release</span><span class="o">();</span>
+            <span class="n">mPlayer</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="nd">@UiThread</span>
+    <span class="kt">void</span> <span class="nf">alertDialog</span><span class="o">(</span><span class="n">String</span> <span class="n">message</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">new</span> <span class="n">AlertDialog</span><span class="o">.</span><span class="na">Builder</span><span class="o">(</span><span class="k">this</span><span class="o">)</span>
+      <span class="o">.</span><span class="na">setCancelable</span><span class="o">(</span><span class="kc">false</span><span class="o">)</span>
+      <span class="o">.</span><span class="na">setMessage</span><span class="o">(</span><span class="n">message</span><span class="o">)</span>
+      <span class="o">.</span><span class="na">setPositiveButton</span><span class="o">(</span><span class="s">&quot;OK&quot;</span><span class="o">,</span> <span class="k">new</span> <span class="n">OnClickListener</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">DialogInterface</span> <span class="n">dialog</span><span class="o">,</span> <span class="kt">int</span> <span class="n">which</span><span class="o">)</span> <span class="o">{</span></pre></div></td></tr><tr id="section-30"><td class="docs"><div class="pilwrap"><a href="#section-30" class="pilcrow">&#182;</a></div><p>do nothing</p>
+</td><td class="code"><div class="highlight"><pre>        <span class="o">}</span>
+      <span class="o">})</span>
+      <span class="o">.</span><span class="na">show</span><span class="o">();</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+
+</pre></div></td></tr></tbody></table><div id="generated">generated Mon Apr 01 2013 20:01:55 GMT+0000 (UTC)  </div><div id="projectname"><a href="../../../../../index.html">Luper</a></div></div></body></html>
