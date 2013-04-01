@@ -9,7 +9,7 @@ import android.util.Log;
 
 public class LuperSQLiteHelper extends SQLiteOpenHelper {
   private static final String DATABASE_NAME = "luperlocal.db";
-  private static final int DATABASE_VERSION = 1;
+  private static final int DATABASE_VERSION = 2;
   
   private Context context;
   
