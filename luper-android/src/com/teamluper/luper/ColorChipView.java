@@ -79,7 +79,7 @@ public class ColorChipView extends View {
         mDefStrokeWidth = mPaint.getStrokeWidth();
         mPaint.setStyle(Style.FILL_AND_STROKE);
         
-        this.setLayoutParams(new LayoutParams(associated.length, getHeight()));
+        this.setLayoutParams(new LayoutParams(associated.duration, getHeight()));
     }
 
 
