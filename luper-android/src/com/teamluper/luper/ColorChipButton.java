@@ -54,7 +54,7 @@ public class ColorChipButton extends Button {
 	public void promptDialog(){
 		new AlertDialog.Builder(getContext())
 			.setTitle("Clip Details Yo!")
-			.setMessage("Length " + associated.duration)
+			.setMessage("Length " + associated.duration + " ms")
 		    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 		        public void onClick(DialogInterface dialog, int whichButton) {
 		      	  //Do nothing for now
