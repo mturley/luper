@@ -14,11 +14,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Environment;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -190,9 +193,26 @@ public class LuperApp extends SherlockFragmentActivity {
   	startActivity(intent);
   }
   
+  public boolean deviceIsOnline() {
+    // borrowed implementation from:
+    // http://stackoverflow.com/questions/2789612/how-can-i-check-whether-an-android-device-is-connected-to-the-web
+    ConnectivityManager cm =
+      (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+    NetworkInfo ni = cm.getActiveNetworkInfo();
+    if (ni == null) return false;
+    return ni.isConnected();
+  }
+  
   // this will be removed, it's an example of how we'll access the EC2 server.
   @Background
   public void testRestAPI(View view) {
+    if(!deviceIsOnline()) {
+      alertDialog("Internet Connection Required",
+          "That feature requires access to the internet, and your device is " +
+          "offline!  Please connect to a Wifi network or a mobile data network " +
+          "and try again.");
+      return;
+    }
     try {
       String t = rest.getTestString();
       alertDialog("Database Connection Test PASS!\n" +
@@ -257,15 +277,21 @@ public class LuperApp extends SherlockFragmentActivity {
   
   @UiThread
   void alertDialog(String message) {
-    new AlertDialog.Builder(this)
+    alertDialog(null, message);
+  }
+  
+  @UiThread
+  void alertDialog(String title, String message) {
+    AlertDialog.Builder dialog = new AlertDialog.Builder(this)
     .setCancelable(false)
     .setMessage(message)
     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface dialog, int which) {
         // do nothing
       }
-    })
-    .show();
+    });
+    if(title != null) dialog.setTitle(title);
+    dialog.show();
   }
   
   @UiThread
