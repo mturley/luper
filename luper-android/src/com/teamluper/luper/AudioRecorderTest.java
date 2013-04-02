@@ -134,6 +134,7 @@ public class AudioRecorderTest extends SherlockActivity
 	            mPlayer.start();
 	            i++;
 	        } catch (Exception e) {
+	        	//handle interrupted exceptions in a different way
 	            Log.e(LOG_TAG, "prepare() failed1");
 	        }
     	}
@@ -320,14 +321,15 @@ public class AudioRecorderTest extends SherlockActivity
                         0));
         //ll4 holds the textbox to display current file to play
         //create and add the play track button
+        LinearLayout ll4 = new LinearLayout(this);
         mPlayTrackButton = new playTrackButton(this);
-        ll.addView(mPlayTrackButton,
+        ll4.addView(mPlayTrackButton,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
         //testing...
-        /*LinearLayout ll4 = new LinearLayout(this);
+        /*
         ll4.addView(mBrowseButton,
                 new LinearLayout.LayoutParams(
                        ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -348,6 +350,12 @@ public class AudioRecorderTest extends SherlockActivity
                         0));
         //add ll3 to base
         base.addView(ll3,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        0));
+        //add ll4 to base
+        base.addView(ll4,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
