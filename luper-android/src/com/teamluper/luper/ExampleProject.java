@@ -76,8 +76,8 @@ public class ExampleProject extends SherlockActivity {
         
         /* TESTS FUNCTIONALLITY OF THE TRACK VIEW RENDERING */
           Clip clip1 = new Clip(); clip1.begin = 0; clip1.end = 500; clip1.duration = 500;
-          Clip clip2 = new Clip(); clip2.begin = 0; clip2.end = 1000; clip2.duration = 1000;
-          Clip clip3 = new Clip(); clip3.begin = 500; clip3.end = 1000; clip3.duration = 500;
+          Clip clip2 = new Clip(); clip2.begin = 250; clip2.end = 1000; clip2.duration = 650;
+          Clip clip3 = new Clip(); clip3.begin = 100; clip3.end = 600; clip3.duration = 500;
 //        clips.add(clip1);
 //        TV = new TrackView(this, clips);
 //        setContentView(TV);
@@ -112,9 +112,9 @@ public class ExampleProject extends SherlockActivity {
         track2.setPadding(0, 10, 0, 5);
         track3.setPadding(0, 10, 0, 5);
         
-        chip1.setBackgroundColor(Color.BLUE); 
+        chip1.setBackgroundColor(Color.GRAY); 
         chip2.setBackgroundColor(Color.RED); 
-        chip3.setBackgroundColor(Color.BLACK); 
+        chip3.setBackgroundColor(Color.WHITE); 
         
 //        TextView track1_text = new TextView(this);
 //        track1_text.setText(" Clip 1 \n Length: " +clip1.duration+ " ms"); //FIX ME
