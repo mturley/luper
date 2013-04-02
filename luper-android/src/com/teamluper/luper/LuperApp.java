@@ -177,6 +177,10 @@ public class LuperApp extends SherlockFragmentActivity {
       Intent intent = new Intent(this, LuperSettings_.class);
       startActivity(intent);
     }
+    if(item.getItemId() == R.id.menu_login) {
+      Intent intent = new Intent(this, LuperLogin.class);
+      startActivity(intent);
+    }
     return true;
   }
   
@@ -205,7 +209,7 @@ public class LuperApp extends SherlockFragmentActivity {
   }
   
   public void newProject(String title) {
-    Sequence newSequence = dataSource.createSequence(title);
+    Sequence newSequence = dataSource.createSequence(null, title);
     ListView lv = (ListView) findViewById(R.id.projectsListView);
     ArrayAdapter a = (ArrayAdapter) lv.getAdapter();
     a.add(newSequence);

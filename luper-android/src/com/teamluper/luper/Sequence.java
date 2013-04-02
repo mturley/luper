@@ -1,5 +1,9 @@
 package com.teamluper.luper;
 
+import java.util.ArrayList;
+
+import android.util.Log;
+
 public class Sequence {
   // database field variables
   private long id;
@@ -9,13 +13,26 @@ public class Sequence {
   private String playbackOptions;
   private boolean isDirty; // dirty = contains unsynced changes
   
+  // references to related objects
+  private ArrayList<Track> tracks;
+  
   // database access variables
   private LuperDataSource dataSource;
   private boolean autoSaveEnabled;
   
-  public Sequence(LuperDataSource dataSource, boolean autoSaveEnabled) {
+  public Sequence(LuperDataSource dataSource, boolean autoSaveEnabled,
+      long id, long ownerUserID, String title, int sharingLevel,
+      String playbackOptions, boolean isDirty) {
     this.dataSource = dataSource;
     this.setAutoSaveEnabled(autoSaveEnabled);
+    this.id = -1;
+    this.ownerUserID = -1;
+    this.title = title;
+    this.sharingLevel = sharingLevel;
+    this.playbackOptions = playbackOptions;
+    this.isDirty = isDirty;
+    this.tracks = null;
+    this.autoSaveEnabled = false;
   }
   
   // getters and setters for everything, for custom onChange-style hooks
@@ -48,6 +65,18 @@ public class Sequence {
   public boolean isAutoSaveEnabled() { return autoSaveEnabled; }
   public void setAutoSaveEnabled(boolean autoSaveEnabled) {
     this.autoSaveEnabled = autoSaveEnabled;
+  }
+  
+  public void loadTracks() {
+    // query by this sequence's id
+    if(this.id == 1) {
+      Log.w("Sequence.loadTracks()",
+          "attempted to loadTracks of a sequence with an undefined id!  aborted.");
+      return;
+    }
+    // from this point on we can assume this.id is valid
+    // TODO create tracks and fill arraylist
+    // TODO delegate to each track's loadclip
   }
 
   @Override

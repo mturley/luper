@@ -9,4 +9,7 @@
         android:icon="@drawable/ic_action_settings"
         android:title="@string/menu_settings"
         android:showAsAction="ifRoom" />
+    <item android:id="@+id/menu_login"
+        android:title="@string/menu_login"
+        android:showAsAction="ifRoom" />
 </menu>

@@ -35,10 +35,10 @@ public class LuperDataSource {
     dbHelper.close();
   }
 
-  public Sequence createSequence(String title) {
+  public Sequence createSequence(User owner, String title) {
     if(title == "") title = "Untitled";
     ContentValues values = new ContentValues();
-    values.put("ownerUserID", 0);
+    values.put("ownerUserID", 0); // FIXME use owner.getID
     values.put("title", title);
     values.put("isDirty", 1);
     long insertId = database.insert("Sequences", null, values);
@@ -54,6 +54,21 @@ public class LuperDataSource {
     long id = sequence.getId();
     System.out.println("Sequence deleted with id: " + id);
     database.delete("Sequences", "_id = " + id, null);
+  }
+  
+  public Track createTrack(Sequence parentSequence) {
+    ContentValues values = new ContentValues();
+    values.put("ownerUserID", parentSequence.getOwnerUserID());
+    values.put("parentSequenceID", parentSequence.getId());
+    values.put("isMuted", false);
+    values.put("isLocked", false);
+    values.put("isDirty", 1);
+    //long insertId = database.insert("Sequences", null);
+    return null;
+  }
+  
+  public void deleteTrack(Track track) {
+    // TODO
   }
 
   public List<Sequence> getAllSequences() {
@@ -73,13 +88,14 @@ public class LuperDataSource {
   }
   
   private Sequence cursorToSequence(Cursor cursor) {
-    Sequence sequence = new Sequence(this, false);
-    sequence.setId(cursor.getLong(cursor.getColumnIndex("_id")));
-    sequence.setOwnerUserID(cursor.getLong(cursor.getColumnIndex("ownerUserID")));
-    sequence.setTitle(cursor.getString(cursor.getColumnIndex("title")));
-    sequence.setSharingLevel(cursor.getInt(cursor.getColumnIndex("sharingLevel")));
-    sequence.setPlaybackOptions(cursor.getString(cursor.getColumnIndex("playbackOptions")));
-    sequence.setDirty(cursor.getInt(cursor.getColumnIndex("isDirty")) == 1);
+    Sequence sequence = new Sequence(this, false,
+      cursor.getLong(cursor.getColumnIndex("_id")),
+      cursor.getLong(cursor.getColumnIndex("ownerUserID")),
+      cursor.getString(cursor.getColumnIndex("title")),
+      cursor.getInt(cursor.getColumnIndex("sharingLevel")),
+      cursor.getString(cursor.getColumnIndex("playbackOptions")),
+      cursor.getInt(cursor.getColumnIndex("isDirty")) == 1
+    );
     sequence.setAutoSaveEnabled(true);
     return sequence;
   }
