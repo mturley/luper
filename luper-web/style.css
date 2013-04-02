@@ -89,6 +89,14 @@ h1, h2 {
 	font-size: 24px;
 }
 
+.bigindent {
+	text-align: left;
+	margin-left: 150px;
+}
+.bigindent h2 {
+	margin-left: 40px;
+}
+
 ol.leftalign { 
 	text-align: left;
 	font-size: 20px;
