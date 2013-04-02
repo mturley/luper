@@ -114,8 +114,10 @@ public class AudioRecorderTest extends SherlockActivity
     }
 
     private void stopPlaying() {
+      if(mPlayer != null) {
         mPlayer.release();
         mPlayer = null;
+      }
     }
     
     @Background
@@ -141,8 +143,10 @@ public class AudioRecorderTest extends SherlockActivity
     }
 
     private void stopPlayingTrack() {
+      if(mPlayer != null) {
         mPlayer.release();
         mPlayer = null;
+      }
     }
 
     private void startRecording() {
