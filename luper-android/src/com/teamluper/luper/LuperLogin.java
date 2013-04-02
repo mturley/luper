@@ -14,12 +14,13 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
-
+import android.support.v4.app.FragmentActivity;
 /**
  * Activity which displays a login screen to the user, offering registration as
  * well.
  */
-public class LuperLogin extends Activity {
+//modified from Activity to FragmentActivity for Facebook
+public class LuperLogin extends FragmentActivity {
   /**
    * A dummy authentication store containing known user names and passwords.
    * TODO: remove after connecting to a real authentication system.
@@ -47,6 +48,9 @@ public class LuperLogin extends Activity {
   private View mLoginFormView;
   private View mLoginStatusView;
   private TextView mLoginStatusMessageView;
+  
+  //Instance of FacebookLoginFragment
+  private FacebookLoginFragment facebookLoginFragment;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +88,20 @@ public class LuperLogin extends Activity {
             attemptLogin();
           }
         });
+    
+    //facebook button implementation
+    if (savedInstanceState == null) {
+        // Add the fragment on initial activity setup
+        facebookLoginFragment = new FacebookLoginFragment();
+        getSupportFragmentManager()
+        .beginTransaction()
+        .add(android.R.id.content, facebookLoginFragment)
+        .commit();
+    } else {
+        // Or set the fragment from restored state info
+        facebookLoginFragment = (FacebookLoginFragment) getSupportFragmentManager()
+        .findFragmentById(android.R.id.content);
+    }
   }
 
   @Override
