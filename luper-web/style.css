@@ -53,7 +53,6 @@ h1, h2 {
 
 #header {
 	margin:15px 0;
-	height:64px;
 	background:#e6e2d9;
 	border:solid 1px #fff;
 	-webkit-border-radius: 10px;
@@ -61,12 +60,14 @@ h1, h2 {
     border-radius: 10px;
 	text-align:center;
 }
-#header .active {
+#header button:hover {
+	background:#d4d4d4;
+}
+#header .active, #header button:active {
 	background:#ccc;
 }
 
 #header button {
-	height:64px;
 	padding-left:20px;
 	padding-right:20px;
 	font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
@@ -74,6 +75,10 @@ h1, h2 {
 	font-size:13pt;
 	border:none;
 	background:none;
+}
+#header button a {
+	display: inline-block;
+	padding: 5px 0;
 }
 
 #appicon {
