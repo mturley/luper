@@ -172,14 +172,14 @@ public class ExampleProject extends SherlockActivity {
 	    inf.inflate(R.menu.editor_bar, menu);
 	    
 	    // makes an onCLickListener for edit
-	    final MenuItem item = menu.findItem(R.id.edit);
+	    /*final MenuItem item = menu.findItem(R.id.edit);
 	    item.getActionView().setOnClickListener(new OnClickListener() {
 	      @Override
 	      public void onClick(View v) {
 	        onOptionsItemSelected(item);
 	      }
 	    });
-	    
+	    */
 	    return super.onCreateOptionsMenu(menu);
 	  }
 }

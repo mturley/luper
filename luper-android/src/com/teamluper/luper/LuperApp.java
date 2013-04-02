@@ -181,6 +181,8 @@ public class LuperApp extends SherlockFragmentActivity {
       startActivity(intent);
     }
     if(item.getItemId() == R.id.menu_login) {
+      alertDialog("Warning","Login is not fully implemented, and will likely" +
+      		"crash the app.  This is a known issue.");
       Intent intent = new Intent(this, LuperLogin.class);
       startActivity(intent);
     }
