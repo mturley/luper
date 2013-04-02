@@ -126,15 +126,21 @@ public class ExampleProject extends SherlockActivity {
 //        track3_text.setText(" Clip 3 \n Length: " +clip3.duration+ " ms"); //FIX ME
 //        track3.addView(track3_text);
 //        
+        //TextView mark1 = new TextView(this);
+        //mark1.setText("|");
+        //mark1.setPadding(500, 0, 0, 0);
+        //base.addView(mark1);
+        TextView timelinetxt = new TextView(this);
+        timelinetxt.setText("_____|__________________|___________________|___________________|___________________|_________\n");
+        base.addView(timelinetxt);
         /*TextView mark1 = new TextView(this);
         mark1.setText("|");
         mark1.setPadding(500, 0, 0, 0);
         base.addView(mark1);
-        TextView timelinetxt = new TextView(this);
-        timelinetxt.setText("500ms");
-        timelinetxt.setPadding(485, 0, 0, 0);
-        base.addView(timelinetxt);*/
-        
+        TextView timelinetxt2 = new TextView(this);
+        timelinetxt2.setText("500ms");
+        timelinetxt2.setPadding(485, 0, 0, 0);
+        base.addView(timelinetxt2);*/
 //        timelinetxt.setText(" __|__________________|___________________|___________________|___________________|__________\n" +
 //        		"     0                             250                             500                             750                             1000 ms");
 //      
