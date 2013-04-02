@@ -284,7 +284,12 @@ public class LuperApp extends SherlockFragmentActivity {
   
   @UiThread
   void alertDialog(String title, String message) {
-    AlertDialog.Builder dialog = new AlertDialog.Builder(this)
+    alertDialog(this, title, message);
+  }
+  
+  @UiThread
+  void alertDialog(Context context, String title, String message) {
+    AlertDialog.Builder dialog = new AlertDialog.Builder(context)
     .setCancelable(false)
     .setMessage(message)
     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {

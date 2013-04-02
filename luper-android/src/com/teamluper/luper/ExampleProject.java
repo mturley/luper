@@ -1,9 +1,12 @@
 package com.teamluper.luper;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -44,6 +47,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.googlecode.androidannotations.annotations.EFragment;
+import com.googlecode.androidannotations.annotations.UiThread;
 import com.teamluper.luper.AudioRecorderTest.PlayButton;
 import com.teamluper.luper.AudioRecorderTest.RecordButton;
 import com.teamluper.luper.CanvasTest.GraphicsView;
@@ -52,13 +56,19 @@ import com.teamluper.luper.CanvasTest.GraphicsView;
 public class ExampleProject extends SherlockActivity {
 	ActionBar AB;
 	ArrayList<Clip> clips = new ArrayList<Clip>();
-	ArrayList<Track> tracks = new ArrayList<Track>();	
-
+	ArrayList<Track> tracks = new ArrayList<Track>();
 	
 	@Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        
+        alertDialog("Incomplete Feature",
+            "The Project Editor is not yet abstracted to open " +
+            "any given project.  You're being taken instead to a " +
+            "hard-coded Dummy project to demonstrate the editor UI. " +
+            "Note also that the UI buttons are mostly unimplemented.");
+        
         long ID = getIntent().getExtras().getLong("com.teamluper.luper.ProjectId");
 
         AB = getSupportActionBar();
@@ -173,19 +183,55 @@ public class ExampleProject extends SherlockActivity {
 	
 	// #Creates the Actionbar 
 	@Override
-	  public boolean onCreateOptionsMenu(Menu menu) {
-	    MenuInflater inf = getSupportMenuInflater();
-	    inf.inflate(R.menu.editor_bar, menu);
-	    
-	    // makes an onCLickListener for edit
-	    /*final MenuItem item = menu.findItem(R.id.edit);
-	    item.getActionView().setOnClickListener(new OnClickListener() {
-	      @Override
-	      public void onClick(View v) {
-	        onOptionsItemSelected(item);
-	      }
-	    });
-	    */
-	    return super.onCreateOptionsMenu(menu);
-	  }
+  public boolean onCreateOptionsMenu(Menu menu) {
+    MenuInflater inf = getSupportMenuInflater();
+    inf.inflate(R.menu.editor_bar, menu);
+    return super.onCreateOptionsMenu(menu);
+  }
+	@Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+	  boolean incomplete = true;
+    if(item.getItemId() == R.id.editor_play) {
+      // TODO
+    }
+    if(item.getItemId() == R.id.editor_edit_clip) {
+      // TODO
+    }
+    if(item.getItemId() == R.id.editor_add_clip) {
+      // TODO
+    }
+    if(item.getItemId() == R.id.editor_delete_clip) {
+      // TODO
+    }
+    if(item.getItemId() == R.id.editor_volume) {
+      // TODO
+    }
+    if(item.getItemId() == R.id.editor_help) {
+      // TODO
+    }
+    if(incomplete) alertDialog("Incomplete Feature",
+        "That button hasn't been hooked up to anything.");
+    return true;
+  }
+	
+  void alertDialog(String message) {
+    alertDialog(null, message);
+  }
+  
+  void alertDialog(String title, String message) {
+    alertDialog(this, title, message);
+  }
+  
+  void alertDialog(Context context, String title, String message) {
+    AlertDialog.Builder dialog = new AlertDialog.Builder(context)
+    .setCancelable(false)
+    .setMessage(message)
+    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+      public void onClick(DialogInterface dialog, int which) {
+        // do nothing
+      }
+    });
+    if(title != null) dialog.setTitle(title);
+    dialog.show();
+  }
 }
