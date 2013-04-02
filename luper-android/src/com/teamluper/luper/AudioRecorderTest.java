@@ -49,6 +49,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
+import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.UiThread;
 
@@ -117,16 +118,25 @@ public class AudioRecorderTest extends SherlockActivity
         mPlayer = null;
     }
     
-    private void startPlayingTrack() {
+    @Background
+    public void startPlayingTrack() {
     	
-        mPlayer = new MediaPlayer();
-        try {
-            mPlayer.setDataSource(mFileName);
-            mPlayer.prepare();
-            mPlayer.start();
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "prepare() failed1");
-        }
+    	int i=0;
+    	while(playBackTest!=null && i!=playBackTest.size())
+    	{
+	        mPlayer = new MediaPlayer();
+	        mFileName=playBackTest.clips.get(i).name;
+	        try 
+	        {
+	            mPlayer.setDataSource(mFileName);
+	            mPlayer.prepare();
+	            Thread.sleep(playBackTest.clips.get(i).getDuration());
+	            mPlayer.start();
+	            i++;
+	        } catch (Exception e) {
+	            Log.e(LOG_TAG, "prepare() failed1");
+	        }
+    	}
     }
 
     private void stopPlayingTrack() {
