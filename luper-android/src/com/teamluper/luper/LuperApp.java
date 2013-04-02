@@ -219,6 +219,7 @@ public class LuperApp extends SherlockFragmentActivity {
   @Background
   public void exampleProject(View view) {
 		  Intent intent = new Intent(this, ExampleProject.class);
+		  intent.putExtra("com.teamluper.luper.ProjectId", 817265);
 		  startActivity(intent);
   }
   

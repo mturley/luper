@@ -61,7 +61,7 @@ public class AudioRecorderTest extends SherlockActivity
 
     private RecordButton mRecordButton = null;
     private MediaRecorder mRecorder = null;
-
+    
     private PlayButton   mPlayButton = null;
     private MediaPlayer   mPlayer = null;
     
