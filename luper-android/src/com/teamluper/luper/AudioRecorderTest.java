@@ -376,7 +376,7 @@ public class AudioRecorderTest extends SherlockActivity
         //mBrowseButton.setBackgroundColor(Color.RED);
         //mBrowseButton.setLayoutParams(new LinearLayout.LayoutParams(50, 50));
         
-        //allows the functionality of the browse button to start when it gets clicked
+        //starts a new activity/intent that activates the FileSelector activity
         mBrowseButton.setOnClickListener(new View.OnClickListener() {
         	   @Override
         	   public void onClick(View v) {

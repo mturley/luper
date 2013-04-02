@@ -50,7 +50,6 @@ import com.teamluper.luper.CanvasTest.GraphicsView;
 
 
 public class ExampleProject extends SherlockActivity {
-	
 	ActionBar AB;
 	ArrayList<Clip> clips = new ArrayList<Clip>();
 	ArrayList<Track> tracks = new ArrayList<Track>();	
@@ -76,9 +75,9 @@ public class ExampleProject extends SherlockActivity {
         
         
         /* TESTS FUNCTIONALLITY OF THE TRACK VIEW RENDERING */
-          Clip clip1 = new Clip(); clip1.begin = 50; clip1.end = 300; clip1.duration = 250;
-          Clip clip2 = new Clip(); clip2.begin = 350; clip2.end = 1000; clip2.duration = 650;
-          Clip clip3 = new Clip(); clip3.begin = 100; clip3.end = 550; clip3.duration = 450;
+          Clip clip1 = new Clip(); clip1.begin = 0; clip1.end = 500; clip1.duration = 500;
+          Clip clip2 = new Clip(); clip2.begin = 0; clip2.end = 1000; clip2.duration = 1000;
+          Clip clip3 = new Clip(); clip3.begin = 500; clip3.end = 1000; clip3.duration = 500;
 //        clips.add(clip1);
 //        TV = new TrackView(this, clips);
 //        setContentView(TV);
@@ -93,39 +92,45 @@ public class ExampleProject extends SherlockActivity {
         RelativeLayout track2 = new RelativeLayout(this);
         RelativeLayout track3 = new RelativeLayout(this);
         
-        track1.setPadding(20,20,20,5);
-        track2.setPadding(180,10,20,5);
-        track3.setPadding(100,10,20,5);
+//        Button chip1 = new Button(this);
+//        Button chip2 = new Button(this);
+//        Button chip3 = new Button(this);
         
-        //ColorChipView chip1 = new ColorChipView(this, clip1);
-        //ColorChipView chip2 = new ColorChipView(this, clip2);
-        Button chip1 = new Button(this);
-        Button chip2 = new Button(this);
-        Button chip3 = new Button(this);
-        
-        chip1.setBackgroundColor(Color.GRAY); chip1.setLayoutParams(new LinearLayout.LayoutParams(clip1.duration, 100));
-        chip2.setBackgroundColor(Color.RED); chip2.setLayoutParams(new LinearLayout.LayoutParams(clip2.duration, 100));
-        chip3.setBackgroundColor(Color.WHITE); chip3.setLayoutParams(new LinearLayout.LayoutParams(clip3.duration, 100));
+        ColorChipButton chip1 = new ColorChipButton(this, clip1);
+        ColorChipButton chip2 = new ColorChipButton(this, clip2);
+        ColorChipButton chip3 = new ColorChipButton(this, clip3);
         
         track1.addView(chip1);
         track2.addView(chip2);
-        track3.addView(chip3);
+        track3.addView(chip3);        
+
+//        chip1.setX(chip1.getStartTime());
+//        chip2.setX(chip2.getStartTime());
+//        chip3.setX(chip3.getStartTime());
         
-        TextView track1_text = new TextView(this);
-        track1_text.setText(" Clip 1 \n Length: " +clip1.duration+ " ms"); //FIX ME
-        track1.addView(track1_text);
-        TextView track2_text = new TextView(this);
-        track2_text.setText(" Clip 2 \n Length: " +clip2.duration+ " ms"); //FIX ME
-        track2.addView(track2_text);
-        TextView track3_text = new TextView(this);
-        track3_text.setText(" Clip 3 \n Length: " +clip3.duration+ " ms"); //FIX ME
-        track3.addView(track3_text);
+        track1.setPadding(0, 10, 0, 5);
+        track2.setPadding(0, 10, 0, 5);
+        track3.setPadding(0, 10, 0, 5);
         
-        TextView timelinetxt = new TextView(this);
-        timelinetxt.setText(" __|__________________|___________________|___________________|___________________|__________\n" +
-        		"     0                             250                             500                             750                             1000 ms");
-      
-        base.addView(timelinetxt);
+        chip1.setBackgroundColor(Color.BLUE); 
+        chip2.setBackgroundColor(Color.RED); 
+        chip3.setBackgroundColor(Color.BLACK); 
+        
+//        TextView track1_text = new TextView(this);
+//        track1_text.setText(" Clip 1 \n Length: " +clip1.duration+ " ms"); //FIX ME
+//        track1.addView(track1_text);
+//        TextView track2_text = new TextView(this);
+//        track2_text.setText(" Clip 2 \n Length: " +clip2.duration+ " ms"); //FIX ME
+//        track2.addView(track2_text);
+//        TextView track3_text = new TextView(this);
+//        track3_text.setText(" Clip 3 \n Length: " +clip3.duration+ " ms"); //FIX ME
+//        track3.addView(track3_text);
+//        
+//        TextView timelinetxt = new TextView(this);
+//        timelinetxt.setText(" __|__________________|___________________|___________________|___________________|__________\n" +
+//        		"     0                             250                             500                             750                             1000 ms");
+//      
+//        base.addView(timelinetxt);
         
         base.addView(track1,
                 new RelativeLayout.LayoutParams(
