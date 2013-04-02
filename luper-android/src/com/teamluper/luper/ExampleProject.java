@@ -50,62 +50,51 @@ import com.teamluper.luper.CanvasTest.GraphicsView;
 
 
 public class ExampleProject extends SherlockActivity {
-	ActionBar AB;
-	//ProjectFragment PF;
 	
-	ColorChipView CCV;
+	ActionBar AB;
 	ArrayList<Clip> clips = new ArrayList<Clip>();
-	TrackView TV;
+	ArrayList<Track> tracks = new ArrayList<Track>();	
+
 	
 	@Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        long ID = getIntent().getExtras().getLong("com.teamluper.luper.ProjectId");
         AB = getSupportActionBar();
         
         final ActionBar bar = getSupportActionBar();
         bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS); // Gives us Tabs!
         
-        
-        /* TESTS FUNCTIONALITY OF THE COLOR CHIP RENDERING*/
-        
-//        CCV = new ColorChipView(this,clip1);
-//        setContentView(CCV);
-        
-        
-        
-        /* TESTS FUNCTIONALLITY OF THE TRACK VIEW RENDERING */
-          Clip clip1 = new Clip(); clip1.begin = 50; clip1.end = 300; clip1.duration = 250;
-          Clip clip2 = new Clip(); clip2.begin = 350; clip2.end = 1000; clip2.duration = 650;
-//        clips.add(clip1);
-//        TV = new TrackView(this, clips);
-//        setContentView(TV);
-		
+        //
         LinearLayout base = new LinearLayout(this);
         base.setOrientation(LinearLayout.VERTICAL);
+        
+        
+        
         RelativeLayout track1 = new RelativeLayout(this);
         RelativeLayout track2 = new RelativeLayout(this);
-        
-        //ColorChipView chip1 = new ColorChipView(this, clip1);
-        //ColorChipView chip2 = new ColorChipView(this, clip2);
-        Button chip1 = new Button(this);
-        Button chip2 = new Button(this);
-        chip1.setBackgroundColor(Color.BLUE); chip1.setLayoutParams(new LinearLayout.LayoutParams(clip1.duration, 100));
-        chip2.setBackgroundColor(Color.RED); chip2.setLayoutParams(new LinearLayout.LayoutParams(clip2.duration, 100));
-        track1.addView(chip1);
-        //track1.addView(chip2);
-        track2.addView(chip2);
-        
-        base.addView(track1,
-                new RelativeLayout.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
-        base.addView(track2,
-                new RelativeLayout.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
-        
-        setContentView(base);
+//        
+////        ColorChipView chip1 = new ColorChipView(this, clip1);
+////        ColorChipView chip2 = new ColorChipView(this, clip2);
+//////        Button chip1 = new Button(this);
+//////        Button chip2 = new Button(this);
+////        chip1.setBackgroundColor(Color.BLUE); chip1.setLayoutParams(new LinearLayout.LayoutParams(clip1.duration, 100));
+////        chip2.setBackgroundColor(Color.RED); chip2.setLayoutParams(new LinearLayout.LayoutParams(clip2.duration, 100));
+//        track1.addView(chip1);
+//        //track1.addView(chip2);
+//        track2.addView(chip2);
+//        
+//        base.addView(track1,
+//                new RelativeLayout.LayoutParams(
+//                        ViewGroup.LayoutParams.WRAP_CONTENT,
+//                        ViewGroup.LayoutParams.WRAP_CONTENT));
+//        base.addView(track2,
+//                new RelativeLayout.LayoutParams(
+//                        ViewGroup.LayoutParams.WRAP_CONTENT,
+//                        ViewGroup.LayoutParams.WRAP_CONTENT));
+//        
+//        setContentView(base);
         
         /*
         FragmentManager fragmentManager = getFragmentManager();
