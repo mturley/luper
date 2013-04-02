@@ -47,7 +47,7 @@ import com.teamluper.luper.AudioRecorderTest.RecordButton;
 @SuppressLint("WrongCall")
 public class LoopTest extends Activity {
 	ArrayList<Clip> cliplist = new ArrayList<Clip>();
-	ColorChipView CCV;
+	ColorClipView CCV;
 	int numTimes;
 	
 	private OnClickListener onClickListener = new OnClickListener() {
@@ -152,7 +152,7 @@ public class LoopTest extends Activity {
     }
 	static public class ProjectView extends View {
 //		ArrayList<ColorChipView> chipList = new ArrayList<ColorChipView>();
-		ColorChipView chip;
+		ColorClipView chip;
 		protected Canvas canvas;
 
 	    public ProjectView(Context context) {

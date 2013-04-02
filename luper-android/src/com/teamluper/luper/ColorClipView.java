@@ -36,7 +36,7 @@ import java.util.Random;
  * accroding to the event's status.
  *
  */
-public class ColorChipView extends View {
+public class ColorClipView extends View {
 
 	//a tag for XML layouts, Manifest
     private static final String TAG = "ColorChipView";
@@ -60,18 +60,18 @@ public class ColorChipView extends View {
 
     int mColor;
 
-    public ColorChipView(Context context) {
+    public ColorClipView(Context context) {
         super(context);
     	System.out.println("ON MAKE CCV");
         init();
     }
 
-    public ColorChipView(Context context, AttributeSet attrs) {
+    public ColorClipView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
     
-    public ColorChipView(Context context, Clip c) {
+    public ColorClipView(Context context, Clip c) {
         super(context);
         associated = c;
         init();

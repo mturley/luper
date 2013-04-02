@@ -59,7 +59,7 @@ public class TrackView extends ViewGroup {
     Paint mPaint;
     
     ArrayList<Clip> clips;
-    ArrayList<ColorChipView> chips = new ArrayList<ColorChipView>();
+    ArrayList<ColorClipView> chips = new ArrayList<ColorClipView>();
     ImageButton play;
 //  ViewSwitcher switcher;
     OnClickListener listener;
@@ -99,7 +99,7 @@ public class TrackView extends ViewGroup {
         play.setClickable(true);
         
         for(Clip clip: clips){
-        	chips.add(new ColorChipView(context, clip));
+        	chips.add(new ColorClipView(context, clip));
         	this.addView(chips.get(clips.indexOf(clip)));
         }
         this.setLayoutParams( new LayoutParams(LayoutParams.MATCH_PARENT, 100));
@@ -156,7 +156,7 @@ public class TrackView extends ViewGroup {
 				lps.WRAP_CONTENT,
 				20 + lps.bottomMargin
 				);
-		for (ColorChipView ccv: chips) {
+		for (ColorClipView ccv: chips) {
 				
 				// optimization: we are moving through the children in order
 				// when we hit null, there are no more children to layout so return
