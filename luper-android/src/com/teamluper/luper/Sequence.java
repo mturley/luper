@@ -24,15 +24,14 @@ public class Sequence {
       long id, long ownerUserID, String title, int sharingLevel,
       String playbackOptions, boolean isDirty) {
     this.dataSource = dataSource;
-    this.setAutoSaveEnabled(autoSaveEnabled);
-    this.id = -1;
-    this.ownerUserID = -1;
+    this.autoSaveEnabled = autoSaveEnabled;
+    this.id = id;
+    this.ownerUserID = ownerUserID;
     this.title = title;
     this.sharingLevel = sharingLevel;
     this.playbackOptions = playbackOptions;
     this.isDirty = isDirty;
     this.tracks = null;
-    this.autoSaveEnabled = false;
   }
   
   // getters and setters for everything, for custom onChange-style hooks

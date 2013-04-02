@@ -30,9 +30,19 @@ public class Track {
 	// volume? an int?
 	
 	// Mike's constructor
-	public Track(LuperDataSource dataSource, boolean autoSaveEnabled) {
+	public Track(LuperDataSource dataSource, boolean autoSaveEnabled,
+	    long id, long ownerUserID, long parentSequenceID,
+	    boolean isMuted, boolean isLocked, String playbackOptions,
+	    boolean isDirty) {
 	  this.dataSource = dataSource;
 	  this.autoSaveEnabled = autoSaveEnabled;
+	  this.id = id;
+	  this.ownerUserID = ownerUserID;
+	  this.parentSequenceID = parentSequenceID;
+	  this.isMuted = isMuted;
+	  this.isLocked = isLocked;
+	  this.playbackOptions = playbackOptions;
+	  this.isDirty = isDirty;
 	}
 	// temporary constructor for compatability with other files
 	public Track() {

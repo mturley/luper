@@ -63,11 +63,44 @@ public class LuperDataSource {
     values.put("isMuted", false);
     values.put("isLocked", false);
     values.put("isDirty", 1);
-    //long insertId = database.insert("Sequences", null);
-    return null;
+    long insertId = database.insert("Tracks", null, values);
+    Cursor cursor = database.query("Tracks", null,
+        "_id = " + insertId, null, null, null, null);
+    cursor.moveToFirst();
+    Track newTrack = cursorToTrack(cursor);
+    cursor.close();
+    return newTrack;
+  }
+  public void deleteTrack(Track track) {
+    // TODO
   }
   
-  public void deleteTrack(Track track) {
+  public AudioFile createAudioFile(User owner, String filePath) {
+    ContentValues values = new ContentValues();
+    values.put("ownerUserID", 0); // FIXME replace with owner.getID
+    values.put("clientFilePath", filePath);
+    values.put("fileFormat", "3gp");
+    values.put("isReadyOnClient", 1);
+    values.put("isDirty", 1);
+    long insertId = database.insert("Files", null, values);
+    Cursor cursor = database.query("Files", null,
+        "_id = " + insertId, null, null, null, null);
+    AudioFile newFile = cursorToFile(cursor);
+    cursor.close();
+    return newFile;
+  }
+  public void deleteAudioFile(AudioFile file) {
+    // TODO
+  }
+  
+  public Clip createClip(Track parentTrack, AudioFile file) {
+    ContentValues values = new ContentValues();
+    values.put("ownerUserID", parentTrack.getOwnerUserID());
+    values.put("parentTrackID", parentTrack.getId());
+    values.put("audioFileID", file.getId());
+    return null;
+  }
+  public void deleteClip(Clip clip) {
     // TODO
   }
 
@@ -100,32 +133,52 @@ public class LuperDataSource {
     return sequence;
   }
   private Track cursorToTrack(Cursor cursor) {
-    Track track = new Track(this, false);
-    track.setId(cursor.getLong(cursor.getColumnIndex("_id")));
-    track.setOwnerUserID(cursor.getLong(cursor.getColumnIndex("ownerUserID")));
-    track.setParentSequenceID(cursor.getLong(cursor.getColumnIndex("parentSequenceID")));
-    track.setMuted(cursor.getInt(cursor.getColumnIndex("isMuted")) == 1);
-    track.setMuted(cursor.getInt(cursor.getColumnIndex("isLocked")) == 1);
-    track.setPlaybackOptions(cursor.getString(cursor.getColumnIndex("playbackOptions")));
-    track.setDirty(cursor.getInt(cursor.getColumnIndex("isDirty")) == 1);
+    Track track = new Track(this, false,
+      cursor.getLong(cursor.getColumnIndex("_id")),
+      cursor.getLong(cursor.getColumnIndex("ownerUserID")),
+      cursor.getLong(cursor.getColumnIndex("parentSequenceID")),
+      cursor.getInt(cursor.getColumnIndex("isMuted")) == 1,
+      cursor.getInt(cursor.getColumnIndex("isLocked")) == 1,
+      cursor.getString(cursor.getColumnIndex("playbackOptions")),
+      cursor.getInt(cursor.getColumnIndex("isDirty")) == 1
+    );
     track.setAutoSaveEnabled(true);
     return track;
   }
 
   private Clip cursorToClip(Cursor cursor) {
-    Clip clip = new Clip(this, false);
-    clip.setId(cursor.getLong(cursor.getColumnIndex("_id")));
-    clip.setOwnerUserID(cursor.getLong(cursor.getColumnIndex("ownerUserID")));
-    clip.setParentTrackID(cursor.getLong(cursor.getColumnIndex("parentSequenceID")));
-    clip.setAudioFileID(cursor.getLong(cursor.getColumnIndex("audioFileID")));
-    clip.setStartTime(cursor.getInt(cursor.getColumnIndex("startTime")));
-    clip.setDurationMS(cursor.getInt(cursor.getColumnIndex("durationMS")));
-    clip.setLoopCount(cursor.getInt(cursor.getColumnIndex("loopCount")));
-    clip.setLocked(cursor.getInt(cursor.getColumnIndex("isLocked")) == 1);
-    clip.setPlaybackOptions(cursor.getString(cursor.getColumnIndex("playbackOptions")));
-    clip.setDirty(cursor.getInt(cursor.getColumnIndex("isDirty")) == 1);
-    //clip.setAutoSaveEnabled(true);
+    Clip clip = new Clip(this, false,
+      cursor.getLong(cursor.getColumnIndex("_id")),
+      cursor.getLong(cursor.getColumnIndex("ownerUserID")),
+      cursor.getLong(cursor.getColumnIndex("parentSequenceID")),
+      cursor.getLong(cursor.getColumnIndex("audioFileID")),
+      cursor.getInt(cursor.getColumnIndex("startTime")),
+      cursor.getInt(cursor.getColumnIndex("durationMS")),
+      cursor.getInt(cursor.getColumnIndex("loopCount")),
+      cursor.getInt(cursor.getColumnIndex("isLocked")) == 1,
+      cursor.getString(cursor.getColumnIndex("playbackOptions")),
+      cursor.getInt(cursor.getColumnIndex("isDirty")) == 1
+    );
+    clip.setAutoSaveEnabled(true);
     return clip;
+  }
+  
+  private AudioFile cursorToFile(Cursor cursor) {
+    AudioFile file = new AudioFile(this, false,
+      cursor.getLong(cursor.getColumnIndex("_id")),
+      cursor.getLong(cursor.getColumnIndex("ownerUserID")),
+      cursor.getString(cursor.getColumnIndex("clientFilePath")),
+      cursor.getString(cursor.getColumnIndex("serverFilePath")),
+      cursor.getString(cursor.getColumnIndex("fileFormat")),
+      cursor.getDouble(cursor.getColumnIndex("bitrate")),
+      cursor.getDouble(cursor.getColumnIndex("durationMS")),
+      cursor.getInt(cursor.getColumnIndex("isReadyOnClient")) == 1,
+      cursor.getInt(cursor.getColumnIndex("isReadyOnServer")) == 1,
+      cursor.getLong(cursor.getColumnIndex("renderSequenceID")),
+      cursor.getInt(cursor.getColumnIndex("isDirty")) == 1
+    );
+    file.setAutoSaveEnabled(true);
+    return file;
   }
   
   

@@ -50,7 +50,7 @@ public class LuperLogin extends FragmentActivity {
   private TextView mLoginStatusMessageView;
   
   //Instance of FacebookLoginFragment
-  private FacebookLoginFragment facebookLoginFragment;
+  //private FacebookLoginFragment facebookLoginFragment;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +90,7 @@ public class LuperLogin extends FragmentActivity {
         });
     
     //facebook button implementation
+    /*
     if (savedInstanceState == null) {
         // Add the fragment on initial activity setup
         facebookLoginFragment = new FacebookLoginFragment();
@@ -102,6 +103,7 @@ public class LuperLogin extends FragmentActivity {
         facebookLoginFragment = (FacebookLoginFragment) getSupportFragmentManager()
         .findFragmentById(android.R.id.content);
     }
+    */
   }
 
   @Override

@@ -34,15 +34,31 @@ public class Clip {
 	
 	//needs an array of attributes/filters/modifications?
 	// yeah, eventually playbackOptions will be that -Mike
-	public Clip(LuperDataSource dataSource, boolean autoSaveEnabled) {
+	public Clip(LuperDataSource dataSource, boolean autoSaveEnabled,
+	    long id, long ownerUserID, long parentTrackID, long audioFileID,
+	    int startTime, int durationMS, int loopCount,
+	    boolean isLocked, String playbackOptions, boolean isDirty) {
+	  this.dataSource = dataSource;
+	  this.setAutoSaveEnabled(autoSaveEnabled);
+	  this.id = id;
+	  this.ownerUserID = ownerUserID;
+	  this.parentTrackID = parentTrackID;
+	  this.audioFileID = audioFileID;
+	  this.startTime = startTime;
+	  this.durationMS = durationMS;
+	  this.loopCount = loopCount;
+	  this.isLocked = isLocked;
+	  this.playbackOptions = playbackOptions;
+	  this.isDirty = isDirty;
+	  // brad's stuff
 		name = null;
-		setDurationMS(0);
+		durationMS = 0;
 		begin = 0;
 		end = duration;
 	}
 	public Clip() {
 	  dataSource = null;
-	  autoSaveEnabled = false;
+	  setAutoSaveEnabled(false);
 	  name = null;
 	  duration = 0;
 	  begin = 0;
@@ -51,13 +67,13 @@ public class Clip {
 	public Clip(String cName)
 	{
 	  dataSource = null;
-	  autoSaveEnabled = false;
+	  setAutoSaveEnabled(false);
 		name = cName;
 		duration = 0;
 		begin = 0;
 		end = duration;
 	}
-	//Getters and setters for the fields
+	//Getters and setters for the fields TODO cleanup
 	public String getClip()
 	{
 		return name;
@@ -157,7 +173,13 @@ public class Clip {
 	public void setPlaybackOptions(String playbackOptions) {
 		this.playbackOptions = playbackOptions;
 	}
-	public boolean isDirty() {
+	public boolean isAutoSaveEnabled() {
+    return autoSaveEnabled;
+  }
+  public void setAutoSaveEnabled(boolean autoSaveEnabled) {
+    this.autoSaveEnabled = autoSaveEnabled;
+  }
+  public boolean isDirty() {
 		return isDirty;
 	}
 	public void setDirty(boolean isDirty) {
