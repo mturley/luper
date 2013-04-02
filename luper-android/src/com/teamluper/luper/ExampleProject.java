@@ -50,23 +50,29 @@ import com.teamluper.luper.CanvasTest.GraphicsView;
 
 
 public class ExampleProject extends SherlockActivity {
-	ActionBar AB;
-	//ProjectFragment PF;
 	
-	ColorChipView CCV;
+	ActionBar AB;
 	ArrayList<Clip> clips = new ArrayList<Clip>();
-	TrackView TV;
+	ArrayList<Track> tracks = new ArrayList<Track>();	
+
 	
 	@Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+<<<<<<< HEAD
+        long ID = getIntent().getExtras().getLong("com.teamluper.luper.ProjectId");
+=======
         
+>>>>>>> 6113038dc2d32fc8fd03604b7bc85def1ad204f8
         AB = getSupportActionBar();
         
         final ActionBar bar = getSupportActionBar();
         bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS); // Gives us Tabs!
         
+<<<<<<< HEAD
+        //
+=======
         
         /* TESTS FUNCTIONALITY OF THE COLOR CHIP RENDERING*/
         
@@ -83,11 +89,16 @@ public class ExampleProject extends SherlockActivity {
 //        TV = new TrackView(this, clips);
 //        setContentView(TV);
           
+>>>>>>> 6113038dc2d32fc8fd03604b7bc85def1ad204f8
         LinearLayout base = new LinearLayout(this);
         base.setBackgroundColor(Color.parseColor("#e2dfd8"));
         
         
         base.setOrientation(LinearLayout.VERTICAL);
+<<<<<<< HEAD
+        
+        
+=======
         RelativeLayout track1 = new RelativeLayout(this);
         RelativeLayout track2 = new RelativeLayout(this);
         RelativeLayout track3 = new RelativeLayout(this);
@@ -138,8 +149,31 @@ public class ExampleProject extends SherlockActivity {
                 new RelativeLayout.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT));
+>>>>>>> 6113038dc2d32fc8fd03604b7bc85def1ad204f8
         
-        setContentView(base);
+        RelativeLayout track1 = new RelativeLayout(this);
+        RelativeLayout track2 = new RelativeLayout(this);
+//        
+////        ColorChipView chip1 = new ColorChipView(this, clip1);
+////        ColorChipView chip2 = new ColorChipView(this, clip2);
+//////        Button chip1 = new Button(this);
+//////        Button chip2 = new Button(this);
+////        chip1.setBackgroundColor(Color.BLUE); chip1.setLayoutParams(new LinearLayout.LayoutParams(clip1.duration, 100));
+////        chip2.setBackgroundColor(Color.RED); chip2.setLayoutParams(new LinearLayout.LayoutParams(clip2.duration, 100));
+//        track1.addView(chip1);
+//        //track1.addView(chip2);
+//        track2.addView(chip2);
+//        
+//        base.addView(track1,
+//                new RelativeLayout.LayoutParams(
+//                        ViewGroup.LayoutParams.WRAP_CONTENT,
+//                        ViewGroup.LayoutParams.WRAP_CONTENT));
+//        base.addView(track2,
+//                new RelativeLayout.LayoutParams(
+//                        ViewGroup.LayoutParams.WRAP_CONTENT,
+//                        ViewGroup.LayoutParams.WRAP_CONTENT));
+//        
+//        setContentView(base);
         
         /*
         FragmentManager fragmentManager = getFragmentManager();
