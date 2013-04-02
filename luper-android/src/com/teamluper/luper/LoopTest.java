@@ -1,7 +1,9 @@
 package com.teamluper.luper;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -12,6 +14,7 @@ import android.graphics.Path.Direction;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout;
@@ -29,6 +32,7 @@ import android.view.View;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
 import android.util.Log;
 import android.media.MediaRecorder;
 import android.media.MediaPlayer;
@@ -44,6 +48,7 @@ import com.teamluper.luper.AudioRecorderTest.RecordButton;
 public class LoopTest extends Activity {
 	ArrayList<Clip> cliplist = new ArrayList<Clip>();
 	ColorChipView CCV;
+	int numTimes;
 	
 	private OnClickListener onClickListener = new OnClickListener() {
 	    @Override
@@ -183,5 +188,33 @@ public class LoopTest extends Activity {
     public void onPause() {
         super.onPause();
     }
+    public void loopNum()
+    {
+    	AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
+    	alert.setTitle("Title");
+    	alert.setMessage("Message");
+
+    	// Set an EditText view to get user input 
+    	final EditText input = new EditText(this);
+    	alert.setView(input);
+
+    	alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+
+		public void onClick(DialogInterface dialog, int whichButton) {
+    	  Editable value = input.getText();
+    	  // Do something with value!
+    	  numTimes = Integer.parseInt(input.getText().toString());
+    	  }
+    	});
+
+    	alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+    	  public void onClick(DialogInterface dialog, int whichButton) {
+    	    // Canceled.
+    	  }
+    	});
+
+    	alert.show();
+    }
 }

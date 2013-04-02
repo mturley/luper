@@ -84,7 +84,6 @@ public class ColorChipView extends View {
         //this.setLayoutParams(new LayoutParams(associated.duration, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 
-
     public void setDrawStyle(int style) {
         if (style != CLICKED && style != UNCLICKED) {
             return;
@@ -105,7 +104,6 @@ public class ColorChipView extends View {
         //mPaint = new Paint(color);
         invalidate();
     }
-    
 	
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec){
     	super.onMeasure(widthMeasureSpec, heightMeasureSpec);

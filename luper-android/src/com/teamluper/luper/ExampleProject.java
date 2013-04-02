@@ -60,17 +60,96 @@ public class ExampleProject extends SherlockActivity {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+<<<<<<< HEAD
         long ID = getIntent().getExtras().getLong("com.teamluper.luper.ProjectId");
+=======
+        
+>>>>>>> 6113038dc2d32fc8fd03604b7bc85def1ad204f8
         AB = getSupportActionBar();
         
         final ActionBar bar = getSupportActionBar();
         bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS); // Gives us Tabs!
         
+<<<<<<< HEAD
         //
+=======
+        
+        /* TESTS FUNCTIONALITY OF THE COLOR CHIP RENDERING*/
+        
+//        CCV = new ColorChipView(this,clip1);
+//        setContentView(CCV);
+        
+        
+        
+        /* TESTS FUNCTIONALLITY OF THE TRACK VIEW RENDERING */
+          Clip clip1 = new Clip(); clip1.begin = 50; clip1.end = 300; clip1.duration = 250;
+          Clip clip2 = new Clip(); clip2.begin = 350; clip2.end = 1000; clip2.duration = 650;
+          Clip clip3 = new Clip(); clip3.begin = 100; clip3.end = 550; clip3.duration = 450;
+//        clips.add(clip1);
+//        TV = new TrackView(this, clips);
+//        setContentView(TV);
+          
+>>>>>>> 6113038dc2d32fc8fd03604b7bc85def1ad204f8
         LinearLayout base = new LinearLayout(this);
+        base.setBackgroundColor(Color.parseColor("#e2dfd8"));
+        
+        
         base.setOrientation(LinearLayout.VERTICAL);
+<<<<<<< HEAD
         
         
+=======
+        RelativeLayout track1 = new RelativeLayout(this);
+        RelativeLayout track2 = new RelativeLayout(this);
+        RelativeLayout track3 = new RelativeLayout(this);
+        
+        track1.setPadding(20,20,20,5);
+        track2.setPadding(180,10,20,5);
+        track3.setPadding(100,10,20,5);
+        
+        //ColorChipView chip1 = new ColorChipView(this, clip1);
+        //ColorChipView chip2 = new ColorChipView(this, clip2);
+        Button chip1 = new Button(this);
+        Button chip2 = new Button(this);
+        Button chip3 = new Button(this);
+        
+        chip1.setBackgroundColor(Color.GRAY); chip1.setLayoutParams(new LinearLayout.LayoutParams(clip1.duration, 100));
+        chip2.setBackgroundColor(Color.RED); chip2.setLayoutParams(new LinearLayout.LayoutParams(clip2.duration, 100));
+        chip3.setBackgroundColor(Color.WHITE); chip3.setLayoutParams(new LinearLayout.LayoutParams(clip3.duration, 100));
+        
+        track1.addView(chip1);
+        track2.addView(chip2);
+        track3.addView(chip3);
+        
+        TextView track1_text = new TextView(this);
+        track1_text.setText(" Clip 1 \n Length: " +clip1.duration+ " ms"); //FIX ME
+        track1.addView(track1_text);
+        TextView track2_text = new TextView(this);
+        track2_text.setText(" Clip 2 \n Length: " +clip2.duration+ " ms"); //FIX ME
+        track2.addView(track2_text);
+        TextView track3_text = new TextView(this);
+        track3_text.setText(" Clip 3 \n Length: " +clip3.duration+ " ms"); //FIX ME
+        track3.addView(track3_text);
+        
+        TextView timelinetxt = new TextView(this);
+        timelinetxt.setText(" __|__________________|___________________|___________________|___________________|__________\n" +
+        		"     0                             250                             500                             750                             1000 ms");
+      
+        base.addView(timelinetxt);
+        
+        base.addView(track1,
+                new RelativeLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT));
+        base.addView(track2,
+                new RelativeLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT));
+        base.addView(track3,
+                new RelativeLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT));
+>>>>>>> 6113038dc2d32fc8fd03604b7bc85def1ad204f8
         
         RelativeLayout track1 = new RelativeLayout(this);
         RelativeLayout track2 = new RelativeLayout(this);
@@ -104,18 +183,17 @@ public class ExampleProject extends SherlockActivity {
         fragmentTransaction.commit();
         */
         
-       
    
     }
+	
+	// #Creates the Actionbar 
 	@Override
 	  public boolean onCreateOptionsMenu(Menu menu) {
 	    MenuInflater inf = getSupportMenuInflater();
 	    inf.inflate(R.menu.editor_bar, menu);
 	    
-	    // because one of the action items is a custom view,
-	    // we need the next few lines to force it to use onOptionsItemSelected
-	    // when it's clicked.
-	    final MenuItem item = menu.findItem(R.id.add);
+	    // makes an onCLickListener for edit
+	    final MenuItem item = menu.findItem(R.id.edit);
 	    item.getActionView().setOnClickListener(new OnClickListener() {
 	      @Override
 	      public void onClick(View v) {

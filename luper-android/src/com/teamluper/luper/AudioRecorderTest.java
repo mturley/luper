@@ -49,6 +49,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
+import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.UiThread;
 
@@ -66,6 +67,8 @@ public class AudioRecorderTest extends SherlockActivity
     
     private Button mBrowseButton = null;
     private TextView fileSelected;
+    
+    private playTrackButton mPlayTrackButton = null;
     
     private AudioManager audioManager;
 
@@ -89,6 +92,14 @@ public class AudioRecorderTest extends SherlockActivity
             stopPlaying();
         }
     }
+    
+    private void onPlayTrack(boolean start) {
+        if (start) {
+            startPlayingTrack();
+        } else {
+            stopPlayingTrack();
+        }
+    }
 
     private void startPlaying() {
     	
@@ -103,6 +114,33 @@ public class AudioRecorderTest extends SherlockActivity
     }
 
     private void stopPlaying() {
+        mPlayer.release();
+        mPlayer = null;
+    }
+    
+    @Background
+    public void startPlayingTrack() {
+    	
+    	int i=0;
+    	while(playBackTest!=null && i!=playBackTest.size())
+    	{
+	        mPlayer = new MediaPlayer();
+	        mFileName=playBackTest.clips.get(i).name;
+	        try 
+	        {
+	            mPlayer.setDataSource(mFileName);
+	            mPlayer.prepare();
+	            Thread.sleep(playBackTest.clips.get(i).getDuration());
+	            mPlayer.start();
+	            i++;
+	        } catch (Exception e) {
+	        	//handle interrupted exceptions in a different way
+	            Log.e(LOG_TAG, "prepare() failed1");
+	        }
+    	}
+    }
+
+    private void stopPlayingTrack() {
         mPlayer.release();
         mPlayer = null;
     }
@@ -139,7 +177,7 @@ public class AudioRecorderTest extends SherlockActivity
 
         try {
 			newClip.getDuration();
-		} catch (IOException e1) {
+		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
         playBackTest.putClip(newClip);
@@ -194,6 +232,27 @@ public class AudioRecorderTest extends SherlockActivity
             setOnClickListener(clicker);
         }
     }
+    class playTrackButton extends Button {
+        boolean mStartPlayingTrack = true;
+
+        OnClickListener clicker = new OnClickListener() {
+            public void onClick(View v) {
+                onPlayTrack(mStartPlayingTrack);
+                if (mStartPlayingTrack) {
+                    setText("Stop Track");
+                } else {
+                    setText("Start Track");
+                }
+                mStartPlayingTrack = !mStartPlayingTrack;
+            }
+        };
+
+        public playTrackButton(Context ctx) {
+            super(ctx);
+            setText("Start Track");
+            setOnClickListener(clicker);
+        }
+    }
 
     public AudioRecorderTest() {
         mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/LuperApp/";
@@ -238,6 +297,7 @@ public class AudioRecorderTest extends SherlockActivity
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
+
         
         //ll2 holds the textbox to display current file to play
         LinearLayout ll2 = new LinearLayout(this);
@@ -259,12 +319,22 @@ public class AudioRecorderTest extends SherlockActivity
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
+        //ll4 holds the textbox to display current file to play
+        //create and add the play track button
+        LinearLayout ll4 = new LinearLayout(this);
+        mPlayTrackButton = new playTrackButton(this);
+        ll4.addView(mPlayTrackButton,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        0));
         //testing...
-//        ll4.addView(mBrowseButton,
-//                new LinearLayout.LayoutParams(
-//                        ViewGroup.LayoutParams.WRAP_CONTENT,
-//                        ViewGroup.LayoutParams.WRAP_CONTENT,
-//                        0));
+        /*
+        ll4.addView(mBrowseButton,
+                new LinearLayout.LayoutParams(
+                       ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        0));*/
         
         //add ll to base
         base.addView(ll,
@@ -284,6 +354,13 @@ public class AudioRecorderTest extends SherlockActivity
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
+        //add ll4 to base
+        base.addView(ll4,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        0));
+
         //testing...
 //        base.addView(ll4,
 //                new LinearLayout.LayoutParams(

@@ -219,31 +219,14 @@ public class LuperApp extends SherlockFragmentActivity {
 		  startActivity(intent);
   }
   
-  
-  @Background
-  public void start_testmenu(View view) {
-		  Intent intent = new Intent(this, PopupTest.class);
-		  startActivity(intent);
-  }
-  
-  // code: http://www.java2s.com/Code/Android/2D-Graphics/DrawwithCanvas.htm
-  @Background
-  public void start_testcanvas(View view) {
-		  Intent intent = new Intent(this, CanvasTest.class);
-		  startActivity(intent);
-  }
+
   
   @Background
   public void start_testloop(View view) {
 		  Intent intent = new Intent(this, LoopTest.class);
 		  startActivity(intent);
   }
-  
-  @Background
-  public void startAudioTest(View view) {
-	  Intent intent = new Intent(this, TestEffects.class);
-	  startActivity(intent);
-  }
+
   
   
   // this will be removed too, it's checking the google account that the
