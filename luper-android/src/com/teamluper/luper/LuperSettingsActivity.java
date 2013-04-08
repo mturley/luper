@@ -41,7 +41,7 @@ import com.teamluper.luper.rest.LuperRestClient;
  * API Guide</a> for more information on developing a Settings UI.
  */
 @EActivity
-public class LuperSettings extends SherlockPreferenceActivity
+public class LuperSettingsActivity extends SherlockPreferenceActivity
                            implements OnSharedPreferenceChangeListener {
   /**
    * Determines whether to always show the simplified settings UI, where

@@ -7,13 +7,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-public class LuperSQLiteHelper extends SQLiteOpenHelper {
+public class SQLiteHelper extends SQLiteOpenHelper {
   private static final String DATABASE_NAME = "luperlocal.db";
   private static final int DATABASE_VERSION = 3;
   
   private Context context;
   
-  public LuperSQLiteHelper(Context c) {
+  public SQLiteHelper(Context c) {
     super(c, DATABASE_NAME, null, DATABASE_VERSION);
     context = c;
   }
@@ -29,7 +29,7 @@ public class LuperSQLiteHelper extends SQLiteOpenHelper {
   
   @Override
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-    Log.w(LuperSQLiteHelper.class.getName(),
+    Log.w(SQLiteHelper.class.getName(),
         "Upgrading database from version " + oldVersion + " to "
             + newVersion + ", which will destroy all old data");
     InputStream in = context.getResources().openRawResource(R.raw.drop_sqlite_tables);

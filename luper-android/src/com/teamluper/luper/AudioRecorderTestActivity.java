@@ -54,7 +54,7 @@ import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.UiThread;
 
 @EActivity
-public class AudioRecorderTest extends SherlockActivity
+public class AudioRecorderTestActivity extends SherlockActivity
 {
     private static final String LOG_TAG = "AudioRecorderTest";
     private static String mFileName = null;
@@ -258,7 +258,7 @@ public class AudioRecorderTest extends SherlockActivity
         }
     }
 
-    public AudioRecorderTest() {
+    public AudioRecorderTestActivity() {
         mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/LuperApp/";
         //System.out.println(mFileName);
         mFileName += System.currentTimeMillis() + ".3gp";
@@ -384,8 +384,8 @@ public class AudioRecorderTest extends SherlockActivity
         mBrowseButton.setOnClickListener(new View.OnClickListener() {
         	   @Override
         	   public void onClick(View v) {
-        	    Intent intent = new Intent(AudioRecorderTest.this, FileSelector.class);
-        	    AudioRecorderTest.this.startActivityForResult(intent, MediaFetchResultCode);
+        	    Intent intent = new Intent(AudioRecorderTestActivity.this, FileSelectorActivity.class);
+        	    AudioRecorderTestActivity.this.startActivityForResult(intent, MediaFetchResultCode);
         	   }
         	  });
         mBrowseButton.setText("Browse");

@@ -10,7 +10,7 @@ import android.graphics.Path.Direction;
 import android.os.Bundle;
 import android.view.View;
 
-public class CanvasTest extends Activity {
+public class CanvasTestActivity extends Activity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

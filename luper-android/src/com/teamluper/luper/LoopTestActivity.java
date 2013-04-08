@@ -41,11 +41,11 @@ import java.io.IOException;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.googlecode.androidannotations.annotations.EFragment;
-import com.teamluper.luper.AudioRecorderTest.PlayButton;
-import com.teamluper.luper.AudioRecorderTest.RecordButton;
+import com.teamluper.luper.AudioRecorderTestActivity.PlayButton;
+import com.teamluper.luper.AudioRecorderTestActivity.RecordButton;
 
 @SuppressLint("WrongCall")
-public class LoopTest extends Activity {
+public class LoopTestActivity extends Activity {
 	ArrayList<Clip> cliplist = new ArrayList<Clip>();
 	ColorClipView CCV;
 	int numTimes;

@@ -27,7 +27,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
  
-public class FileSelector extends Activity {
+public class FileSelectorActivity extends Activity {
  ArrayList<String> str = new ArrayList<String>();
  
  // Check if the first level of the directory structure is the one showing

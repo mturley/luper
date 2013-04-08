@@ -1,7 +1,7 @@
 package com.teamluper.luper;
 
 public class AudioFile {
-  private LuperDataSource dataSource;
+  private SQLiteDataSource dataSource;
   private boolean autoSaveEnabled;
    
   private long id;
@@ -16,7 +16,7 @@ public class AudioFile {
   private long renderSequenceID;
   private boolean isDirty;
   
-  public AudioFile(LuperDataSource dataSource, boolean autoSaveEnabled,
+  public AudioFile(SQLiteDataSource dataSource, boolean autoSaveEnabled,
       long id, long ownerUserID, String clientFilePath, String serverFilePath,
       String fileFormat, double bitrate, double durationMS,
       boolean isReadyOnClient, boolean isReadyOnServer,
