@@ -25,7 +25,7 @@ public class Clip {
   private boolean isDirty; // dirty = contains unsynced changes
   
   // Mike's database access variables
-  private SQLiteDataSource dataSource;
+  private LuperDataSource dataSource;
   private boolean autoSaveEnabled;
   
   // Brad's variables
@@ -34,7 +34,7 @@ public class Clip {
 	
 	//needs an array of attributes/filters/modifications?
 	// yeah, eventually playbackOptions will be that -Mike
-	public Clip(SQLiteDataSource dataSource, boolean autoSaveEnabled,
+	public Clip(LuperDataSource dataSource, boolean autoSaveEnabled,
 	    long id, long ownerUserID, long parentTrackID, long audioFileID,
 	    int startTime, int durationMS, int loopCount,
 	    boolean isLocked, String playbackOptions, boolean isDirty) {

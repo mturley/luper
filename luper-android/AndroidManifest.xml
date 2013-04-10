@@ -45,27 +45,27 @@
                 android:value="com.teamluper.luper.LuperApp_" />
         </activity>
         <activity
-            android:name="com.teamluper.luper.LuperProjectEditorActivity"
+            android:name="com.teamluper.luper.ExampleProject"
             android:label="@string/title_activity_example_project"
             android:parentActivityName="com.teamluper.luper.LuperApp_" >
         </activity>
         <activity
-            android:name="com.teamluper.luper.PopupTestActivity"
+            android:name="com.teamluper.luper.PopupTest"
             android:label="TESTME"
             android:parentActivityName="com.teamluper.luper.LuperApp_" >
         </activity>
         <activity
-            android:name="com.teamluper.luper.CanvasTestActivity"
+            android:name="com.teamluper.luper.CanvasTest"
             android:label="Canvas"
             android:parentActivityName="com.teamluper.luper.LuperApp_" >
         </activity>
         <activity
-            android:name="com.teamluper.luper.LoopTestActivity"
+            android:name="com.teamluper.luper.LoopTest"
             android:label="Loop"
             android:parentActivityName="com.teamluper.luper.LuperApp_" >
         </activity>
         <activity
-            android:name="com.teamluper.luper.FileSelectorActivity"
+            android:name="com.teamluper.luper.FileSelector"
             android:label="FileSelector" >
         </activity>
         <activity
@@ -73,7 +73,7 @@
             android:label="AudioTest" >
         </activity>
         <activity
-            android:name="com.teamluper.luper.LuperLoginActivity"
+            android:name="com.teamluper.luper.LuperLogin"
             android:label="@string/title_activity_luper_login"
             android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>

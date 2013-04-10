@@ -48,12 +48,12 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.googlecode.androidannotations.annotations.EFragment;
 import com.googlecode.androidannotations.annotations.UiThread;
-import com.teamluper.luper.AudioRecorderTestActivity.PlayButton;
-import com.teamluper.luper.AudioRecorderTestActivity.RecordButton;
-import com.teamluper.luper.CanvasTestActivity.GraphicsView;
+import com.teamluper.luper.AudioRecorderTest.PlayButton;
+import com.teamluper.luper.AudioRecorderTest.RecordButton;
+import com.teamluper.luper.CanvasTest.GraphicsView;
 
 
-public class LuperProjectEditorActivity extends SherlockActivity {
+public class ExampleProject extends SherlockActivity {
 	ActionBar AB;
 	ArrayList<Clip> clips = new ArrayList<Clip>();
 	ArrayList<Track> tracks = new ArrayList<Track>();
