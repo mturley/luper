@@ -20,7 +20,7 @@ public class Track {
 	private boolean isDirty; // dirty = contains unsynced changes
 	
 	// Mike's database access variables
-	private LuperDataSource dataSource;
+	private SQLiteDataSource dataSource;
 	private boolean autoSaveEnabled;
 	
 	// Cam's variables
@@ -30,7 +30,7 @@ public class Track {
 	// volume? an int?
 	
 	// Mike's constructor
-	public Track(LuperDataSource dataSource, boolean autoSaveEnabled,
+	public Track(SQLiteDataSource dataSource, boolean autoSaveEnabled,
 	    long id, long ownerUserID, long parentSequenceID,
 	    boolean isMuted, boolean isLocked, String playbackOptions,
 	    boolean isDirty) {

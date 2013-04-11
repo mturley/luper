@@ -22,7 +22,7 @@ public class TabProjectsFragment extends Fragment {
   public View onCreateView(LayoutInflater infl, ViewGroup vg, Bundle state) {
     if(vg == null) return null;
     
-    final LuperApp app = (LuperApp) getActivity();
+    final LuperMainActivity app = (LuperMainActivity) getActivity();
 
     View view = infl.inflate(R.layout.tab_projects_layout, vg, false);
 

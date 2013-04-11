@@ -62,7 +62,7 @@ import com.teamluper.luper.test.TestEffects;
 
 // @EActivity = "Enhanced Activity", which turns on AndroidAnnotations features
 @EActivity
-public class LuperApp extends SherlockFragmentActivity {
+public class LuperMainActivity extends SherlockFragmentActivity {
 
   @RestService
   LuperRestClient rest;
@@ -72,7 +72,7 @@ public class LuperApp extends SherlockFragmentActivity {
   
   // Additional local variables
   AccountManager am;
-  LuperDataSource dataSource;
+  SQLiteDataSource dataSource;
   
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +84,7 @@ public class LuperApp extends SherlockFragmentActivity {
     mViewPager.setId(R.id.tabcontentpager);
     setContentView(mViewPager);
     
-    dataSource = new LuperDataSource(this);
+    dataSource = new SQLiteDataSource(this);
     dataSource.open();
     
     // TEMPORARY: testing the readability of the database source file
@@ -177,13 +177,13 @@ public class LuperApp extends SherlockFragmentActivity {
       );
     }
     if(item.getItemId() == R.id.menu_settings) {
-      Intent intent = new Intent(this, LuperSettings_.class);
+      Intent intent = new Intent(this, LuperSettingsActivity_.class);
       startActivity(intent);
     }
     if(item.getItemId() == R.id.menu_login) {
       alertDialog("Warning","Login is not fully implemented, and will likely" +
       		"crash the app.  This is a known issue.");
-      Intent intent = new Intent(this, LuperLogin.class);
+      Intent intent = new Intent(this, LuperLoginActivity.class);
       startActivity(intent);
     }
     return true;
@@ -191,7 +191,7 @@ public class LuperApp extends SherlockFragmentActivity {
   
   //method to navigate to the audiorecorder activity
   public void startRecording(View view) {
-  	Intent intent = new Intent(this, AudioRecorderTest_.class);
+  	Intent intent = new Intent(this, AudioRecorderTestActivity_.class);
   	startActivity(intent);
   }
   
@@ -240,7 +240,7 @@ public class LuperApp extends SherlockFragmentActivity {
   // Just here until it gets moved to Project Tab
   @Background
   public void exampleProject(View view) {
-		  Intent intent = new Intent(this, ExampleProject.class);
+		  Intent intent = new Intent(this, LuperProjectEditorActivity.class);
 		  intent.putExtra("com.teamluper.luper.ProjectId", 817265);
 		  startActivity(intent);
   }
@@ -249,7 +249,7 @@ public class LuperApp extends SherlockFragmentActivity {
   
   @Background
   public void start_testloop(View view) {
-		  Intent intent = new Intent(this, LoopTest.class);
+		  Intent intent = new Intent(this, LoopTestActivity.class);
 		  startActivity(intent);
   }
 

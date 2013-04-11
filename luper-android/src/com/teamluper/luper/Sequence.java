@@ -17,10 +17,10 @@ public class Sequence {
   private ArrayList<Track> tracks;
   
   // database access variables
-  private LuperDataSource dataSource;
+  private SQLiteDataSource dataSource;
   private boolean autoSaveEnabled;
   
-  public Sequence(LuperDataSource dataSource, boolean autoSaveEnabled,
+  public Sequence(SQLiteDataSource dataSource, boolean autoSaveEnabled,
       long id, long ownerUserID, String title, int sharingLevel,
       String playbackOptions, boolean isDirty) {
     this.dataSource = dataSource;

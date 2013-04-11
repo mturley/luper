@@ -20,7 +20,7 @@ import android.support.v4.app.FragmentActivity;
  * well.
  */
 //modified from Activity to FragmentActivity for Facebook
-public class LuperLogin extends FragmentActivity {
+public class LuperLoginActivity extends FragmentActivity {
   /**
    * A dummy authentication store containing known user names and passwords.
    * TODO: remove after connecting to a real authentication system.

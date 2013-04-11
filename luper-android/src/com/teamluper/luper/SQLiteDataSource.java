@@ -13,17 +13,17 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-public class LuperDataSource {
+public class SQLiteDataSource {
   // Database fields
   private SQLiteDatabase database;
-  private LuperSQLiteHelper dbHelper;
+  private SQLiteHelper dbHelper;
   private long activeUserID; // TODO change this on register / login
 
-  public LuperDataSource(Context context) {
+  public SQLiteDataSource(Context context) {
     this(context, -1);
   }
-  public LuperDataSource(Context context, long userID) {
-    dbHelper = new LuperSQLiteHelper(context);
+  public SQLiteDataSource(Context context, long userID) {
+    dbHelper = new SQLiteHelper(context);
     activeUserID = userID;
   }
 
