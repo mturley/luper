@@ -20,7 +20,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.teamluper.luper.LuperApp_"
+            android:name="com.teamluper.luper.LuperMainActivity_"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,40 +29,40 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.teamluper.luper.AudioRecorderTest_"
+            android:name="com.teamluper.luper.AudioRecorderTestActivity_"
             android:label="@string/title_activity_audio_recorder_test"
             android:parentActivityName="com.teamluper.luper.LuperApp_" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.teamluper.luper.LuperApp_" />
+                android:value="com.teamluper.luper.LuperMainActivity_" />
         </activity>
         <activity
-            android:name="com.teamluper.luper.LuperSettings_"
+            android:name="com.teamluper.luper.LuperSettingsActivity_"
             android:label="@string/title_activity_luper_settings"
-            android:parentActivityName="com.teamluper.luper.LuperApp_" >
+            android:parentActivityName="com.teamluper.luper.LuperMainActivity_" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.teamluper.luper.LuperApp_" />
+                android:value="com.teamluper.luper.LuperMainActivity_" />
         </activity>
         <activity
             android:name="com.teamluper.luper.LuperProjectEditorActivity"
             android:label="@string/title_activity_example_project"
-            android:parentActivityName="com.teamluper.luper.LuperApp_" >
+            android:parentActivityName="com.teamluper.luper.LuperMainActivity_" >
         </activity>
         <activity
             android:name="com.teamluper.luper.PopupTestActivity"
             android:label="TESTME"
-            android:parentActivityName="com.teamluper.luper.LuperApp_" >
+            android:parentActivityName="com.teamluper.luper.LuperMainActivity_" >
         </activity>
         <activity
             android:name="com.teamluper.luper.CanvasTestActivity"
             android:label="Canvas"
-            android:parentActivityName="com.teamluper.luper.LuperApp_" >
+            android:parentActivityName="com.teamluper.luper.LuperMainActivity_" >
         </activity>
         <activity
             android:name="com.teamluper.luper.LoopTestActivity"
             android:label="Loop"
-            android:parentActivityName="com.teamluper.luper.LuperApp_" >
+            android:parentActivityName="com.teamluper.luper.LuperMainActivity_" >
         </activity>
         <activity
             android:name="com.teamluper.luper.FileSelectorActivity"
