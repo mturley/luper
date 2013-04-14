@@ -63,13 +63,9 @@ public class LuperProjectEditorActivity extends SherlockActivity {
         super.onCreate(icicle);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         
-        alertDialog("Incomplete Feature",
-            "The Project Editor is not yet abstracted to open " +
-            "any given project.  You're being taken instead to a " +
-            "hard-coded Dummy project to demonstrate the editor UI. " +
-            "Note also that the UI buttons are mostly unimplemented.");
-        
         long ID = getIntent().getExtras().getLong("com.teamluper.luper.ProjectId");
+        
+        alertDialog("Loading Project ID: "+ID);
 
         AB = getSupportActionBar();
         

@@ -87,30 +87,6 @@ public class LuperMainActivity extends SherlockFragmentActivity {
     dataSource = new SQLiteDataSource(this);
     dataSource.open();
     
-    // TEMPORARY: testing the readability of the database source file
-    /*
-    File dbFile = getDatabasePath("luperlocal.db");
-    String dbFilePath = dbFile.getAbsolutePath();
-    Log.i("SQLITE DATABASE PATH: ", dbFilePath);
-    String rawDatabase = "failed";
-    try {
-      java.io.InputStream in = new java.io.FileInputStream(dbFilePath);
-      java.io.OutputStream out = new java.io.FileOutputStream(Environment.getExternalStorageDirectory()+"/LuperApp/sqlite_backup.db");
-      byte[] buffer = new byte[1024];
-      int length;
-      while ((length = in.read(buffer))>0) {
-        out.write(buffer, 0, length);
-      }
-      //Close the streams
-      out.flush();
-      out.close();
-      in.close();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    Log.i("backup",Environment.getExternalStorageDirectory()+"/LuperApp/sqlite_backup.db");
-    */
-    
     final ActionBar bar = getSupportActionBar();
     bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS); // Gives us Tabs!
     
@@ -120,7 +96,6 @@ public class LuperMainActivity extends SherlockFragmentActivity {
     File mfile=new File(Environment.getExternalStorageDirectory()+"/LuperApp/Projects");
     nfile.mkdir();
     mfile.mkdir();
-    
     
     // now we set up the TabsAdapter, which is a special class borrowed from Google.
     // TabsAdapter.java takes care of all the guts of the Tab interactions, and
