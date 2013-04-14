@@ -15,6 +15,7 @@ package com.teamluper.luper;
  * limitations under the License.
  */
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -22,158 +23,197 @@ import android.graphics.Color;
 import android.view.ViewGroup;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
+import android.media.MediaRecorder;
+import android.os.Environment;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.ViewSwitcher;
 import android.widget.ViewSwitcher.ViewFactory;
 
+
+import java.io.IOException;
 import java.util.Random;
 import java.util.ArrayList;
+
+import com.teamluper.luper.AudioRecorderTestActivity.RecordButton;
 
 /**
  * A custom view for a color chip for an event that can be drawn differently
  * according to the event's status.
  *
  */
-public class TrackView extends ViewGroup {
+public class TrackView extends RelativeLayout {
+	private static final String LOG_TAG = "TrackView";
+    private static String mFileName = null;
 
-	//a tag for XML layouts, Manifest
-    private static final String TAG = "TrackView";
-    // Style of drawing
-    // Full rectangle for accepted events
-    // Border for tentative events
-    // Cross-hatched with 50% transparency for declined events
-    
-    private static final int CLICKED = 0;
-    private static final int UNCLICKED = 1;
-    private static final int DEF_BORDER_WIDTH = 4;
-    private float mDefStrokeWidth;
+    private RecordButton mRecordButton = null;
+    private MediaRecorder mRecorder = null;
 
-    int mBorderWidth = DEF_BORDER_WIDTH;
-
-    int mColor;
-    Paint mPaint;
-    
-    ArrayList<Clip> clips;
-    ArrayList<ColorClipView> chips = new ArrayList<ColorClipView>();
-    ImageButton play;
-//  ViewSwitcher switcher;
-    OnClickListener listener;
-    
-    public TrackView(Context context, ArrayList<Clip> c) {
-        super(context);
-        clips = c;
-    	
-//    	switcher = new ViewSwitcher(context);
-        init(context);
-        System.out.println("ON MAKE TV");
-    }
-
-    public TrackView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(context);
-        System.out.println("ON MAKE TV");
-    }
-    
-    @Override public void setOnClickListener(TrackView.OnClickListener l){
-    	super.setOnClickListener(l);
-    }
-    
-
-    private void init(Context context) {
-    	
-        mPaint = new Paint();
-        mDefStrokeWidth = mPaint.getStrokeWidth();
-        mPaint.setStyle(Style.FILL_AND_STROKE);
-        
-        play = new ImageButton(context);
-        play.setImageResource(getResources().getIdentifier(
-    			"ic_menu_play_clip", 
-    			"drawable",
-    			"com.teamluper.luper"));
-        this.addView(play);
-        play.setClickable(true);
-        
-        for(Clip clip: clips){
-        	chips.add(new ColorClipView(context, clip));
-        	this.addView(chips.get(clips.indexOf(clip)));
-        }
-        this.setLayoutParams( new LayoutParams(LayoutParams.MATCH_PARENT, 100));
-        
-        requestLayout();
-    }
-
-//    public void setDrawStyle(int style) {
-//        if (style != CLICKED && style != UNCLICKED) {
-//            return;
-//        }
-//        mDrawStyle = style;
-//        invalidate();
-//    }
-
-    public void setBorderWidth(int width) {
-        if (width >= 0) {
-            mBorderWidth = width;
-            invalidate();
-        }
-    }
-
-    public void setColor(int color) {
-        mColor = color;
-        invalidate();
-    }
-    
-    public void onMeasure(int widthMeasureSpec, int heightMeasureSpec){
-    	super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    	measureChildren(widthMeasureSpec,heightMeasureSpec);
-    }
-    
-    public boolean onKeyDown (int keyCode, KeyEvent event){
-    	return super.onKeyDown(keyCode,event);
-    }
-
-    @Override
-    public void onDraw(Canvas c) {
-    	System.out.println("ON DRAW TV");
-    	super.onDraw(c);
-        mPaint.setColor(Color.parseColor("80#000000"));
-        int right = getWidth();
-        int bottom = getHeight() - 50;
-        c.drawRect(10, getWidth(), right, bottom, mPaint);
-
-        }
-
-	@Override
-	protected void onLayout(boolean arg0, int arg1, int arg2, int arg3, int arg4) {
-		MarginLayoutParams lps = (MarginLayoutParams) this.getLayoutParams();
-		play.layout(
-				20 + lps.leftMargin,
-				lps.topMargin - 20,
-				lps.WRAP_CONTENT,
-				20 + lps.bottomMargin
-				);
-		for (ColorClipView ccv: chips) {
-				
-				// optimization: we are moving through the children in order
-				// when we hit null, there are no more children to layout so return
-				if (ccv == null) return;
-				// get the child's layout parameters so that we can honour their margins
-				// we don't support gravity, so the arithmetic is simplified
-				if (ccv == chips.get(0)){
-					ccv.layout(
-							70 + lps.leftMargin,
-							lps.topMargin - 20,
-							lps.WRAP_CONTENT,
-							20 + lps.bottomMargin
-							);
-				}
-			}
-		
+    private TextView fileSelected;
+	
+	//the track that will be associated with this TrackView
+	Track associated;
+	
+	//constructor
+	public TrackView(Context context){
+		super(context);
+		init();
 	}
+	
+	//set a click listener for the buttons that will activate promptDialog() when clicked
+		OnClickListener clicker = new OnClickListener(){
+			public void onClick(View v){
+				promptDialog();
+			}
+		};
+	
+	public void init(){
+		this.setPadding(0, 10, 0, 5);
+		
+//		add a linear layout to the left side that will have a playtrack button
+//		as well as a button to add a clip to this track
+		LinearLayout trackControl = new LinearLayout(this.getContext());
+		trackControl.setOrientation(LinearLayout.VERTICAL);
+		
+//		create the addClipButton then set its image to add and add it to the trackControl
+		ImageButton addClipButton = new ImageButton(this.getContext());
+		addClipButton.setImageResource(R.drawable.add);		
+		addClipButton.setOnClickListener(clicker);
+		trackControl.addView(addClipButton);
+		
+//		create the playButton then set its image to play and add it to the trackControl
+		ImageButton playButton = new ImageButton(this.getContext());
+		playButton.setImageResource(R.drawable.play);		
+		trackControl.addView(playButton);
+		
+		this.addView(trackControl);
+	}
+	
+	public void promptDialog(){
+		//our custom layout for inside the dialog
+		LinearLayout custom = new LinearLayout(this.getContext());
+		custom.setOrientation(LinearLayout.VERTICAL);
+		
+		LinearLayout ll = new LinearLayout(this.getContext());		
+		mRecordButton = new RecordButton(this.getContext());
+        ll.addView(mRecordButton,
+                new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    0));
+        
+        LinearLayout ll2 = new LinearLayout(this.getContext());
+        fileSelected = new AutoCompleteTextView(this.getContext());   
+        fileSelected.setHint("Select a File");
+        ll2.addView(fileSelected,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.FILL_PARENT,
+                        ViewGroup.LayoutParams.FILL_PARENT,
+                        0));
+
+        custom.addView(ll,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        0));
+        custom.addView(ll2,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        0));
+		
+		new AlertDialog.Builder(getContext())
+			.setTitle("Record or Browse?")
+			.setView(custom)
+			.show();
+
+	}
+	
+    class RecordButton extends Button {
+        boolean mStartRecording = true;
+
+        OnClickListener clicker = new OnClickListener() {
+            public void onClick(View v) {
+                onRecord(mStartRecording);
+                if (mStartRecording) {
+                    setText("Stop recording");
+                } else {
+                    setText("Start recording");
+                }
+                mStartRecording = !mStartRecording;
+            }
+        };
+
+        public RecordButton(Context ctx) {
+            super(ctx);
+            setText("Start recording");
+            setOnClickListener(clicker);
+        }
+    }
+
+    private void onRecord(boolean start) {
+
+        if (start) {
+            startRecording();
+        } else {
+            stopRecording();
+        }
+    }
+
+    private void startRecording() {
+    	//Sets the name of the file when you start recording as opposed to when you click "Audio Record Test" from the main screen
+        mFileName = Environment.getExternalStorageDirectory()+"/LuperApp/Clips";
+        mFileName += "/clip_" + System.currentTimeMillis() +".3gp";
+        
+        mRecorder = new MediaRecorder();
+        //System.out.println("here");
+        mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        //System.out.println("and here");
+        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        mRecorder.setOutputFile(mFileName);
+      
+        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+
+        try {
+            mRecorder.prepare();
+        } catch (IOException e) {
+        	System.out.println(e.toString());
+            Log.e(LOG_TAG, "prepare() failed2");
+        }
+
+        mRecorder.start();
+    }
+
+    private void stopRecording() {
+        mRecorder.stop();
+        mRecorder.release();
+        
+        Clip newClip = new Clip(mFileName); 
+
+        try {
+			newClip.getDuration();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+        
+        //playBackTest.putClip(newClip);        
+        //alertDialog("Clip Created! The clip's length is: " + newClip.duration + "(ms). The tracks size is " + playBackTest.size() + " and it's name in the track is ..." + playBackTest.clips.get(0).name);
+        
+       // alertDialog("Clip Created! The clip's length is: " + newClip.duration + "(ms) the clip's name is: " + newClip.name);
+        
+        fileSelected.setText(mFileName);
+        mRecorder = null;
+    }
+
 
 }
 

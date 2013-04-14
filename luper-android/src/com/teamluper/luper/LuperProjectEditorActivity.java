@@ -85,26 +85,33 @@ public class LuperProjectEditorActivity extends SherlockActivity {
         base.setBackgroundColor(Color.parseColor("#e2dfd8"));        
         
         base.setOrientation(LinearLayout.VERTICAL);
+        
+        TrackView track1 = new TrackView(this);
+        
+//        ImageButton addClipButton = new ImageButton(this);
+//        addClipButton.setImageResource(R.drawable.add);
+//        
+//        track1.addView(addClipButton);
 
-        RelativeLayout track1 = new RelativeLayout(this);
-        RelativeLayout track2 = new RelativeLayout(this);
-        RelativeLayout track3 = new RelativeLayout(this);
-        
-        ColorChipButton chip1 = new ColorChipButton(this, clip1);
-        ColorChipButton chip2 = new ColorChipButton(this, clip2);
-        ColorChipButton chip3 = new ColorChipButton(this, clip3);
-        
-        track1.addView(chip1);
-        track2.addView(chip2);
-        track3.addView(chip3);        
-        
-        track1.setPadding(0, 10, 0, 5);
-        track2.setPadding(0, 10, 0, 5);
-        track3.setPadding(0, 10, 0, 5);
-        
-        chip1.setBackgroundColor(Color.GRAY); 
-        chip2.setBackgroundColor(Color.RED); 
-        chip3.setBackgroundColor(Color.WHITE); 
+//        RelativeLayout track1 = new RelativeLayout(this);
+//        RelativeLayout track2 = new RelativeLayout(this);
+//        RelativeLayout track3 = new RelativeLayout(this);
+//        
+//        ColorChipButton chip1 = new ColorChipButton(this, clip1);
+//        ColorChipButton chip2 = new ColorChipButton(this, clip2);
+//        ColorChipButton chip3 = new ColorChipButton(this, clip3);
+//        
+//        track1.addView(chip1);
+//        track2.addView(chip2);
+//        track3.addView(chip3);        
+//        
+//        track1.setPadding(0, 10, 0, 5);
+//        track2.setPadding(0, 10, 0, 5);
+//        track3.setPadding(0, 10, 0, 5);
+//        
+//        chip1.setBackgroundColor(Color.GRAY); 
+//        chip2.setBackgroundColor(Color.RED); 
+//        chip3.setBackgroundColor(Color.WHITE); 
         
         TextView timelinetxt = new TextView(this);
         timelinetxt.setText("_____|__________________|___________________|___________________|___________________|_________\n");
@@ -113,14 +120,14 @@ public class LuperProjectEditorActivity extends SherlockActivity {
                 new RelativeLayout.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT));
-        base.addView(track2,
-                new RelativeLayout.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
-        base.addView(track3,
-                new RelativeLayout.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
+//        base.addView(track2,
+//                new RelativeLayout.LayoutParams(
+//                        ViewGroup.LayoutParams.WRAP_CONTENT,
+//                        ViewGroup.LayoutParams.WRAP_CONTENT));
+//        base.addView(track3,
+//                new RelativeLayout.LayoutParams(
+//                        ViewGroup.LayoutParams.WRAP_CONTENT,
+//                        ViewGroup.LayoutParams.WRAP_CONTENT));
         
         setContentView(base);
    
