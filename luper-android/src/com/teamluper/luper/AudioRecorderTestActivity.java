@@ -303,6 +303,8 @@ public class AudioRecorderTestActivity extends SherlockActivity
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
+        //create the button to add a clip to the track, set the button text to
+        //"Add to Track", then add the button to ll2
         mAddToTrackButton = new Button(this);
         mAddToTrackButton.setText("Add to Track");
         ll2.addView(mAddToTrackButton,
@@ -381,8 +383,10 @@ public class AudioRecorderTestActivity extends SherlockActivity
 			
 			@Override
 			public void onClick(View v) {
-				Clip newClip = new Clip(mFileName);
-				playBackTest.putClip(newClip);
+				if(mFileName != null){
+					Clip newClip = new Clip(mFileName);
+					playBackTest.putClip(newClip);
+				}
 			}
 		});
         

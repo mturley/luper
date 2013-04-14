@@ -74,37 +74,21 @@ public class LuperProjectEditorActivity extends SherlockActivity {
         AB = getSupportActionBar();
         
         final ActionBar bar = getSupportActionBar();
-        bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS); // Gives us Tabs!
-        
-        
-        /* TESTS FUNCTIONALITY OF THE COLOR CHIP RENDERING*/
-        
-//        CCV = new ColorChipView(this,clip1);
-//        setContentView(CCV);
-        
-        
+        bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS); // Gives us Tabs!   
         
         /* TESTS FUNCTIONALLITY OF THE TRACK VIEW RENDERING */
           Clip clip1 = new Clip(); clip1.begin = 0; clip1.end = 500; clip1.duration = 500;
           Clip clip2 = new Clip(); clip2.begin = 250; clip2.end = 1000; clip2.duration = 650;
           Clip clip3 = new Clip(); clip3.begin = 100; clip3.end = 600; clip3.duration = 500;
-//        clips.add(clip1);
-//        TV = new TrackView(this, clips);
-//        setContentView(TV);
           
         LinearLayout base = new LinearLayout(this);
-        base.setBackgroundColor(Color.parseColor("#e2dfd8"));
-        
+        base.setBackgroundColor(Color.parseColor("#e2dfd8"));        
         
         base.setOrientation(LinearLayout.VERTICAL);
 
         RelativeLayout track1 = new RelativeLayout(this);
         RelativeLayout track2 = new RelativeLayout(this);
         RelativeLayout track3 = new RelativeLayout(this);
-        
-//        Button chip1 = new Button(this);
-//        Button chip2 = new Button(this);
-//        Button chip3 = new Button(this);
         
         ColorChipButton chip1 = new ColorChipButton(this, clip1);
         ColorChipButton chip2 = new ColorChipButton(this, clip2);
@@ -113,10 +97,6 @@ public class LuperProjectEditorActivity extends SherlockActivity {
         track1.addView(chip1);
         track2.addView(chip2);
         track3.addView(chip3);        
-
-//        chip1.setX(chip1.getStartTime());
-//        chip2.setX(chip2.getStartTime());
-//        chip3.setX(chip3.getStartTime());
         
         track1.setPadding(0, 10, 0, 5);
         track2.setPadding(0, 10, 0, 5);
@@ -126,35 +106,8 @@ public class LuperProjectEditorActivity extends SherlockActivity {
         chip2.setBackgroundColor(Color.RED); 
         chip3.setBackgroundColor(Color.WHITE); 
         
-//        TextView track1_text = new TextView(this);
-//        track1_text.setText(" Clip 1 \n Length: " +clip1.duration+ " ms"); //FIX ME
-//        track1.addView(track1_text);
-//        TextView track2_text = new TextView(this);
-//        track2_text.setText(" Clip 2 \n Length: " +clip2.duration+ " ms"); //FIX ME
-//        track2.addView(track2_text);
-//        TextView track3_text = new TextView(this);
-//        track3_text.setText(" Clip 3 \n Length: " +clip3.duration+ " ms"); //FIX ME
-//        track3.addView(track3_text);
-//        
-        //TextView mark1 = new TextView(this);
-        //mark1.setText("|");
-        //mark1.setPadding(500, 0, 0, 0);
-        //base.addView(mark1);
         TextView timelinetxt = new TextView(this);
         timelinetxt.setText("_____|__________________|___________________|___________________|___________________|_________\n");
-        base.addView(timelinetxt);
-        /*TextView mark1 = new TextView(this);
-        mark1.setText("|");
-        mark1.setPadding(500, 0, 0, 0);
-        base.addView(mark1);
-        TextView timelinetxt2 = new TextView(this);
-        timelinetxt2.setText("500ms");
-        timelinetxt2.setPadding(485, 0, 0, 0);
-        base.addView(timelinetxt2);*/
-//        timelinetxt.setText(" __|__________________|___________________|___________________|___________________|__________\n" +
-//        		"     0                             250                             500                             750                             1000 ms");
-//      
-//        base.addView(timelinetxt);
         
         base.addView(track1,
                 new RelativeLayout.LayoutParams(
@@ -170,14 +123,6 @@ public class LuperProjectEditorActivity extends SherlockActivity {
                         ViewGroup.LayoutParams.WRAP_CONTENT));
         
         setContentView(base);
-        
-        /*
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        PF = new ProjectFragment();
-        fragmentTransaction.add(PF, "example_tag");
-        fragmentTransaction.commit();
-        */
    
     }
 	
