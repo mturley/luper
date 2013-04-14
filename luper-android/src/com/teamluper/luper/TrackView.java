@@ -18,6 +18,7 @@ package com.teamluper.luper;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.view.ViewGroup;
@@ -59,22 +60,25 @@ public class TrackView extends RelativeLayout {
     private MediaRecorder mRecorder = null;
 
     private TextView fileSelected;
+    
+    Track associated;
 	
 	//the track that will be associated with this TrackView
-	Track associated;
+	//Track associated;
 	
 	//constructor
 	public TrackView(Context context){
 		super(context);
+		associated = new Track();
 		init();
 	}
 	
 	//set a click listener for the buttons that will activate promptDialog() when clicked
-		OnClickListener clicker = new OnClickListener(){
-			public void onClick(View v){
-				promptDialog();
-			}
-		};
+	OnClickListener clicker = new OnClickListener(){
+		public void onClick(View v){
+			promptDialog();
+		}
+	};
 	
 	public void init(){
 		this.setPadding(0, 10, 0, 5);
@@ -96,6 +100,15 @@ public class TrackView extends RelativeLayout {
 		trackControl.addView(playButton);
 		
 		this.addView(trackControl);
+//		testing...
+//        Clip clip1 = new Clip(); clip1.begin = 0; clip1.end = 500; clip1.duration = 1500;
+//        ColorChipButton chip;
+//        this.associated.putClip(clip1);
+//        for(int i = 0; i < this.associated.clips.size(); i++){
+//        	chip = new ColorChipButton(this.getContext(), this.associated.clips.get(i));
+//        	chip.setBackgroundColor(Color.RED);
+//        	this.addView(chip);
+//        }
 	}
 	
 	public void promptDialog(){
@@ -134,6 +147,16 @@ public class TrackView extends RelativeLayout {
 		new AlertDialog.Builder(getContext())
 			.setTitle("Record or Browse?")
 			.setView(custom)
+		    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+		        public void onClick(DialogInterface dialog, int whichButton) {
+		        	//want it to pass a new clip back to the editor panel and add it to the screen
+		        }
+		    })
+		    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+		        public void onClick(DialogInterface dialog, int whichButton) {
+		            // Do nothing.
+		        }
+		    })
 			.show();
 
 	}
