@@ -34,6 +34,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.util.Log;
 import android.media.MediaRecorder;
@@ -67,6 +68,7 @@ public class AudioRecorderTestActivity extends SherlockActivity
     
     private Button mBrowseButton = null;
     private TextView fileSelected;
+    private Button mAddToTrackButton = null;
     
     private playTrackButton mPlayTrackButton = null;
     
@@ -184,10 +186,11 @@ public class AudioRecorderTestActivity extends SherlockActivity
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
-        playBackTest.putClip(newClip);
-        //playBackTest.createPBList();
         
-        alertDialog("Clip Created! The clip's length is: " + newClip.duration + "(ms). The tracks size is " + playBackTest.size() + " and it's name in the track is ..." + playBackTest.clips.get(0).name);
+        //playBackTest.putClip(newClip);        
+        //alertDialog("Clip Created! The clip's length is: " + newClip.duration + "(ms). The tracks size is " + playBackTest.size() + " and it's name in the track is ..." + playBackTest.clips.get(0).name);
+        
+        alertDialog("Clip Created! The clip's length is: " + newClip.duration + "(ms) the clip's name is: " + newClip.name);
         
         fileSelected.setText(mFileName);
         mRecorder = null;
@@ -267,19 +270,14 @@ public class AudioRecorderTestActivity extends SherlockActivity
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-
-        // this LinearLayout is used in place of an XML file.
-        // Android lets you do your layouts either programattically like this,
-        // or with an XML file.
-        
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);        
         //base will hold the other linear layouts that hold buttons and whatnot
         LinearLayout base = new LinearLayout(this);
         //sets the orientation to be vertical
         base.setOrientation(LinearLayout.VERTICAL);
         
         //ll holds the start recording, play, and browse buttons
-        LinearLayout ll = new LinearLayout(this);
-        
+        LinearLayout ll = new LinearLayout(this);        
         //create and add the record button
         mRecordButton = new RecordButton(this);
         ll.addView(mRecordButton,
@@ -294,28 +292,36 @@ public class AudioRecorderTestActivity extends SherlockActivity
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 0));
-        //create and add the browse button
+        
+        //ll2 holds the textbox to display current file to play
+        LinearLayout ll2 = new LinearLayout(this);
+        //create and add the browse button, set the button text to "Browse"
         mBrowseButton = new Button(this);
-        ll.addView(mBrowseButton,
+        mBrowseButton.setText("Browse");
+        ll2.addView(mBrowseButton,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
-
-        
-        //ll2 holds the textbox to display current file to play
-        LinearLayout ll2 = new LinearLayout(this);
-        //create and add the file selected text field
-        fileSelected = new AutoCompleteTextView(this);
+        mAddToTrackButton = new Button(this);
+        mAddToTrackButton.setText("Add to Track");
+        ll2.addView(mAddToTrackButton,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        0));
+        //create and add the file selected text field, then set the initial text 
+        //to be "Select a File"
+        fileSelected = new AutoCompleteTextView(this);   
+        fileSelected.setHint("Select a File");
         ll2.addView(fileSelected,
                 new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.FILL_PARENT,
+                        ViewGroup.LayoutParams.FILL_PARENT,
                         0));
         
         //ll3 will hold the volume bar
         LinearLayout ll3 = new LinearLayout(this);
-        //LinearLayout ll4 = new LinearLayout(this); //testing purposes
         //create and add the volume bar
         SeekBar volBar = new SeekBar(this);
         ll3.addView(volBar,
@@ -323,6 +329,7 @@ public class AudioRecorderTestActivity extends SherlockActivity
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
+        
         //ll4 holds the textbox to display current file to play
         //create and add the play track button
         LinearLayout ll4 = new LinearLayout(this);
@@ -332,13 +339,6 @@ public class AudioRecorderTestActivity extends SherlockActivity
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
-        //testing...
-        /*
-        ll4.addView(mBrowseButton,
-                new LinearLayout.LayoutParams(
-                       ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        0));*/
         
         //add ll to base
         base.addView(ll,
@@ -352,33 +352,21 @@ public class AudioRecorderTestActivity extends SherlockActivity
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
-        //add ll3 to base
-        base.addView(ll3,
-                new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        0));
         //add ll4 to base
         base.addView(ll4,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
-
-        //testing...
-//        base.addView(ll4,
-//                new LinearLayout.LayoutParams(
-//                        ViewGroup.LayoutParams.MATCH_PARENT,
-//                        ViewGroup.LayoutParams.WRAP_CONTENT,
-//                        0));
+        //add ll3 to base
+        base.addView(ll3,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        0));
+        //switched ll4 and ll3 so that the volume bar would be the bottom most thing in the view
         //sets the context view to be base
         setContentView(base);
-        
-        //sets the initial text in the text box
-        fileSelected.setHint("select a file");
-        
-        //mBrowseButton.setBackgroundColor(Color.RED);
-        //mBrowseButton.setLayoutParams(new LinearLayout.LayoutParams(50, 50));
         
         //starts a new activity/intent that activates the FileSelector activity
         mBrowseButton.setOnClickListener(new View.OnClickListener() {
@@ -388,7 +376,15 @@ public class AudioRecorderTestActivity extends SherlockActivity
         	    AudioRecorderTestActivity.this.startActivityForResult(intent, MediaFetchResultCode);
         	   }
         	  });
-        mBrowseButton.setText("Browse");
+        
+        mAddToTrackButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Clip newClip = new Clip(mFileName);
+				playBackTest.putClip(newClip);
+			}
+		});
         
         //what we need to get the volume bar to work
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
