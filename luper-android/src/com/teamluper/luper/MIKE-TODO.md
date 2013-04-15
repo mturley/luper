@@ -1,10 +1,10 @@
 Mike's TODO list for development:
 =================================
 
-1. Write getSequenceById, and other get_____ById methods in SQLiteDataSource
+1. ~~Write getSequenceById, and other get_____ById methods in SQLiteDataSource~~ Done 4/15
 2. use those getters in LuperProjectEditorActivity to load the sequence data for rendering
-3. implement the proper fields in the data classes (Sequence, Track, Clip, etc) for wiring up to the database
-4. Wire up all the setter methods in the data classes so that they actually update the SQLiteDataSource (in the background).
+3. ~~implement the proper fields in the data classes (Sequence, Track, Clip, etc) for wiring up to the database~~ Done 4/15
+4. ~~Wire up all the setter methods in the data classes so that they actually update the SQLiteDataSource (in the background).~~ Done 4/15
 5. Build a sync routine for updating the cloud database with local changes, and updating the local database with cloud changes (less important)
 
 	a) make use of the isDirty flags, always set dirty on setter call
