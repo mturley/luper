@@ -10,5 +10,6 @@ actionbarsherlock/bin/
 actionbarsherlock/gen/
 *.dex
 *.class
+*.iml
 .DS_Store
 *.DS_Store
