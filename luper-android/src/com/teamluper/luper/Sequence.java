@@ -1,6 +1,7 @@
 package com.teamluper.luper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.util.Log;
 
@@ -14,11 +15,13 @@ public class Sequence {
   private boolean isDirty; // dirty = contains unsynced changes
 
   // references to related objects
-  private ArrayList<Track> tracks;
+  private List<Track> tracks = null;
 
   // database access variables
   private SQLiteDataSource dataSource;
 
+  // NOTE: DO NOT CALL THIS CONSTRUCTOR DIRECTLY unless in a cursorToSequence method.
+  // instead, use SQLiteDataSource.createSequence()!
   public Sequence(SQLiteDataSource dataSource, long id, long ownerUserID,
                   String title, int sharingLevel, String playbackOptions,
                   boolean isDirty) {
@@ -29,7 +32,6 @@ public class Sequence {
     this.sharingLevel = sharingLevel;
     this.playbackOptions = playbackOptions;
     this.isDirty = isDirty;
-    this.tracks = null;
   }
 
   // getters and setters for everything, for custom onChange-style hooks
@@ -75,16 +77,18 @@ public class Sequence {
     dataSource.updateInt("Sequences", this.id, "isDirty", (isDirty ? 1 : 0));
   }
 
-  public void loadTracks() {
-    // query by this sequence's id
-    if(this.id == 1) {
-      Log.w("Sequence.loadTracks()",
-          "attempted to loadTracks of a sequence with an undefined id!  aborted.");
-      return;
+  public void loadAllTrackData() {
+    this.tracks = dataSource.getTracksBySequenceId(this.id);
+    for(Track track : this.tracks) {
+      track.loadAllClipData();
     }
-    // from this point on we can assume this.id is valid
-    // TODO create tracks and fill arraylist
-    // TODO delegate to each track's loadclip
+  }
+
+  public void loadAllTrackAudio() {
+    if(this.tracks == null) loadAllTrackData();
+    for(Track track : this.tracks) {
+      track.loadAllClipAudio();
+    }
   }
 
   @Override

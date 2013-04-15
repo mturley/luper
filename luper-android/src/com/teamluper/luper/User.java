@@ -14,6 +14,8 @@ public class User {
   // database access variables
   private SQLiteDataSource dataSource;
 
+  // NOTE: DO NOT CALL THIS CONSTRUCTOR DIRECTLY unless in a cursorToUser method.
+  // instead, use SQLiteDataSource.createUser()!
   public User(SQLiteDataSource dataSource, long id, String username,
               String email, String passwordHash, boolean isActiveUser,
               long linkedFacebookID, String preferences, boolean isDirty) {

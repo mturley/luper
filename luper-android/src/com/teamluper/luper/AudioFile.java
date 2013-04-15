@@ -15,6 +15,8 @@ public class AudioFile {
   private long renderSequenceID;
   private boolean isDirty;
 
+  // NOTE: DO NOT CALL THIS CONSTRUCTOR DIRECTLY unless in a cursorToAudioFile method.
+  // instead, use SQLiteDataSource.createAudioFile()!
   public AudioFile(SQLiteDataSource dataSource, long id, long ownerUserID,
                    String clientFilePath, String serverFilePath,
                    String fileFormat, double bitrate, double durationMS,
@@ -109,5 +111,9 @@ public class AudioFile {
   public void setDirty(boolean isDirty) {
     this.isDirty = isDirty;
     dataSource.updateInt("Files", this.id, "isDirty", (isDirty ? 1 : 0));
+  }
+
+  public void loadAudio() {
+    // TODO
   }
 }

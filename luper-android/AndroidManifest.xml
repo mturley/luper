@@ -45,7 +45,7 @@
                 android:value="com.teamluper.luper.LuperMainActivity_" />
         </activity>
         <activity
-            android:name="com.teamluper.luper.LuperProjectEditorActivity"
+            android:name="com.teamluper.luper.LuperProjectEditorActivity_"
             android:label="@string/title_activity_example_project"
             android:parentActivityName="com.teamluper.luper.LuperMainActivity_" >
         </activity>

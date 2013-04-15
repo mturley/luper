@@ -233,7 +233,7 @@ public class LuperMainActivity extends SherlockFragmentActivity {
 
   @Background
   public void launchProjectEditor(long projectId) {
-    Intent intent = new Intent(this, LuperProjectEditorActivity.class);
+    Intent intent = new Intent(this, LuperProjectEditorActivity_.class);
     if(projectId != -1)  intent.putExtra("selectedProjectId", projectId);
 		startActivity(intent);
   }

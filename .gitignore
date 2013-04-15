@@ -1,4 +1,5 @@
 .apt_generated/
+local/
 luper-android/bin/
 luper-android/gen/
 luper-android/local.properties

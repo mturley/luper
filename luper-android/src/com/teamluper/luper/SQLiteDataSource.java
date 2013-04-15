@@ -150,6 +150,8 @@ public class SQLiteDataSource {
     // TODO
   }
 
+
+  // more complex queries
   public List<Sequence> getAllSequences() {
     List<Sequence> sequences = new ArrayList<Sequence>();
 
@@ -166,6 +168,40 @@ public class SQLiteDataSource {
     return sequences;
   }
 
+  public List<Track> getTracksBySequenceId(long sequenceId) {
+    List<Track> tracks = new ArrayList<Track>();
+    String[] selectionArgs = new String[1];
+    selectionArgs[0] = ""+sequenceId;
+    Cursor cursor = database.query("Tracks", null, "parentSequenceID = ?",
+      selectionArgs, null, null, null);
+    cursor.moveToFirst();
+    while(!cursor.isAfterLast()) {
+      Track track = cursorToTrack(cursor);
+      tracks.add(track);
+      cursor.moveToNext();
+    }
+    cursor.close();
+    return tracks;
+  }
+
+  public List<Clip> getClipsByTrackId(long trackId) {
+    List<Clip> clips = new ArrayList<Clip>();
+    String[] selectionArgs = new String[1];
+    selectionArgs[0] = ""+trackId;
+    Cursor cursor = database.query("Clips", null, "parentTrackID = ?",
+      selectionArgs, null, null, null);
+    cursor.moveToFirst();
+    while(!cursor.isAfterLast()) {
+      Clip clip = cursorToClip(cursor);
+      clips.add(clip);
+      cursor.moveToNext();
+    }
+    cursor.close();
+    return clips;
+  }
+
+
+  // database-cursor-to-object conversion
   private User cursorToUser(Cursor cursor) {
     User user = new User(this,
       cursor.getLong(cursor.getColumnIndex("_id")),

@@ -22,13 +22,17 @@ public class Track {
 	// Mike's database access variables
 	private SQLiteDataSource dataSource;
 
-	// Cam's variables
-	ArrayList <Clip>clips = new ArrayList<Clip>();
+	// references to relevant data
+	ArrayList<Clip> clips = new ArrayList<Clip>();
+
+  // cam's variables
 	String[] playBackList;
 	long duration;
 	// volume? an int?
 
 	// Mike's constructor
+  // NOTE: DO NOT CALL THIS CONSTRUCTOR DIRECTLY unless in a cursorToTrack method.
+  // instead, use SQLiteDataSource.createTrack()!
 	public Track(SQLiteDataSource dataSource, long id, long ownerUserID,
                long parentSequenceID, boolean isMuted, boolean isLocked,
                String playbackOptions, boolean isDirty) {
@@ -89,6 +93,20 @@ public class Track {
   public void setDirty(boolean isDirty) {
     this.isDirty = isDirty;
     dataSource.updateInt("Tracks", this.id, "isDirty", (isDirty ? 1 : 0));
+  }
+
+  public void loadAllClipData() {
+    this.clips = (ArrayList<Clip>) dataSource.getClipsByTrackId(this.id);
+    for(Clip clip : this.clips) {
+      clip.loadFileMetadata();
+    }
+  }
+
+  public void loadAllClipAudio() {
+    if(this.clips == null) loadAllClipData();
+    for(Clip clip : this.clips) {
+      clip.loadAudio();
+    }
   }
 
   //SIZE

@@ -27,12 +27,18 @@ public class Clip {
   // Mike's database access variables
   private SQLiteDataSource dataSource;
 
+  // references to relevant data
+  private AudioFile audioFile = null;
+
   // Brad's variables
 	String name = null;
 	int begin, end, duration; // FIXME these will need to be removed and instead the above stuff used
 
 	//needs an array of attributes/filters/modifications?
 	// yeah, eventually playbackOptions will be that -Mike
+
+  // NOTE: DO NOT CALL THIS CONSTRUCTOR DIRECTLY unless in a cursorToClip method.
+  // instead, use SQLiteDataSource.createClip()!
 	public Clip(SQLiteDataSource dataSource, long id, long ownerUserID,
               long parentTrackID, long audioFileID, int startTime,
               int durationMS, int loopCount, boolean isLocked,
@@ -188,8 +194,14 @@ public class Clip {
     dataSource.updateInt("Clips", this.id, "isDirty", (isDirty ? 1 : 0));
 	}
 
+  public void loadFileMetadata() {
+    this.audioFile = dataSource.getAudioFileById(this.audioFileID);
+  }
 
-
+  public void loadAudio() {
+    if(this.audioFile == null) loadFileMetadata();
+    this.audioFile.loadAudio();
+  }
 
 	//calculates the total playing length of the clip as an int, keeping in line with getDuration
 	public int calcLength()
