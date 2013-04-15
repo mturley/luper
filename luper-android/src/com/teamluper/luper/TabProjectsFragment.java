@@ -22,30 +22,27 @@ public class TabProjectsFragment extends Fragment {
   public View onCreateView(LayoutInflater infl, ViewGroup vg, Bundle state) {
     if(vg == null) return null;
     
-    final LuperMainActivity app = (LuperMainActivity) getActivity();
+    final LuperMainActivity main = (LuperMainActivity) getActivity();
 
     View view = infl.inflate(R.layout.tab_projects_layout, vg, false);
 
-    List<Sequence> allSequences = app.dataSource.getAllSequences();
+    List<Sequence> allSequences = main.dataSource.getAllSequences();
     ArrayAdapter<Sequence> adapter = new ArrayAdapter<Sequence>(
-      (Context) app,
+      (Context) main,
       android.R.layout.simple_list_item_1,
-      allSequences
-    );
+      allSequences);
     ListView projectsListView = (ListView) view.findViewById(R.id.projectsListView);
     projectsListView.setAdapter(adapter);
     projectsListView.setEmptyView(view.findViewById(R.id.projectsListEmptyText));
     projectsListView.setOnItemClickListener(
-        new OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View view,
-                    int position, long id) {
-                      app.exampleProject(null);
-                      // TODO really launch the correct project
-                 }
-            }
-     );
+        new OnItemClickListener() {
+          @Override
+          public void onItemClick(AdapterView<?> parent, View view,
+              int position, long id) {
+            Sequence s = (Sequence) parent.getItemAtPosition(position);
+            main.launchProjectEditor(s.getId());
+          }
+        });
     return (RelativeLayout) view;
   }
   

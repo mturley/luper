@@ -54,7 +54,12 @@ import com.teamluper.luper.CanvasTestActivity.GraphicsView;
 
 
 public class LuperProjectEditorActivity extends SherlockActivity {
-	ActionBar AB;
+  LuperMainActivity main;
+  SQLiteDataSource dataSource = null;
+	Sequence sequence = null;
+	
+	// TODO these will be moved to within Sequence, and accessed with
+	// sequence.getClips() and sequence.getTracks(), etc.
 	ArrayList<Clip> clips = new ArrayList<Clip>();
 	ArrayList<Track> tracks = new ArrayList<Track>();
 	
@@ -71,10 +76,13 @@ public class LuperProjectEditorActivity extends SherlockActivity {
                 finish();
               }
             });
+        } else {
+          DialogFactory.alert(this,"Loading Project ID: "+ID);
         }
-        DialogFactory.alert(this,"Loading Project ID: "+ID);
 
-        AB = getSupportActionBar();
+        main = LuperMainActivity.getInstance();
+        dataSource = main.getDataSource();
+        // TODO load the actual sequence in from dataSource
         
         final ActionBar bar = getSupportActionBar();
         bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS); // Gives us Tabs!   

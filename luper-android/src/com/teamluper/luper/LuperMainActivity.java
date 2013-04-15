@@ -64,6 +64,7 @@ import com.teamluper.luper.test.TestEffects;
 @EActivity
 public class LuperMainActivity extends SherlockFragmentActivity {
 
+  static LuperMainActivity instance;
   @RestService
   LuperRestClient rest;
   
@@ -77,6 +78,7 @@ public class LuperMainActivity extends SherlockFragmentActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    instance = this;
     
     // set up the ViewPager, which we will use in conjunction with tabs.
     // this makes it possible to swipe left and right between the tabs.
@@ -163,6 +165,14 @@ public class LuperMainActivity extends SherlockFragmentActivity {
     }
     return true;
   }
+
+  public static LuperMainActivity getInstance() {
+    return instance;
+  } 
+  
+  public SQLiteDataSource getDataSource() {
+    return dataSource;
+  }
   
   //method to navigate to the audiorecorder activity
   public void startRecording(View view) {
@@ -212,24 +222,24 @@ public class LuperMainActivity extends SherlockFragmentActivity {
     ArrayAdapter<Sequence> adapter = (ArrayAdapter<Sequence>) lv.getAdapter();
     adapter.add(newSequence);
   }
-  
-  // Just here until it gets moved to Project Tab
+
   @Background
   public void exampleProject(View view) {
-		  Intent intent = new Intent(this, LuperProjectEditorActivity.class);
-		  intent.putExtra("com.teamluper.luper.ProjectId", 817265);
-		  startActivity(intent);
+    launchProjectEditor(123456);
   }
   
-
+  @Background
+  public void launchProjectEditor(long projectId) {
+    Intent intent = new Intent(this, LuperProjectEditorActivity.class);
+    if(projectId != -1)  intent.putExtra("selectedProjectId", projectId);
+		startActivity(intent);
+  }
   
   @Background
   public void start_testloop(View view) {
-		  Intent intent = new Intent(this, LoopTestActivity.class);
-		  startActivity(intent);
+		Intent intent = new Intent(this, LoopTestActivity.class);
+		startActivity(intent);
   }
-
-  
   
   // this will be removed too, it's checking the google account that the
   // device's user is already logged in with.  We'll likely ditch this in favor
