@@ -11,5 +11,6 @@ actionbarsherlock/gen/
 *.dex
 *.class
 *.iml
+*.eml
 .DS_Store
 *.DS_Store
