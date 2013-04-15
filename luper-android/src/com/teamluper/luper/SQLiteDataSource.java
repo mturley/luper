@@ -35,6 +35,28 @@ public class SQLiteDataSource {
     dbHelper.close();
   }
 
+  public User createUser(String username, String email, String passwordHash) {
+    ContentValues values = new ContentValues();
+    values.put("username", username);
+    values.put("email", email);
+    values.put("passwordHash", passwordHash);
+    values.put("isActiveUser", 1);
+    values.put("isDirty", 1);
+    long insertId = database.insert("Users", null, values);
+    return getUserById(insertId);
+  }
+  public User getUserById(long id) {
+    Cursor cursor = database.query("Users", null,
+      "_id = " + id, null, null, null, null);
+    cursor.moveToFirst();
+    User u = cursorToUser(cursor);
+    cursor.close();
+    return u;
+  }
+  public void deleteUser() {
+    // TODO
+  }
+
   public Sequence createSequence(User owner, String title) {
     if(title == "") title = "Untitled";
     ContentValues values = new ContentValues();
@@ -42,12 +64,16 @@ public class SQLiteDataSource {
     values.put("title", title);
     values.put("isDirty", 1);
     long insertId = database.insert("Sequences", null, values);
+    return getSequenceById(insertId);
+  }
+
+  public Sequence getSequenceById(long id) {
     Cursor cursor = database.query("Sequences", null,
-        "_id = " + insertId, null, null, null, null);
+      "_id = " + id, null, null, null, null);
     cursor.moveToFirst();
-    Sequence newSequence = cursorToSequence(cursor);
+    Sequence s = cursorToSequence(cursor);
     cursor.close();
-    return newSequence;
+    return s;
   }
 
   public void deleteSequence(Sequence sequence) {
@@ -55,7 +81,7 @@ public class SQLiteDataSource {
     System.out.println("Sequence deleted with id: " + id);
     database.delete("Sequences", "_id = " + id, null);
   }
-  
+
   public Track createTrack(Sequence parentSequence) {
     ContentValues values = new ContentValues();
     values.put("ownerUserID", parentSequence.getOwnerUserID());
@@ -64,41 +90,61 @@ public class SQLiteDataSource {
     values.put("isLocked", false);
     values.put("isDirty", 1);
     long insertId = database.insert("Tracks", null, values);
+    return getTrackById(insertId);
+  }
+  public Track getTrackById(long id) {
     Cursor cursor = database.query("Tracks", null,
-        "_id = " + insertId, null, null, null, null);
+      "_id = " + id, null, null, null, null);
     cursor.moveToFirst();
-    Track newTrack = cursorToTrack(cursor);
+    Track t = cursorToTrack(cursor);
     cursor.close();
-    return newTrack;
+    return t;
   }
   public void deleteTrack(Track track) {
     // TODO
   }
-  
+
   public AudioFile createAudioFile(User owner, String filePath) {
     ContentValues values = new ContentValues();
-    values.put("ownerUserID", 0); // FIXME replace with owner.getID
+    values.put("ownerUserID", owner.getId());
     values.put("clientFilePath", filePath);
     values.put("fileFormat", "3gp");
     values.put("isReadyOnClient", 1);
+    values.put("isReadyOnServer", 0);
     values.put("isDirty", 1);
     long insertId = database.insert("Files", null, values);
+    return getAudioFileById(insertId);
+  }
+  public AudioFile getAudioFileById(long id) {
     Cursor cursor = database.query("Files", null,
-        "_id = " + insertId, null, null, null, null);
-    AudioFile newFile = cursorToFile(cursor);
+      "_id = " + id, null, null, null, null);
+    AudioFile f = cursorToFile(cursor);
     cursor.close();
-    return newFile;
+    return f;
   }
   public void deleteAudioFile(AudioFile file) {
     // TODO
   }
-  
-  public Clip createClip(Track parentTrack, AudioFile file) {
+
+  public Clip createClip(Track parentTrack, AudioFile file, int startTime) {
     ContentValues values = new ContentValues();
     values.put("ownerUserID", parentTrack.getOwnerUserID());
     values.put("parentTrackID", parentTrack.getId());
     values.put("audioFileID", file.getId());
-    return null;
+    values.put("startTime", startTime);
+    values.put("loopCount", 1);
+    values.put("isLocked", 0);
+    values.put("playbackOptions", "{}");
+    values.put("isDirty",1);
+    long insertId = database.insert("Clips", null, values);
+    return getClipById(insertId);
+  }
+  public Clip getClipById(long id) {
+    Cursor cursor = database.query("Clips", null,
+      "_id = " + id, null, null, null, null);
+    Clip c = cursorToClip(cursor);
+    cursor.close();
+    return c;
   }
   public void deleteClip(Clip clip) {
     // TODO
@@ -119,7 +165,22 @@ public class SQLiteDataSource {
     cursor.close();
     return sequences;
   }
-  
+
+  private User cursorToUser(Cursor cursor) {
+    User user = new User(this, false,
+      cursor.getLong(cursor.getColumnIndex("_id")),
+      cursor.getString(cursor.getColumnIndex("username")),
+      cursor.getString(cursor.getColumnIndex("email")),
+      cursor.getString(cursor.getColumnIndex("passwordHash")),
+      cursor.getInt(cursor.getColumnIndex("isActiveUser")) == 1,
+      cursor.getLong(cursor.getColumnIndex("linkedFacebookID")),
+      cursor.getString(cursor.getColumnIndex("preferences")),
+      cursor.getInt(cursor.getColumnIndex("isDirty")) == 1
+    );
+    user.setAutoSaveEnabled(true);
+    return user;
+  }
+
   private Sequence cursorToSequence(Cursor cursor) {
     Sequence sequence = new Sequence(this, false,
       cursor.getLong(cursor.getColumnIndex("_id")),
@@ -162,7 +223,7 @@ public class SQLiteDataSource {
     clip.setAutoSaveEnabled(true);
     return clip;
   }
-  
+
   private AudioFile cursorToFile(Cursor cursor) {
     AudioFile file = new AudioFile(this, false,
       cursor.getLong(cursor.getColumnIndex("_id")),
@@ -180,8 +241,7 @@ public class SQLiteDataSource {
     file.setAutoSaveEnabled(true);
     return file;
   }
-  
-  
+
   // PROCEED WITH CAUTION, THIS DOES EXACTLY WHAT IT SOUNDS LIKE
   public void dropAllData() {
     // forces a drop and recreate of all tables
