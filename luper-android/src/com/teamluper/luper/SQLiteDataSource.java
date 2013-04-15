@@ -3,15 +3,14 @@ package com.teamluper.luper;
 // TODO: generalize this to all database tables, and do something more clever with the cursors.
 // TODO: instead of selection by id, use composite key of id and ownerUserId
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SQLiteDataSource {
   // Database fields

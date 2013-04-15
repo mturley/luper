@@ -3,31 +3,21 @@ package com.teamluper.luper;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.annotation.TargetApi;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.ListPreference;
-import android.preference.Preference;
-import android.preference.PreferenceActivity;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
-import android.widget.Toast;
+import android.preference.*;
 import android.support.v4.app.NavUtils;
-
-import java.util.List;
-
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.googlecode.androidannotations.annotations.EActivity;
-import com.googlecode.androidannotations.annotations.UiThread;
 import com.googlecode.androidannotations.annotations.rest.RestService;
 import com.teamluper.luper.rest.LuperRestClient;
+
+import java.util.List;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -50,10 +40,10 @@ public class LuperSettingsActivity extends SherlockPreferenceActivity
    * on tablets.
    */
   private static final boolean ALWAYS_SIMPLE_PREFS = false;
-  
+
   @RestService
   LuperRestClient rest;
-  
+
   AccountManager am;
 
   @Override
@@ -61,7 +51,7 @@ public class LuperSettingsActivity extends SherlockPreferenceActivity
     super.onCreate(savedInstanceState);
     setupActionBar();
   }
-  
+
   @Override
   protected void onResume() {
     super.onResume();
@@ -72,7 +62,7 @@ public class LuperSettingsActivity extends SherlockPreferenceActivity
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
     prefs.registerOnSharedPreferenceChangeListener(this);
   }
-  
+
   @Override
   protected void onPause() {
     super.onPause();
@@ -128,7 +118,7 @@ public class LuperSettingsActivity extends SherlockPreferenceActivity
 
     // In the simplified UI, fragments are not used at all and we instead
     // use the older PreferenceActivity APIs.
-    
+
     // Add 'general' preferences.
     addPreferencesFromResource(R.xml.pref_general);
 
@@ -198,7 +188,7 @@ public class LuperSettingsActivity extends SherlockPreferenceActivity
         // simple string representation.
         preference.setSummary(stringValue);
       }
-      
+
       return true;
     }
   };
@@ -209,7 +199,7 @@ public class LuperSettingsActivity extends SherlockPreferenceActivity
    * preference title) is updated to reflect the value. The summary is also
    * immediately updated upon calling this method. The exact display format is
    * dependent on the type of preference.
-   * 
+   *
    * @see #sBindPreferenceSummaryToValueListener
    */
   private static void bindPreferenceSummaryToValue(Preference preference) {
@@ -242,7 +232,7 @@ public class LuperSettingsActivity extends SherlockPreferenceActivity
       bindPreferenceSummaryToValue(findPreference("pref_favColor"));
     }
   }
-  
+
   boolean testAccounts() {
     if(am == null) am = AccountManager.get(this);
     Account[] accounts = am.getAccountsByType("com.google");
@@ -252,7 +242,7 @@ public class LuperSettingsActivity extends SherlockPreferenceActivity
     }
     return accounts.length >= 1;
   }
- 
+
   @Override
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
       String key) {

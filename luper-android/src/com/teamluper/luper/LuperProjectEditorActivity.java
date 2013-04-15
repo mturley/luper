@@ -1,57 +1,22 @@
 package com.teamluper.luper;
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
+
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.Path.Direction;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
-import android.os.Bundle;
-import android.os.Environment;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.Button;
-import android.view.View;
-import android.content.Context;
-import android.content.pm.ActivityInfo;
-import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.media.MediaRecorder;
-import android.media.MediaPlayer;
-import java.util.*;
-import java.io.IOException;
-
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.UiThread;
-import com.googlecode.androidannotations.annotations.Background;
-import com.teamluper.luper.AudioRecorderTestActivity.PlayButton;
-import com.teamluper.luper.AudioRecorderTestActivity.RecordButton;
-import com.teamluper.luper.CanvasTestActivity.GraphicsView;
+
+import java.util.ArrayList;
 
 
 @EActivity

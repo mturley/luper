@@ -10,56 +10,39 @@
 package com.teamluper.luper;
 
 // imports from the core android API
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.List;
-
-import android.content.pm.ActivityInfo;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.Environment;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.view.ViewPager;
-import android.text.Editable;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-// imports for ActionBarSherlock dependency
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-
-// imports for AndroidAnnotations dependency
-import com.googlecode.androidannotations.annotations.AfterViews;
-// @AfterViews is never used, but don't remove as we may want to use it eventually
 import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EActivity;
-import com.googlecode.androidannotations.annotations.UiThread;
-import com.googlecode.androidannotations.annotations.ViewById;
 import com.googlecode.androidannotations.annotations.rest.RestService;
-
-// imports for the SpringFramework REST dependency
-import org.springframework.web.client.HttpClientErrorException;
 import com.teamluper.luper.rest.LuperRestClient;
+import org.springframework.web.client.HttpClientErrorException;
 
+import java.io.File;
+
+// imports for ActionBarSherlock dependency
+// imports for AndroidAnnotations dependency
+// @AfterViews is never used, but don't remove as we may want to use it eventually
+// imports for the SpringFramework REST dependency
 // imports for Test Suite
-import com.teamluper.luper.test.TestEffects;
 
 // @EActivity = "Enhanced Activity", which turns on AndroidAnnotations features
 @EActivity

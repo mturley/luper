@@ -1,15 +1,9 @@
 package com.teamluper.luper;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileDescriptor;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.File;
 
 import android.media.MediaPlayer;
+
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
 
 public class Clip {
   // Mike's database field variables

@@ -3,10 +3,10 @@ package com.teamluper.luper;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.support.v4.app.FragmentActivity;
 /**
  * Activity which displays a login screen to the user, offering registration as
  * well.
@@ -48,7 +47,7 @@ public class LuperLoginActivity extends FragmentActivity {
   private View mLoginFormView;
   private View mLoginStatusView;
   private TextView mLoginStatusMessageView;
-  
+
   //Instance of FacebookLoginFragment
   //private FacebookLoginFragment facebookLoginFragment;
 
@@ -88,7 +87,7 @@ public class LuperLoginActivity extends FragmentActivity {
             attemptLogin();
           }
         });
-    
+
     //facebook button implementation
     /*
     if (savedInstanceState == null) {

@@ -16,36 +16,16 @@ package com.teamluper.luper;
  */
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.view.ViewGroup;
-import android.graphics.Paint;
-import android.graphics.Paint.Style;
 import android.media.MediaRecorder;
 import android.os.Environment;
-import android.util.AttributeSet;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.ViewSwitcher;
-import android.widget.ViewSwitcher.ViewFactory;
-
+import android.view.ViewGroup;
+import android.widget.*;
 
 import java.io.IOException;
-import java.util.Random;
-import java.util.ArrayList;
-
-import com.teamluper.luper.AudioRecorderTestActivity.RecordButton;
 
 /**
  * A custom view for a color chip for an event that can be drawn differently
@@ -60,45 +40,45 @@ public class TrackView extends RelativeLayout {
     private MediaRecorder mRecorder = null;
 
     private TextView fileSelected;
-    
+
     Track associated;
-	
+
 	//the track that will be associated with this TrackView
 	//Track associated;
-	
+
 	//constructor
 	public TrackView(Context context){
 		super(context);
 		associated = new Track();
 		init();
 	}
-	
+
 	//set a click listener for the buttons that will activate promptDialog() when clicked
 	OnClickListener clicker = new OnClickListener(){
 		public void onClick(View v){
 			promptDialog();
 		}
 	};
-	
+
 	public void init(){
 		this.setPadding(0, 10, 0, 5);
-		
+
 //		add a linear layout to the left side that will have a playtrack button
 //		as well as a button to add a clip to this track
 		LinearLayout trackControl = new LinearLayout(this.getContext());
 		trackControl.setOrientation(LinearLayout.VERTICAL);
-		
+
 //		create the addClipButton then set its image to add and add it to the trackControl
 		ImageButton addClipButton = new ImageButton(this.getContext());
-		addClipButton.setImageResource(R.drawable.add);		
+		addClipButton.setImageResource(R.drawable.add);
 		addClipButton.setOnClickListener(clicker);
 		trackControl.addView(addClipButton);
-		
+
 //		create the playButton then set its image to play and add it to the trackControl
 		ImageButton playButton = new ImageButton(this.getContext());
-		playButton.setImageResource(R.drawable.play);		
+		playButton.setImageResource(R.drawable.play);
 		trackControl.addView(playButton);
-		
+
 		this.addView(trackControl);
 //		testing...
 //        Clip clip1 = new Clip(); clip1.begin = 0; clip1.end = 500; clip1.duration = 1500;
@@ -110,22 +90,22 @@ public class TrackView extends RelativeLayout {
 //        	this.addView(chip);
 //        }
 	}
-	
+
 	public void promptDialog(){
 		//our custom layout for inside the dialog
 		LinearLayout custom = new LinearLayout(this.getContext());
 		custom.setOrientation(LinearLayout.VERTICAL);
-		
-		LinearLayout ll = new LinearLayout(this.getContext());		
+
+		LinearLayout ll = new LinearLayout(this.getContext());
 		mRecordButton = new RecordButton(this.getContext());
         ll.addView(mRecordButton,
                 new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     0));
-        
+
         LinearLayout ll2 = new LinearLayout(this.getContext());
-        fileSelected = new AutoCompleteTextView(this.getContext());   
+        fileSelected = new AutoCompleteTextView(this.getContext());
         fileSelected.setHint("Select a File");
         ll2.addView(fileSelected,
                 new LinearLayout.LayoutParams(
@@ -143,7 +123,7 @@ public class TrackView extends RelativeLayout {
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
-		
+
 		new AlertDialog.Builder(getContext())
 			.setTitle("Record or Browse?")
 			.setView(custom)
@@ -160,7 +140,7 @@ public class TrackView extends RelativeLayout {
 			.show();
 
 	}
-	
+
     class RecordButton extends Button {
         boolean mStartRecording = true;
 
@@ -196,14 +176,14 @@ public class TrackView extends RelativeLayout {
     	//Sets the name of the file when you start recording as opposed to when you click "Audio Record Test" from the main screen
         mFileName = Environment.getExternalStorageDirectory()+"/LuperApp/Clips";
         mFileName += "/clip_" + System.currentTimeMillis() +".3gp";
-        
+
         mRecorder = new MediaRecorder();
         //System.out.println("here");
         mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         //System.out.println("and here");
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         mRecorder.setOutputFile(mFileName);
-      
+
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
         try {
@@ -219,20 +199,20 @@ public class TrackView extends RelativeLayout {
     private void stopRecording() {
         mRecorder.stop();
         mRecorder.release();
-        
-        Clip newClip = new Clip(mFileName); 
+
+        Clip newClip = new Clip(mFileName);
 
         try {
 			newClip.getDuration();
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
-        
-        //playBackTest.putClip(newClip);        
+
+        //playBackTest.putClip(newClip);
         //alertDialog("Clip Created! The clip's length is: " + newClip.duration + "(ms). The tracks size is " + playBackTest.size() + " and it's name in the track is ..." + playBackTest.clips.get(0).name);
-        
+
        // alertDialog("Clip Created! The clip's length is: " + newClip.duration + "(ms) the clip's name is: " + newClip.name);
-        
+
         fileSelected.setText(mFileName);
         mRecorder = null;
     }

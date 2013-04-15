@@ -1,9 +1,5 @@
 package com.teamluper.luper;
 
-import java.util.List;
-
-import com.googlecode.androidannotations.annotations.EFragment;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,13 +11,16 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import com.googlecode.androidannotations.annotations.EFragment;
+
+import java.util.List;
 
 @EFragment
 public class TabProjectsFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater infl, ViewGroup vg, Bundle state) {
     if(vg == null) return null;
-    
+
     final LuperMainActivity main = (LuperMainActivity) getActivity();
 
     View view = infl.inflate(R.layout.tab_projects_layout, vg, false);
@@ -45,5 +44,5 @@ public class TabProjectsFragment extends Fragment {
         });
     return (RelativeLayout) view;
   }
-  
+
 }

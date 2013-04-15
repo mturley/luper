@@ -1,17 +1,16 @@
 package com.teamluper.luper;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.app.ActionBar.Tab;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+
+import java.util.ArrayList;
 
 // TabsAdapter class copied from:
 // http://developer.android.com/reference/android/support/v4/view/ViewPager.html
@@ -31,9 +30,9 @@ implements ActionBar.TabListener, ViewPager.OnPageChangeListener {
   private final Context mContext;
   private final ActionBar mActionBar;
   private final ViewPager mViewPager;
-  private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();  
+  private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
 
-  static final class TabInfo { 
+  static final class TabInfo {
     private final Class<?> clss;
     private final Bundle args;
 

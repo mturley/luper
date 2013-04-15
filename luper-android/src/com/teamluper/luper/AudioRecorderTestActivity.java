@@ -16,10 +16,9 @@
  */
 package com.teamluper.luper;
 
-import java.io.File;
-import java.io.IOException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -28,31 +27,13 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.view.View;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
-import android.content.pm.ActivityInfo;
-import android.graphics.Color;
-import android.util.Log;
-import android.media.MediaRecorder;
-import android.media.MediaPlayer;
-
-import java.io.IOException;
-
-import android.widget.AutoCompleteTextView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.SeekBar;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import android.widget.*;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EActivity;
-import com.googlecode.androidannotations.annotations.UiThread;
+
+import java.io.File;
+import java.io.IOException;
 
 @EActivity
 public class AudioRecorderTestActivity extends SherlockActivity
@@ -62,20 +43,20 @@ public class AudioRecorderTestActivity extends SherlockActivity
 
     private RecordButton mRecordButton = null;
     private MediaRecorder mRecorder = null;
-    
+
     private PlayButton   mPlayButton = null;
     private MediaPlayer   mPlayer = null;
-    
+
     private Button mBrowseButton = null;
     private TextView fileSelected;
     private Button mAddToTrackButton = null;
-    
+
     private playTrackButton mPlayTrackButton = null;
-    
+
     private AudioManager audioManager;
 
     private int MediaFetchResultCode = 11;
-    
+
     private Track playBackTest = new Track ();
 
     private void onRecord(boolean start) {
@@ -94,7 +75,7 @@ public class AudioRecorderTestActivity extends SherlockActivity
             stopPlaying();
         }
     }
-    
+
     private void onPlayTrack(boolean start) {
         if (start) {
             startPlayingTrack();
@@ -104,7 +85,7 @@ public class AudioRecorderTestActivity extends SherlockActivity
     }
 
     private void startPlaying() {
-    	
+
         mPlayer = new MediaPlayer();
         try {
             mPlayer.setDataSource(mFileName);
@@ -121,16 +102,16 @@ public class AudioRecorderTestActivity extends SherlockActivity
         mPlayer = null;
       }
     }
-    
+
     @Background
     public void startPlayingTrack() {
-    	
+
     	int i=0;
     	while(playBackTest!=null && i!=playBackTest.size())
     	{
 	        mPlayer = new MediaPlayer();
 	        mFileName=playBackTest.clips.get(i).name;
-	        try 
+	        try
 	        {
 	            mPlayer.setDataSource(mFileName);
 	            mPlayer.prepare();
@@ -155,14 +136,14 @@ public class AudioRecorderTestActivity extends SherlockActivity
     	//Sets the name of the file when you start recording as opposed to when you click "Audio Record Test" from the main screen
         mFileName = Environment.getExternalStorageDirectory()+"/LuperApp/Clips";
         mFileName += "/clip_" + System.currentTimeMillis() +".3gp";
-        
+
         mRecorder = new MediaRecorder();
         //System.out.println("here");
         mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         //System.out.println("and here");
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         mRecorder.setOutputFile(mFileName);
-      
+
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
         try {
@@ -178,21 +159,21 @@ public class AudioRecorderTestActivity extends SherlockActivity
     private void stopRecording() {
         mRecorder.stop();
         mRecorder.release();
-        
-        Clip newClip = new Clip(mFileName); 
+
+        Clip newClip = new Clip(mFileName);
 
         try {
 			newClip.getDuration();
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
-        
-        //playBackTest.putClip(newClip);        
+
+        //playBackTest.putClip(newClip);
         //alertDialog("Clip Created! The clip's length is: " + newClip.duration + "(ms). The tracks size is " + playBackTest.size() + " and it's name in the track is ..." + playBackTest.clips.get(0).name);
-        
+
         DialogFactory.alert(this,"Clip Created! The clip's length is: "
           + newClip.duration + "(ms) the clip's name is: " + newClip.name);
-        
+
         fileSelected.setText(mFileName);
         mRecorder = null;
     }
@@ -271,14 +252,14 @@ public class AudioRecorderTestActivity extends SherlockActivity
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);        
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         //base will hold the other linear layouts that hold buttons and whatnot
         LinearLayout base = new LinearLayout(this);
         //sets the orientation to be vertical
         base.setOrientation(LinearLayout.VERTICAL);
-        
+
         //ll holds the start recording, play, and browse buttons
-        LinearLayout ll = new LinearLayout(this);        
+        LinearLayout ll = new LinearLayout(this);
         //create and add the record button
         mRecordButton = new RecordButton(this);
         ll.addView(mRecordButton,
@@ -293,7 +274,7 @@ public class AudioRecorderTestActivity extends SherlockActivity
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 0));
-        
+
         //ll2 holds the textbox to display current file to play
         LinearLayout ll2 = new LinearLayout(this);
         //create and add the browse button, set the button text to "Browse"
@@ -313,16 +294,16 @@ public class AudioRecorderTestActivity extends SherlockActivity
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
-        //create and add the file selected text field, then set the initial text 
+        //create and add the file selected text field, then set the initial text
         //to be "Select a File"
-        fileSelected = new AutoCompleteTextView(this);   
+        fileSelected = new AutoCompleteTextView(this);
         fileSelected.setHint("Select a File");
         ll2.addView(fileSelected,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.FILL_PARENT,
                         ViewGroup.LayoutParams.FILL_PARENT,
                         0));
-        
+
         //ll3 will hold the volume bar
         LinearLayout ll3 = new LinearLayout(this);
         //create and add the volume bar
@@ -332,7 +313,7 @@ public class AudioRecorderTestActivity extends SherlockActivity
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
-        
+
         //ll4 holds the textbox to display current file to play
         //create and add the play track button
         LinearLayout ll4 = new LinearLayout(this);
@@ -342,7 +323,7 @@ public class AudioRecorderTestActivity extends SherlockActivity
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
-        
+
         //add ll to base
         base.addView(ll,
                 new LinearLayout.LayoutParams(
@@ -370,7 +351,7 @@ public class AudioRecorderTestActivity extends SherlockActivity
         //switched ll4 and ll3 so that the volume bar would be the bottom most thing in the view
         //sets the context view to be base
         setContentView(base);
-        
+
         //starts a new activity/intent that activates the FileSelector activity
         mBrowseButton.setOnClickListener(new View.OnClickListener() {
         	   @Override
@@ -379,9 +360,9 @@ public class AudioRecorderTestActivity extends SherlockActivity
         	    AudioRecorderTestActivity.this.startActivityForResult(intent, MediaFetchResultCode);
         	   }
         	  });
-        
+
         mAddToTrackButton.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				if(mFileName != null){
@@ -390,7 +371,7 @@ public class AudioRecorderTestActivity extends SherlockActivity
 				}
 			}
 		});
-        
+
         //what we need to get the volume bar to work
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
@@ -400,21 +381,21 @@ public class AudioRecorderTestActivity extends SherlockActivity
         volBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			public void onStopTrackingTouch(SeekBar seekBar) {}
 			public void onStartTrackingTouch(SeekBar seekBar) {}
-			
+
 			public void onProgressChanged(SeekBar seekBar, int progress,
 					boolean fromUser) {
 				audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
 			}
 		});
     }
-    
+
     //returns the correct file when you select one from the file browser
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     	  super.onActivityResult(requestCode, resultCode, data);
     	  if (requestCode == MediaFetchResultCode) {
     	   if (resultCode == RESULT_OK) {
     	    mFileName = data.getStringExtra("fileChosen");
-    	    File file = new File(mFileName);    
+    	    File file = new File(mFileName);
     	    fileSelected.setText(file.getName());
     	    Toast.makeText(getApplicationContext(),
     	      "You have selected:" + file.getName(), Toast.LENGTH_LONG).show();

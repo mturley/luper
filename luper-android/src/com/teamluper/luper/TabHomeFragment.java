@@ -1,13 +1,12 @@
 package com.teamluper.luper;
 
-import com.googlecode.androidannotations.annotations.EFragment;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import com.googlecode.androidannotations.annotations.EFragment;
 
 @EFragment
 public class TabHomeFragment extends Fragment {

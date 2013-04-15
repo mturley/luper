@@ -1,9 +1,6 @@
 package com.teamluper.luper;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import android.util.Log;
 
 public class Sequence {
   // database field variables

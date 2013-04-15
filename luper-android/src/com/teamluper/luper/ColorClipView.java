@@ -21,13 +21,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
-import android.view.ViewGroup.MarginLayoutParams;
 
 import java.util.Random;
 
@@ -48,7 +43,7 @@ public class ColorClipView extends View {
     public static final int CLICKED = 0;
     public static final int UNCLICKED = 1;
     Random r = new Random();
-    
+
     Clip associated;
     private int mDrawStyle = UNCLICKED;
     private float mDefStrokeWidth;
@@ -70,7 +65,7 @@ public class ColorClipView extends View {
         super(context, attrs);
         init();
     }
-    
+
     public ColorClipView(Context context, Clip c) {
         super(context);
         associated = c;
@@ -80,7 +75,7 @@ public class ColorClipView extends View {
         mPaint = new Paint();
         mDefStrokeWidth = mPaint.getStrokeWidth();
         mPaint.setStyle(Style.FILL_AND_STROKE);
-        
+
         //this.setLayoutParams(new LayoutParams(associated.duration, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 
@@ -104,20 +99,20 @@ public class ColorClipView extends View {
         //mPaint = new Paint(color);
         invalidate();
     }
-	
+
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec){
     	super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
-    
+
     public boolean onKeyDown (int keyCode, KeyEvent event){
     	return super.onKeyDown(keyCode,event);
     }
-    
+
     @Override
     public void onDraw(Canvas c) {
     	System.out.println("ON DRAW CCV");
     	super.onDraw(c);
-		//MarginLayoutParams lps = (MarginLayoutParams) this.getto    	
+		//MarginLayoutParams lps = (MarginLayoutParams) this.getto
     	int left = associated.begin;
 		int top = 10;
     	//int top = this.getLayoutParams().MATCH_PARENT;
