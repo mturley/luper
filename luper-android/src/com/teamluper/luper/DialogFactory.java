@@ -32,7 +32,8 @@ public class DialogFactory {
     dialog.show();
   }
 
-  public static void prompt(Context context, String title, String message, final StringCallback callback) {
+  public static void prompt(Context context, String title,
+      String message, final Lambda.StringCallback callback) {
     final EditText input = new EditText(context);
     new AlertDialog.Builder(context)
     .setTitle(title)

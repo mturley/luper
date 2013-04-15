@@ -144,7 +144,7 @@ public class LuperMainActivity extends SherlockFragmentActivity {
     if(item.getItemId() == R.id.menu_new_project) {
       DialogFactory.prompt(this,"New Project",
         "Please type a name for your project.  You can change it later.",
-        new StringCallback() {
+        new Lambda.StringCallback() {
           public void go(String value) {
             newProject(value);
           }
