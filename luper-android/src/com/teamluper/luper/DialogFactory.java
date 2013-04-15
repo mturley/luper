@@ -7,7 +7,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class DialogFactory {
-  //toastMessage and alertDialog are just helper methods to make it easier to
+  //toastMessage and alert are just helper methods to make it easier to
   // include a popup message in either dialog or toast form.
   // perhaps we'll need to move this to a common static class shared by all
   // our other classes?  if not, they'll need to be repeated in every file.
@@ -18,22 +18,27 @@ public class DialogFactory {
   public static void alert(Context context, String message) {
     alert(context, null, message);
   }
-
+  
   public static void alert(Context context, String title, String message) {
+    alert(context, title, message, null);
+  }
+  
+  public static void alert(Context context, String title, String message,
+      final Lambda.VoidCallback callback) {
     AlertDialog.Builder dialog = new AlertDialog.Builder(context)
     .setCancelable(false)
     .setMessage(message)
     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface dialog, int which) {
-        // do nothing
+        if(callback != null) callback.go();
       }
     });
     if(title != null) dialog.setTitle(title);
     dialog.show();
   }
 
-  public static void prompt(Context context, String title,
-      String message, final Lambda.StringCallback callback) {
+  public static void prompt(Context context, String title, String message,
+      final Lambda.StringCallback callback) {
     final EditText input = new EditText(context);
     new AlertDialog.Builder(context)
     .setTitle(title)

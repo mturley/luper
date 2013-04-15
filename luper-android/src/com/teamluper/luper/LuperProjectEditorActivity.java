@@ -65,8 +65,12 @@ public class LuperProjectEditorActivity extends SherlockActivity {
         
         long ID = getIntent().getLongExtra("selectedProjectId", -1);
         if(ID == -1) {
-          DialogFactory.alert(this,"No project ID found!  Aborting.");
-          finish();
+          DialogFactory.alert(this,"ERROR","No project ID found!  Aborting.",
+            new Lambda.VoidCallback() {
+              public void go() {
+                finish();
+              }
+            });
         }
         DialogFactory.alert(this,"Loading Project ID: "+ID);
 
