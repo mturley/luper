@@ -40,6 +40,17 @@
             style="@style/LoginFormContainer"
             android:orientation="vertical" >
 
+            <TextView
+                android:id="@+id/donotuse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:text="WORK IN PROGRESS, DO NOT USE THIS YET --Mike"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
             <EditText
                 android:id="@+id/email"
                 android:layout_width="match_parent"
@@ -74,18 +85,19 @@
     </ScrollView>
 
     <!-- Facebook Login Button -->
-   <LinearLayout>
-           android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+   <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <com.facebook.widget.LoginButton
+  <!--  <com.facebook.widget.LoginButton
         android:id="@+id/authButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
         />
-       
-   </LinearLayout> 
+  -->
+
+   </LinearLayout>
 </merge>
