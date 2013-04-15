@@ -10,7 +10,8 @@ create table Users (
   passwordHash      text      not null,
   isActiveUser      integer   not null,
   linkedFacebookID  integer,
-  preferences       text
+  preferences       text,
+  isDirty           integer   not null
 );
 
 create table Sequences (
