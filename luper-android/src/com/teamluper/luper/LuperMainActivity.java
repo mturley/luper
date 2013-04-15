@@ -1,6 +1,6 @@
 // LuperApp.java
 // -------------
- 
+
 // NOTE: ActionBarSherlock is a polyfill providing the new Android 4.2 ActionBar
 //       functionality to all versions of android.  To compile this project
 //       properly, the actionbarsherlock project must also be in your
@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
 
+import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
@@ -67,38 +68,40 @@ public class LuperMainActivity extends SherlockFragmentActivity {
   static LuperMainActivity instance;
   @RestService
   LuperRestClient rest;
-  
+
   ViewPager mViewPager;
   TabsAdapter mTabsAdapter;
-  
+
   // Additional local variables
   AccountManager am;
   SQLiteDataSource dataSource;
-  
+
   @Override
-  protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     instance = this;
-    
+
+    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
     // set up the ViewPager, which we will use in conjunction with tabs.
     // this makes it possible to swipe left and right between the tabs.
     mViewPager = new ViewPager(this);
     mViewPager.setId(R.id.tabcontentpager);
     setContentView(mViewPager);
-    
+
     dataSource = new SQLiteDataSource(this);
     dataSource.open();
-    
+
     final ActionBar bar = getSupportActionBar();
     bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS); // Gives us Tabs!
-    
+
     // FIXME this is slowing down the app launch dramatically.  Perhaps do it in background?
     //Creates a folder for Luper and associated clips and projects
     File nfile=new File(Environment.getExternalStorageDirectory()+"/LuperApp/Clips");
     File mfile=new File(Environment.getExternalStorageDirectory()+"/LuperApp/Projects");
     nfile.mkdir();
     mfile.mkdir();
-    
+
     // now we set up the TabsAdapter, which is a special class borrowed from Google.
     // TabsAdapter.java takes care of all the guts of the Tab interactions, and
     // links it with our ViewPager for us.  The code below is all we need to
@@ -110,12 +113,12 @@ public class LuperMainActivity extends SherlockFragmentActivity {
         TabProjectsFragment_.class, null);
     mTabsAdapter.addTab(bar.newTab().setText(""+"Friends"),
         TabFriendsFragment_.class, null);
-    
+
     //create a directory to save in
     File testdir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/LuperApp/");
     testdir.mkdirs();
   }
-  
+
   @Override
   protected void onResume() {
     super.onResume();
@@ -126,7 +129,7 @@ public class LuperMainActivity extends SherlockFragmentActivity {
   public boolean onCreateOptionsMenu(Menu menu) {
     MenuInflater inf = getSupportMenuInflater();
     inf.inflate(R.menu.activity_main, menu);
-    
+
     // because one of the action items is a custom view,
     // we need the next few lines to force it to use onOptionsItemSelected
     // when it's clicked.
@@ -137,10 +140,10 @@ public class LuperMainActivity extends SherlockFragmentActivity {
         onOptionsItemSelected(item);
       }
     });
-    
+
     return super.onCreateOptionsMenu(menu);
   }
-  
+
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     if(item.getItemId() == R.id.menu_new_project) {
@@ -168,18 +171,18 @@ public class LuperMainActivity extends SherlockFragmentActivity {
 
   public static LuperMainActivity getInstance() {
     return instance;
-  } 
-  
+  }
+
   public SQLiteDataSource getDataSource() {
     return dataSource;
   }
-  
+
   //method to navigate to the audiorecorder activity
   public void startRecording(View view) {
   	Intent intent = new Intent(this, AudioRecorderTestActivity_.class);
   	startActivity(intent);
   }
-  
+
   public boolean deviceIsOnline() {
     // borrowed implementation from:
     // http://stackoverflow.com/questions/2789612/how-can-i-check-whether-an-android-device-is-connected-to-the-web
@@ -189,7 +192,7 @@ public class LuperMainActivity extends SherlockFragmentActivity {
     if (ni == null) return false;
     return ni.isConnected();
   }
-  
+
   // this will be removed, it's an example of how we'll access the EC2 server.
   @Background
   public void testRestAPI(View view) {
@@ -209,12 +212,12 @@ public class LuperMainActivity extends SherlockFragmentActivity {
       DialogFactory.alert(this,"Database Connection Test FAIL!\n" + e.toString());
     }
   }
-  
+
   public void dropAllData(View view) {
     dataSource.dropAllData();
     DialogFactory.alert(this,"Done!");
   }
-  
+
   public void newProject(String title) {
     Sequence newSequence = dataSource.createSequence(null, title);
     ListView lv = (ListView) findViewById(R.id.projectsListView);
@@ -227,20 +230,20 @@ public class LuperMainActivity extends SherlockFragmentActivity {
   public void exampleProject(View view) {
     launchProjectEditor(123456);
   }
-  
+
   @Background
   public void launchProjectEditor(long projectId) {
     Intent intent = new Intent(this, LuperProjectEditorActivity.class);
     if(projectId != -1)  intent.putExtra("selectedProjectId", projectId);
 		startActivity(intent);
   }
-  
+
   @Background
   public void start_testloop(View view) {
 		Intent intent = new Intent(this, LoopTestActivity.class);
 		startActivity(intent);
   }
-  
+
   // this will be removed too, it's checking the google account that the
   // device's user is already logged in with.  We'll likely ditch this in favor
   // of a Facebook-based login solution.
