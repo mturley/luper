@@ -1,6 +1,6 @@
-//Track class will hold a sequence of clips. Tracks will be 
-//played simultaneously with other tracks. Volume will be 
-//adjustable at a track level as well. 
+//Track class will hold a sequence of clips. Tracks will be
+//played simultaneously with other tracks. Volume will be
+//adjustable at a track level as well.
 //
 //Created by: Cam 3/30/13
 //Adapted by: Mike 4/1/13
@@ -18,24 +18,21 @@ public class Track {
 	private boolean isLocked;
 	private String playbackOptions;
 	private boolean isDirty; // dirty = contains unsynced changes
-	
+
 	// Mike's database access variables
 	private SQLiteDataSource dataSource;
-	private boolean autoSaveEnabled;
-	
+
 	// Cam's variables
 	ArrayList <Clip>clips = new ArrayList<Clip>();
 	String[] playBackList;
 	long duration;
 	// volume? an int?
-	
+
 	// Mike's constructor
-	public Track(SQLiteDataSource dataSource, boolean autoSaveEnabled,
-	    long id, long ownerUserID, long parentSequenceID,
-	    boolean isMuted, boolean isLocked, String playbackOptions,
-	    boolean isDirty) {
+	public Track(SQLiteDataSource dataSource, long id, long ownerUserID,
+               long parentSequenceID, boolean isMuted, boolean isLocked,
+               String playbackOptions, boolean isDirty) {
 	  this.dataSource = dataSource;
-	  this.autoSaveEnabled = autoSaveEnabled;
 	  this.id = id;
 	  this.ownerUserID = ownerUserID;
 	  this.parentSequenceID = parentSequenceID;
@@ -47,45 +44,53 @@ public class Track {
 	// temporary constructor for compatability with other files
 	public Track() {
 	  this.dataSource = null;
-	  this.autoSaveEnabled = false;
 	}
-	
+
 	// Mike's getters and setters for database abstraction
 	public long getId() { return id; }
 	public void setId(long id) {
+    long oldId = this.id;
 	  this.id = id;
+    dataSource.updateLong("Tracks", oldId, "_id", id);
+    this.isDirty = true;
 	}
-	
+
 	public long getOwnerUserID() { return ownerUserID; }
 	public void setOwnerUserID(long ownerUserID) {
     this.ownerUserID = ownerUserID;
+    dataSource.updateLong("Tracks", this.id, "ownerUserID", ownerUserID);
+    this.isDirty = true;
 	}
 	public long getParentSequenceID() { return parentSequenceID; }
   public void setParentSequenceID(long parentSequenceID) {
     this.parentSequenceID = parentSequenceID;
+    dataSource.updateLong("Tracks", this.id, "parentSequenceID", parentSequenceID);
+    this.isDirty = true;
   }
 	public boolean isMuted() { return isMuted; }
   public void setMuted(boolean isMuted) {
     this.isMuted = isMuted;
+    dataSource.updateInt("Tracks", this.id, "isMuted", (isMuted ? 1 : 0));
+    this.isDirty = true;
   }
   public boolean isLocked() { return isLocked; }
   public void setLocked(boolean isLocked) {
     this.isLocked = isLocked;
+    dataSource.updateInt("Tracks", this.id, "isLocked", (isLocked ? 1 : 0));
+    this.isDirty = true;
   }
   public String getPlaybackOptions() { return playbackOptions; }
   public void setPlaybackOptions(String playbackOptions) {
     this.playbackOptions = playbackOptions;
+    dataSource.updateString("Tracks", this.id, "playbackOptions", playbackOptions);
+    this.isDirty = true;
   }
   public boolean isDirty() { return isDirty; }
   public void setDirty(boolean isDirty) {
     this.isDirty = isDirty;
+    dataSource.updateInt("Tracks", this.id, "isDirty", (isDirty ? 1 : 0));
   }
 
-  public boolean isAutoSaveEnabled() { return autoSaveEnabled; }
-  public void setAutoSaveEnabled(boolean autoSaveEnabled) {
-    this.autoSaveEnabled = autoSaveEnabled;
-  }
-  
   //SIZE
   public int size()
   {
@@ -112,37 +117,37 @@ public class Track {
 		}
 		return sum;
 	}
-	
+
 	//gets the clip at the end of the track
 	public Clip getClip()
 	{
 		return clips.get(clips.size());
 	}
-	
+
 	//gets the clip at the specified index
 	public Clip getClip(int index)
 	{
 		return clips.get(index);
 	}
-	
+
 	//adds the clip to back of list
 	public void putClip(Clip clip)
 	{
 		clips.add(clip);
 	}
-	
-	
+
+
 	//a method that will allow you to add a clip to the track
 	//TIMES NEED TO BE FIXED
 	public void putClip(int start, Clip clip)
 	{
-//		not sure how to do this, were going to need to find 
-//		out what the start time is then add the clip to the 
+//		not sure how to do this, were going to need to find
+//		out what the start time is then add the clip to the
 //		array at the appropriate place
-	  
+
 	  // yeah, i think this is going to be straightforward but only once
 	  // i finish implementing everything else from the database -Mike
-	  
+
 		int i = 0;
 		for(Clip c : clips)
 		{
@@ -165,7 +170,7 @@ public class Track {
 			}
 		}
 	}
-	
+
 //	will be used to select a portion of the track, then duplicate
 //	that part 'howMany' times
 //  TIMES NEED TO BE FIXED - USE MIKE'S DUPLICATE

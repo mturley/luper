@@ -68,4 +68,4 @@ create table Clips (
   foreign key (audioFileID)   references Files (_id)
 );
 
-insert into Users VALUES (-1, 'anonymous', '', '', 1, null, null  );
+insert into Users VALUES (-1, 'anonymous', '', '', 1, null, null, 0 );

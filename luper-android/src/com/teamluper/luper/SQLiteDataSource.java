@@ -167,7 +167,7 @@ public class SQLiteDataSource {
   }
 
   private User cursorToUser(Cursor cursor) {
-    User user = new User(this, false,
+    User user = new User(this,
       cursor.getLong(cursor.getColumnIndex("_id")),
       cursor.getString(cursor.getColumnIndex("username")),
       cursor.getString(cursor.getColumnIndex("email")),
@@ -177,12 +177,11 @@ public class SQLiteDataSource {
       cursor.getString(cursor.getColumnIndex("preferences")),
       cursor.getInt(cursor.getColumnIndex("isDirty")) == 1
     );
-    user.setAutoSaveEnabled(true);
     return user;
   }
 
   private Sequence cursorToSequence(Cursor cursor) {
-    Sequence sequence = new Sequence(this, false,
+    Sequence sequence = new Sequence(this,
       cursor.getLong(cursor.getColumnIndex("_id")),
       cursor.getLong(cursor.getColumnIndex("ownerUserID")),
       cursor.getString(cursor.getColumnIndex("title")),
@@ -190,11 +189,10 @@ public class SQLiteDataSource {
       cursor.getString(cursor.getColumnIndex("playbackOptions")),
       cursor.getInt(cursor.getColumnIndex("isDirty")) == 1
     );
-    sequence.setAutoSaveEnabled(true);
     return sequence;
   }
   private Track cursorToTrack(Cursor cursor) {
-    Track track = new Track(this, false,
+    Track track = new Track(this,
       cursor.getLong(cursor.getColumnIndex("_id")),
       cursor.getLong(cursor.getColumnIndex("ownerUserID")),
       cursor.getLong(cursor.getColumnIndex("parentSequenceID")),
@@ -203,12 +201,11 @@ public class SQLiteDataSource {
       cursor.getString(cursor.getColumnIndex("playbackOptions")),
       cursor.getInt(cursor.getColumnIndex("isDirty")) == 1
     );
-    track.setAutoSaveEnabled(true);
     return track;
   }
 
   private Clip cursorToClip(Cursor cursor) {
-    Clip clip = new Clip(this, false,
+    Clip clip = new Clip(this,
       cursor.getLong(cursor.getColumnIndex("_id")),
       cursor.getLong(cursor.getColumnIndex("ownerUserID")),
       cursor.getLong(cursor.getColumnIndex("parentSequenceID")),
@@ -220,12 +217,11 @@ public class SQLiteDataSource {
       cursor.getString(cursor.getColumnIndex("playbackOptions")),
       cursor.getInt(cursor.getColumnIndex("isDirty")) == 1
     );
-    clip.setAutoSaveEnabled(true);
     return clip;
   }
 
   private AudioFile cursorToFile(Cursor cursor) {
-    AudioFile file = new AudioFile(this, false,
+    AudioFile file = new AudioFile(this,
       cursor.getLong(cursor.getColumnIndex("_id")),
       cursor.getLong(cursor.getColumnIndex("ownerUserID")),
       cursor.getString(cursor.getColumnIndex("clientFilePath")),
@@ -238,8 +234,32 @@ public class SQLiteDataSource {
       cursor.getLong(cursor.getColumnIndex("renderSequenceID")),
       cursor.getInt(cursor.getColumnIndex("isDirty")) == 1
     );
-    file.setAutoSaveEnabled(true);
     return file;
+  }
+
+  public void updateString(String table, long id, String key, String value) {
+    ContentValues values = new ContentValues();
+    values.put(key, value);
+    values.put("isDirty", 1);
+    database.update(table, values, "_id = "+id, null);
+  }
+  public void updateDouble(String table, long id, String key, double value) {
+    ContentValues values = new ContentValues();
+    values.put(key, value);
+    values.put("isDirty", 1);
+    database.update(table, values, "_id = "+id, null);
+  }
+  public void updateLong(String table, long id, String key, long value) {
+    ContentValues values = new ContentValues();
+    values.put(key, value);
+    values.put("isDirty", 1);
+    database.update(table, values, "_id = "+id, null);
+  }
+  public void updateInt(String table, long id, String key, int value) {
+    ContentValues values = new ContentValues();
+    values.put(key, value);
+    values.put("isDirty", 1);
+    database.update(table, values, "_id = "+id, null);
   }
 
   // PROCEED WITH CAUTION, THIS DOES EXACTLY WHAT IT SOUNDS LIKE
