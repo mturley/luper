@@ -32,6 +32,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EActivity;
+import com.googlecode.androidannotations.annotations.UiThread;
 import com.googlecode.androidannotations.annotations.rest.RestService;
 import com.teamluper.luper.rest.LuperRestClient;
 import org.springframework.web.client.HttpClientErrorException;
@@ -180,7 +181,7 @@ public class LuperMainActivity extends SherlockFragmentActivity {
   @Background
   public void testRestAPI(View view) {
     if(!deviceIsOnline()) {
-      DialogFactory.alert(this,"Internet Connection Required",
+      alert("Internet Connection Required",
           "That feature requires access to the internet, and your device is " +
           "offline!  Please connect to a Wifi network or a mobile data network " +
           "and try again.");
@@ -188,12 +189,17 @@ public class LuperMainActivity extends SherlockFragmentActivity {
     }
     try {
       String t = rest.getTestString();
-      DialogFactory.alert(this,"Database Connection Test PASS!\n" +
-          "Request: GET http://teamluper.com/api/test\n" +
-          "Response: '"+t+"'");
+      alert("Database Connection Test PASS!",
+        "Request: GET http://teamluper.com/api/test\n" +
+        "Response: '" + t + "'");
     } catch(HttpClientErrorException e) {
-      DialogFactory.alert(this,"Database Connection Test FAIL!\n" + e.toString());
+      alert("Database Connection Test FAIL!", e.toString());
     }
+  }
+
+  @UiThread
+  public void alert(String title, String message) {
+    DialogFactory.alert(this, title, message);
   }
 
   public void dropAllData(View view) {
@@ -211,19 +217,15 @@ public class LuperMainActivity extends SherlockFragmentActivity {
 
   @Background
   public void exampleProject(View view) {
-    launchProjectEditor(123456);
+    alert("Nothing to see here",
+      "This button will be removed soon.  There is no more Dummy Project. " +
+      "To launch LuperProjectEditorActivity, just create and open a real project.");
   }
 
   @Background
   public void launchProjectEditor(long projectId) {
     Intent intent = new Intent(this, LuperProjectEditorActivity_.class);
     if(projectId != -1)  intent.putExtra("selectedProjectId", projectId);
-		startActivity(intent);
-  }
-
-  @Background
-  public void start_testloop(View view) {
-		Intent intent = new Intent(this, LoopTestActivity.class);
 		startActivity(intent);
   }
 
