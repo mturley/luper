@@ -66,7 +66,7 @@ public class LuperSettingsActivity extends SherlockPreferenceActivity
   protected void onResume() {
     super.onResume();
     if(!testAccounts()) {
-      alertDialog("Warning: since your device is not logged into a google account," +
+      DialogFactory.alert(this,"Warning: since your device is not logged into a google account," +
       		        " your settings will not be saved to the server properly.");
     }
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -252,28 +252,10 @@ public class LuperSettingsActivity extends SherlockPreferenceActivity
     }
     return accounts.length >= 1;
   }
-  
-  @UiThread
-  public void toastMessage(String message) {
-    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-  }
-  
-  @UiThread
-  void alertDialog(String message) {
-    new AlertDialog.Builder(this)
-    .setCancelable(false)
-    .setMessage(message)
-    .setPositiveButton("OK", new OnClickListener() {
-      public void onClick(DialogInterface dialog, int which) {
-        // do nothing
-      }
-    })
-    .show();
-  }
-
+ 
   @Override
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
       String key) {
-    toastMessage("TODO: Save new "+key+" preference value to server!");
+    DialogFactory.toastMessage(this,"TODO: Save new "+key+" preference value to server!");
   }
 }

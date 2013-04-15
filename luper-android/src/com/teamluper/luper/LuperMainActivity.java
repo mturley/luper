@@ -142,7 +142,7 @@ public class LuperMainActivity extends SherlockFragmentActivity {
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     if(item.getItemId() == R.id.menu_new_project) {
-      promptDialog("New Project",
+      DialogFactory.prompt(this,"New Project",
         "Please type a name for your project.  You can change it later.",
         new StringCallback() {
           public void go(String value) {
@@ -156,8 +156,8 @@ public class LuperMainActivity extends SherlockFragmentActivity {
       startActivity(intent);
     }
     if(item.getItemId() == R.id.menu_login) {
-      alertDialog("Warning","Login is not fully implemented, and will likely" +
-      		"crash the app.  This is a known issue.");
+      DialogFactory.alert(this,"Warning","Login is not fully implemented, " +
+      		"and will likely crash the app.  This is a known issue.");
       Intent intent = new Intent(this, LuperLoginActivity.class);
       startActivity(intent);
     }
@@ -184,7 +184,7 @@ public class LuperMainActivity extends SherlockFragmentActivity {
   @Background
   public void testRestAPI(View view) {
     if(!deviceIsOnline()) {
-      alertDialog("Internet Connection Required",
+      DialogFactory.alert(this,"Internet Connection Required",
           "That feature requires access to the internet, and your device is " +
           "offline!  Please connect to a Wifi network or a mobile data network " +
           "and try again.");
@@ -192,24 +192,25 @@ public class LuperMainActivity extends SherlockFragmentActivity {
     }
     try {
       String t = rest.getTestString();
-      alertDialog("Database Connection Test PASS!\n" +
+      DialogFactory.alert(this,"Database Connection Test PASS!\n" +
           "Request: GET http://teamluper.com/api/test\n" +
           "Response: '"+t+"'");
     } catch(HttpClientErrorException e) {
-      alertDialog("Database Connection Test FAIL!\n" + e.toString());
+      DialogFactory.alert(this,"Database Connection Test FAIL!\n" + e.toString());
     }
   }
   
   public void dropAllData(View view) {
     dataSource.dropAllData();
-    alertDialog("Done!");
+    DialogFactory.alert(this,"Done!");
   }
   
   public void newProject(String title) {
     Sequence newSequence = dataSource.createSequence(null, title);
     ListView lv = (ListView) findViewById(R.id.projectsListView);
-    ArrayAdapter a = (ArrayAdapter) lv.getAdapter();
-    a.add(newSequence);
+    @SuppressWarnings("unchecked")
+    ArrayAdapter<Sequence> adapter = (ArrayAdapter<Sequence>) lv.getAdapter();
+    adapter.add(newSequence);
   }
   
   // Just here until it gets moved to Project Tab
@@ -241,57 +242,5 @@ public class LuperMainActivity extends SherlockFragmentActivity {
     for(int i=0; i<accounts.length; i++) {
       System.out.println(accounts[i].toString());
     }
-  }
-  
-  // toastMessage and alertDialog are just helper methods to make it easier to
-  // include a popup message in either dialog or toast form.
-  // perhaps we'll need to move this to a common static class shared by all
-  // our other classes?  if not, they'll need to be repeated in every file.
-  @UiThread
-  void toastMessage(String message) {
-    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-  }
-  
-  @UiThread
-  void alertDialog(String message) {
-    alertDialog(null, message);
-  }
-  
-  @UiThread
-  void alertDialog(String title, String message) {
-    alertDialog(this, title, message);
-  }
-  
-  @UiThread
-  void alertDialog(Context context, String title, String message) {
-    AlertDialog.Builder dialog = new AlertDialog.Builder(context)
-    .setCancelable(false)
-    .setMessage(message)
-    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-      public void onClick(DialogInterface dialog, int which) {
-        // do nothing
-      }
-    });
-    if(title != null) dialog.setTitle(title);
-    dialog.show();
-  }
-  
-  @UiThread
-  void promptDialog(String title, String message, final StringCallback callback) {
-    final EditText input = new EditText(this);
-    new AlertDialog.Builder(this)
-      .setTitle(title)
-      .setMessage(message)
-      .setView(input)
-      .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-          public void onClick(DialogInterface dialog, int whichButton) {
-              String value = input.getText().toString();
-              callback.go(value);
-          }
-      }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-          public void onClick(DialogInterface dialog, int whichButton) {
-              // Do nothing.
-          }
-      }).show();
   }
 }

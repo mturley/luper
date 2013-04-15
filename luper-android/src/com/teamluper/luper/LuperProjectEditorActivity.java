@@ -63,9 +63,12 @@ public class LuperProjectEditorActivity extends SherlockActivity {
         super.onCreate(icicle);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         
-        long ID = getIntent().getExtras().getLong("com.teamluper.luper.ProjectId");
-        
-        alertDialog("Loading Project ID: "+ID);
+        long ID = getIntent().getLongExtra("selectedProjectId", -1);
+        if(ID == -1) {
+          DialogFactory.alert(this,"No project ID found!  Aborting.");
+          finish();
+        }
+        DialogFactory.alert(this,"Loading Project ID: "+ID);
 
         AB = getSupportActionBar();
         
@@ -157,29 +160,8 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     if(item.getItemId() == R.id.editor_help) {
       // TODO
     }
-    if(incomplete) alertDialog("Incomplete Feature",
+    if(incomplete) DialogFactory.alert(this,"Incomplete Feature",
         "That button hasn't been hooked up to anything.");
     return true;
-  }
-	
-  void alertDialog(String message) {
-    alertDialog(null, message);
-  }
-  
-  void alertDialog(String title, String message) {
-    alertDialog(this, title, message);
-  }
-  
-  void alertDialog(Context context, String title, String message) {
-    AlertDialog.Builder dialog = new AlertDialog.Builder(context)
-    .setCancelable(false)
-    .setMessage(message)
-    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-      public void onClick(DialogInterface dialog, int which) {
-        // do nothing
-      }
-    });
-    if(title != null) dialog.setTitle(title);
-    dialog.show();
   }
 }

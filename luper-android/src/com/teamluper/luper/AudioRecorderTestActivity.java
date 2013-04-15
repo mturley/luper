@@ -190,7 +190,8 @@ public class AudioRecorderTestActivity extends SherlockActivity
         //playBackTest.putClip(newClip);        
         //alertDialog("Clip Created! The clip's length is: " + newClip.duration + "(ms). The tracks size is " + playBackTest.size() + " and it's name in the track is ..." + playBackTest.clips.get(0).name);
         
-        alertDialog("Clip Created! The clip's length is: " + newClip.duration + "(ms) the clip's name is: " + newClip.name);
+        DialogFactory.alert(this,"Clip Created! The clip's length is: "
+          + newClip.duration + "(ms) the clip's name is: " + newClip.name);
         
         fileSelected.setText(mFileName);
         mRecorder = null;
@@ -434,17 +435,4 @@ public class AudioRecorderTestActivity extends SherlockActivity
             mPlayer = null;
         }
     }
-    @UiThread
-    void alertDialog(String message) {
-      new AlertDialog.Builder(this)
-      .setCancelable(false)
-      .setMessage(message)
-      .setPositiveButton("OK", new OnClickListener() {
-        public void onClick(DialogInterface dialog, int which) {
-          // do nothing
-        }
-      })
-      .show();
-    }
-
 }
