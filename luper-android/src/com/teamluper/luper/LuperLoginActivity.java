@@ -3,6 +3,7 @@ package com.teamluper.luper;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -94,6 +95,7 @@ public class LuperLoginActivity extends FragmentActivity {
           }
         });
 
+    
     //facebook button implementation
     /*
     if (savedInstanceState == null) {
@@ -111,6 +113,11 @@ public class LuperLoginActivity extends FragmentActivity {
     */
   }
 
+  public void registerMe(View view) {
+    	Intent intent = new Intent(this, LuperRegisterActivity_.class);
+    	startActivity(intent);
+    }
+  
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     super.onCreateOptionsMenu(menu);
