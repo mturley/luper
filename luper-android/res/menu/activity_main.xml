@@ -12,7 +12,7 @@
     <item android:id="@+id/menu_login"
         android:title="@string/menu_login"
         android:showAsAction="ifRoom" />
-     <!--  <item android:id="@+id/menu_register"
+     <item android:id="@+id/menu_register"
         android:title="@string/menu_register"
-        android:showAsAction="ifRoom" />-->
+        android:showAsAction="ifRoom" />
 </menu>

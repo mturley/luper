@@ -22,10 +22,10 @@
        
     </LinearLayout>
 
-    <!-- Login form -->
+    <!-- Register form -->
 
     <ScrollView
-        android:id="@+id/login_form"
+        android:id="@+id/register_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
@@ -71,7 +71,7 @@
                 android:singleLine="true" />
             
             <Button
-                android:id="@+id/sign_in_button"
+                android:id="@+id/register_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
