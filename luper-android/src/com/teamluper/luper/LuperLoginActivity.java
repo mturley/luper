@@ -113,6 +113,8 @@ public class LuperLoginActivity extends FragmentActivity {
     */
   }
 
+  //Register Account Activity
+  //Activity is created in Luper Manifest
   public void registerMe(View view) {
     	Intent intent = new Intent(this, LuperRegisterActivity_.class);
     	startActivity(intent);

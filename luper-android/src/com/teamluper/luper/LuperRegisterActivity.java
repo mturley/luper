@@ -13,6 +13,7 @@ public class LuperRegisterActivity extends FragmentActivity {
 	  protected void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 
+	    //uses the activity_luper_register.xml to set the graphical layout
 	    setContentView(R.layout.activity_luper_register);
 	  }
 	  @Override
