@@ -56,46 +56,13 @@ public class Clip {
 	}
 	public Clip() {
 	  dataSource = null;
-	  name = null;
-	  duration = 0;
-	  begin = 0;
-	  end = duration;
 	}
 	public Clip(String cName)
 	{
 	  dataSource = null;
-		name = cName;
-		duration = 0;
-		begin = 0;
-		end = duration;
-	}
-	//Getters and setters for the fields TODO cleanup
-	public String getClip()
-	{
-		return name;
-	}
-	public long getBegin()
-	{
-		return begin;
-	}
-	public long getEnd()
-	{
-		return end;
-	}
-	public void setClip(String cName)
-	{
-		name = cName;
-	}
-	public void setStart(int start)
-	{
-		begin = start;
-	}
-	public void setEnd(int stop)
-	{
-		end = stop;
 	}
 	//Extra length method using mediaplayer which oddly uses an integer for the duration
-	public int getDuration()
+	public int getDuration() //FIXME update database with current duration , refactor
 	{
 		try {
 			MediaPlayer mp = new MediaPlayer();
@@ -109,7 +76,6 @@ public class Clip {
 			mp.release();
 			duration = length;
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			duration = 0;
 		}
@@ -196,17 +162,4 @@ public class Clip {
     if(this.audioFile == null) loadFileMetadata();
     this.audioFile.loadAudio();
   }
-
-	//calculates the total playing length of the clip as an int, keeping in line with getDuration
-	public int calcLength()
-	{
-		duration = end-begin;
-		return duration;
-	}
-	/*//returns the clips path and save location as a string
-	public String getClipPath()
-	{
-		String path = this.name.getPath();
-		return path;
-	}*/
 }
