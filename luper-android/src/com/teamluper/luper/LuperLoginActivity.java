@@ -3,10 +3,11 @@ package com.teamluper.luper;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -14,12 +15,19 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.support.v4.app.FragmentActivity;
+
+import com.actionbarsherlock.view.MenuItem;
+import com.googlecode.androidannotations.annotations.EActivity;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 /**
  * Activity which displays a login screen to the user, offering registration as
  * well.
  */
 //modified from Activity to FragmentActivity for Facebook
+@EActivity
 public class LuperLoginActivity extends FragmentActivity {
   /**
    * A dummy authentication store containing known user names and passwords.
@@ -48,7 +56,7 @@ public class LuperLoginActivity extends FragmentActivity {
   private View mLoginFormView;
   private View mLoginStatusView;
   private TextView mLoginStatusMessageView;
-  
+
   //Instance of FacebookLoginFragment
   //private FacebookLoginFragment facebookLoginFragment;
 
@@ -88,6 +96,7 @@ public class LuperLoginActivity extends FragmentActivity {
             attemptLogin();
           }
         });
+
     
     //facebook button implementation
     /*
@@ -106,11 +115,30 @@ public class LuperLoginActivity extends FragmentActivity {
     */
   }
 
+  
+  //Register Account Activity
+  //Activity is created in Luper Manifest
+  public void registerMe(View view) {
+    	Intent intent = new Intent(this, LuperRegisterActivity_.class);
+    	startActivity(intent);
+    }
+  
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     super.onCreateOptionsMenu(menu);
     getMenuInflater().inflate(R.menu.luper_login, menu);
     return true;
+  }
+ 
+
+  public static String sha1(String input) throws NoSuchAlgorithmException {
+    MessageDigest mDigest = MessageDigest.getInstance("SHA1");
+    byte[] result = mDigest.digest(input.getBytes());
+    StringBuffer sb = new StringBuffer();
+    for (int i = 0; i < result.length; i++) {
+      sb.append(Integer.toString((result[i] & 0xff) + 0x100, 16).substring(1));
+    }
+    return sb.toString();
   }
 
   /**
@@ -211,6 +239,7 @@ public class LuperLoginActivity extends FragmentActivity {
    * Represents an asynchronous login/registration task used to authenticate the
    * user.
    */
+  // TODO refactor this all into just a simple @Background-annotated method.
   public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
     @Override
     protected Boolean doInBackground(Void... params) {

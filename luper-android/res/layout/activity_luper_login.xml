@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".LuperLoginActivity" >
@@ -40,6 +42,17 @@
             style="@style/LoginFormContainer"
             android:orientation="vertical" >
 
+            <TextView
+                android:id="@+id/donotuse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:text="WORK IN PROGRESS, DO NOT USE THIS YET --Mike"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
             <EditText
                 android:id="@+id/email"
                 android:layout_width="match_parent"
@@ -69,23 +82,36 @@
                 android:layout_marginTop="16dp"
                 android:paddingLeft="32dp"
                 android:paddingRight="32dp"
-                android:text="@string/action_sign_in_register" />
+                android:text="@string/action_sign_in" />
+            
+            <Button
+                android:id="@+id/register_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:paddingLeft="32dp"
+                android:paddingRight="32dp"
+                android:onClick="registerMe"
+                android:text="@string/action_register" />
+            
         </LinearLayout>
     </ScrollView>
 
     <!-- Facebook Login Button -->
-   <LinearLayout>
-           android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+   <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <com.facebook.widget.LoginButton
-        android:id="@+id/authButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        />
-       
-   </LinearLayout> 
+
+  
+  		<com.facebook.widget.LoginButton
+            android:id="@+id/login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp" />
+
+   </LinearLayout>
 </merge>
