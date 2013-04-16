@@ -1,5 +1,8 @@
 package com.teamluper.luper;
 
+// DISCLAIMER: IF YOU DON'T KNOW WHAT THE HELL IS UP WITH LAMBDA,
+// THEN DON'T WORRY ABOUT IT, YOU PROBABLY DON'T NEED IT.
+
 // This is my dumb implementation of Lambda in Java.
 // because java doesn't cleanly support passing a function as a parameter,
 // which is useful for things like taking some action after a request you made
@@ -20,7 +23,7 @@ package com.teamluper.luper;
 // gets called as soon as the dialog is closed) you can just add a parameter:
 //
 // public void someFunction(String something, Lambda.VoidCallback callback)
-// 
+//
 // and then in the body of that function, just make sure to call callback.go().
 
 // VoidCallback is for plain old callbacks, just a function you need called.
@@ -28,6 +31,8 @@ package com.teamluper.luper;
 // (such as DialogFactory.prompt, which takes user input) and then pass it a
 // method to be called with that string as a parameter. (do something with the
 // string the user entered).
+
+// oh and by the way, it's like 5 lines of code:
 
 public class Lambda {
   public static interface VoidCallback {
