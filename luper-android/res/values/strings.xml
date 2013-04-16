@@ -29,4 +29,5 @@
     <string name="editor_play">Play</string>
     <string name="editor_volume">Volume</string>
     <string name="editor_help">Help</string>
+    <string name="get_started">Log into Facebook to use Luper</string>
 </resources>
