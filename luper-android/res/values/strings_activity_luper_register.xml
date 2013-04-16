@@ -6,6 +6,7 @@
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="prompt_password2">Re-enter Password</string>
+    <string name="prompt_username">Display Name</string>
     <string name="action_register">Register</string>
 
 </resources>

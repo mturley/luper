@@ -128,6 +128,16 @@ public class LuperMainActivity extends SherlockFragmentActivity {
     });
     */
 
+    User activeUser = dataSource.getActiveUser();
+    if(activeUser == null) {
+      // we're logged out
+      menu.add(0,1,0,"Log In");
+      menu.add(0,2,0,"Register");
+    } else {
+      // we're logged in
+      menu.add(0,3,0,"Log Out "+activeUser.getEmail());
+    }
+
     return super.onCreateOptionsMenu(menu);
   }
 

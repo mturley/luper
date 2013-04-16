@@ -56,6 +56,22 @@ public class SQLiteDataSource {
     // TODO
   }
 
+  public User getActiveUser() {
+    Cursor cursor = database.query("Users", null,
+      "isActiveUser = 1", null, null, null, null);
+    int numResults = cursor.getCount();
+    if(numResults < 1) return null;
+    cursor.moveToFirst();
+    User u = cursorToUser(cursor);
+    cursor.close();
+    return u;
+  }
+  public void logoutActiveUser() {
+    ContentValues values = new ContentValues();
+    values.put("isActiveUser", 0);
+    database.update("Users", values, "isActiveUser = 1", null);
+  }
+
   public Sequence createSequence(User owner, String title) {
     if(title == "") title = "Untitled";
     ContentValues values = new ContentValues();
