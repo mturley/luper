@@ -3,6 +3,7 @@ package com.teamluper.luper;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +15,8 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.actionbarsherlock.view.MenuItem;
 import com.googlecode.androidannotations.annotations.EActivity;
 
 import java.security.MessageDigest;
@@ -94,6 +97,7 @@ public class LuperLoginActivity extends FragmentActivity {
           }
         });
 
+    
     //facebook button implementation
     /*
     if (savedInstanceState == null) {
@@ -111,12 +115,21 @@ public class LuperLoginActivity extends FragmentActivity {
     */
   }
 
+  
+  //Register Account Activity
+  //Activity is created in Luper Manifest
+  public void registerMe(View view) {
+    	Intent intent = new Intent(this, LuperRegisterActivity_.class);
+    	startActivity(intent);
+    }
+  
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     super.onCreateOptionsMenu(menu);
     getMenuInflater().inflate(R.menu.luper_login, menu);
     return true;
   }
+ 
 
   public static String sha1(String input) throws NoSuchAlgorithmException {
     MessageDigest mDigest = MessageDigest.getInstance("SHA1");

@@ -148,6 +148,10 @@ public class LuperMainActivity extends SherlockFragmentActivity {
       Intent intent = new Intent(this, LuperLoginActivity_.class);
       startActivity(intent);
     }
+    if(item.getItemId() == R.id.menu_register) {
+        Intent intent = new Intent(this, LuperRegisterActivity_.class);
+        startActivity(intent);
+      }
     return true;
   }
 
@@ -219,6 +223,7 @@ public class LuperMainActivity extends SherlockFragmentActivity {
       "This button will be removed soon.  There is no more Dummy Project. " +
       "To launch LuperProjectEditorActivity, just create and open a real project.");
   }
+  
 
   @Background
   public void launchProjectEditor(long projectId) {
