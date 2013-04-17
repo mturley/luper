@@ -27,9 +27,40 @@ $api->get('/test', function() use ($api) {
   }
 });
 
-$api->get('/account/byEmail/:email', function() use ($api) {
+$api->post('/auth/register/:email/:plainTextPassword', function() use ($api) {
   try {
-    $db = getDB();
+    // TODO
+  } catch(PDOException $e) {
+    $api->halt(500,$e->getMessage());
+  }
+});
+
+$api->post('/auth/passwd/:email/:newPlainTextPassword', function() use ($api) {
+  try {
+    // TODO
+  } catch(PDOException $e) {
+    $api->halt(500,$e->getMessage());
+  }
+});
+
+$api->get('/auth/login/:email/:halfBakedPasswordHash', function() use ($api) {
+  try {
+    // TODO
+  } catch(PDOException $e) {
+    $api->halt(500,$e->getMessage());
+  }
+});
+
+$api->get('/auth/login_insecure/:email/:plainTextPassword', function() use ($api) {
+  try {
+    // TODO
+  } catch(PDOException $e) {
+    $api->halt(500,$e->getMessage());
+  }
+});
+
+$api->get('/auth/salt/:email', function() use ($api) {
+  try {
     // TODO
   } catch(PDOException $e) {
     $api->halt(500,$e->getMessage());

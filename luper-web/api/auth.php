@@ -8,6 +8,7 @@ require_once 'db.php';
 // this is probably all overkill, but it's better to be safe than sorry.
 
 define("HALF_TOTAL_NUM_HASHES",50000); // we will be hashing twice as many times as this number.
+// this number must match the one on the client or the password will fail to validate.
 
 // computes a new random salt.
 function newRandomSalt($email) {
