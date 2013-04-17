@@ -79,6 +79,12 @@
             android:windowSoftInputMode="adjustResize|stateVisible"
             android:parentActivityName="com.teamluper.luper.LuperMainActivity_" >
         </activity>
+        <activity
+            android:name="com.teamluper.luper.LuperForgotPasswordActivity_"
+            android:label="Forgot Password"
+            android:windowSoftInputMode="adjustResize|stateVisible"
+            android:parentActivityName="com.teamluper.luper.LuperMainActivity_" >
+        </activity>
     </application>
 
 </manifest>
