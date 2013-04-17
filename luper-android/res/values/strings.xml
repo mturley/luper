@@ -30,6 +30,6 @@
     <string name="editor_volume">Volume</string>
     <string name="editor_help">Help</string>
     <string name="get_started">Log into Facebook to use Luper</string>
-
+    <string name="app_id">568749619823694</string>
     <string name="devtoolsexplanation">NOTE: All the buttons which were here before have been moved to the new LuperDevToolsActivity, so that this space can instead be used for facebook features.  The button above will be removed soon, but the Developer Tools can also be accessed from the menu in the actionbar.\n--Mike</string>
 </resources>

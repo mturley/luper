@@ -19,6 +19,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <meta-data android:name="com.facebook.sdk.applicationId" android:value="@string/app_id" />
         <activity
             android:name="com.teamluper.luper.LuperMainActivity_"
             android:label="@string/app_name" >
@@ -79,7 +80,19 @@
             android:windowSoftInputMode="adjustResize|stateVisible"
             android:parentActivityName="com.teamluper.luper.LuperMainActivity_" >
         </activity>
-        <activity android:name=".LuperDevToolsActivity"/>
+
+        <activity
+            android:name="com.teamluper.luper.LuperDevToolsActivity"
+            android:label="Luper Developer Tools"
+            android:parentActivityName="com.teamluper.luper.LuperMainActivity_" >
+        </activity>
+
+        <activity
+            android:name="com.teamluper.luper.LuperForgotPasswordActivity_"
+            android:label="Forgot Password"
+            android:windowSoftInputMode="adjustResize|stateVisible"
+            android:parentActivityName="com.teamluper.luper.LuperMainActivity_" >
+        </activity>
     </application>
 
 </manifest>
