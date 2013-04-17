@@ -153,14 +153,12 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   public void loadDataInBackground() {
     if(sequence == null) return;
     sequence.loadAllTrackData();
-    alert("All Track Data is Loaded!");
   }
 
   @Background
   public void loadAudioInBackground() {
     if(sequence == null) return;
     sequence.loadAllTrackAudio();
-    alert("All Audio Data is Loaded!");
   }
 
   @UiThread
