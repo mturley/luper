@@ -99,11 +99,11 @@ public class LuperMainActivity extends SherlockFragmentActivity {
     // add some fragment content as tabs in the ActionBar!
     mTabsAdapter = new TabsAdapter(this, mViewPager);
     mTabsAdapter.addTab(bar.newTab().setText(""+"Home"),
-        TabHomeFragment.class, null);
+        TabHomeFragment_.class, null);
     mTabsAdapter.addTab(bar.newTab().setText(""+"Projects"),
-        TabProjectsFragment.class, null);
+        TabProjectsFragment_.class, null);
     mTabsAdapter.addTab(bar.newTab().setText(""+"Friends"),
-        TabFriendsFragment.class, null);
+        TabFriendsFragment_.class, null);
 
     //create a directory to save in
     File testdir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/LuperApp/");
