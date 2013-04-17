@@ -31,14 +31,4 @@
             android:layout_marginTop="10dp" android:layout_alignLeft="@+id/welcome"
             android:layout_alignRight="@+id/welcome"/>
 
-
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/bytheway"
-        android:layout_centerHorizontal="true"
-        android:onClick="login"
-        android:text="Login" />
-
 </RelativeLayout>

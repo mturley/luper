@@ -124,6 +124,7 @@ public class LuperMainActivity extends SherlockFragmentActivity {
     // because one of the action items is a custom view,
     // we need the next few lines to force it to use onOptionsItemSelected
     // when it's clicked.
+    /*
     final MenuItem item = menu.findItem(R.id.menu_new_project);
     item.getActionView().setOnClickListener(new OnClickListener() {
       @Override
@@ -131,6 +132,7 @@ public class LuperMainActivity extends SherlockFragmentActivity {
         onOptionsItemSelected(item);
       }
     });
+    */
 
     return super.onCreateOptionsMenu(menu);
   }
