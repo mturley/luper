@@ -18,11 +18,11 @@ public class DialogFactory {
   public static void alert(Context context, String message) {
     alert(context, null, message);
   }
-  
+
   public static void alert(Context context, String title, String message) {
     alert(context, title, message, null);
   }
-  
+
   public static void alert(Context context, String title, String message,
       final Lambda.VoidCallback callback) {
     AlertDialog.Builder dialog = new AlertDialog.Builder(context)
@@ -38,7 +38,7 @@ public class DialogFactory {
   }
 
   public static void prompt(Context context, String title, String message,
-      final Lambda.StringCallback callback) {
+                            final Lambda.StringCallback callback) {
     final EditText input = new EditText(context);
     new AlertDialog.Builder(context)
     .setTitle(title)

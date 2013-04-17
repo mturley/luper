@@ -20,11 +20,16 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -32,12 +37,14 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EActivity;
+import com.googlecode.androidannotations.annotations.EFragment;
 import com.googlecode.androidannotations.annotations.UiThread;
 import com.googlecode.androidannotations.annotations.rest.RestService;
 import com.teamluper.luper.rest.LuperRestClient;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.io.File;
+import java.util.List;
 
 // imports for ActionBarSherlock dependency
 // imports for AndroidAnnotations dependency
@@ -45,7 +52,7 @@ import java.io.File;
 // imports for the SpringFramework REST dependency
 // imports for Test Suite
 
-// @EActivity = "Enhanced Activity", which turns on AndroidAnnotations features
+// @EActivity = "Enhanced Activity", which turns on AndroidAnnotati1ons features
 @EActivity
 public class LuperMainActivity extends SherlockFragmentActivity {
 
@@ -223,7 +230,7 @@ public class LuperMainActivity extends SherlockFragmentActivity {
       "This button will be removed soon.  There is no more Dummy Project. " +
       "To launch LuperProjectEditorActivity, just create and open a real project.");
   }
-  
+
 
   @Background
   public void launchProjectEditor(long projectId) {
@@ -244,4 +251,56 @@ public class LuperMainActivity extends SherlockFragmentActivity {
       System.out.println(accounts[i].toString());
     }
   }
+
+  @EFragment
+  private class TabHomeFragment extends Fragment {
+    @Override
+    public View onCreateView(LayoutInflater infl, ViewGroup vg, Bundle state) {
+      if(vg == null) return null;
+      return (RelativeLayout)infl.inflate(R.layout.tab_home_layout, vg, false);
+    }
+  }
+
+  @EFragment
+  public class TabProjectsFragment extends Fragment {
+    @Override
+    public View onCreateView(LayoutInflater infl, ViewGroup vg, Bundle state) {
+      if(vg == null) return null;
+
+      final LuperMainActivity main = (LuperMainActivity) getActivity();
+
+      View view = infl.inflate(R.layout.tab_projects_layout, vg, false);
+
+      List<Sequence> allSequences = main.dataSource.getAllSequences();
+      ArrayAdapter<Sequence> adapter = new ArrayAdapter<Sequence>(
+        (Context) main,
+        android.R.layout.simple_list_item_1,
+        allSequences);
+      ListView projectsListView = (ListView) view.findViewById(R.id.projectsListView);
+      projectsListView.setAdapter(adapter);
+      projectsListView.setEmptyView(view.findViewById(R.id.projectsListEmptyText));
+      projectsListView.setOnItemClickListener(
+        new AdapterView.OnItemClickListener() {
+          @Override
+          public void onItemClick(AdapterView<?> parent, View view,
+                                  int position, long id) {
+            Sequence s = (Sequence) parent.getItemAtPosition(position);
+            main.launchProjectEditor(s.getId());
+          }
+        });
+      return (RelativeLayout) view;
+    }
+
+  }
+
+  @EFragment
+  public class TabFriendsFragment extends Fragment {
+    @Override
+    public View onCreateView(LayoutInflater infl, ViewGroup vg, Bundle state) {
+      if(vg == null) return null;
+      return (RelativeLayout)infl.inflate(R.layout.tab_friends_layout, vg, false);
+    }
+  }
+
 }
+
