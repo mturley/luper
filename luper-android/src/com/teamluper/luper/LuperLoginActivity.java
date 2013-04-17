@@ -16,8 +16,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.actionbarsherlock.view.MenuItem;
-import com.facebook.Session;
 import com.googlecode.androidannotations.annotations.EActivity;
 
 import java.security.MessageDigest;
@@ -61,7 +59,6 @@ public class LuperLoginActivity extends FragmentActivity {
 
   //Instance of FacebookLoginFragment
   private FacebookLoginFragment facebookLoginFragment;
-  private Session session = new Session.Builder(this).setApplicationId(MY_APP_ID).build();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
