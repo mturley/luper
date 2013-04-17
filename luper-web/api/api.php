@@ -7,7 +7,8 @@ $api = new \Slim\Slim(array(
   'log.level'   => \Slim\Log::DEBUG
 ));
 
-require 'db.php'; // defines getDB()
+require_once 'db.php'; // defines getDB()
+require_once 'auth.php'; // defines password hashing functions
 
 $api->get('/null', function() use ($api) {
   echo "";
@@ -36,5 +37,3 @@ $api->get('/account/byEmail/:email', function() use ($api) {
 });
 
 $api->run();
-
-?>
