@@ -168,6 +168,12 @@ public class LuperMainActivity extends SherlockFragmentActivity {
   	Intent intent = new Intent(this, AudioRecorderTestActivity_.class);
   	startActivity(intent);
   }
+  
+  //Start login activity
+  public void login(View view) {
+	  Intent intent = new Intent(this,LuperLoginActivity_.class);
+	  startActivity(intent);
+  }
 
   public boolean deviceIsOnline() {
     // borrowed implementation from:

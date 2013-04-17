@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.actionbarsherlock.view.MenuItem;
+import com.facebook.Session;
 import com.googlecode.androidannotations.annotations.EActivity;
 
 import java.security.MessageDigest;
@@ -29,6 +30,7 @@ import java.security.NoSuchAlgorithmException;
 //modified from Activity to FragmentActivity for Facebook
 @EActivity
 public class LuperLoginActivity extends FragmentActivity {
+	private final String MY_APP_ID = "568749619823694";
   /**
    * A dummy authentication store containing known user names and passwords.
    * TODO: remove after connecting to a real authentication system.
@@ -58,11 +60,26 @@ public class LuperLoginActivity extends FragmentActivity {
   private TextView mLoginStatusMessageView;
 
   //Instance of FacebookLoginFragment
-  //private FacebookLoginFragment facebookLoginFragment;
+  private FacebookLoginFragment facebookLoginFragment;
+  private Session session = new Session.Builder(this).setApplicationId(MY_APP_ID).build();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    
+    if(savedInstanceState == null) {
+    	// create new fragment from initial activity group
+    	facebookLoginFragment = new FacebookLoginFragment();
+    	getSupportFragmentManager()
+    	.beginTransaction()
+    	.add(android.R.id.content,facebookLoginFragment)
+    	.commit();
+    } else {
+    	// Or set the fragment from restored state info
+        facebookLoginFragment = (FacebookLoginFragment) getSupportFragmentManager()
+        .findFragmentById(android.R.id.content);
+    }
+// for now login activity will only display Facebook login button    	
 
     setContentView(R.layout.activity_luper_login);
 
