@@ -79,8 +79,7 @@
         </activity>
         <activity
             android:name="com.teamluper.luper.LuperLoginActivity_"
-            android:label="@string/title_activity_luper_login"
-            android:windowSoftInputMode="adjustResize|stateVisible"
+            android:label="@string/login_title"
             android:parentActivityName="com.teamluper.luper.LuperMainActivity_" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -100,10 +99,10 @@
             android:name="com.teamluper.luper.LuperForgotPasswordActivity_"
             android:label="Forgot Password"
             android:windowSoftInputMode="adjustResize|stateVisible"
-            android:parentActivityName="com.teamluper.luper.LuperMainActivity_" >
+            android:parentActivityName="com.teamluper.luper.LuperLoginActivity_" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.teamluper.luper.LuperMainActivity_" />
+                android:value="com.teamluper.luper.LuperLoginActivity_" />
         </activity>
     </application>
 

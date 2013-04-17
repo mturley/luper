@@ -68,6 +68,10 @@ public class LuperMainActivity extends SherlockFragmentActivity {
 
     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+    final ActionBar bar = getSupportActionBar();
+    bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS); // Gives us Tabs!
+    bar.setDisplayShowTitleEnabled(false);
+
     // set up the ViewPager, which we will use in conjunction with tabs.
     // this makes it possible to swipe left and right between the tabs.
     mViewPager = new ViewPager(this);
@@ -76,9 +80,6 @@ public class LuperMainActivity extends SherlockFragmentActivity {
 
     dataSource = new SQLiteDataSource(this);
     dataSource.open();
-
-    final ActionBar bar = getSupportActionBar();
-    bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS); // Gives us Tabs!
 
     // FIXME this is slowing down the app launch dramatically.  Perhaps do it in background?
     //Creates a folder for Luper and associated clips and projects

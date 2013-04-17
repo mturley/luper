@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".LuperLoginActivity" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
 
     <!-- Login progress -->
 
@@ -42,13 +42,21 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/donotuse"
+                android:id="@+id/header_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:text="WORK IN PROGRESS, DO NOT USE THIS YET --Mike"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="@string/header_login_welcome"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
+            <TextView
+                android:id="@+id/subheader_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/subheader_login"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <EditText
                 android:id="@+id/email"
@@ -76,26 +84,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="10dp"
                 android:paddingLeft="32dp"
                 android:paddingRight="32dp"
                 android:text="@string/action_sign_in" />
-            
-            <Button
-                android:id="@+id/register_button"
+
+            <TextView
+                android:id="@+id/header_or_facebook"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:paddingLeft="32dp"
-                android:paddingRight="32dp"
-                android:onClick="registerMe"
-                android:text="@string/action_register" />
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:text="@string/or_login_facebook"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
-           
-            
+            <Button
+                android:id="@+id/login_with_facebook_fake_button_steve_replace_this"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:text="Someone Replace this Fake Button with a Real One" />
         </LinearLayout>
     </ScrollView>
-        
-
-  
-</merge>
+</RelativeLayout>
