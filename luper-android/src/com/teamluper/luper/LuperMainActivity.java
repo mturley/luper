@@ -115,6 +115,7 @@ public class LuperMainActivity extends SherlockFragmentActivity {
     MenuInflater inf = getSupportMenuInflater();
     inf.inflate(R.menu.activity_main, menu);
 
+    // TODO remove this code if we want the New Project button to stay the way it is now.
     // because one of the action items is a custom view,
     // we need the next few lines to force it to use onOptionsItemSelected
     // when it's clicked.
@@ -128,6 +129,8 @@ public class LuperMainActivity extends SherlockFragmentActivity {
     });
     */
 
+    // TODO replace this code with a better way to make sure when we're logged in we see "Logout" instead of "Login/Register"
+    /*
     User activeUser = dataSource.getActiveUser();
     if(activeUser == null) {
       // we're logged out
@@ -137,6 +140,7 @@ public class LuperMainActivity extends SherlockFragmentActivity {
       // we're logged in
       menu.add(0,3,0,"Log Out "+activeUser.getEmail());
     }
+    */
 
     return super.onCreateOptionsMenu(menu);
   }
