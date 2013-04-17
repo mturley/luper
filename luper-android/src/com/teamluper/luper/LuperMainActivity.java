@@ -64,7 +64,6 @@ public class LuperMainActivity extends SherlockFragmentActivity {
   @Override
     protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    instance = this;
 
     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -106,9 +105,15 @@ public class LuperMainActivity extends SherlockFragmentActivity {
   }
 
   @Override
+  protected void onStop() {
+    if(dataSource.isOpen()) dataSource.close();
+    super.onStop();
+  }
+
+  @Override
   protected void onResume() {
+    if(!dataSource.isOpen()) dataSource.open();
     super.onResume();
-    testAccounts();
   }
 
   @Override
@@ -120,7 +125,6 @@ public class LuperMainActivity extends SherlockFragmentActivity {
     // because one of the action items is a custom view,
     // we need the next few lines to force it to use onOptionsItemSelected
     // when it's clicked.
-    /*
     final MenuItem item = menu.findItem(R.id.menu_new_project);
     item.getActionView().setOnClickListener(new OnClickListener() {
       @Override
@@ -128,7 +132,6 @@ public class LuperMainActivity extends SherlockFragmentActivity {
         onOptionsItemSelected(item);
       }
     });
-    */
 
     // TODO replace this code with a better way to make sure when we're logged in we see "Logout" instead of "Login/Register"
     /*
@@ -162,30 +165,28 @@ public class LuperMainActivity extends SherlockFragmentActivity {
       Intent intent = new Intent(this, LuperSettingsActivity_.class);
       startActivity(intent);
     }
-    if(item.getItemId() == R.id.menu_login) {
+    if(item.getItemId() == R.id.menu_logout) {
       Intent intent = new Intent(this, LuperLoginActivity_.class);
+      intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
       startActivity(intent);
+      finish();
     }
     if(item.getItemId() == R.id.devtools) {
       Intent intent = new Intent(this, LuperDevToolsActivity_.class);
       startActivity(intent);
     }
-    return true;
-  }
-
-  public static LuperMainActivity getInstance() {
-    return instance;
+    return super.onOptionsItemSelected(item);
   }
 
   public SQLiteDataSource getDataSource() {
     return dataSource;
   }
 
-  public static boolean deviceIsOnline() {
+  public static boolean deviceIsOnline(Context context) {
     // borrowed implementation from:
     // http://stackoverflow.com/questions/2789612/how-can-i-check-whether-an-android-device-is-connected-to-the-web
     ConnectivityManager cm =
-      (ConnectivityManager) LuperMainActivity.getInstance().getSystemService(Context.CONNECTIVITY_SERVICE);
+      (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
     NetworkInfo ni = cm.getActiveNetworkInfo();
     if (ni == null) return false;
     return ni.isConnected();

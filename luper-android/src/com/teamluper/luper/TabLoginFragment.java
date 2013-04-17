@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -49,7 +50,7 @@ public class TabLoginFragment extends Fragment {
   //Instance of FacebookLoginFragment
   //private FacebookLoginFragment facebookLoginFragment;
 
-  SQLiteDataSource dataSource;
+  private SQLiteDataSource dataSource;
 
   @Override
   public View onCreateView(LayoutInflater infl, ViewGroup vg, Bundle state) {
@@ -58,7 +59,7 @@ public class TabLoginFragment extends Fragment {
     Activity a = getActivity();
 
     // set up the SQLite database access.
-    dataSource = LuperMainActivity.getInstance().getDataSource();
+    dataSource = ((LuperLoginActivity)getActivity()).getDataSource();
     if(!dataSource.isOpen()) dataSource.open();
 
     // Set up the login form.
@@ -84,7 +85,7 @@ public class TabLoginFragment extends Fragment {
     mLoginStatusView = v.findViewById(R.id.login_status);
     mLoginStatusMessageView = (TextView) v.findViewById(R.id.login_status_message);
 
-    v.findViewById(R.id.sign_in_button).setOnClickListener(
+    v.findViewById(R.id.login_button).setOnClickListener(
       new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -159,7 +160,7 @@ public class TabLoginFragment extends Fragment {
     } else {
       // Show a progress spinner, and kick off a background task to
       // perform the user login attempt.
-      mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
+      mLoginStatusMessageView.setText(R.string.progress_logging_in);
       showProgress(true);
       DialogFactory.alert(getActivity(), "TODO","This spinner will spin forever.  Still need to implement login.");
       // TODO start a new login task (JUST CALL A @BACKGROUND REST thing)

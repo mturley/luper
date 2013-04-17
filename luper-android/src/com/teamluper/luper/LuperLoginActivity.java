@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -35,13 +36,19 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
   ViewPager mViewPager;
   TabsAdapter mTabsAdapter;
 
+  private SQLiteDataSource dataSource;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
+    this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
     // enable tabs in the ActionBar
     final ActionBar bar = getSupportActionBar();
     bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+    bar.setTitle(R.string.login_title);
+    bar.setDisplayHomeAsUpEnabled(false);
 
     // set up the ViewPager and Tabs
     mViewPager = new ViewPager(this);
@@ -52,6 +59,22 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
       TabLoginFragment_.class, null);
     mTabsAdapter.addTab(bar.newTab().setText(""+"Register"),
       TabRegisterFragment_.class, null);
+
+    // connect to the database
+    dataSource = new SQLiteDataSource(this);
+    dataSource.open();
+  }
+
+  @Override
+  protected void onStop() {
+    if(dataSource.isOpen()) dataSource.close();
+    super.onStop();
+  }
+
+  @Override
+  protected void onResume() {
+    if(!dataSource.isOpen()) dataSource.open();
+    super.onResume();
   }
 
   @Override
@@ -68,6 +91,16 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
       startActivity(intent);
     }
     return true;
+  }
+
+  public SQLiteDataSource getDataSource() {
+    return dataSource;
+  }
+
+  public void skipLogin(View v) {
+    // TODO actually sign in to a dummy account, so we can refuse to launch the main activity if truly logged out.
+    Intent intent = new Intent(this, LuperMainActivity_.class);
+    startActivity(intent);
   }
 
   public static String sha1(String input) throws NoSuchAlgorithmException {

@@ -16,16 +16,33 @@ import org.springframework.web.client.HttpClientErrorException;
 public class LuperDevToolsActivity extends Activity {
   @RestService
   LuperRestClient rest;
+  SQLiteDataSource dataSource;
 
-  public void onCreate(Bundle savedInstanceState) {
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_luper_devtools);
+
+    dataSource = new SQLiteDataSource(this);
+    dataSource.open();
+  }
+
+  @Override
+  protected void onStop() {
+    if(dataSource.isOpen()) dataSource.close();
+    super.onStop();
+  }
+
+  @Override
+  protected void onResume() {
+    if(!dataSource.isOpen()) dataSource.open();
+    super.onResume();
   }
 
   // this will be removed, it's an example of how we'll access the EC2 server.
   @Background
   public void testRestAPI(View view) {
-    if(!LuperMainActivity.deviceIsOnline()) {
+    if(!LuperMainActivity.deviceIsOnline(this)) {
       alert("Internet Connection Required",
         "That feature requires access to the internet, and your device is " +
           "offline!  Please connect to a Wifi network or a mobile data network " +
@@ -49,7 +66,6 @@ public class LuperDevToolsActivity extends Activity {
   }
 
   public void dropAllData(View view) {
-    SQLiteDataSource dataSource = LuperMainActivity.getInstance().getDataSource();
     dataSource.dropAllData();
     DialogFactory.alert(this,"Done!");
   }

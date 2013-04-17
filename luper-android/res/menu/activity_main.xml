@@ -1,8 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/menu_new_project"
         android:title="@string/menu_new_project"
-        android:showAsAction="always" />
-    <item android:id="@+id/menu_login"
+        android:showAsAction="always"
+        android:actionLayout="@layout/big_new_project_button" />
+    <item android:id="@+id/menu_logout"
         android:title="@string/menu_logout"
         android:showAsAction="always" />
     <item android:id="@+id/menu_settings"

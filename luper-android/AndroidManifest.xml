@@ -20,31 +20,37 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <meta-data android:name="com.facebook.sdk.applicationId" android:value="@string/app_id" />
+
         <activity
-            android:name="com.teamluper.luper.LuperMainActivity_"
-            android:label="@string/app_name" >
+            android:name="com.teamluper.luper.LuperLoginActivity_"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustResize"
+            android:parentActivityName="com.teamluper.luper.LuperMainActivity_" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
-            android:name="com.teamluper.luper.AudioRecorderTestActivity_"
-            android:label="@string/title_activity_audio_recorder_test"
-            android:parentActivityName="com.teamluper.luper.LuperDevToolsActivity_" >
+            android:name="com.teamluper.luper.LuperForgotPasswordActivity_"
+            android:label="Forgot Password"
+            android:windowSoftInputMode="adjustResize|stateVisible"
+            android:parentActivityName="com.teamluper.luper.LuperLoginActivity_" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.teamluper.luper.LuperDevToolsActivity_" />
+                android:value="com.teamluper.luper.LuperLoginActivity_" />
         </activity>
+
         <activity
-            android:name="com.teamluper.luper.LuperSettingsActivity_"
-            android:label="@string/title_activity_luper_settings"
-            android:parentActivityName="com.teamluper.luper.LuperMainActivity_" >
+            android:name="com.teamluper.luper.LuperMainActivity_"
+            android:label="@string/app_name"
+            android:parentActivityName="com.teamluper.luper.LuperLoginActivity_" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.teamluper.luper.LuperMainActivity_" />
+                android:value="com.teamluper.luper.LuperLoginActivity_" />
         </activity>
+
         <activity
             android:name="com.teamluper.luper.LuperProjectEditorActivity_"
             android:label="@string/title_activity_example_project"
@@ -53,6 +59,19 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.teamluper.luper.LuperMainActivity_" />
         </activity>
+
+        <activity
+            android:name="com.teamluper.luper.LuperSettingsActivity_"
+            android:label="@string/title_activity_luper_settings"
+            android:parentActivityName="com.teamluper.luper.LuperMainActivity_" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.teamluper.luper.LuperMainActivity_" />
+        </activity>
+
+
+
+        <!-- TODO REMOVE THESE TWO ACTIVITIES -->
         <activity
             android:name="com.teamluper.luper.PopupTestActivity"
             android:label="TESTME"
@@ -69,6 +88,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.teamluper.luper.LuperMainActivity_" />
         </activity>
+        <!-- TODO REMOVE THESE TWO ACTIVITIES -->
+
+
+
         <activity
             android:name="com.teamluper.luper.FileSelectorActivity"
             android:label="FileSelector" >
@@ -76,14 +99,6 @@
         <activity
             android:name="com.teamluper.luper.test.TestEffects"
             android:label="AudioTest" >
-        </activity>
-        <activity
-            android:name="com.teamluper.luper.LuperLoginActivity_"
-            android:label="@string/login_title"
-            android:parentActivityName="com.teamluper.luper.LuperMainActivity_" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.teamluper.luper.LuperMainActivity_" />
         </activity>
 
         <activity
@@ -94,15 +109,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.teamluper.luper.LuperMainActivity_" />
         </activity>
-
         <activity
-            android:name="com.teamluper.luper.LuperForgotPasswordActivity_"
-            android:label="Forgot Password"
-            android:windowSoftInputMode="adjustResize|stateVisible"
-            android:parentActivityName="com.teamluper.luper.LuperLoginActivity_" >
+            android:name="com.teamluper.luper.AudioRecorderTestActivity_"
+            android:label="@string/title_activity_audio_recorder_test"
+            android:parentActivityName="com.teamluper.luper.LuperDevToolsActivity_" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.teamluper.luper.LuperLoginActivity_" />
+                android:value="com.teamluper.luper.LuperDevToolsActivity_" />
         </activity>
     </application>
 

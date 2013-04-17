@@ -35,14 +35,13 @@
     <!-- Strings related to login -->
     <string name="login_title">Welcome to Lüper!</string>
     <string name="header_login_welcome">Hi There! Have We Met?</string>
-    <string name="subheader_login">If you already have a Lüper Account, use it to log in. If you\'re new to Lüper, use the Register tab above.</string>
+    <string name="subheader_login">If you already have a Lüper Account, use it to log in. If you\'re new to Lüper, use the Register tab above.\nDEVELOPERS: JUST PRESS SKIP SIGN IN FOR NOW</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in</string>
+    <string name="action_login">Log In</string>
     <string name="action_register">Register</string>
-    <string name="action_sign_in_short">Sign in</string>
     <string name="action_forgot_password">Recover lost password</string>
-    <string name="login_progress_signing_in">Signing in&#8230;</string>
+    <string name="progress_logging_in">Logging in&#8230;</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
