@@ -21,7 +21,7 @@
         android:layout_below="@+id/welcome"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:onClick="testRestAPI"
+        android:onClick="devTools"
         android:text="Developer Tools" />
     <TextView
             android:layout_width="wrap_content"
