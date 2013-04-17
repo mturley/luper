@@ -86,16 +86,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.teamluper.luper.LuperMainActivity_" />
         </activity>
-        <activity
-            android:name="com.teamluper.luper.LuperRegisterActivity_"
-            android:label="@string/title_activity_luper_register"
-            android:windowSoftInputMode="adjustResize|stateVisible"
-            android:parentActivityName="com.teamluper.luper.LuperMainActivity_" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.teamluper.luper.LuperMainActivity_" />
-
-        </activity>
 
         <activity
             android:name="com.teamluper.luper.LuperDevToolsActivity_"

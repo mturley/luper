@@ -165,10 +165,6 @@ public class LuperMainActivity extends SherlockFragmentActivity {
       Intent intent = new Intent(this, LuperLoginActivity_.class);
       startActivity(intent);
     }
-    if(item.getItemId() == R.id.menu_register) {
-      Intent intent = new Intent(this, LuperRegisterActivity_.class);
-      startActivity(intent);
-    }
     if(item.getItemId() == R.id.devtools) {
       Intent intent = new Intent(this, LuperDevToolsActivity_.class);
       startActivity(intent);
