@@ -1,14 +1,10 @@
 .apt_generated/
 local/
-luper-android/bin/
-luper-android/gen/
+*/bin/
+*/gen/
 luper-android/local.properties
 luper-android/local/
-luper-android-test/bin/
-luper-android-test/gen/
 luper-android-test/local.properties
-actionbarsherlock/bin/
-actionbarsherlock/gen/
 *.dex
 *.class
 *.iml
