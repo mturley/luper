@@ -1,11 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".LuperRegisterActivity" >
+    tools:context=".LuperLoginActivity" >
 
     <!-- Login progress -->
 
     <LinearLayout
-        android:id="@+id/register_status"
+        android:id="@+id/login_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -19,13 +20,20 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp" />
 
-
+        <TextView
+            android:id="@+id/login_status_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/login_progress_signing_in"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
     </LinearLayout>
 
-    <!-- Register form -->
+    <!-- Login form -->
 
     <ScrollView
-        android:id="@+id/register_form"
+        android:id="@+id/login_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
@@ -33,24 +41,14 @@
             style="@style/LoginFormContainer"
             android:orientation="vertical" >
 
-             <TextView
-                android:id="@+id/heading_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp"
-                android:text="Register a New Lüper Account"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
             <TextView
-                android:id="@+id/heading_title"
+                android:id="@+id/donotuse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:text="Using a Lüper account allows you to save your projects in the cloud, and form a friends list for sharing and collaboration.  You can also link Facebook with your Luper account to log in with facebook and bring in your facebook friends."
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:text="WORK IN PROGRESS, DO NOT USE THIS YET --Mike"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <EditText
                 android:id="@+id/email"
@@ -66,39 +64,38 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_password"
+                android:imeActionId="@+id/login"
+                android:imeActionLabel="@string/action_sign_in_short"
+                android:imeOptions="actionUnspecified"
                 android:inputType="textPassword"
-                android:maxLines="1"
-                android:singleLine="true" />
-
-            <EditText
-                android:id="@+id/password2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/prompt_password2"
-                android:inputType="textPassword"
-                android:maxLines="1"
-                android:singleLine="true" />
-
-            <EditText
-                android:id="@+id/username"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/prompt_username"
-                android:inputType="text"
                 android:maxLines="1"
                 android:singleLine="true" />
 
             <Button
-                android:id="@+id/register_button"
+                android:id="@+id/sign_in_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_marginTop="16dp"
                 android:paddingLeft="32dp"
                 android:paddingRight="32dp"
-                android:text="@string/action_register"
-                android:action="processRegistration" />
+                android:text="@string/action_sign_in" />
+            
+            <Button
+                android:id="@+id/register_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:paddingLeft="32dp"
+                android:paddingRight="32dp"
+                android:onClick="registerMe"
+                android:text="@string/action_register" />
+
+           
+            
         </LinearLayout>
     </ScrollView>
+        
 
+  
 </merge>

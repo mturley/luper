@@ -14,7 +14,7 @@ import java.util.List;
 
 public class SQLiteDataSource {
   // Database fields
-  private SQLiteDatabase database;
+  private SQLiteDatabase database = null;
   private SQLiteHelper dbHelper;
   private long activeUserID; // TODO change this on register / login
 
@@ -24,6 +24,10 @@ public class SQLiteDataSource {
   public SQLiteDataSource(Context context, long userID) {
     dbHelper = new SQLiteHelper(context);
     activeUserID = userID;
+  }
+
+  public boolean isOpen() {
+    return database != null;
   }
 
   public void open() throws SQLException {

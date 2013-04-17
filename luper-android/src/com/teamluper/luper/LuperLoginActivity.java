@@ -7,15 +7,17 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.googlecode.androidannotations.annotations.EActivity;
 
@@ -28,7 +30,11 @@ import java.security.NoSuchAlgorithmException;
  */
 //modified from Activity to FragmentActivity for Facebook
 @EActivity
-public class LuperLoginActivity extends FragmentActivity {
+public class LuperLoginActivity extends SherlockFragmentActivity {
+  ViewPager mViewPager;
+  TabsAdapter mTabsAdapter;
+  SQLiteDataSource dataSource;
+
   /**
    * A dummy authentication store containing known user names and passwords.
    * TODO: remove after connecting to a real authentication system.
@@ -64,7 +70,23 @@ public class LuperLoginActivity extends FragmentActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    setContentView(R.layout.activity_luper_login);
+    // enable tabs in the ActionBar
+    final ActionBar bar = getSupportActionBar();
+    bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+    // set up the ViewPager and Tabs
+    mViewPager = new ViewPager(this);
+    mViewPager.setId(R.id.tabcontentpager);
+    setContentView(mViewPager);
+    mTabsAdapter = new TabsAdapter(this, mViewPager);
+    mTabsAdapter.addTab(bar.newTab().setText(""+"Log In"),
+      TabLoginFragment_.class, null);
+    mTabsAdapter.addTab(bar.newTab().setText(""+"Register"),
+      TabRegisterFragment_.class, null);
+
+    // set up the SQLite database access.
+    dataSource = LuperMainActivity.getInstance().getDataSource();
+    if(!dataSource.isOpen()) dataSource.open();
 
     // Set up the login form.
     mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
@@ -97,7 +119,7 @@ public class LuperLoginActivity extends FragmentActivity {
           }
         });
 
-    
+
     //facebook button implementation
     /*
     if (savedInstanceState == null) {
@@ -115,21 +137,21 @@ public class LuperLoginActivity extends FragmentActivity {
     */
   }
 
-  
+
   //Register Account Activity
   //Activity is created in Luper Manifest
   public void registerMe(View view) {
     	Intent intent = new Intent(this, LuperRegisterActivity_.class);
     	startActivity(intent);
     }
-  
+
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     super.onCreateOptionsMenu(menu);
-    getMenuInflater().inflate(R.menu.luper_login, menu);
+    getSupportMenuInflater().inflate(R.menu.luper_login, menu);
     return true;
   }
- 
+
 
   public static String sha1(String input) throws NoSuchAlgorithmException {
     MessageDigest mDigest = MessageDigest.getInstance("SHA1");
