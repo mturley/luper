@@ -37,11 +37,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EActivity;
-import com.googlecode.androidannotations.annotations.EFragment;
 import com.googlecode.androidannotations.annotations.UiThread;
-import com.googlecode.androidannotations.annotations.rest.RestService;
-import com.teamluper.luper.rest.LuperRestClient;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.io.File;
 import java.util.List;
@@ -57,8 +53,6 @@ import java.util.List;
 public class LuperMainActivity extends SherlockFragmentActivity {
 
   static LuperMainActivity instance;
-  @RestService
-  LuperRestClient rest;
 
   ViewPager mViewPager;
   TabsAdapter mTabsAdapter;
@@ -162,7 +156,7 @@ public class LuperMainActivity extends SherlockFragmentActivity {
       startActivity(intent);
     }
     if(item.getItemId() == R.id.devtools) {
-      Intent intent = new Intent(this, LuperDevToolsActivity.class);
+      Intent intent = new Intent(this, LuperDevToolsActivity_.class);
       startActivity(intent);
     }
     return true;
@@ -176,56 +170,19 @@ public class LuperMainActivity extends SherlockFragmentActivity {
     return dataSource;
   }
 
-  //method to navigate to the audiorecorder activity
-  public void startRecording(View view) {
-  	Intent intent = new Intent(this, AudioRecorderTestActivity_.class);
-  	startActivity(intent);
-  }
-
-  //Start login activity
-  public void login(View view) {
-	  Intent intent = new Intent(this,LuperLoginActivity_.class);
-	  startActivity(intent);
-  }
-
-  public boolean deviceIsOnline() {
+  public static boolean deviceIsOnline() {
     // borrowed implementation from:
     // http://stackoverflow.com/questions/2789612/how-can-i-check-whether-an-android-device-is-connected-to-the-web
     ConnectivityManager cm =
-      (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+      (ConnectivityManager) LuperMainActivity.getInstance().getSystemService(Context.CONNECTIVITY_SERVICE);
     NetworkInfo ni = cm.getActiveNetworkInfo();
     if (ni == null) return false;
     return ni.isConnected();
   }
 
-  // this will be removed, it's an example of how we'll access the EC2 server.
-  @Background
-  public void testRestAPI(View view) {
-    if(!deviceIsOnline()) {
-      alert("Internet Connection Required",
-          "That feature requires access to the internet, and your device is " +
-          "offline!  Please connect to a Wifi network or a mobile data network " +
-          "and try again.");
-      return;
-    }
-    try {
-      String t = rest.getTestString();
-      alert("Database Connection Test PASS!",
-        "Request: GET http://teamluper.com/api/test\n" +
-        "Response: '" + t + "'");
-    } catch(HttpClientErrorException e) {
-      alert("Database Connection Test FAIL!", e.toString());
-    }
-  }
-
   @UiThread
   public void alert(String title, String message) {
     DialogFactory.alert(this, title, message);
-  }
-
-  public void dropAllData(View view) {
-    dataSource.dropAllData();
-    DialogFactory.alert(this,"Done!");
   }
 
   public void newProject(String title) {
@@ -238,7 +195,7 @@ public class LuperMainActivity extends SherlockFragmentActivity {
 
   @Background
   public void devTools(View view) {
-    Intent intent = new Intent(this, LuperDevToolsActivity.class);
+    Intent intent = new Intent(this, LuperDevToolsActivity_.class);
     startActivity(intent);
   }
 
