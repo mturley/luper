@@ -99,11 +99,11 @@ public class LuperMainActivity extends SherlockFragmentActivity {
     // add some fragment content as tabs in the ActionBar!
     mTabsAdapter = new TabsAdapter(this, mViewPager);
     mTabsAdapter.addTab(bar.newTab().setText(""+"Home"),
-        TabHomeFragment_.class, null);
+        TabHomeFragment.class, null);
     mTabsAdapter.addTab(bar.newTab().setText(""+"Projects"),
-        TabProjectsFragment_.class, null);
+        TabProjectsFragment.class, null);
     mTabsAdapter.addTab(bar.newTab().setText(""+"Friends"),
-        TabFriendsFragment_.class, null);
+        TabFriendsFragment.class, null);
 
     //create a directory to save in
     File testdir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/LuperApp/");
@@ -179,7 +179,7 @@ public class LuperMainActivity extends SherlockFragmentActivity {
   	Intent intent = new Intent(this, AudioRecorderTestActivity_.class);
   	startActivity(intent);
   }
-  
+
   //Start login activity
   public void login(View view) {
 	  Intent intent = new Intent(this,LuperLoginActivity_.class);
@@ -260,56 +260,4 @@ public class LuperMainActivity extends SherlockFragmentActivity {
       System.out.println(accounts[i].toString());
     }
   }
-
-  @EFragment
-  private class TabHomeFragment extends Fragment {
-    @Override
-    public View onCreateView(LayoutInflater infl, ViewGroup vg, Bundle state) {
-      if(vg == null) return null;
-      return (RelativeLayout)infl.inflate(R.layout.tab_home_layout, vg, false);
-    }
-  }
-
-  @EFragment
-  public class TabProjectsFragment extends Fragment {
-    @Override
-    public View onCreateView(LayoutInflater infl, ViewGroup vg, Bundle state) {
-      if(vg == null) return null;
-
-      final LuperMainActivity main = (LuperMainActivity) getActivity();
-
-      View view = infl.inflate(R.layout.tab_projects_layout, vg, false);
-
-      List<Sequence> allSequences = main.dataSource.getAllSequences();
-      ArrayAdapter<Sequence> adapter = new ArrayAdapter<Sequence>(
-        (Context) main,
-        android.R.layout.simple_list_item_1,
-        allSequences);
-      ListView projectsListView = (ListView) view.findViewById(R.id.projectsListView);
-      projectsListView.setAdapter(adapter);
-      projectsListView.setEmptyView(view.findViewById(R.id.projectsListEmptyText));
-      projectsListView.setOnItemClickListener(
-        new AdapterView.OnItemClickListener() {
-          @Override
-          public void onItemClick(AdapterView<?> parent, View view,
-                                  int position, long id) {
-            Sequence s = (Sequence) parent.getItemAtPosition(position);
-            main.launchProjectEditor(s.getId());
-          }
-        });
-      return (RelativeLayout) view;
-    }
-
-  }
-
-  @EFragment
-  public class TabFriendsFragment extends Fragment {
-    @Override
-    public View onCreateView(LayoutInflater infl, ViewGroup vg, Bundle state) {
-      if(vg == null) return null;
-      return (RelativeLayout)infl.inflate(R.layout.tab_friends_layout, vg, false);
-    }
-  }
-
 }
-
