@@ -27,22 +27,39 @@ $api->get('/test', function() use ($api) {
   }
 });
 
-$api->post('/auth/register/:email/:plainTextPassword', function() use ($api) {
+// /auth/register/  registers a new user account
+$api->post('/auth/register/:email/:plainTextPassword/:username',
+  function($email, $plainTextPassword, $username) use ($api) {
   try {
-    // TODO
+    $db = getDB();
+    $hash = newRandomSaltedHash($email, $plainTextPassword);
+    $stmt = $db.prepare(
+      "INSERT INTO Users (username, email, passwordHash, isActiveUser, preferences)".
+      "           VALUES (:username, :email, :passwordHash, 1, '{}');");
+    $stmt->bindParam("username",$username);
+    $stmt->bindParam("email",$email);
+    $stmt->bindParam("passwordHash",$hash);
+    $stmt->execute();
+    $response = new stdclass();
+    $response->success = true;
+    $response->insertId = $db->lastInsertId();
+    echo json_encode($response);
   } catch(PDOException $e) {
     $api->halt(500,$e->getMessage());
   }
 });
 
+// /auth/passwd/  resets and/or changes a password
 $api->post('/auth/passwd/:email/:newPlainTextPassword', function() use ($api) {
   try {
-    // TODO
+    // TODO update query via PDO, respond with success JSON
   } catch(PDOException $e) {
     $api->halt(500,$e->getMessage());
   }
 });
 
+// /auth/login/  validates a login attempt with the half-baked approach (see auth.php)
+// better security with or without HTTPS, but slower than below.
 $api->get('/auth/login/:email/:halfBakedPasswordHash', function() use ($api) {
   try {
     // TODO
@@ -51,6 +68,8 @@ $api->get('/auth/login/:email/:halfBakedPasswordHash', function() use ($api) {
   }
 });
 
+// /auth/login_insecure/  validates a login attempt with plain text submission.
+// acceptable security if used exclusively over HTTPS.  Faster than above.
 $api->get('/auth/login_insecure/:email/:plainTextPassword', function() use ($api) {
   try {
     // TODO
@@ -59,9 +78,16 @@ $api->get('/auth/login_insecure/:email/:plainTextPassword', function() use ($api
   }
 });
 
-$api->get('/auth/salt/:email', function() use ($api) {
+// /auth/salt/  retrieves the salt value for a given user
+// for use in performing a client-side partial hash ("half-baked hash")
+$api->get('/auth/salt/:email', function($email) use ($api) {
   try {
-    // TODO
+    $hash = getKnownHashForUser($email);
+    $salt = substr($hash, 0, 64);
+    $response = new stdclass();
+    $response->email = $email;
+    $response->salt = $salt;
+    echo json_encode($response);
   } catch(PDOException $e) {
     $api->halt(500,$e->getMessage());
   }
