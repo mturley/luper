@@ -23,8 +23,8 @@ public class Track {
 	private SQLiteDataSource dataSource;
 
 	// references to relevant data
-	ArrayList<Clip> clips = new ArrayList<Clip>();
-	
+	public ArrayList<Clip> clips = new ArrayList<Clip>();
+
 	// Mike's constructor
   // NOTE: DO NOT CALL THIS CONSTRUCTOR DIRECTLY unless in a cursorToTrack method.
   // instead, use SQLiteDataSource.createTrack()!
@@ -121,7 +121,7 @@ public class Track {
 			playBackList[i]=clips.get(i).name;
 		}
 	}*/
-  
+
 	//gets the track length by calculating the length of all the clips it contains
 	public long getTrackLength()
 	{
