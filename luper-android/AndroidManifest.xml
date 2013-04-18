@@ -19,11 +19,9 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-<<<<<<< HEAD
-=======
+
         <meta-data android:name="com.facebook.sdk.applicationId" android:value="@string/app_id" />
 
->>>>>>> 318cdbf64de99c3a1abaff1d57496cecef68d2db
         <activity
             android:name="com.teamluper.luper.LuperLoginActivity_"
             android:label="@string/app_name"
