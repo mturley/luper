@@ -13,6 +13,6 @@ public class TabHomeFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater infl, ViewGroup vg, Bundle state) {
     if(vg == null) return null;
-    return (RelativeLayout)infl.inflate(R.layout.tab_home_layout, vg, false);
+    return infl.inflate(R.layout.tab_home_layout, vg, false);
   }
 }

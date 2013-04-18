@@ -21,58 +21,14 @@
         android:layout_below="@+id/welcome"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:onClick="testRestAPI"
-        android:text="@string/button_dbtest" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/button1"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:onClick="startRecording"
-        android:text="@string/button_record" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/button2"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:onClick="exampleProject"
-        android:text="@string/button_project" />
-
-
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/button3"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:onClick="dropAllData"
-        android:text="Erase All SQLite Data" />
-
+        android:onClick="devTools"
+        android:text="Developer Tools" />
     <TextView
-        android:id="@+id/bytheway"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/button4"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:text="I got rid of LoopTest. --Mike"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/bytheway"
-        android:layout_centerHorizontal="true"
-        android:onClick="login"
-        android:text="Login" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/devtoolsexplanation"
+            android:id="@+id/textView" android:layout_centerHorizontal="true" android:layout_below="@+id/button1"
+            android:layout_marginTop="10dp" android:layout_alignLeft="@+id/welcome"
+            android:layout_alignRight="@+id/welcome"/>
 
 </RelativeLayout>

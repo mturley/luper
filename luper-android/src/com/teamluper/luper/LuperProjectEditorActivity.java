@@ -21,14 +21,13 @@ import java.util.ArrayList;
 
 @EActivity
 public class LuperProjectEditorActivity extends SherlockActivity {
-  LuperMainActivity main;
-  SQLiteDataSource dataSource = null;
+  SQLiteDataSource dataSource;
 	Sequence sequence = null;
 
 	// TODO these will be moved to within Sequence, and accessed with
 	// sequence.getClips() and sequence.getTracks(), etc.
-	ArrayList<Clip> clips = new ArrayList<Clip>();
-	ArrayList<Track> tracks = new ArrayList<Track>();
+	// ArrayList<Clip> clips = new ArrayList<Clip>();
+	// ArrayList<Track> tracks = new ArrayList<Track>();
 
 	@Override
     public void onCreate(Bundle icicle) {
@@ -46,8 +45,9 @@ public class LuperProjectEditorActivity extends SherlockActivity {
           return;
         }
 
-        main = LuperMainActivity.getInstance();
-        dataSource = main.getDataSource();
+        dataSource = new SQLiteDataSource(this);
+        dataSource.open();
+
         sequence = dataSource.getSequenceById(ID);
         // TODO use the data within the sequence object to render the clips.
         DialogFactory.alert(this, "Successfully Loaded Project ID #"+ID+
@@ -116,6 +116,18 @@ public class LuperProjectEditorActivity extends SherlockActivity {
 
     }
 
+  @Override
+  protected void onStop() {
+    if(dataSource.isOpen()) dataSource.close();
+    super.onStop();
+  }
+
+  @Override
+  protected void onResume() {
+    if(!dataSource.isOpen()) dataSource.open();
+    super.onResume();
+  }
+
 	// #Creates the Actionbar
 	@Override
   public boolean onCreateOptionsMenu(Menu menu) {
@@ -125,42 +137,46 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   }
 	@Override
   public boolean onOptionsItemSelected(MenuItem item) {
-	  boolean incomplete = true;
+	  boolean incomplete = false;
     if(item.getItemId() == R.id.editor_play) {
       // TODO
+      incomplete = true;
     }
     if(item.getItemId() == R.id.editor_edit_clip) {
       // TODO
+      incomplete = true;
     }
     if(item.getItemId() == R.id.editor_add_clip) {
       // TODO
+      incomplete = true;
     }
     if(item.getItemId() == R.id.editor_delete_clip) {
       // TODO
+      incomplete = true;
     }
     if(item.getItemId() == R.id.editor_volume) {
       // TODO
+      incomplete = true;
     }
     if(item.getItemId() == R.id.editor_help) {
       // TODO
+      incomplete = true;
     }
     if(incomplete) DialogFactory.alert(this,"Incomplete Feature",
         "That button hasn't been hooked up to anything.");
-    return true;
+    return super.onOptionsItemSelected(item);
   }
 
   @Background
   public void loadDataInBackground() {
     if(sequence == null) return;
     sequence.loadAllTrackData();
-    alert("All Track Data is Loaded!");
   }
 
   @Background
   public void loadAudioInBackground() {
     if(sequence == null) return;
     sequence.loadAllTrackAudio();
-    alert("All Audio Data is Loaded!");
   }
 
   @UiThread
