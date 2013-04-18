@@ -38,29 +38,7 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
   ViewPager mViewPager;
   TabsAdapter mTabsAdapter;
 
-  /**
-   * The default email to populate the email field with.
-   */
-  public static final String EXTRA_EMAIL = "com.example.android.authenticatordemo.extra.EMAIL";
 
-  /**
-   * Keep track of the login task to ensure we can cancel it if requested.
-   */
-//  private UserLoginTask mAuthTask = null;
-
-  // Values for email and password at the time of the login attempt.
-  private String mEmail;
-  private String mPassword;
-
-  // UI references.
-  private EditText mEmailView;
-  private EditText mPasswordView;
-  private View mLoginFormView;
-  private View mLoginStatusView;
-  private TextView mLoginStatusMessageView;
-
-//  //Instance of FacebookLoginFragment
-//  private FacebookLoginFragment facebookLoginFragment;
   private SQLiteDataSource dataSource;
 
   @Override
