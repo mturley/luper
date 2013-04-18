@@ -16,14 +16,11 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
-<<<<<<< HEAD
-=======
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.googlecode.androidannotations.annotations.Background;
->>>>>>> 318cdbf64de99c3a1abaff1d57496cecef68d2db
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.UiThread;
 
@@ -39,7 +36,6 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
   ViewPager mViewPager;
   TabsAdapter mTabsAdapter;
 
-<<<<<<< HEAD
   /**
    * The default email to populate the email field with.
    */
@@ -63,9 +59,7 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
 
   //Instance of FacebookLoginFragment
   private FacebookLoginFragment facebookLoginFragment;
-=======
   private SQLiteDataSource dataSource;
->>>>>>> 318cdbf64de99c3a1abaff1d57496cecef68d2db
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
