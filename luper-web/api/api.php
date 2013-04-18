@@ -29,6 +29,8 @@ $api->get('/test', function() use ($api) {
 $api->post('/auth/register/:email/:plainTextPassword/:username',
   function($email, $plainTextPassword, $username) use ($api) {
   try {
+    $input = $api->request()->getBody();
+    // TODO fetch actual values from the body
     $db = getDB();
     $hash = newRandomSaltedHash($email, $plainTextPassword);
     $stmt = $db->prepare(

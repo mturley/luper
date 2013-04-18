@@ -9,9 +9,15 @@ import android.widget.RelativeLayout;
 import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EFragment;
 import com.googlecode.androidannotations.annotations.UiThread;
+import com.googlecode.androidannotations.annotations.rest.RestService;
+import com.teamluper.luper.rest.LuperRestClient;
 
 @EFragment
 public class TabRegisterFragment extends Fragment {
+
+  @RestService
+  LuperRestClient rest;
+
   @Override
   public View onCreateView(LayoutInflater infl, ViewGroup vg, Bundle state) {
     if(vg == null) return null;
@@ -20,6 +26,7 @@ public class TabRegisterFragment extends Fragment {
 
   @Background
   public void processRegistration(View view) {
+
     alert("Registration","TODO: actually process it");
     // TODO stub here
   }
