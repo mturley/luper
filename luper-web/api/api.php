@@ -18,10 +18,8 @@ $api->get('/test', function() use ($api) {
   try {
     $db = getDB();
     $numUsers = $db->query("SELECT COUNT(*) AS numUsers FROM Users")->fetchObject()->numUsers;
-    $numReds = $db->query("SELECT COUNT(*) AS numReds FROM Users
-                           WHERE favColor = 'red'")->fetchObject()->numReds;
     echo "Success!  Here's some data from the database: there are currently ".$numUsers
-        ." registered users, and ".$numReds." of them have their favColor preference set to \"red\".";
+        ." registered users.";
   } catch(PDOException $e) {
     $api->halt(500,$e->getMessage());
   }
@@ -33,7 +31,7 @@ $api->post('/auth/register/:email/:plainTextPassword/:username',
   try {
     $db = getDB();
     $hash = newRandomSaltedHash($email, $plainTextPassword);
-    $stmt = $db.prepare(
+    $stmt = $db->prepare(
       "INSERT INTO Users (username, email, passwordHash, isActiveUser, preferences)".
       "           VALUES (:username, :email, :passwordHash, 1, '{}');");
     $stmt->bindParam("username",$username);
