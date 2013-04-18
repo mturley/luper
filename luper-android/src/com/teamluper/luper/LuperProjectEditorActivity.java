@@ -61,6 +61,12 @@ public class LuperProjectEditorActivity extends SherlockActivity {
         final ActionBar bar = getSupportActionBar();
         bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS); // Gives us Tabs!
 
+        LinearLayout base = new LinearLayout(this);
+        base.setId(1337);
+        base.setBackgroundColor(Color.parseColor("#e2dfd8"));
+
+        base.setOrientation(LinearLayout.VERTICAL);
+
         // RENDERING ROUTINE STARTS HERE
         if(sequence.isReady()) {
           // draw stuff in it
@@ -82,11 +88,6 @@ public class LuperProjectEditorActivity extends SherlockActivity {
           Clip clip1 = new Clip(); clip1.begin = 0; clip1.end = 500; clip1.duration = 500;
           Clip clip2 = new Clip(); clip2.begin = 250; clip2.end = 1000; clip2.duration = 650;
           Clip clip3 = new Clip(); clip3.begin = 100; clip3.end = 600; clip3.duration = 500;
-
-        LinearLayout base = new LinearLayout(this);
-        base.setBackgroundColor(Color.parseColor("#e2dfd8"));
-
-        base.setOrientation(LinearLayout.VERTICAL);
 
         TrackView track1 = new TrackView(this);
 
@@ -188,8 +189,9 @@ public class LuperProjectEditorActivity extends SherlockActivity {
 
   @Background
   public void loadDataInBackground() {
-    if(sequence == null) return;
+    if(sequence == null || sequence.isReady()) return;
     sequence.loadAllTrackData();
+    findViewById(1337).invalidate();
   }
 
   @Background
