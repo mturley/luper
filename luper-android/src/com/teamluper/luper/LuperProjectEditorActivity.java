@@ -53,11 +53,30 @@ public class LuperProjectEditorActivity extends SherlockActivity {
         DialogFactory.alert(this, "Successfully Loaded Project ID #"+ID+
           "!  The title is '"+sequence.getTitle()+"'");
 
+        // TODO: we only want to load stuff if we don't already have it loaded...
+        // onCreate gets called a bunch of times, so be careful only to load stuff once per open project
         loadDataInBackground();
         loadAudioInBackground();
 
         final ActionBar bar = getSupportActionBar();
         bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS); // Gives us Tabs!
+
+        // RENDERING ROUTINE STARTS HERE
+        if(sequence.isReady()) {
+          // draw stuff in it
+          for(Track track : sequence.tracks) {
+            for(Clip clip : track.clips) {
+              // render the clip
+              // TODO test this, we have no real dummy data yet so I didn't test these loops
+            }
+          }
+        }
+
+
+
+
+
+
 
         /* TESTS FUNCTIONALLITY OF THE TRACK VIEW RENDERING */
           Clip clip1 = new Clip(); clip1.begin = 0; clip1.end = 500; clip1.duration = 500;

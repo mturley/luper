@@ -1,6 +1,6 @@
 package com.teamluper.luper;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class Sequence {
   // database field variables
@@ -10,9 +10,10 @@ public class Sequence {
   private int sharingLevel;
   private String playbackOptions;
   private boolean isDirty; // dirty = contains unsynced changes
+  private boolean isReady;
 
   // references to related objects
-  private List<Track> tracks = null;
+  public ArrayList<Track> tracks = null;
 
   // database access variables
   private SQLiteDataSource dataSource;
@@ -29,6 +30,7 @@ public class Sequence {
     this.sharingLevel = sharingLevel;
     this.playbackOptions = playbackOptions;
     this.isDirty = isDirty;
+    this.isReady = false;
   }
 
   // getters and setters for everything, for custom onChange-style hooks
@@ -74,11 +76,14 @@ public class Sequence {
     dataSource.updateInt("Sequences", this.id, "isDirty", (isDirty ? 1 : 0));
   }
 
+  public boolean isReady() { return this.isReady; }
+
   public void loadAllTrackData() {
     this.tracks = dataSource.getTracksBySequenceId(this.id);
     for(Track track : this.tracks) {
       track.loadAllClipData();
     }
+    this.isReady = true;
   }
 
   public void loadAllTrackAudio() {
