@@ -75,23 +75,25 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     int clipsTraversed = 0;
     // RENDERING ROUTINE STARTS HERE
     DialogFactory.alert(this, "RENDER","Render is Happening, and sequence.isReady = "+sequence.isReady());
-    if(sequence.isReady()) {
-      // draw stuff in it
+//    if(sequence.isReady()) {
+//      // draw stuff in it
       for(Track track : sequence.tracks) {
-        RelativeLayout track1 = new RelativeLayout(this);
-        base.addView(track1,
-          new RelativeLayout.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT));
+        RelativeLayout tracklayout = new RelativeLayout(this);
+        TrackView tv = new TrackView(this);
+        tracklayout.addView(tv);
+        base.addView(tracklayout,
+            new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT));
+
         tracksTraversed++;
         for(Clip clip : track.clips) {
-          track1.addView(track1);
           // render the clip
           clipsTraversed++;
         }
       }
       DialogFactory.alert(this,"Done with render sequence","Traversed "+tracksTraversed+" tracks and "+clipsTraversed+" clips.");
-    }
+    //}
 
 
 
