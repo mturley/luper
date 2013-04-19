@@ -55,12 +55,16 @@ public class LuperProjectEditorActivity extends SherlockActivity {
 
     // TODO: we only want to load stuff if we don't already have it loaded...
     // onCreate gets called a bunch of times, so be careful only to load stuff once per open project
-    loadDataInBackground();
-    loadAudioInBackground();
+    loadDataInForeground();
 
     final ActionBar bar = getSupportActionBar();
     bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS); // Gives us Tabs!
 
+    render();
+  }
+
+  @UiThread
+  public void render() {
     LinearLayout base = new LinearLayout(this);
     base.setId(1337);
     base.setBackgroundColor(Color.parseColor("#e2dfd8"));
@@ -70,6 +74,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     int tracksTraversed = 0;
     int clipsTraversed = 0;
     // RENDERING ROUTINE STARTS HERE
+    DialogFactory.alert(this, "RENDER","Render is Happening, and sequence.isReady = "+sequence.isReady());
 //    if(sequence.isReady()) {
 //      // draw stuff in it
       for(Track track : sequence.tracks) {
@@ -80,6 +85,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
             new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
+
         tracksTraversed++;
         for(Clip clip : track.clips) {
           // render the clip
@@ -140,7 +146,6 @@ public class LuperProjectEditorActivity extends SherlockActivity {
 //                        ViewGroup.LayoutParams.WRAP_CONTENT));
 
     setContentView(base);
-
   }
 
   @Override
@@ -198,7 +203,13 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   public void loadDataInBackground() {
     if(sequence == null || sequence.isReady()) return;
     sequence.loadAllTrackData();
-    findViewById(1337).invalidate();
+    render();
+  }
+
+  @UiThread
+  public void loadDataInForeground() {
+    if(sequence == null || sequence.isReady()) return;
+    sequence.loadAllTrackData();
   }
 
   @Background
