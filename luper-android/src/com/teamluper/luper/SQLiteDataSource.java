@@ -14,7 +14,7 @@ import java.util.List;
 
 public class SQLiteDataSource {
   // Database fields
-  private SQLiteDatabase database;
+  private SQLiteDatabase database = null;
   private SQLiteHelper dbHelper;
   private long activeUserID; // TODO change this on register / login
 
@@ -24,6 +24,10 @@ public class SQLiteDataSource {
   public SQLiteDataSource(Context context, long userID) {
     dbHelper = new SQLiteHelper(context);
     activeUserID = userID;
+  }
+
+  public boolean isOpen() {
+    return database != null;
   }
 
   public void open() throws SQLException {
@@ -54,6 +58,22 @@ public class SQLiteDataSource {
   }
   public void deleteUser() {
     // TODO
+  }
+
+  public User getActiveUser() {
+    Cursor cursor = database.query("Users", null,
+      "isActiveUser = 1", null, null, null, null);
+    int numResults = cursor.getCount();
+    if(numResults < 1) return null;
+    cursor.moveToFirst();
+    User u = cursorToUser(cursor);
+    cursor.close();
+    return u;
+  }
+  public void logoutActiveUser() {
+    ContentValues values = new ContentValues();
+    values.put("isActiveUser", 0);
+    database.update("Users", values, "isActiveUser = 1", null);
   }
 
   public Sequence createSequence(User owner, String title) {
@@ -167,8 +187,8 @@ public class SQLiteDataSource {
     return sequences;
   }
 
-  public List<Track> getTracksBySequenceId(long sequenceId) {
-    List<Track> tracks = new ArrayList<Track>();
+  public ArrayList<Track> getTracksBySequenceId(long sequenceId) {
+    ArrayList<Track> tracks = new ArrayList<Track>();
     String[] selectionArgs = new String[1];
     selectionArgs[0] = ""+sequenceId;
     Cursor cursor = database.query("Tracks", null, "parentSequenceID = ?",

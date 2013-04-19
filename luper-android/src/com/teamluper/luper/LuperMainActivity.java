@@ -20,11 +20,16 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -33,11 +38,9 @@ import com.actionbarsherlock.view.MenuItem;
 import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.UiThread;
-import com.googlecode.androidannotations.annotations.rest.RestService;
-import com.teamluper.luper.rest.LuperRestClient;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.io.File;
+import java.util.List;
 
 // imports for ActionBarSherlock dependency
 // imports for AndroidAnnotations dependency
@@ -45,13 +48,11 @@ import java.io.File;
 // imports for the SpringFramework REST dependency
 // imports for Test Suite
 
-// @EActivity = "Enhanced Activity", which turns on AndroidAnnotations features
+// @EActivity = "Enhanced Activity", which turns on AndroidAnnotati1ons features
 @EActivity
 public class LuperMainActivity extends SherlockFragmentActivity {
 
   static LuperMainActivity instance;
-  @RestService
-  LuperRestClient rest;
 
   ViewPager mViewPager;
   TabsAdapter mTabsAdapter;
@@ -63,9 +64,12 @@ public class LuperMainActivity extends SherlockFragmentActivity {
   @Override
     protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    instance = this;
 
     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+    final ActionBar bar = getSupportActionBar();
+    bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS); // Gives us Tabs!
+    bar.setDisplayShowTitleEnabled(false);
 
     // set up the ViewPager, which we will use in conjunction with tabs.
     // this makes it possible to swipe left and right between the tabs.
@@ -75,9 +79,6 @@ public class LuperMainActivity extends SherlockFragmentActivity {
 
     dataSource = new SQLiteDataSource(this);
     dataSource.open();
-
-    final ActionBar bar = getSupportActionBar();
-    bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS); // Gives us Tabs!
 
     // FIXME this is slowing down the app launch dramatically.  Perhaps do it in background?
     //Creates a folder for Luper and associated clips and projects
@@ -104,9 +105,15 @@ public class LuperMainActivity extends SherlockFragmentActivity {
   }
 
   @Override
+  protected void onStop() {
+    if(dataSource.isOpen()) dataSource.close();
+    super.onStop();
+  }
+
+  @Override
   protected void onResume() {
+    if(!dataSource.isOpen()) dataSource.open();
     super.onResume();
-    testAccounts();
   }
 
   @Override
@@ -114,6 +121,7 @@ public class LuperMainActivity extends SherlockFragmentActivity {
     MenuInflater inf = getSupportMenuInflater();
     inf.inflate(R.menu.activity_main, menu);
 
+    // TODO remove this code if we want the New Project button to stay the way it is now.
     // because one of the action items is a custom view,
     // we need the next few lines to force it to use onOptionsItemSelected
     // when it's clicked.
@@ -124,6 +132,19 @@ public class LuperMainActivity extends SherlockFragmentActivity {
         onOptionsItemSelected(item);
       }
     });
+
+    // TODO replace this code with a better way to make sure when we're logged in we see "Logout" instead of "Login/Register"
+    /*
+    User activeUser = dataSource.getActiveUser();
+    if(activeUser == null) {
+      // we're logged out
+      menu.add(0,1,0,"Log In");
+      menu.add(0,2,0,"Register");
+    } else {
+      // we're logged in
+      menu.add(0,3,0,"Log Out "+activeUser.getEmail());
+    }
+    */
 
     return super.onCreateOptionsMenu(menu);
   }
@@ -144,69 +165,36 @@ public class LuperMainActivity extends SherlockFragmentActivity {
       Intent intent = new Intent(this, LuperSettingsActivity_.class);
       startActivity(intent);
     }
-    if(item.getItemId() == R.id.menu_login) {
+    if(item.getItemId() == R.id.menu_logout) {
       Intent intent = new Intent(this, LuperLoginActivity_.class);
+      intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+      startActivity(intent);
+      finish();
+    }
+    if(item.getItemId() == R.id.devtools) {
+      Intent intent = new Intent(this, LuperDevToolsActivity_.class);
       startActivity(intent);
     }
-    if(item.getItemId() == R.id.menu_register) {
-        Intent intent = new Intent(this, LuperRegisterActivity_.class);
-        startActivity(intent);
-      }
-    return true;
-  }
-
-  public static LuperMainActivity getInstance() {
-    return instance;
+    return super.onOptionsItemSelected(item);
   }
 
   public SQLiteDataSource getDataSource() {
     return dataSource;
   }
 
-  //method to navigate to the audiorecorder activity
-  public void startRecording(View view) {
-  	Intent intent = new Intent(this, AudioRecorderTestActivity_.class);
-  	startActivity(intent);
-  }
-
-  public boolean deviceIsOnline() {
+  public static boolean deviceIsOnline(Context context) {
     // borrowed implementation from:
     // http://stackoverflow.com/questions/2789612/how-can-i-check-whether-an-android-device-is-connected-to-the-web
     ConnectivityManager cm =
-      (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+      (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
     NetworkInfo ni = cm.getActiveNetworkInfo();
     if (ni == null) return false;
     return ni.isConnected();
   }
 
-  // this will be removed, it's an example of how we'll access the EC2 server.
-  @Background
-  public void testRestAPI(View view) {
-    if(!deviceIsOnline()) {
-      alert("Internet Connection Required",
-          "That feature requires access to the internet, and your device is " +
-          "offline!  Please connect to a Wifi network or a mobile data network " +
-          "and try again.");
-      return;
-    }
-    try {
-      String t = rest.getTestString();
-      alert("Database Connection Test PASS!",
-        "Request: GET http://teamluper.com/api/test\n" +
-        "Response: '" + t + "'");
-    } catch(HttpClientErrorException e) {
-      alert("Database Connection Test FAIL!", e.toString());
-    }
-  }
-
   @UiThread
   public void alert(String title, String message) {
     DialogFactory.alert(this, title, message);
-  }
-
-  public void dropAllData(View view) {
-    dataSource.dropAllData();
-    DialogFactory.alert(this,"Done!");
   }
 
   public void newProject(String title) {
@@ -218,12 +206,11 @@ public class LuperMainActivity extends SherlockFragmentActivity {
   }
 
   @Background
-  public void exampleProject(View view) {
-    alert("Nothing to see here",
-      "This button will be removed soon.  There is no more Dummy Project. " +
-      "To launch LuperProjectEditorActivity, just create and open a real project.");
+  public void devTools(View view) {
+    Intent intent = new Intent(this, LuperDevToolsActivity_.class);
+    startActivity(intent);
   }
-  
+
 
   @Background
   public void launchProjectEditor(long projectId) {

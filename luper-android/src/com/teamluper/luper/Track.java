@@ -23,12 +23,7 @@ public class Track {
 	private SQLiteDataSource dataSource;
 
 	// references to relevant data
-	ArrayList<Clip> clips = new ArrayList<Clip>();
-
-  // cam's variables
-	String[] playBackList;
-	long duration;
-	// volume? an int?
+	public ArrayList<Clip> clips = new ArrayList<Clip>();
 
 	// Mike's constructor
   // NOTE: DO NOT CALL THIS CONSTRUCTOR DIRECTLY unless in a cursorToTrack method.
@@ -118,109 +113,29 @@ public class Track {
   public ArrayList<Clip> getClips() {
 		return this.clips;
 	}
+  /*DEPRECATE OR DELETE
 	public void createPBList()
 	{
 		for(int i = 0; i < clips.size(); i++)
 		{
 			playBackList[i]=clips.get(i).name;
 		}
-	}
+	}*/
+
 	//gets the track length by calculating the length of all the clips it contains
 	public long getTrackLength()
 	{
 		long sum = 0;
 		for(Clip c:clips)
 		{
-			sum+=c.duration;
+			sum+=c.getDuration();
 		}
 		return sum;
 	}
-
-	//gets the clip at the end of the track
-	public Clip getClip()
-	{
-		return clips.get(clips.size());
-	}
-
-	//gets the clip at the specified index
-	public Clip getClip(int index)
-	{
-		return clips.get(index);
-	}
-
-	//adds the clip to back of list
+	//DEPRECATE
 	public void putClip(Clip clip)
 	{
 		clips.add(clip);
 	}
-
-
-	//a method that will allow you to add a clip to the track
-	//TIMES NEED TO BE FIXED
-	public void putClip(int start, Clip clip)
-	{
-//		not sure how to do this, were going to need to find
-//		out what the start time is then add the clip to the
-//		array at the appropriate place
-
-	  // yeah, i think this is going to be straightforward but only once
-	  // i finish implementing everything else from the database -Mike
-
-		int i = 0;
-		for(Clip c : clips)
-		{
-			if(i==start)
-			{
-				clips.add(i, clip);
-			}
-			i++;
-		}
-	}
-//  Removes a clip based on its name
-//  TIMES NEED TO BE FIXED
-	public void removeClip(Clip clip)
-	{
-		for(Clip c : clips)
-		{
-			if(c.name == clip.name)
-			{
-				clips.remove(c);
-			}
-		}
-	}
-
-//	will be used to select a portion of the track, then duplicate
-//	that part 'howMany' times
-//  TIMES NEED TO BE FIXED - USE MIKE'S DUPLICATE
-	// i'm leaving this one on the back burner for now, for after beta -Mike
-	public void duplicate(int start, int end, int howMany)
-	{
-		ArrayList<Clip> clist = new ArrayList<Clip>();
-		int i = 0;
-		for(Clip c : clips)
-		{
-			if(i == start)
-			{
-				for(int j = start; j<=end; j++)
-				{
-					clist.add(clips.get(j));
-				}
-			}
-			i++;
-		}
-		for(int k = 0; k<howMany; k++)
-		{
-			if(k==0)
-			{
-				clips.addAll(end, clist);
-			}
-			else
-			{
-				clips.addAll(end+clist.size(), clist);
-			}
-		}
-	}
-
-	//getVolume() and setVolume() will need to be added
 
 }
