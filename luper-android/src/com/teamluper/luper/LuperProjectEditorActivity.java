@@ -67,6 +67,8 @@ public class LuperProjectEditorActivity extends SherlockActivity {
 
     base.setOrientation(LinearLayout.VERTICAL);
 
+    int tracksTraversed = 0;
+    int clipsTraversed = 0;
     // RENDERING ROUTINE STARTS HERE
     if(sequence.isReady()) {
       // draw stuff in it
@@ -76,12 +78,14 @@ public class LuperProjectEditorActivity extends SherlockActivity {
             new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
+        tracksTraversed++;
         for(Clip clip : track.clips) {
           track1.addView(track1);
           // render the clip
-          // TODO test this, we have no real dummy data yet so I didn't test these loops
+          clipsTraversed++;
         }
       }
+      DialogFactory.alert(this,"Done with render sequence","Traversed "+tracksTraversed+" tracks and "+clipsTraversed+" clips.");
     }
 
 
