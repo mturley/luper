@@ -1,31 +1,22 @@
 package com.teamluper.luper;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
-import android.widget.TextView;
-
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EActivity;
-import com.googlecode.androidannotations.annotations.UiThread;
+import com.googlecode.androidannotations.annotations.rest.RestService;
+import com.teamluper.luper.rest.LuperRestClient;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import com.google.gson.Gson;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
@@ -35,6 +26,10 @@ import java.security.NoSuchAlgorithmException;
 public class LuperLoginActivity extends SherlockFragmentActivity {
   ViewPager mViewPager;
   TabsAdapter mTabsAdapter;
+  Gson gson;
+
+  @RestService
+  LuperRestClient restClient;
 
   private SQLiteDataSource dataSource;
 
@@ -63,6 +58,9 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
     // connect to the database
     dataSource = new SQLiteDataSource(this);
     dataSource.open();
+
+    // initialize Gson for encoding and decoding JSON
+    gson = new Gson();
   }
 
   @Override

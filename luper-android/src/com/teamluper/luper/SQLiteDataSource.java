@@ -187,8 +187,8 @@ public class SQLiteDataSource {
     return sequences;
   }
 
-  public List<Track> getTracksBySequenceId(long sequenceId) {
-    List<Track> tracks = new ArrayList<Track>();
+  public ArrayList<Track> getTracksBySequenceId(long sequenceId) {
+    ArrayList<Track> tracks = new ArrayList<Track>();
     String[] selectionArgs = new String[1];
     selectionArgs[0] = ""+sequenceId;
     Cursor cursor = database.query("Tracks", null, "parentSequenceID = ?",

@@ -2,6 +2,7 @@
 package com.teamluper.luper.rest;
 
 import com.googlecode.androidannotations.annotations.rest.Get;
+import com.googlecode.androidannotations.annotations.rest.Post;
 import com.googlecode.androidannotations.annotations.rest.Rest;
 import org.springframework.http.converter.StringHttpMessageConverter;
 
@@ -11,12 +12,26 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 @Rest(rootUrl = "http://www.teamluper.com", converters = StringHttpMessageConverter.class)
 public interface LuperRestClient {
 
-  @Get("/api/test")
-  String getTestString();
-
   @Get("/api/null")
   public abstract void main();
 
-  // TODO figure out how POST works and how to submit key/values in the body
+  @Get("/api/test")
+  String getTestString();
+
+  @Post("/api/auth/register")
+  String registerNewAccount(String requestJSON);
+  // requestJSON must contain: email, password, username
+
+  @Post("/api/auth/challenge")
+  String getLoginChallengeSalt(String requestJSON);
+  // requestJSON must contain: email
+
+  @Post("/api/auth/login")
+  String validateLoginAttempt(String requestJSON);
+  // requestJSON must contain: email, password, securityType
+
+  @Post("/api/auth/passwd")
+  String changeUserPassword(String requestJSON);
+  // requestJSON must contain: email, oldPassword, newPassword, securityType
 
 }
