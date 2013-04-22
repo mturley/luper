@@ -109,10 +109,11 @@ public class Track {
   {
     return clips.size();
   }
-
+  
   public ArrayList<Clip> getClips() {
 		return this.clips;
 	}
+  
   /*DEPRECATE OR DELETE
 	public void createPBList()
 	{
