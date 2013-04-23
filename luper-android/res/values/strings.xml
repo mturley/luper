@@ -55,4 +55,7 @@
     <string name="action_register">Register</string>
     <string name="progress_registering">Registering&#8230;</string>
     <string name="or_register_facebook">or, Register with Facebook:</string>
+    <string name="title_activity_Luper_Login">Luper Login</string>
+    <string name="title_activity_Luper_register">Luper Register</string>
+    
 </resources>
