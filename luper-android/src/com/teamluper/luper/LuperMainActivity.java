@@ -42,12 +42,6 @@ import com.googlecode.androidannotations.annotations.UiThread;
 import java.io.File;
 import java.util.List;
 
-// imports for ActionBarSherlock dependency
-// imports for AndroidAnnotations dependency
-// @AfterViews is never used, but don't remove as we may want to use it eventually
-// imports for the SpringFramework REST dependency
-// imports for Test Suite
-
 // @EActivity = "Enhanced Activity", which turns on AndroidAnnotati1ons features
 @EActivity
 public class LuperMainActivity extends SherlockFragmentActivity {

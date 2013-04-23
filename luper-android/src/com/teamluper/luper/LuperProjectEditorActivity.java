@@ -1,5 +1,7 @@
 package com.teamluper.luper;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -180,7 +182,21 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     }
     if(item.getItemId() == R.id.editor_add_clip) {
       // TODO
-      incomplete = true;
+      //incomplete = true;
+    	new AlertDialog.Builder(this)
+		.setTitle("Record or Browse?")
+		//.setView(this)
+	    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+	        public void onClick(DialogInterface dialog, int whichButton) {
+	        	//want it to pass a new clip back to the editor panel and add it to the screen
+	        }
+	    })
+	    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+	        public void onClick(DialogInterface dialog, int whichButton) {
+	            // Do nothing.
+	        }
+	    })
+		.show();
     }
     if(item.getItemId() == R.id.editor_delete_clip) {
       // TODO

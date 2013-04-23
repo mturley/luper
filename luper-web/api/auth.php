@@ -46,8 +46,9 @@ function newRandomSaltedHash($email, $plainPassword) {
 // a basic authentication from a password which was submitted over the internet in plain text.
 // terrible for regular use on HTTP (vulnerable to very simple man-in-the-middle attacks)
 // but just fine if the password is sent securely over SSL via HTTPS.
-function validatePlainTextLoginAttempt($email, $plainPassword) {
-  $knownHash = getKnownHashForUser($email);
+function validatePlainTextLoginAttempt($db, $email, $plainPassword) {
+  $knownHash = getKnownHashForUser($db, $email);
+  if(!$knownHash) return false;
   $salt = substr($knownHash, 0, 64);
   $attemptHash = saltyHashBrowns($plainPassword, $salt, HALF_TOTAL_NUM_HASHES*2, true); // full hash
   return $attemptHash == $knownHash;
@@ -55,20 +56,22 @@ function validatePlainTextLoginAttempt($email, $plainPassword) {
 
 // alternatively, you can authenticate by submitting a password that has already been hashed a bunch by the client.
 // as long as the total number of hashes is the same, the result will still match if valid.
-function validateHalfBakedLoginAttempt($email, $halfBakedHash) {
+function validateHalfBakedLoginAttempt($db, $email, $halfBakedHash) {
   // remove the hash from its salty envelope, taking note of the salt.
   $salt = substr($halfBakedHash, 0, 64);
   $hash = substr($halfBakedHash, 64);
   $attemptHash = saltyHashBrowns($hash, $salt, HALF_TOTAL_NUM_HASHES, false);
-  $knownHash = getKnownHashForUser($email);
+  $knownHash = getKnownHashForUser($db, $email);
+  if(!$knownHash) return false;
   return $attemptHash == $knownHash;
 }
 
 // actually fetches the passwordHash field given a user's email address.
-function getKnownHashForUser($email) {
-  $db = getDB();
+function getKnownHashForUser($db, $email) {
   $query = $db->prepare("SELECT passwordHash FROM Users WHERE email = :email LIMIT 1");
   $query->bindParam("email", $email);
   $query->execute();
+  $obj = $query->fetchObject();
+  if(!$obj) return false;
   return $query->fetchObject()->passwordHash;
 }

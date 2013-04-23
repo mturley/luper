@@ -124,6 +124,17 @@ public class AudioRecorderTestActivity extends SherlockActivity
 	        }
     	}
     }
+    
+    //Used to initialize a playhead from a specific point - literally just a sleep call on the thread in question
+    public void playFrom(int ms)
+    {
+    		try {
+				Thread.sleep(ms);
+			} catch (Exception e) {
+				//handle interrupted exceptions in a different way
+				Log.e(LOG_TAG, "sleep() failed1");
+			}
+    }
 
     private void stopPlayingTrack() {
       if(mPlayer != null) {
@@ -242,7 +253,7 @@ public class AudioRecorderTestActivity extends SherlockActivity
             setOnClickListener(clicker);
         }
     }
-
+ 
     public AudioRecorderTestActivity() {
         mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/LuperApp/";
         //System.out.println(mFileName);
