@@ -85,11 +85,12 @@ public class AudioRecorderTestActivity extends SherlockActivity
     }
 
     private void startPlaying() {
-
+    	
         mPlayer = new MediaPlayer();
         try {
             mPlayer.setDataSource(mFileName);
             mPlayer.prepare();
+            //playFrom(1000);
             mPlayer.start();
         } catch (IOException e) {
             Log.e(LOG_TAG, "prepare() failed1");
