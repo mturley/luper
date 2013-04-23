@@ -18,14 +18,20 @@ package com.teamluper.luper;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.*;
 
 import java.io.IOException;
+
+import com.googlecode.androidannotations.annotations.Background;
+import com.teamluper.luper.AudioRecorderTestActivity.PlayButton;
+import com.teamluper.luper.AudioRecorderTestActivity.playTrackButton;
 
 /**
  * A custom view for a color chip for an event that can be drawn differently
@@ -38,6 +44,14 @@ public class TrackView extends RelativeLayout {
 
     private RecordButton mRecordButton = null;
     private MediaRecorder mRecorder = null;
+    
+    private PlayButton   mPlayButton = null;
+    private MediaPlayer   mPlayer = null;
+    
+    private Button mAddToTrackButton = null;
+    private playTrackButton mPlayTrackButton = null;
+    
+    private Track playBackTest = new Track ();
 
     private TextView fileSelected;
 
@@ -59,6 +73,11 @@ public class TrackView extends RelativeLayout {
 			promptDialog();
 		}
 	};
+	OnClickListener playClicker = new OnClickListener(){
+		public void onClick(View v){
+			startPlaying();
+		}
+	};
 
 	public void init(){
 		this.setPadding(0, 10, 0, 5);
@@ -77,6 +96,7 @@ public class TrackView extends RelativeLayout {
 //		create the playButton then set its image to play and add it to the trackControl
 		ImageButton playButton = new ImageButton(this.getContext());
 		playButton.setImageResource(R.drawable.play);
+		playButton.setOnClickListener(playClicker);
 		trackControl.addView(playButton);
 
 		this.addView(trackControl);
@@ -130,6 +150,9 @@ public class TrackView extends RelativeLayout {
 		    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 		        public void onClick(DialogInterface dialog, int whichButton) {
 		        	//want it to pass a new clip back to the editor panel and add it to the screen
+		        	//NEED TO ADD CLIP TO THE TRACK
+		        	Clip newClip = new Clip(mFileName);
+		        	playBackTest.putClip(newClip);
 		        }
 		    })
 		    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -216,8 +239,122 @@ public class TrackView extends RelativeLayout {
         fileSelected.setText(mFileName);
         mRecorder = null;
     }
+    class PlayButton extends Button {
+        boolean mStartPlaying = true;
 
+        OnClickListener clicker = new OnClickListener() {
+            public void onClick(View v) {
+                onPlay(mStartPlaying);
+                if (mStartPlaying) {
+                    setText("Stop playing");
+                } else {
+                    setText("Start playing");
+                }
+                mStartPlaying = !mStartPlaying;
+            }
+        };
 
+        public PlayButton(Context ctx) {
+            super(ctx);
+            setText("Start playing");
+            setOnClickListener(clicker);
+        }
+    }
+    private void onPlay(boolean start) {
+        if (start) {
+            startPlaying();
+        } else {
+            stopPlaying();
+        }
+    }
+    
+    private void onPlayTrack(boolean start) {
+        if (start) {
+            startPlayingTrack();
+        } else {
+            stopPlayingTrack();
+        }
+    }
+    private void startPlaying() {
+    	
+        mPlayer = new MediaPlayer();
+        try {
+            mPlayer.setDataSource(mFileName);
+            mPlayer.prepare();
+            //playFrom(1000);
+            mPlayer.start();
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "prepare() failed1");
+        }
+    }
+
+    private void stopPlaying() {
+      if(mPlayer != null) {
+        mPlayer.release();
+        mPlayer = null;
+      }
+    }
+    
+    //Used to initialize a playhead from a specific point - literally just a sleep call on the thread in question
+    public void playFrom(int ms)
+    {
+    		try {
+				Thread.sleep(ms);
+			} catch (Exception e) {
+				//handle interrupted exceptions in a different way
+				Log.e(LOG_TAG, "sleep() failed1");
+			}
+    }
+
+   
+    class playTrackButton extends Button {
+        boolean mStartPlayingTrack = true;
+
+        OnClickListener clicker = new OnClickListener() {
+            public void onClick(View v) {
+                onPlayTrack(mStartPlayingTrack);
+                if (mStartPlayingTrack) {
+                    setText("Stop Track");
+                } else {
+                    setText("Start Track");
+                }
+                mStartPlayingTrack = !mStartPlayingTrack;
+            }
+        };
+
+        public playTrackButton(Context ctx) {
+            super(ctx);
+            setText("Start Track");
+            setOnClickListener(clicker);
+        }
+    }
+
+    public void startPlayingTrack() {
+
+    	int i=0;
+    	while(playBackTest!=null && i!=playBackTest.size())
+    	{
+	        mPlayer = new MediaPlayer();
+	        mFileName=playBackTest.clips.get(i).name;
+	        try
+	        {
+	            mPlayer.setDataSource(mFileName);
+	            mPlayer.prepare();
+	            Thread.sleep(playBackTest.clips.get(i).getDuration());
+	            mPlayer.start();
+	            i++;
+	        } catch (Exception e) {
+	        	//handle interrupted exceptions in a different way
+	            Log.e(LOG_TAG, "prepare() failed1");
+	        }
+    	}
+    }
+    private void stopPlayingTrack() {
+        if(mPlayer != null) {
+          mPlayer.release();
+          mPlayer = null;
+        }
+      }
 }
 
 
