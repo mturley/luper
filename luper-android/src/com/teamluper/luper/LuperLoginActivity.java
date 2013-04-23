@@ -19,6 +19,8 @@ import com.teamluper.luper.rest.LuperRestClient;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import com.facebook.Session;
+
 /**
  * Activity which displays a login screen to the user, offering registration as
  * well.
@@ -27,7 +29,9 @@ import java.security.NoSuchAlgorithmException;
 public class LuperLoginActivity extends SherlockFragmentActivity {
   ViewPager mViewPager;
   TabsAdapter mTabsAdapter;
-
+  
+  // Facebook Login Session
+  private Session session;
   @RestService
   LuperRestClient restClient;
 
@@ -69,6 +73,7 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
   @Override
   protected void onResume() {
     if(!dataSource.isOpen()) dataSource.open();
+    session = Session.getActiveSession();
     super.onResume();
   }
 
