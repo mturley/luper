@@ -1,7 +1,5 @@
 <?php
 
-error_reporting(E_ALL);
-
 require 'Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
 $api = new \Slim\Slim(array(
@@ -27,8 +25,8 @@ $api->get('/test', function() use ($api) {
   }
 });
 
-// /auth/register  registers a new user account
-$api->post('/auth/register',
+// registers a new user account
+$api->post('/auth-register',
   function() use ($api) {
   try {
     // fetch and decode the request object
@@ -69,8 +67,8 @@ $api->post('/auth/register',
   }
 });
 
-// /auth/challenge  retrieves the challenge salt value for a given user
-$api->post('/auth/challenge', function($email) use ($api) {
+// retrieves the challenge salt value for a given user
+$api->post('/auth-challenge', function($email) use ($api) {
   try {
     // TODO refactor this so every challenge salt is different... we'd need to store a different password hash too
     $db = getDB();
@@ -85,8 +83,8 @@ $api->post('/auth/challenge', function($email) use ($api) {
   }
 });
 
-// /auth/login  validates a login attempt against the database.
-$api->post('/auth/login', function() use ($api) {
+// validates a login attempt against the database.
+$api->post('/auth-login', function() use ($api) {
   try {
     // fetch and decode the request object
     $request = json_decode($api->request()->getBody());
@@ -111,8 +109,8 @@ $api->post('/auth/login', function() use ($api) {
   }
 });
 
-// /auth/passwd  resets and/or changes a password
-$api->post('/auth/passwd', function() use ($api) {
+// resets and/or changes a password
+$api->post('/auth-passwd', function() use ($api) {
   try {
     // fetch and decode the request object
     $request = json_decode($api->request()->getBody());

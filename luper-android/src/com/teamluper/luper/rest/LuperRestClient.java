@@ -18,19 +18,19 @@ public interface LuperRestClient {
   @Get("/api/test")
   String getTestString();
 
-  @Post("/api/auth/register")
+  @Post("/api/auth-register")
   String registerNewAccount(String requestJSON);
   // requestJSON must contain: email, password, username
 
-  @Post("/api/auth/challenge")
+  @Post("/api/auth-challenge")
   String getLoginChallengeSalt(String requestJSON);
   // requestJSON must contain: email
 
-  @Post("/api/auth/login")
+  @Post("/api/auth-login")
   String validateLoginAttempt(String requestJSON);
   // requestJSON must contain: email, password, securityType
 
-  @Post("/api/auth/passwd")
+  @Post("/api/auth-passwd")
   String changeUserPassword(String requestJSON);
   // requestJSON must contain: email, oldPassword, newPassword, securityType
 
