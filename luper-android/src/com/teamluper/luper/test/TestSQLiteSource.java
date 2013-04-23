@@ -1,7 +1,5 @@
 package com.teamluper.luper.test;
 
-//import org.junit.Test;
-import junit.framework.TestCase;
 import com.teamluper.luper.*;
 import android.test.ActivityInstrumentationTestCase2;
 //import android.test.ActivityUnitTestCase;
