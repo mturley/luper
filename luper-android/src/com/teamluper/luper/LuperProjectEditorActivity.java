@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
@@ -40,6 +41,8 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   private static final String LOG_TAG = "TrackView";
   private TextView fileSelected;
   private RecordButton mRecordButton = null;
+  private MediaPlayer   mPlayer = null;
+  private Track playBackTest = new Track ();
 
   // TODO these will be moved to within Sequence, and accessed with
   // sequence.getClips() and sequence.getTracks(), etc.
@@ -189,7 +192,25 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     boolean incomplete = false;
     if(item.getItemId() == R.id.editor_play) {
       // TODO
-      incomplete = true;
+      //incomplete = true;
+    	
+    	int i=0;
+    	while(playBackTest!=null && i!=playBackTest.size())
+    	{
+	        mPlayer = new MediaPlayer();
+	        mFileName=playBackTest.clips.get(i).name;
+	        try
+	        {
+	            mPlayer.setDataSource(mFileName);
+	            mPlayer.prepare();
+	            Thread.sleep(playBackTest.clips.get(i).getDuration());
+	            mPlayer.start();
+	            i++;
+	        } catch (Exception e) {
+	        	//handle interrupted exceptions in a different way
+	            Log.e(LOG_TAG, "prepare() failed1");
+	        }
+    	}
     }
     if(item.getItemId() == R.id.editor_edit_clip) {
       // TODO
@@ -230,9 +251,9 @@ public class LuperProjectEditorActivity extends SherlockActivity {
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
         
-    	new AlertDialog.Builder(this)
+        new AlertDialog.Builder(this)
 		.setTitle("Record or Browse?")
-		//.setView(this)
+		.setView(custom)
 	    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 	        public void onClick(DialogInterface dialog, int whichButton) {
 	        	//want it to pass a new clip back to the editor panel and add it to the screen
