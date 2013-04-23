@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
@@ -43,6 +45,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   private RecordButton mRecordButton = null;
   private MediaPlayer   mPlayer = null;
   private Track playBackTest = new Track ();
+  private AudioManager audioManager;
 
   // TODO these will be moved to within Sequence, and accessed with
   // sequence.getClips() and sequence.getTracks(), etc.
@@ -62,6 +65,11 @@ public class LuperProjectEditorActivity extends SherlockActivity {
               finish();
             }
           });
+      
+      
+      
+      
+      
       return;
     }
 
@@ -272,7 +280,30 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     }
     if(item.getItemId() == R.id.editor_volume) {
       // TODO
-      incomplete = true;
+      //incomplete = true;
+    	LinearLayout ll3 = new LinearLayout(this);
+        SeekBar volBar = new SeekBar(this);
+        ll3.addView(volBar,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        0));//what we need to get the volume bar to work
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        int curVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        volBar.setMax(maxVolume);
+        volBar.setProgress(curVolume);
+        volBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+  			public void onStopTrackingTouch(SeekBar seekBar) {}
+  			public void onStartTrackingTouch(SeekBar seekBar) {}
+  			public void onProgressChanged(SeekBar seekBar, int progress,
+  					boolean fromUser) {
+  				audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
+  			}
+        });
+    	new AlertDialog.Builder(this)
+    	.setView(ll3)
+    	.show();
     }
     if(item.getItemId() == R.id.editor_help) {
       // TODO
