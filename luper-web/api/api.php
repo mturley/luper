@@ -1,5 +1,7 @@
 <?php
 
+error_reporting(E_ALL);
+
 require 'Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
 $api = new \Slim\Slim(array(
