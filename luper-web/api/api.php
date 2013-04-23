@@ -25,8 +25,8 @@ $api->get('/test', function() use ($api) {
   }
 });
 
-// /auth/register  registers a new user account
-$api->post('/auth/register',
+// registers a new user account
+$api->post('/auth-register',
   function() use ($api) {
   try {
     // fetch and decode the request object
@@ -34,29 +34,41 @@ $api->post('/auth/register',
     $email = $request->email;
     $password = $request->password;
     $username = $request->username;
-    // put some data into the database
+    // check if the email is already registered
     $db = getDB();
-    $hash = newRandomSaltedHash($email, $password);
-    $stmt = $db->prepare(
-      "INSERT INTO Users (username, email, passwordHash, isActiveUser, preferences)".
-      "           VALUES (:username, :email, :passwordHash, 1, '{}');");
-    $stmt->bindParam("username",$username);
+    $stmt = $db->prepare("SELECT COUNT(*) AS userCount FROM Users WHERE email = :email");
     $stmt->bindParam("email",$email);
-    $stmt->bindParam("passwordHash",$hash);
     $stmt->execute();
-    // build, encode and send the response object
-    $response = new stdclass();
-    $response->success = true;
-    $response->insertId = $db->lastInsertId();
-    echo json_encode($response);
+    $userCount = $stmt->fetchObject()->userCount;
+    if($userCount != 0) {
+      $response = new stdclass();
+      $response->success = false;
+      $response->message = "An account with that email address is already registered!";
+      echo json_encode($response);
+    } else {
+      // put some data into the database
+      $hash = newRandomSaltedHash($email, $password);
+      $stmt = $db->prepare(
+        "INSERT INTO Users (username, email, passwordHash, isActiveUser, preferences)".
+        "           VALUES (:username, :email, :passwordHash, 1, '{}');");
+      $stmt->bindParam("username",$username);
+      $stmt->bindParam("email",$email);
+      $stmt->bindParam("passwordHash",$hash);
+      $stmt->execute();
+      // build, encode and send the response object
+      $response = new stdclass();
+      $response->success = true;
+      $response->insertId = $db->lastInsertId();
+      echo json_encode($response);
+    }
   } catch(PDOException $e) {
     // database errors will be delivered as an HTTP 500 Internal Server Error
     $api->halt(500,$e->getMessage());
   }
 });
 
-// /auth/challenge  retrieves the challenge salt value for a given user
-$api->post('/auth/challenge', function($email) use ($api) {
+// retrieves the challenge salt value for a given user
+$api->post('/auth-challenge', function($email) use ($api) {
   try {
     // TODO refactor this so every challenge salt is different... we'd need to store a different password hash too
     $db = getDB();
@@ -71,8 +83,8 @@ $api->post('/auth/challenge', function($email) use ($api) {
   }
 });
 
-// /auth/login  validates a login attempt against the database.
-$api->post('/auth/login', function() use ($api) {
+// validates a login attempt against the database.
+$api->post('/auth-login', function() use ($api) {
   try {
     // fetch and decode the request object
     $request = json_decode($api->request()->getBody());
@@ -97,8 +109,8 @@ $api->post('/auth/login', function() use ($api) {
   }
 });
 
-// /auth/passwd  resets and/or changes a password
-$api->post('/auth/passwd', function() use ($api) {
+// resets and/or changes a password
+$api->post('/auth-passwd', function() use ($api) {
   try {
     // fetch and decode the request object
     $request = json_decode($api->request()->getBody());

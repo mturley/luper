@@ -20,7 +20,14 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp" />
 
-
+        <TextView
+            android:id="@+id/register_status_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/progress_registering"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
     </LinearLayout>
 
     <!-- Register form -->
@@ -53,7 +60,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <EditText
-                android:id="@+id/email"
+                android:id="@+id/register_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_email"
@@ -62,7 +69,7 @@
                 android:singleLine="true" />
 
             <EditText
-                android:id="@+id/password"
+                android:id="@+id/register_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_password"
@@ -71,7 +78,7 @@
                 android:singleLine="true" />
 
             <EditText
-                android:id="@+id/password2"
+                android:id="@+id/register_password2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_password2"
@@ -80,7 +87,7 @@
                 android:singleLine="true" />
 
             <EditText
-                android:id="@+id/username"
+                android:id="@+id/register_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_username"
@@ -96,8 +103,7 @@
                 android:layout_marginTop="10dp"
                 android:paddingLeft="32dp"
                 android:paddingRight="32dp"
-                android:text="@string/action_register"
-                android:action="processRegistration" />
+                android:text="@string/action_register" />
 
             <TextView
                 android:id="@+id/header_or_facebook"

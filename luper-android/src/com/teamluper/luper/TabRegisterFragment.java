@@ -1,16 +1,25 @@
 package com.teamluper.luper;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EFragment;
 import com.googlecode.androidannotations.annotations.UiThread;
 import com.googlecode.androidannotations.annotations.rest.RestService;
 import com.teamluper.luper.rest.LuperRestClient;
+import org.json.JSONObject;
 
 @EFragment
 public class TabRegisterFragment extends Fragment {
@@ -21,14 +30,17 @@ public class TabRegisterFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater infl, ViewGroup vg, Bundle state) {
     if(vg == null) return null;
-    return infl.inflate(R.layout.tab_register_layout, vg, false);
-  }
+    View v = infl.inflate(R.layout.tab_register_layout, vg, false);
 
-  @Background
-  public void processRegistration(View view) {
+    v.findViewById(R.id.register_button).setOnClickListener(
+      new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+          attemptRegistration();
+        }
+      });
 
-    alert("Registration","TODO: actually process it");
-    // TODO stub here
+    return v;
   }
 
   @UiThread
@@ -36,4 +48,139 @@ public class TabRegisterFragment extends Fragment {
     DialogFactory.alert(getActivity(), title, message);
   }
 
+  @UiThread
+  public void attemptRegistration() {
+    Activity a = getActivity();
+    EditText editEmail     = (EditText) a.findViewById(R.id.register_email);
+    EditText editPassword  = (EditText) a.findViewById(R.id.register_password);
+    EditText editPassword2 = (EditText) a.findViewById(R.id.register_password2);
+    EditText editUsername  = (EditText) a.findViewById(R.id.register_username);
+
+    editEmail.setError(null);
+    editPassword.setError(null);
+    editPassword2.setError(null);
+    editUsername.setError(null);
+
+    String email = editEmail.getText().toString();
+    String password = editPassword.getText().toString();
+    String password2 = editPassword2.getText().toString();
+    String username = editUsername.getText().toString();
+
+    boolean cancel = false;
+    View focusView = null;
+
+    // Check that the passwords match and are valid.
+    if(!password.equals(password2)) {
+      editPassword.setError("Passwords do not match!");
+      focusView = editPassword;
+      cancel = true;
+    } else if(password.length() < 4) {
+      editPassword.setError("Password must be greater than 4 characters.");
+      focusView = editPassword;
+      cancel = true;
+    }
+
+    // Check that the email is valid.
+    if(TextUtils.isEmpty(email)) {
+      editEmail.setError("A valid email address is required!");
+      focusView = editEmail;
+      cancel = true;
+    } else if(!email.contains("@")) {
+      editEmail.setError("This email address is invalid!");
+      focusView = editEmail;
+      cancel = true;
+    }
+
+    // Check that the username is specified
+    if(TextUtils.isEmpty(username) || username.length() < 4) {
+      editUsername.setError("A display name of at least 4 characters is required.");
+      focusView = editUsername;
+      cancel = true;
+    }
+
+    if(cancel) {
+      focusView.requestFocus();
+      return;
+    }
+
+    DialogFactory.alert(getActivity(),"We're all good to register!");
+
+    completeRegistration(email, password, username);
+  }
+
+  @Background
+  public void completeRegistration(String email, String password, String username) {
+    JSONObject request = new JSONObject();
+    try {
+      request.put("password",password);
+      request.put("username",username);
+      request.put("email",email);
+      String requestJSON = request.toString();
+      showProgress(true);
+      String responseJSON = rest.registerNewAccount(requestJSON);
+      JSONObject response = new JSONObject(responseJSON);
+      showProgress(false);
+      if(response.getBoolean("success")) {
+        registrationSuccess(response.getLong("insertId"));
+      } else {
+        registrationFailure(response.getString("message"));
+      }
+    } catch(org.json.JSONException e) {
+      registrationFailure(e.getMessage());
+    }
+  }
+
+  @UiThread
+  public void registrationSuccess(long userid) {
+    DialogFactory.alert(getActivity(), "Registration Complete!",
+      "Your new account has been registered!  Please use the login form.");
+  }
+
+  @UiThread
+  public void registrationFailure(String errorMessage) {
+    DialogFactory.alert(getActivity(), "Registration Failed!",
+      errorMessage);
+  }
+
+  /**
+   * Shows the progress UI and hides the register form.
+   */
+  @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+  private void showProgress(final boolean show) {
+    Activity a = getActivity();
+    final View mRegisterFormView = a.findViewById(R.id.register_form);
+    final View mRegisterStatusView = a.findViewById(R.id.register_status);
+    final TextView mRegisterStatusMessageView = (TextView) a.findViewById(R.id.register_status_message);
+
+    // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+    // for very easy animations. If available, use these APIs to fade-in
+    // the progress spinner.
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+      int shortAnimTime = getResources().getInteger(
+        android.R.integer.config_shortAnimTime);
+
+      mRegisterStatusView.setVisibility(View.VISIBLE);
+      mRegisterStatusView.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0)
+        .setListener(new AnimatorListenerAdapter() {
+          @Override
+          public void onAnimationEnd(Animator animation) {
+            mRegisterStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
+          }
+        });
+
+      mRegisterFormView.setVisibility(View.VISIBLE);
+      mRegisterFormView.animate().setDuration(shortAnimTime).alpha(show ? 0 : 1)
+        .setListener(new AnimatorListenerAdapter() {
+          @Override
+          public void onAnimationEnd(Animator animation) {
+            mRegisterFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+          }
+        });
+    } else {
+      // The ViewPropertyAnimator APIs are not available, so simply show
+      // and hide the relevant UI components.
+      mRegisterStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
+      mRegisterFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+    }
+  }
 }
