@@ -18,6 +18,7 @@ package com.teamluper.luper;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Environment;
@@ -101,14 +102,16 @@ public class TrackView extends RelativeLayout {
 
 		this.addView(trackControl);
 //		testing...
-//        Clip clip1 = new Clip(); clip1.begin = 0; clip1.end = 500; clip1.duration = 1500;
-//        ColorChipButton chip;
-//        this.associated.putClip(clip1);
-//        for(int i = 0; i < this.associated.clips.size(); i++){
-//        	chip = new ColorChipButton(this.getContext(), this.associated.clips.get(i));
-//        	chip.setBackgroundColor(Color.RED);
-//        	this.addView(chip);
-//        }
+        Clip clip1 = new Clip(); clip1.begin = 400; clip1.end = 500; clip1.duration = 100;
+        ColorChipButton chip;
+        this.associated.putClip(clip1);
+        for(int i = 0; i < this.associated.clips.size(); i++){
+        	System.out.println("Here " + this.associated.getClips().get(i).begin);
+        	chip = new ColorChipButton(this.getContext(), this.associated.getClips().get(i));
+        	chip.setBackgroundColor(Color.RED);
+        	System.out.println("Chips x pos " + chip.associated.begin);
+        	this.addView(chip);
+        }
 	}
 
 	public void promptDialog(){
