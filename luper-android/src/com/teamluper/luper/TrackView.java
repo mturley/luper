@@ -73,7 +73,7 @@ public class TrackView extends RelativeLayout {
 	};
 	OnClickListener playClicker = new OnClickListener(){
 		public void onClick(View v){
-				stopPlaying(); //need track playback but track class + audio hook-up not working yet; this does work though
+				startPlaying(); //need track playback but track class + audio hook-up not working yet; this does work though
 		}
 	};
 
