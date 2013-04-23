@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.googlecode.androidannotations.annotations.EFragment;
 import com.googlecode.androidannotations.annotations.UiThread;
 import com.googlecode.androidannotations.annotations.rest.RestService;
 import com.teamluper.luper.rest.LuperRestClient;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 @EFragment
@@ -103,8 +105,6 @@ public class TabRegisterFragment extends Fragment {
       return;
     }
 
-    DialogFactory.alert(getActivity(),"We're all good to register!");
-
     completeRegistration(email, password, username);
   }
 
@@ -115,18 +115,32 @@ public class TabRegisterFragment extends Fragment {
       request.put("password",password);
       request.put("username",username);
       request.put("email",email);
-      String requestJSON = request.toString();
-      showProgress(true);
-      String responseJSON = rest.registerNewAccount(requestJSON);
-      JSONObject response = new JSONObject(responseJSON);
-      showProgress(false);
+    } catch(JSONException e) {}
+    String requestJSON = request.toString();
+    showProgress(true);
+
+    Log.e("luper","Here's the attempted request JSON: "+requestJSON);
+
+    String responseJSON = rest.registerNewAccount(requestJSON);
+
+    JSONObject response = null;
+    try {
+      response = new JSONObject(responseJSON);
+    } catch(JSONException e) {
+      Log.e("luper","=== FAILED TO PARSE RESPONSE JSON FROM /api/auth/register");
+      Log.e("luper","=== RESPONSE (which failed to parse as JSON) WAS:");
+      Log.e("luper","=== "+responseJSON);
+      Log.e("luper","=== Exception: ",e);
+    }
+    showProgress(false);
+    try {
       if(response.getBoolean("success")) {
         registrationSuccess(response.getLong("insertId"));
       } else {
         registrationFailure(response.getString("message"));
       }
-    } catch(org.json.JSONException e) {
-      registrationFailure(e.getMessage());
+    } catch(JSONException e) {
+      Log.e("luper","=== POST-PARSE JSON EXCEPTION: ",e);
     }
   }
 
@@ -146,7 +160,8 @@ public class TabRegisterFragment extends Fragment {
    * Shows the progress UI and hides the register form.
    */
   @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-  private void showProgress(final boolean show) {
+  @UiThread
+  public void showProgress(final boolean show) {
     Activity a = getActivity();
     final View mRegisterFormView = a.findViewById(R.id.register_form);
     final View mRegisterStatusView = a.findViewById(R.id.register_status);
