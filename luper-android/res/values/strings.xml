@@ -53,5 +53,6 @@
     <string name="prompt_password2">Re-enter Password</string>
     <string name="prompt_username">Display Name</string>
     <string name="action_register">Register</string>
+    <string name="progress_registering">Registering&#8230;</string>
     <string name="or_register_facebook">or, Register with Facebook:</string>
 </resources>

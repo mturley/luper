@@ -34,21 +34,33 @@ $api->post('/auth/register',
     $email = $request->email;
     $password = $request->password;
     $username = $request->username;
-    // put some data into the database
+    // check if the email is already registered
     $db = getDB();
-    $hash = newRandomSaltedHash($email, $password);
-    $stmt = $db->prepare(
-      "INSERT INTO Users (username, email, passwordHash, isActiveUser, preferences)".
-      "           VALUES (:username, :email, :passwordHash, 1, '{}');");
-    $stmt->bindParam("username",$username);
+    $stmt = $db->prepare("SELECT COUNT(*) AS userCount FROM Users WHERE email = :email");
     $stmt->bindParam("email",$email);
-    $stmt->bindParam("passwordHash",$hash);
     $stmt->execute();
-    // build, encode and send the response object
-    $response = new stdclass();
-    $response->success = true;
-    $response->insertId = $db->lastInsertId();
-    echo json_encode($response);
+    $userCount = $stmt->fetchObject()->userCount;
+    if($userCount != 0) {
+      $response = new stdclass();
+      $response->success = false;
+      $response->message = "An account with that email address is already registered!";
+      echo json_encode($response);
+    } else {
+      // put some data into the database
+      $hash = newRandomSaltedHash($email, $password);
+      $stmt = $db->prepare(
+        "INSERT INTO Users (username, email, passwordHash, isActiveUser, preferences)".
+        "           VALUES (:username, :email, :passwordHash, 1, '{}');");
+      $stmt->bindParam("username",$username);
+      $stmt->bindParam("email",$email);
+      $stmt->bindParam("passwordHash",$hash);
+      $stmt->execute();
+      // build, encode and send the response object
+      $response = new stdclass();
+      $response->success = true;
+      $response->insertId = $db->lastInsertId();
+      echo json_encode($response);
+    }
   } catch(PDOException $e) {
     // database errors will be delivered as an HTTP 500 Internal Server Error
     $api->halt(500,$e->getMessage());

@@ -16,7 +16,7 @@ import org.springframework.web.client.HttpClientErrorException;
 public class LuperDevToolsActivity extends Activity {
   @RestService
   LuperRestClient rest;
-  SQLiteDataSource dataSource;
+  SQLiteDataSource dataSource ;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
