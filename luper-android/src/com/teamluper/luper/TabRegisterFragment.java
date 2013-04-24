@@ -23,6 +23,8 @@ import com.teamluper.luper.rest.LuperRestClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.MessageDigest;
+
 @EFragment
 public class TabRegisterFragment extends Fragment {
 
@@ -112,10 +114,16 @@ public class TabRegisterFragment extends Fragment {
   public void completeRegistration(String email, String password, String username) {
     JSONObject request = new JSONObject();
     try {
-      request.put("password",password);
+      MessageDigest md = MessageDigest.getInstance("SHA-256");
+      md.update(password.getBytes("UTF-8")); // Change this to "UTF-16" if needed
+      byte[] digest = md.digest();
+      String passwordHash = new String(digest);
+      request.put("passwordHash",passwordHash);
       request.put("username",username);
       request.put("email",email);
-    } catch(JSONException e) {}
+    } catch(Exception e) {
+      Log.e("luper","=== Exception while trying to hash password for JSON request ===",e);
+    }
     String requestJSON = request.toString();
     showProgress(true);
 
@@ -127,10 +135,9 @@ public class TabRegisterFragment extends Fragment {
     try {
       response = new JSONObject(responseJSON);
     } catch(JSONException e) {
-      Log.e("luper","=== FAILED TO PARSE RESPONSE JSON FROM /api/auth/register");
+      Log.e("luper","=== FAILED TO PARSE RESPONSE JSON FROM /api/auth/register",e);
       Log.e("luper","=== RESPONSE (which failed to parse as JSON) WAS:");
       Log.e("luper","=== "+responseJSON);
-      Log.e("luper","=== Exception: ",e);
     }
     showProgress(false);
     try {
@@ -140,7 +147,7 @@ public class TabRegisterFragment extends Fragment {
         registrationFailure(response.getString("message"));
       }
     } catch(JSONException e) {
-      Log.e("luper","=== POST-PARSE JSON EXCEPTION: ",e);
+      Log.e("luper", "=== POST-PARSE JSON EXCEPTION: ", e);
     }
   }
 

@@ -26,17 +26,17 @@ function saltyHashBrowns($simpleHashedPassword, $salt, $hashCount) {
   $hash = $salt . $simpleHashedPassword;
   // Hashing our hashes times a hundred thousand, because security!
   for ( $i = 0; $i < $hashCount; $i++ ) {
-    $hash = hash('sha256', $hash); // hashity hash
+    $hash = sha256($hash); // hashity hash
   }
   return $hash;
 }
 
 // computes a simple hash with no salt, for initial password storage.
-function simpleHash($password) {
+function sha256($password) {
   return hash('sha256', $password);
 }
 
-// validates an attempted login hash that was made using the latest challenge salt.'.
+// validates an attempted login hash that was made using the latest challenge salt.
 function validateLoginAttempt($db, $email, $attemptHash) {
   $knownSimpleHash = getKnownSimpleHashForUser($db, $email);
   if(!$knownSimpleHash) return false;

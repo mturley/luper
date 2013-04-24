@@ -10,6 +10,14 @@ $api = new \Slim\Slim(array(
 require_once 'db.php'; // defines getDB()
 require_once 'auth.php'; // defines password hashing functions
 
+function handlePDOException($api, $e) {
+  // database errors will be delivered as an HTTP 500 Internal Server Error
+  $response = new stdclass();
+  $response->success = false;
+  $response->message = "Database error!  Please contact support@teamluper.com with the error message: "+$e->getMessage();
+  $api->halt(500,json_encode($response));
+}
+
 $api->get('/null', function() use ($api) {
   echo "";
 });
@@ -26,14 +34,13 @@ $api->get('/test', function() use ($api) {
 });
 
 // registers a new user account
-$api->post('/auth-register',
-  function() use ($api) {
+$api->post('/auth-register', function() use ($api) {
+  // fetch and decode the request object
+  $request = json_decode($api->request()->getBody());
+  $email = $request->email;
+  $passwordHash = $request->passwordHash;
+  $username = $request->username;
   try {
-    // fetch and decode the request object
-    $request = json_decode($api->request()->getBody());
-    $email = $request->email;
-    $password = $request->password;
-    $username = $request->username;
     // check if the email is already registered
     $db = getDB();
     $stmt = $db->prepare("SELECT COUNT(*) AS userCount FROM Users WHERE email = :email");
@@ -49,13 +56,12 @@ $api->post('/auth-register',
       // here we put a singly-hashed password in the database.
       // later on we'll generate a challenge salt and hash
       // the password further during login verification.
-      $hash = simpleHash($password);
       $stmt = $db->prepare(
         "INSERT INTO Users (username, email, passwordHash, isActiveUser, preferences)".
         "           VALUES (:username, :email, :passwordHash, 1, '{}');");
       $stmt->bindParam("username",$username);
       $stmt->bindParam("email",$email);
-      $stmt->bindParam("passwordHash",$hash);
+      $stmt->bindParam("passwordHash",$passwordHash);
       $stmt->execute();
       // build, encode and send the response object
       $response = new stdclass();
@@ -64,47 +70,65 @@ $api->post('/auth-register',
       echo json_encode($response);
     }
   } catch(PDOException $e) {
-    // database errors will be delivered as an HTTP 500 Internal Server Error
-    $api->halt(500,$e->getMessage());
+    handlePDOException($api, $e);
   }
 });
 
 // generates, stores and returns a new random salt for use in hashing.
-$api->post('/auth-challenge', function($email) use ($api) {
+$api->post('/auth-challenge', function() use ($api) {
+  // fetch and decode the request object
+  $request = json_decode($api->request()->getBody());
+  $email = $request->email;
   try {
     $db = getDB();
-    $salt = newRandomSalt($email);
-    $stmt = $db->prepare("UPDATE Users SET challengeSalt = :salt WHERE email = :email");
-    $stmt->bindParam("salt",$salt);
+    $stmt = $db->prepare("SELECT passwordHash FROM Users WHERE email = :email");
     $stmt->bindParam("email",$email);
     $stmt->execute();
-    // TODO what if the user doesn't exist?  rowcount check?  does the update cause a SQL error?
+    $obj = $stmt->fetchObject();
     $response = new stdclass();
-    $response->email = $email;
-    $response->salt = $salt;
+    if(!obj) {
+      $response->success = false;
+      $response->message = "No user found with that email address. Did you already register?";
+    } else if($obj->passwordHash == null) {
+      $response->success = false;
+      $response->message = "User has no registered password; maybe you meant to log in via facebook?";
+    } else {
+      $salt = newRandomSalt($email);
+      $stmt = $db->prepare("UPDATE Users SET challengeSalt = :salt WHERE email = :email");
+      $stmt->bindParam("salt",$salt);
+      $stmt->bindParam("email",$email);
+      $stmt->execute();
+      if($stmt->rowCount() != 1) {
+        $response->success = false;
+        $response->message = "Something is wrong with this user in the database. Please contact support@teamluper.com!";
+      } else {
+        $response->success = true;
+        $response->salt = $salt;
+      }
+    }
     echo json_encode($response);
   } catch(PDOException $e) {
-    $api->halt(500,$e->getMessage());
+    handlePDOException($api, $e);
   }
 });
 
 // validates a login attempt against the database.
 $api->post('/auth-login', function() use ($api) {
+  // fetch and decode the request object
+  $request = json_decode($api->request()->getBody());
+  $email = $request->email;
+  $attemptHash = $request->attemptHash;
   try {
-    // fetch and decode the request object
-    $request = json_decode($api->request()->getBody());
-    $email = $request->email;
-    $attemptHash = $request->attemptHash;
     // validate the password against the database
     $db = getDB();
     $isLoginValid = validateLoginAttempt($db, $email, $attemptHash);
     // build, encode and send the response object
     $response = new stdclass();
+    $response->success = true;
     $response->isLoginValid = $isLoginValid;
     echo json_encode($response);
   } catch(PDOException $e) {
-    // database errors will be delivered as an HTTP 500 Internal Server Error
-    $api->halt(500,$e->getMessage());
+    handlePDOException($api, $e);
   }
 });
 
