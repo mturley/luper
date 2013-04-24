@@ -153,6 +153,10 @@ public class Clip {
 		this.isDirty = isDirty;
     dataSource.updateInt("Clips", this.id, "isDirty", (isDirty ? 1 : 0));
 	}
+	
+	public AudioFile getAudioFile() {
+		return this.audioFile;
+	}
 
   public void loadFileMetadata() {
     this.audioFile = dataSource.getAudioFileById(this.audioFileID);

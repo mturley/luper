@@ -107,7 +107,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
 //      // draw stuff in it
       for(Track track : sequence.tracks) {
         RelativeLayout tracklayout = new RelativeLayout(this);
-        TrackView tv = new TrackView(this);
+        TrackView tv = new TrackView(this, track, dataSource);
         tracklayout.addView(tv);
         base.addView(tracklayout,
             new RelativeLayout.LayoutParams(
