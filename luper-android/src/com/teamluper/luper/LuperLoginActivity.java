@@ -5,21 +5,17 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.EditText;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.googlecode.androidannotations.annotations.Background;
+import com.facebook.Session;
 import com.googlecode.androidannotations.annotations.EActivity;
-import com.googlecode.androidannotations.annotations.UiThread;
 import com.googlecode.androidannotations.annotations.rest.RestService;
 import com.teamluper.luper.rest.LuperRestClient;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
-import com.facebook.Session;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
@@ -29,16 +25,16 @@ import com.facebook.Session;
 public class LuperLoginActivity extends SherlockFragmentActivity {
   ViewPager mViewPager;
   TabsAdapter mTabsAdapter;
-  
+
   // Facebook Login Session
   private Session session;
   private String accessToken;
-  
+
   protected void loadActiveSession() {
 	  session = Session.getActiveSession();
 	  accessToken = session.getAccessToken();
   }
-  
+
   @RestService
   LuperRestClient restClient;
 
