@@ -30,7 +30,7 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
   ViewPager mViewPager;
   TabsAdapter mTabsAdapter;
   
-  // Facebook Login Session
+  // Facebook Login Session - Goodies for Mike
   private Session session;
   private String accessToken;
   
