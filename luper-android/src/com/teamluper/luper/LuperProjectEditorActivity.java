@@ -46,6 +46,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   private MediaPlayer   mPlayer = null;
   private Track playBackTest = new Track ();
   private AudioManager audioManager;
+  private LinearLayout base;
 
   // TODO these will be moved to within Sequence, and accessed with
   // sequence.getClips() and sequence.getTracks(), etc.
@@ -55,6 +56,11 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   @Override
   public void onCreate(Bundle icicle) {
     super.onCreate(icicle);
+    base = new LinearLayout(this);
+    base.setId(1337);
+    base.setBackgroundColor(Color.parseColor("#e2dfd8"));
+
+    base.setOrientation(LinearLayout.VERTICAL);
     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
     long ID = getIntent().getLongExtra("selectedProjectId", -1);
@@ -93,11 +99,11 @@ public class LuperProjectEditorActivity extends SherlockActivity {
 
   @UiThread
   public void render() {
-    LinearLayout base = new LinearLayout(this);
-    base.setId(1337);
-    base.setBackgroundColor(Color.parseColor("#e2dfd8"));
-
-    base.setOrientation(LinearLayout.VERTICAL);
+//    LinearLayout base = new LinearLayout(this);
+//    base.setId(1337);
+//    base.setBackgroundColor(Color.parseColor("#e2dfd8"));
+//
+//    base.setOrientation(LinearLayout.VERTICAL);
 
     int tracksTraversed = 0;
     int clipsTraversed = 0;
@@ -106,10 +112,10 @@ public class LuperProjectEditorActivity extends SherlockActivity {
 //    if(sequence.isReady()) {
 //      // draw stuff in it
       for(Track track : sequence.tracks) {
-        RelativeLayout tracklayout = new RelativeLayout(this);
+        //RelativeLayout tracklayout = new RelativeLayout(this);
         TrackView tv = new TrackView(this);
-        tracklayout.addView(tv);
-        base.addView(tracklayout,
+        //tracklayout.addView(tv);
+        base.addView(tv,
             new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -220,7 +226,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
 	        }
     	}
     }
-    if(item.getItemId() == R.id.editor_edit_clip) {
+    if(item.getItemId() == R.id.editor_add_track) {
       // TODO
       incomplete = true;
     }
