@@ -122,7 +122,7 @@ public class TabRegisterFragment extends Fragment {
       request.put("username",username);
       request.put("email",email);
     } catch(Exception e) {
-      Log.e("luper","=== Exception while trying to hash password for JSON request ===",e);
+      Log.e("luper","=== Exception while trying to hash password for JSON request ===", e);
     }
     String requestJSON = request.toString();
     showProgress(true);
@@ -135,13 +135,13 @@ public class TabRegisterFragment extends Fragment {
     try {
       response = new JSONObject(responseJSON);
     } catch(JSONException e) {
-      Log.e("luper","=== FAILED TO PARSE RESPONSE JSON FROM /api/auth/register",e);
+      Log.e("luper","=== FAILED TO PARSE RESPONSE JSON FROM /api/auth/register", e);
       Log.e("luper","=== RESPONSE (which failed to parse as JSON) WAS:");
       Log.e("luper","=== "+responseJSON);
     }
     showProgress(false);
     try {
-      if(response.getBoolean("success")) {
+      if(isResponseSuccessful(response)) {
         registrationSuccess(response.getLong("insertId"));
       } else {
         registrationFailure(response.getString("message"));
@@ -155,12 +155,21 @@ public class TabRegisterFragment extends Fragment {
   public void registrationSuccess(long userid) {
     DialogFactory.alert(getActivity(), "Registration Complete!",
       "Your new account has been registered!  Please use the login form.");
+    // TODO automatically switch to login form, or just automatically log in.
   }
 
   @UiThread
   public void registrationFailure(String errorMessage) {
-    DialogFactory.alert(getActivity(), "Registration Failed!",
-      errorMessage);
+    DialogFactory.alert(getActivity(), "Registration Failed!", errorMessage);
+  }
+
+  public boolean isResponseSuccessful(JSONObject response) {
+    try {
+      return response.getBoolean("success");
+    } catch(Exception e) {
+      Log.e("luper","=== A REGISTRATION API RESPONSE WAS UNSUCCESSFUL === Exception: ", e);
+      return false;
+    }
   }
 
   /**
