@@ -28,10 +28,10 @@ public interface LuperRestClient {
 
   @Post("/api/auth-login")
   String validateLoginAttempt(String requestJSON);
-  // requestJSON must contain: email, password, securityType
+  // requestJSON must contain: email, attemptHash
 
   @Post("/api/auth-passwd")
   String changeUserPassword(String requestJSON);
-  // requestJSON must contain: email, oldPassword, newPassword, securityType
+  // requestJSON must contain: email, oldPasswordAttemptHash, newPassword
 
 }

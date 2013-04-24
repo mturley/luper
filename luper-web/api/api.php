@@ -46,8 +46,10 @@ $api->post('/auth-register',
       $response->message = "An account with that email address is already registered!";
       echo json_encode($response);
     } else {
-      // put some data into the database
-      $hash = newRandomSaltedHash($email, $password);
+      // here we put a singly-hashed password in the database.
+      // later on we'll generate a challenge salt and hash
+      // the password further during login verification.
+      $hash = simpleHash($password);
       $stmt = $db->prepare(
         "INSERT INTO Users (username, email, passwordHash, isActiveUser, preferences)".
         "           VALUES (:username, :email, :passwordHash, 1, '{}');");
@@ -67,13 +69,16 @@ $api->post('/auth-register',
   }
 });
 
-// retrieves the challenge salt value for a given user
+// generates, stores and returns a new random salt for use in hashing.
 $api->post('/auth-challenge', function($email) use ($api) {
   try {
-    // TODO refactor this so every challenge salt is different... we'd need to store a different password hash too
     $db = getDB();
-    $hash = getKnownHashForUser($db, $email);
-    $salt = substr($hash, 0, 64);
+    $salt = newRandomSalt($email);
+    $stmt = $db->prepare("UPDATE Users SET challengeSalt = :salt WHERE email = :email");
+    $stmt->bindParam("salt",$salt);
+    $stmt->bindParam("email",$email);
+    $stmt->execute();
+    // TODO what if the user doesn't exist?  rowcount check?  does the update cause a SQL error?
     $response = new stdclass();
     $response->email = $email;
     $response->salt = $salt;
@@ -89,16 +94,10 @@ $api->post('/auth-login', function() use ($api) {
     // fetch and decode the request object
     $request = json_decode($api->request()->getBody());
     $email = $request->email;
-    $password = $request->password; // may be a hash or plain text depending on...
-    $securityType = $request->securityType; // this.
+    $attemptHash = $request->attemptHash;
     // validate the password against the database
     $db = getDB();
-    $isLoginValid = false;
-    if($securityType == "plaintext") {
-      $isLoginValid = validatePlainTextLoginAttempt($db, $email, $password);
-    } else if($securityType == "halfbaked") {
-      $isLoginValid = validateHalfBakedLoginAttempt($db, $email, $password);
-    }
+    $isLoginValid = validateLoginAttempt($db, $email, $attemptHash);
     // build, encode and send the response object
     $response = new stdclass();
     $response->isLoginValid = $isLoginValid;
