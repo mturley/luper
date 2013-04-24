@@ -98,6 +98,6 @@ CREATE TABLE `Users` (
 DROP USER 'luper'@'localhost';
 CREATE USER 'luper'@'localhost' IDENTIFIED BY 'luper';
 GRANT USAGE ON * . * TO  'luper'@'localhost' IDENTIFIED BY 'luper' WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0 ;
-GRANT ALL PRIVILEGES ON  `luper` . * TO  'luper'@'localhost`';
+GRANT ALL PRIVILEGES ON  `luper` . * TO  'luper'@'localhost';
 
 -- 2013-04-18 01:55:29

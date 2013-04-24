@@ -117,7 +117,7 @@ public class TabRegisterFragment extends Fragment {
       MessageDigest md = MessageDigest.getInstance("SHA-256");
       md.update(password.getBytes("UTF-8")); // Change this to "UTF-16" if needed
       byte[] digest = md.digest();
-      String passwordHash = new String(digest);
+      String passwordHash = bytesToHex(digest);
       request.put("passwordHash",passwordHash);
       request.put("username",username);
       request.put("email",email);
@@ -126,8 +126,6 @@ public class TabRegisterFragment extends Fragment {
     }
     String requestJSON = request.toString();
     showProgress(true);
-
-    Log.e("luper","Here's the attempted request JSON: "+requestJSON);
 
     String responseJSON = rest.registerNewAccount(requestJSON);
 
@@ -170,6 +168,18 @@ public class TabRegisterFragment extends Fragment {
       Log.e("luper","=== A REGISTRATION API RESPONSE WAS UNSUCCESSFUL === Exception: ", e);
       return false;
     }
+  }
+
+  public static String bytesToHex(byte[] bytes) {
+    final char[] hexArray = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
+    char[] hexChars = new char[bytes.length * 2];
+    int v;
+    for ( int j = 0; j < bytes.length; j++ ) {
+      v = bytes[j] & 0xFF;
+      hexChars[j * 2] = hexArray[v >>> 4];
+      hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+    }
+    return new String(hexChars).toLowerCase();
   }
 
   /**

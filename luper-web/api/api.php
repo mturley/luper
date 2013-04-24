@@ -15,7 +15,7 @@ function handlePDOException($api, $e) {
   $response = new stdclass();
   $response->success = false;
   $response->message = "Database error!  Please contact support@teamluper.com with the error message: "+$e->getMessage();
-  $api->halt(500,json_encode($response));
+  $api->halt(200,json_encode($response));
 }
 
 $api->get('/null', function() use ($api) {
