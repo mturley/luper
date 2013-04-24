@@ -165,6 +165,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
         tracksTraversed++;
+
         for(Clip clip : track.clips) {
           // render the clip
           clipsTraversed++;
