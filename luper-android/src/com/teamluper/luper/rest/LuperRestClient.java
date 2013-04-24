@@ -32,6 +32,6 @@ public interface LuperRestClient {
 
   @Post("/api/auth-passwd")
   String changeUserPassword(String requestJSON);
-  // requestJSON must contain: email, oldPasswordAttemptHash, newPassword
+  // requestJSON must contain: email, oldPasswordAttemptHash, newPasswordHash
 
 }

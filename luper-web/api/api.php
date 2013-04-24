@@ -138,21 +138,18 @@ $api->post('/auth-passwd', function() use ($api) {
     // fetch and decode the request object
     $request = json_decode($api->request()->getBody());
     $email = $request->email;
-    $oldPassword = $request->oldPassword; // depends on securityType
-    $newPassword = $request->newPassword; // plain text
-    $securityType = $request->securityType;
+    $oldPasswordAttemptHash = $request->oldPasswordAttemptHash;
+    $newPassword = $request->newPasswordHash;
     // validate the old password against the database
     $db = getDB();
-    $oldPasswordIsValid = false;
-    if($securityType == "plaintext") {
-      $oldPasswordIsValid = validatePlainTextLoginAttempt($db, $email, $oldPassword);
-    } else if($securityType == "halfbaked") {
-      $oldPasswordIsValid = validateHalfBakedLoginAttempt($db, $email, $oldPassword);
-    }
+    $oldPasswordIsValid = validateLoginAttempt($db, $email, $oldPasswordAttemptHash);
     if(!$oldPasswordIsValid) {
-      $api->halt(403,"FORBIDDEN: Incorrect Old Password.");
+      $response = new stdclass();
+      $response->success = false;
+      $response->message = "Incorrect Old Password!";
+      $api->halt(403,json_encode($response));
     } else {
-      $newHash = newRandomSaltedHash($email, $newPassword);
+      $newHash = sha256($newPassword);
       $stmt = $db->prepare("UPDATE Users SET passwordHash = :hash WHERE email = :email");
       $stmt->bindParam("hash",$newHash);
       $stmt->bindParam("email",$email);
@@ -163,12 +160,12 @@ $api->post('/auth-passwd', function() use ($api) {
         $response->success = true;
       } else {
         $response->success = false;
+        $response->message = "Password failed to update! Are you sure that account exists?";
       }
       echo json_encode($response);
     }
   } catch(PDOException $e) {
-    // database errors will be delivered as an HTTP 500 Internal Server Error
-    $api->halt(500,$e->getMessage());
+    handlePDOException($api, $e);
   }
 });
 
