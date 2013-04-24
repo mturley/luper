@@ -65,11 +65,6 @@ public class LuperProjectEditorActivity extends SherlockActivity {
               finish();
             }
           });
-      
-      
-      
-      
-      
       return;
     }
 
@@ -201,7 +196,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     if(item.getItemId() == R.id.editor_play) {
       // TODO
       //incomplete = true;
-    	
+
     	int i=0;
     	while(playBackTest!=null && i!=playBackTest.size())
     	{
@@ -238,7 +233,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     0));
 
-        
+
         LinearLayout ll2 = new LinearLayout(this);
         fileSelected = new AutoCompleteTextView(this);
         fileSelected.setHint("Select a File");
@@ -258,7 +253,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
-        
+
         new AlertDialog.Builder(this)
 		.setTitle("Record or Browse?")
 		.setView(custom)
@@ -313,7 +308,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
         "That button hasn't been hooked up to anything.");
     return super.onOptionsItemSelected(item);
   }
-  
+
   class RecordButton extends Button {
       boolean mStartRecording = true;
 
