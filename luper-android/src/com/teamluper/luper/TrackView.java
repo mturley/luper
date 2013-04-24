@@ -99,16 +99,18 @@ public class TrackView extends RelativeLayout {
 
 		this.addView(trackControl);
 //		testing...
-        Clip clip1 = new Clip(); clip1.begin = 400; clip1.end = 500; clip1.duration = 100;
-        ColorChipButton chip;
-        this.associated.putClip(clip1);
-        for(int i = 0; i < this.associated.clips.size(); i++){
-        	System.out.println("Here " + this.associated.getClips().get(i).begin);
-        	chip = new ColorChipButton(this.getContext(), this.associated.getClips().get(i));
-        	chip.setBackgroundColor(Color.RED);
-        	System.out.println("Chips x pos " + chip.associated.begin);
-        	this.addView(chip);
-        }
+//        Clip clip1 = new Clip(); clip1.begin = 400; clip1.end = 500; clip1.duration = 100;
+//        Clip clip2 = new Clip(); clip2.setBegin(0); clip2.setEnd(350); clip2.setDuration(350);
+//        //Clip clip2 = new Clip(); clip2.setBegin(0); clip2.setEnd(350); clip2.setDuration(350);
+//        ColorChipButton chip;
+//        this.associated.putClip(clip2);
+//        for(int i = 0; i < this.associated.clips.size(); i++){
+//        	//System.out.println("Here " + this.associated.getClips().get(i).begin);
+//        	chip = new ColorChipButton(this.getContext(), this.associated.getClips().get(i));
+//        	chip.setBackgroundColor(Color.RED);
+//        	System.out.println("Chips width " + chip.getWidth());
+//        	this.addView(chip);
+//        }
 	}
 
 	public void promptDialog(){
