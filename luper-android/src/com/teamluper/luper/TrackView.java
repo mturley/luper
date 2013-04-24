@@ -105,10 +105,10 @@ public class TrackView extends RelativeLayout {
         ColorChipButton chip;
         this.associated.putClip(clip2);
         for(int i = 0; i < this.associated.clips.size(); i++){
-        	System.out.println("Here " + this.associated.getClips().get(i).begin);
+        	//System.out.println("Here " + this.associated.getClips().get(i).begin);
         	chip = new ColorChipButton(this.getContext(), this.associated.getClips().get(i));
         	chip.setBackgroundColor(Color.RED);
-        	System.out.println("Chips x pos " + chip.associated.begin);
+        	System.out.println("Chips width " + chip.getWidth());
         	this.addView(chip);
         }
 	}
