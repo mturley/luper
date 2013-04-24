@@ -32,6 +32,13 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
   
   // Facebook Login Session
   private Session session;
+  private String accessToken;
+  
+  protected void loadActiveSession() {
+	  session = Session.getActiveSession();
+	  accessToken = session.getAccessToken();
+  }
+  
   @RestService
   LuperRestClient restClient;
 

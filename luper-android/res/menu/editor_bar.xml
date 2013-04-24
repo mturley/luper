@@ -4,9 +4,9 @@
         android:title="@string/editor_play"
         android:showAsAction="always|withText"
         />
-    <item android:id="@+id/editor_edit_clip"
-        android:icon="@drawable/ic_content_edit"
-        android:title="@string/editor_edit_clip"
+    <item android:id="@+id/editor_add_track"
+        android:icon="@drawable/ic_content_new"
+        android:title="@string/editor_add_track"
         android:showAsAction="always|withText"
         />
     <item android:id="@+id/editor_add_clip"

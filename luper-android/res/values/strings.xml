@@ -24,6 +24,7 @@
 
     <string name="editor_edit_clip">Edit Clip</string>
     <string name="editor_add_clip">Add Clip</string>
+    <string name="editor_add_track">Add Track</string>
     <string name="editor_delete_clip">Delete Clip</string>
     <string name="editor_play">Play</string>
     <string name="editor_volume">Volume</string>
