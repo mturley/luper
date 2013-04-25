@@ -50,7 +50,7 @@ function validateLoginAttempt($db, $email, $attemptHash) {
   // the db's challenge salt has been used, so expire it by setting it null.
   // while we're at it, update lastLoginTime to NOW().
   $stmt = $db->prepare("UPDATE Users SET challengeSalt = NULL, lastLoginTime = NOW() WHERE email = :email");
-  $db->bindParam("email", $email);
+  $stmt->bindParam("email", $email);
   $stmt->execute();
   $knownCompleteHash = saltyHashBrowns($knownSimpleHash, $salt, HASH_COUNT);
   return $attemptHash == $knownCompleteHash;
