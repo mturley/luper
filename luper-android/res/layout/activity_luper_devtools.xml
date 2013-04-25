@@ -54,12 +54,23 @@
         android:gravity="center"
         android:onClick="dropAllData"
         android:text="Erase All SQLite Data" />
+    
+    
+     <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button3"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:onClick="dragTest"
+        android:text="DragTest" />
 
     <TextView
         android:id="@+id/bytheway"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button3"
+        android:layout_below="@+id/button4"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"

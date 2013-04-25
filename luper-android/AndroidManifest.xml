@@ -128,6 +128,15 @@
         <activity android:name="com.facebook.LoginActivity"></activity>
         <activity android:name="com.teamluper.luper.LuperLoginActivity"></activity>
         
+        <activity
+            android:name="com.teamluper.luper.DragTest_"
+            android:label="@string/app_name" 
+            android:parentActivityName="com.teamluper.luper.LuperDevToolsActivity_" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.teamluper.luper.LuperDevToolsActivity_" />
+        </activity>
+        
     </application>
 
 </manifest>
