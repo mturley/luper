@@ -60,8 +60,6 @@ public class TabLoginFragment extends Fragment {
     View v = infl.inflate(R.layout.tab_login_layout, vg, false);
     Activity a = getActivity();
 
-    showProgress(false);
-
     // set up the SQLite database access.
     dataSource = ((LuperLoginActivity)a).getDataSource();
     if(!dataSource.isOpen()) dataSource.open();
@@ -88,6 +86,8 @@ public class TabLoginFragment extends Fragment {
     mLoginFormView = v.findViewById(R.id.login_form);
     mLoginStatusView = v.findViewById(R.id.login_status);
     mLoginStatusMessageView = (TextView) v.findViewById(R.id.login_status_message);
+
+    showProgress(false);
 
     v.findViewById(R.id.login_button).setOnClickListener(
       new View.OnClickListener() {
