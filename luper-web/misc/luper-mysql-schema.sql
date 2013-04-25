@@ -89,6 +89,7 @@ CREATE TABLE `Users` (
   `email` varchar(128) NOT NULL,
   `passwordHash` varchar(512) NOT NULL,
   `challengeSalt` varchar(512) DEFAULT NULL,
+  `lastLoginTime` timestamp NULL,
   `isActiveUser` tinyint(1) NOT NULL DEFAULT '0',
   `linkedFacebookID` int(11) DEFAULT NULL,
   `preferences` text,
