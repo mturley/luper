@@ -211,9 +211,8 @@ public class TabLoginFragment extends Fragment {
 
   @UiThread
   public void loginSuccess() {
-    showProgress(false);
-    DialogFactory.alert(getActivity(), "Login Success!", "TODO: actually launch LuperMainActivity_");
-    // TODO launch the actual LuperMainActivity_
+    Intent intent = new Intent(getActivity(), LuperMainActivity_.class);
+    startActivity(intent);
   }
 
   @UiThread
