@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EFragment;
@@ -55,6 +54,11 @@ public class TabRegisterFragment extends Fragment {
   @UiThread
   public void attemptRegistration() {
     Activity a = getActivity();
+    if(!LuperMainActivity.deviceIsOnline(a)) {
+      DialogFactory.alert(a, "Registration Failed!", "You are not connected to the internet! " +
+        "You must be online to register or log in.  Once logged in, however, you can use Lüper while offline.");
+    }
+
     EditText editEmail     = (EditText) a.findViewById(R.id.register_email);
     EditText editPassword  = (EditText) a.findViewById(R.id.register_password);
     EditText editPassword2 = (EditText) a.findViewById(R.id.register_password2);
@@ -140,7 +144,7 @@ public class TabRegisterFragment extends Fragment {
     showProgress(false);
     try {
       if(isResponseSuccessful(response)) {
-        registrationSuccess(response.getLong("insertId"));
+        registrationSuccess(response.getLong("insertId"), email);
       } else {
         registrationFailure(response.getString("message"));
       }
@@ -150,11 +154,26 @@ public class TabRegisterFragment extends Fragment {
   }
 
   @UiThread
-  public void registrationSuccess(long userid) {
+  public void registrationSuccess(long userId, String email) {
     showProgress(false);
-    DialogFactory.alert(getActivity(), "Registration Complete!",
-      "Your new account has been registered!  Please use the login form.");
-    // TODO automatically switch to login form, or just automatically log in.
+    Activity activity = getActivity();
+    EditText editEmail     = (EditText) activity.findViewById(R.id.register_email);
+    EditText editPassword  = (EditText) activity.findViewById(R.id.register_password);
+    EditText editPassword2 = (EditText) activity.findViewById(R.id.register_password2);
+    EditText editUsername  = (EditText) activity.findViewById(R.id.register_username);
+    editEmail.setText("");
+    editPassword.setText("");
+    editPassword2.setText("");
+    editUsername.setText("");
+    final LuperLoginActivity a = (LuperLoginActivity) activity;
+    final String e = email;
+    DialogFactory.alert(activity, "Registration Complete!",
+      "Your new account has been registered!  Please re-enter your password to log in.",
+      new Lambda.VoidCallback() {
+        public void go() {
+          a.prefillLoginForm(e);
+        }
+      });
   }
 
   @UiThread

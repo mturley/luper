@@ -38,26 +38,32 @@ public class SQLiteDataSource {
     dbHelper.close();
   }
 
-  public User createUser(String username, String email, String passwordHash) {
+  public User createUser(String username, String email, String linkedFacebookID) {
     ContentValues values = new ContentValues();
     values.put("username", username);
     values.put("email", email);
-    values.put("passwordHash", passwordHash);
     values.put("isActiveUser", 1);
     values.put("isDirty", 1);
     long insertId = database.insert("Users", null, values);
     return getUserById(insertId);
   }
   public User getUserById(long id) {
+    return getUserWhere("_id = " + id);
+  }
+  public User getUserByEmail(String email) {
+    return getUserWhere("email = " + email);
+  }
+  public User getUserWhere(String where) {
     Cursor cursor = database.query("Users", null,
-      "_id = " + id, null, null, null, null);
+      where, null, null, null, null);
     cursor.moveToFirst();
     User u = cursorToUser(cursor);
     cursor.close();
     return u;
   }
-  public void deleteUser() {
+  public boolean deleteUser(long id) {
     // TODO
+    return false;
   }
 
   public User getActiveUser() {
@@ -226,7 +232,6 @@ public class SQLiteDataSource {
       cursor.getLong(cursor.getColumnIndex("_id")),
       cursor.getString(cursor.getColumnIndex("username")),
       cursor.getString(cursor.getColumnIndex("email")),
-      cursor.getString(cursor.getColumnIndex("passwordHash")),
       cursor.getInt(cursor.getColumnIndex("isActiveUser")) == 1,
       cursor.getLong(cursor.getColumnIndex("linkedFacebookID")),
       cursor.getString(cursor.getColumnIndex("preferences")),

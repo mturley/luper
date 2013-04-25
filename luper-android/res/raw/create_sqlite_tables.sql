@@ -7,7 +7,6 @@ create table Users (
   _id               integer   primary key,
   username          text      not null,
   email             text      not null,
-  passwordHash      text      not null,
   isActiveUser      integer   not null,
   linkedFacebookID  integer,
   preferences       text,
@@ -68,7 +67,7 @@ create table Clips (
   foreign key (audioFileID)   references Files (_id)
 );
 
-insert into Users VALUES (-1, 'anonymous', '', '', 1, null, null, 0 );
+insert into Users VALUES (-1, 'anonymous', '', 1, null, null, 0 );
 insert into Files (_id, ownerUserID, clientFilePath, fileFormat, isReadyOnClient, isReadyOnServer, isDirty)
            VALUES (1, -1,          '',             '',         0,               0,               0);
 insert into Sequences (_id, ownerUserID, title, isDirty) VALUES (1, -1, 'DUMMY SEQUENCE', 0);

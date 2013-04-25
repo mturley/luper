@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.facebook.Session;
 import com.googlecode.androidannotations.annotations.EActivity;
+import com.googlecode.androidannotations.annotations.UiThread;
 import com.googlecode.androidannotations.annotations.rest.RestService;
 import com.teamluper.luper.rest.LuperRestClient;
 
@@ -104,6 +106,16 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
     // TODO actually sign in to a dummy account, so we can refuse to launch the main activity if truly logged out.
     Intent intent = new Intent(this, LuperMainActivity_.class);
     startActivity(intent);
+  }
+
+  @UiThread
+  public void prefillLoginForm(String email) {
+    getSupportActionBar().setSelectedNavigationItem(0); // switch to login tab
+    EditText emailField = (EditText) findViewById(R.id.login_email);
+    EditText passwordField = (EditText) findViewById(R.id.login_password);
+    emailField.setText(email);
+    passwordField.setText("");
+    passwordField.requestFocus();
   }
 
   public static String sha1(String input) throws NoSuchAlgorithmException {

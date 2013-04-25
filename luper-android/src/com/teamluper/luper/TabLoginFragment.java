@@ -61,15 +61,15 @@ public class TabLoginFragment extends Fragment {
     Activity a = getActivity();
 
     // set up the SQLite database access.
-    dataSource = ((LuperLoginActivity)getActivity()).getDataSource();
+    dataSource = ((LuperLoginActivity)a).getDataSource();
     if(!dataSource.isOpen()) dataSource.open();
 
     // Set up the login form.
     mEmail = a.getIntent().getStringExtra("luperPrefilledEmail");
-    mEmailView = (EditText) v.findViewById(R.id.email);
+    mEmailView = (EditText) v.findViewById(R.id.login_email);
     mEmailView.setText(mEmail);
 
-    mPasswordView = (EditText) v.findViewById(R.id.password);
+    mPasswordView = (EditText) v.findViewById(R.id.login_password);
     mPasswordView
       .setOnEditorActionListener(new TextView.OnEditorActionListener() {
         @Override
@@ -86,6 +86,8 @@ public class TabLoginFragment extends Fragment {
     mLoginFormView = v.findViewById(R.id.login_form);
     mLoginStatusView = v.findViewById(R.id.login_status);
     mLoginStatusMessageView = (TextView) v.findViewById(R.id.login_status_message);
+
+    showProgress(false);
 
     v.findViewById(R.id.login_button).setOnClickListener(
       new View.OnClickListener() {
@@ -119,8 +121,13 @@ public class TabLoginFragment extends Fragment {
    * there are form errors (invalid email, missing fields, etc.), the errors are
    * presented and no actual login attempt is made.
    */
+  @UiThread
   public void attemptLogin() {
-    // TODO check if existing REST login call is still in progress, fail if so.
+    Activity a = getActivity();
+    if(!LuperMainActivity.deviceIsOnline(a)) {
+      DialogFactory.alert(a, "Login Failed!", "You are not connected to the internet! " +
+        "You must be online to log in.  Once logged in, however, you can use Lüper while offline.");
+    }
 
     // Reset errors.
     mEmailView.setError(null);
@@ -197,6 +204,7 @@ public class TabLoginFragment extends Fragment {
         loginFailure("The email address or password you entered was invalid!");
         return;
       }
+
       // if we haven't returned yet at this point, the login is successful!
       // TODO check if the user object exists locally and...
       //   if so, set it as the active user
@@ -211,6 +219,8 @@ public class TabLoginFragment extends Fragment {
 
   @UiThread
   public void loginSuccess() {
+    if(mEmailView != null) mEmailView.setText("");
+    if(mPasswordView != null) mPasswordView.setText("");
     Intent intent = new Intent(getActivity(), LuperMainActivity_.class);
     startActivity(intent);
   }
