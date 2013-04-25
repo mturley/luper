@@ -115,8 +115,8 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
     dataSource.open();
     
     // UI handler - Facebook login
-//    uiHelper = new UiLifecycleHelper(this,callback);
-//    uiHelper.onCreate(savedInstanceState);
+    uiHelper = new UiLifecycleHelper(this,callback);
+    uiHelper.onCreate(savedInstanceState);
   }
 
   @Override
@@ -124,12 +124,25 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
     if(dataSource.isOpen()) dataSource.close();
     super.onStop();
   }
+  
+  @Override
+  public void onDestroy() {
+      super.onDestroy();
+      uiHelper.onDestroy();
+  }
 
   @Override
   protected void onResume() {
     if(!dataSource.isOpen()) dataSource.open();
     session = Session.getActiveSession();
     super.onResume();
+    uiHelper.onResume();
+  }
+  
+  @Override
+  public void onSaveInstanceState(Bundle outState) {
+      super.onSaveInstanceState(outState);
+      uiHelper.onSaveInstanceState(outState);
   }
 
   @Override
