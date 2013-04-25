@@ -31,11 +31,16 @@ import android.widget.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.androidlearner.widget.DragThing;
 import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EView;
 import com.googlecode.androidannotations.annotations.UiThread;
 import com.teamluper.luper.AudioRecorderTestActivity.PlayButton;
 import com.teamluper.luper.AudioRecorderTestActivity.playTrackButton;
+import android.os.Bundle;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.androidlearner.widget.DragThing;
+import com.googlecode.androidannotations.annotations.EActivity;
 
 /**
  * A custom view for a color chip for an event that can be drawn differently
@@ -45,6 +50,9 @@ import com.teamluper.luper.AudioRecorderTestActivity.playTrackButton;
 @EView
 public class TrackView extends RelativeLayout {
 	private static final String LOG_TAG = "TrackView";
+	
+	DragThing deMovingTxt;
+	int [] paramz;
 	
 	private String lastRecordedFileName = null;
 	private AudioFile lastRecordedFile = null;
@@ -86,6 +94,19 @@ public class TrackView extends RelativeLayout {
 		}
 	};
 
+	protected void onPause() {
+		//super.onPause();
+		//gets the current layout
+		paramz = deMovingTxt.getCurrent();
+	}
+
+	protected void onResume() {
+		//super.onResume();
+		//updates the array in DragThing
+		if(paramz != null) deMovingTxt.layout(paramz[0] , 0, paramz[2], 0);
+		//if(paramz != null) deMovingTxt.layout(paramz[0] , paramz[1], paramz[2], paramz[3]);
+	}
+	
 	public void init(){
 		mPlayer = new MediaPlayer();
 		
@@ -123,12 +144,15 @@ public class TrackView extends RelativeLayout {
         	this.addView(chip);
         }
 	}
+	
 
 	public void promptDialog(int startTime){
 		//our custom layout for inside the dialog
 		LinearLayout custom = new LinearLayout(this.getContext());
 		custom.setOrientation(LinearLayout.VERTICAL);
 
+		deMovingTxt = (DragThing) findViewById(R.id.detext);
+		
 		LinearLayout ll = new LinearLayout(this.getContext());
 		mRecordButton = new RecordButton(this.getContext());
         ll.addView(mRecordButton,
@@ -156,6 +180,11 @@ public class TrackView extends RelativeLayout {
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
+        custom.addView(deMovingTxt,
+        		new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                0));
         
         final int finalStartTime = startTime;
         final Track finalTrack = associated;
@@ -299,6 +328,8 @@ public class TrackView extends RelativeLayout {
           mPlayer = null;
         }
       }
+    
+    
 }
 
 
