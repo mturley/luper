@@ -238,7 +238,7 @@ public class TrackView extends RelativeLayout {
     private void stopRecording() {
         mRecorder.stop();
         mRecorder.release();
-
+        
         lastRecordedFile = dataSource.createAudioFile(dataSource.getActiveUser(), lastRecordedFileName);
         lastRecordedFile.setReadyOnClient(true);
 
