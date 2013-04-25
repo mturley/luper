@@ -140,7 +140,7 @@ public class TabRegisterFragment extends Fragment {
     showProgress(false);
     try {
       if(isResponseSuccessful(response)) {
-        registrationSuccess(response.getLong("insertId"));
+        registrationSuccess(response.getLong("insertId"), email);
       } else {
         registrationFailure(response.getString("message"));
       }
@@ -150,11 +150,20 @@ public class TabRegisterFragment extends Fragment {
   }
 
   @UiThread
-  public void registrationSuccess(long userid) {
+  public void registrationSuccess(long userId, String email) {
     showProgress(false);
+    Activity a = getActivity();
+    EditText editEmail     = (EditText) a.findViewById(R.id.register_email);
+    EditText editPassword  = (EditText) a.findViewById(R.id.register_password);
+    EditText editPassword2 = (EditText) a.findViewById(R.id.register_password2);
+    EditText editUsername  = (EditText) a.findViewById(R.id.register_username);
+    editEmail.setText("");
+    editPassword.setText("");
+    editPassword2.setText("");
+    editUsername.setText("");
+    ((LuperLoginActivity) getActivity()).prefillLoginForm(email);
     DialogFactory.alert(getActivity(), "Registration Complete!",
-      "Your new account has been registered!  Please use the login form.");
-    // TODO automatically switch to login form, or just automatically log in.
+      "Your new account has been registered!  Please re-enter your password to log in.");
   }
 
   @UiThread

@@ -60,16 +60,18 @@ public class TabLoginFragment extends Fragment {
     View v = infl.inflate(R.layout.tab_login_layout, vg, false);
     Activity a = getActivity();
 
+    showProgress(false);
+
     // set up the SQLite database access.
-    dataSource = ((LuperLoginActivity)getActivity()).getDataSource();
+    dataSource = ((LuperLoginActivity)a).getDataSource();
     if(!dataSource.isOpen()) dataSource.open();
 
     // Set up the login form.
     mEmail = a.getIntent().getStringExtra("luperPrefilledEmail");
-    mEmailView = (EditText) v.findViewById(R.id.email);
+    mEmailView = (EditText) v.findViewById(R.id.login_email);
     mEmailView.setText(mEmail);
 
-    mPasswordView = (EditText) v.findViewById(R.id.password);
+    mPasswordView = (EditText) v.findViewById(R.id.login_password);
     mPasswordView
       .setOnEditorActionListener(new TextView.OnEditorActionListener() {
         @Override
@@ -211,6 +213,8 @@ public class TabLoginFragment extends Fragment {
 
   @UiThread
   public void loginSuccess() {
+    mEmailView.setText("");
+    mPasswordView.setText("");
     Intent intent = new Intent(getActivity(), LuperMainActivity_.class);
     startActivity(intent);
   }
