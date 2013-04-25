@@ -7,7 +7,6 @@ create table Users (
   _id               integer   primary key,
   username          text      not null,
   email             text      not null,
-  passwordHash      text      not null,
   isActiveUser      integer   not null,
   linkedFacebookID  integer,
   preferences       text,

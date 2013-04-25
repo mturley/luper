@@ -122,8 +122,6 @@ public class TabLoginFragment extends Fragment {
    * presented and no actual login attempt is made.
    */
   public void attemptLogin() {
-    // TODO check if existing REST login call is still in progress, fail if so.
-
     // Reset errors.
     mEmailView.setError(null);
     mPasswordView.setError(null);
@@ -199,6 +197,7 @@ public class TabLoginFragment extends Fragment {
         loginFailure("The email address or password you entered was invalid!");
         return;
       }
+
       // if we haven't returned yet at this point, the login is successful!
       // TODO check if the user object exists locally and...
       //   if so, set it as the active user

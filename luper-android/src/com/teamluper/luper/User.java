@@ -5,7 +5,6 @@ public class User {
   private long id;
   private String username;
   private String email;
-  private String passwordHash;
   private boolean isActiveUser;
   private long linkedFacebookID;
   private String preferences;
@@ -17,13 +16,12 @@ public class User {
   // NOTE: DO NOT CALL THIS CONSTRUCTOR DIRECTLY unless in a cursorToUser method.
   // instead, use SQLiteDataSource.createUser()!
   public User(SQLiteDataSource dataSource, long id, String username,
-              String email, String passwordHash, boolean isActiveUser,
-              long linkedFacebookID, String preferences, boolean isDirty) {
+              String email, boolean isActiveUser, long linkedFacebookID,
+              String preferences, boolean isDirty) {
     this.dataSource = dataSource;
     this.id = id;
     this.username = username;
     this.email = email;
-    this.passwordHash = passwordHash;
     this.isActiveUser = isActiveUser;
     this.linkedFacebookID = linkedFacebookID;
     this.preferences = preferences;
@@ -49,13 +47,6 @@ public class User {
   public void setEmail(String email) {
     this.email = email;
     dataSource.updateString("Users", this.id, "email", email);
-    this.isDirty = true;
-  }
-
-  public String getPasswordHash() { return passwordHash; }
-  public void setPasswordHash(String passwordHash) {
-    this.passwordHash = passwordHash;
-    dataSource.updateString("Users", this.id, "passwordHash", passwordHash);
     this.isDirty = true;
   }
 
