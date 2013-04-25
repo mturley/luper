@@ -34,32 +34,41 @@ public class DragThing extends TextView{
 		final int action = event.getAction();
 		
 		final int x = (int)event.getX(); //teh current x val
-		final int y = (int)event.getY(); //teh current y val 
+		final int y = prevy;
+		//final int y = (int)event.getY(); //teh current y val 
 		
 		switch(action){
 		case MotionEvent.ACTION_DOWN:
 			prevx = x; //updates points
-			prevy = y;
+			//prevy = y;
 			break;
 			
 		case MotionEvent.ACTION_MOVE:
 			int changex = x - prevx; //calculates the change in position
-			int changey = y - prevy;
+			int changey = prevy;
+			//int changey = y - prevy;
 			final int left = getLeft();
-			final int top = getTop();
-			if(changex != 0 || changey != 0) { // if there is a change, then update the layout
+			final int top = prevy;
+			//final int top = getTop();
+			if(changex != 0) {
+			//if(changex != 0 || changey != 0) { // if there is a change, then update the layout
 				//values and stuff
-				layout(left + changex, top + changey, left + changex + getWidth(), top + changey + getHeight());
+				//layout(left + changex, top + changey, left + changex + getWidth(), top + changey + getHeight());
+				layout(left + changex, 0, left + changex + getWidth(), 0);
+
 			}
 			
 			prevx = x - changex;
-			prevy = y - changey;
+			prevy = prevy;
+			//prevy = y - changey;
 			
 			//redefining array
 			current[0] = left + changex;
-			current[1] = top + changey;
+			current[1] = prevy;
+			//current[1] = top + changey;
 			current[2] = left + changex + getWidth();
-			current[3] = top + changey + getHeight();
+			current[3] = prevy;
+			//current[3] = top + changey + getHeight();
 			break;
 			
 		case MotionEvent.ACTION_UP:
