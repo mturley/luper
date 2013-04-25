@@ -6,11 +6,18 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.TextView;
+
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.facebook.Response;
 import com.facebook.Session;
+import com.facebook.SessionState;
+import com.facebook.UiLifecycleHelper;
+import com.facebook.Request;
+import com.facebook.model.GraphUser;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.UiThread;
 import com.googlecode.androidannotations.annotations.rest.RestService;
@@ -41,6 +48,45 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
   LuperRestClient restClient;
 
   private SQLiteDataSource dataSource;
+  
+  @Override
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+	  super.onActivityResult(requestCode,resultCode,data);
+	  Session.getActiveSession().onActivityResult(this,requestCode,resultCode,data);
+  }
+  
+  // How Luper should behave when user logs into or out of facebook
+  protected void onSessionStateChange(Session sesh, SessionState seshState, Exception e) {
+	  if (seshState.isOpened()) {
+		  /** usr logged in **/
+		  // Create new request to facebook API
+		  Request.executeMeRequestAsync(session, new Request.GraphUserCallback() {
+
+		    // callback after Graph API response with user object
+		    @Override
+		    public void onCompleted(GraphUser user, Response response) {
+		    	if (user != null) {
+		    		  TextView welcome = (TextView) findViewById(R.id.welcome);
+		    		  welcome.setText("Hello " + user.getName() + "!");
+		    		}
+		    }
+
+		  });
+	  } else if (seshState.isClosed()) {
+		  // usr logged out
+	  } else {
+		  // probably shouldn't be here
+	  }
+  }
+  
+  private Session.StatusCallback callback = new Session.StatusCallback() {
+	  @Override
+	  public void call(Session sesh, SessionState seshState, Exception e) {
+		  onSessionStateChange(sesh,seshState,e);
+	  }
+  };
+  
+  private UiLifecycleHelper uiHelper;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +113,10 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
     // connect to the database
     dataSource = new SQLiteDataSource(this);
     dataSource.open();
+    
+    // UI handler - Facebook login
+//    uiHelper = new UiLifecycleHelper(this,callback);
+//    uiHelper.onCreate(savedInstanceState);
   }
 
   @Override
