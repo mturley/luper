@@ -121,7 +121,14 @@ public class TabLoginFragment extends Fragment {
    * there are form errors (invalid email, missing fields, etc.), the errors are
    * presented and no actual login attempt is made.
    */
+  @UiThread
   public void attemptLogin() {
+    Activity a = getActivity();
+    if(!LuperMainActivity.deviceIsOnline(a)) {
+      DialogFactory.alert(a, "Login Failed!", "You are not connected to the internet! " +
+        "You must be online to log in.  Once logged in, however, you can use Lüper while offline.");
+    }
+
     // Reset errors.
     mEmailView.setError(null);
     mPasswordView.setError(null);
