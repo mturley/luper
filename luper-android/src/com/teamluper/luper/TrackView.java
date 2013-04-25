@@ -110,7 +110,7 @@ public class TrackView extends RelativeLayout {
 
 		this.addView(trackControl);
 //		testing...
-        //Clip clip1 = new Clip(); clip1.begin = 100; clip1.end = 350; clip1.duration = 250;
+        //Clip clip1 = new Clip(); clip1.begin = 100; clip1.end = 4000; clip1.duration = 3900;
         //Clip clip2 = new Clip(); clip2.begin = 0; clip2.end = 450; clip2.duration = 450;
         ColorChipButton chip;
         //this.associated.putClip(clip1);
@@ -167,9 +167,10 @@ public class TrackView extends RelativeLayout {
 		        public void onClick(DialogInterface dialog, int whichButton) {
 		        	//want it to pass a new clip back to the editor panel and add it to the screen
 		        	//NEED TO ADD CLIP TO THE TRACK
-		        	Clip newClip = dataSource.createClip(finalTrack, lastRecordedFile, finalStartTime);
-		        	associated.putClip(newClip);
-		        	
+                    Clip newClip = dataSource.createClip(finalTrack, lastRecordedFile, finalStartTime);
+                    associated.putClip(newClip);
+                //finishRecording(associated, lastRecordedFile, finalStartTime);
+
 		        }
 		    })
 		    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -180,7 +181,11 @@ public class TrackView extends RelativeLayout {
 			.show();
 
 	}
-
+    public void finishRecording(Track track, AudioFile file, int startTime)
+    {
+        Clip newClip = dataSource.createClip(track, lastRecordedFile, startTime);
+        associated.putClip(newClip);
+    }
     class RecordButton extends Button {
         boolean mStartRecording = true;
 
@@ -238,7 +243,7 @@ public class TrackView extends RelativeLayout {
     private void stopRecording() {
         mRecorder.stop();
         mRecorder.release();
-        
+
         lastRecordedFile = dataSource.createAudioFile(dataSource.getActiveUser(), lastRecordedFileName);
         lastRecordedFile.setReadyOnClient(true);
 
