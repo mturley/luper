@@ -86,7 +86,7 @@ $api->post('/auth-challenge', function() use ($api) {
     $stmt->execute();
     $obj = $stmt->fetchObject();
     $response = new stdclass();
-    if(!obj) {
+    if(!$obj) {
       $response->success = false;
       $response->message = "No user found with that email address. Did you already register?";
     } else if($obj->passwordHash == null) {
