@@ -52,7 +52,7 @@ public class TabLoginFragment extends Fragment {
   @RestService
   LuperRestClient rest;
 
-  private static final int HASH_COUNT = 100000;
+  private static final int HASH_COUNT = 10000;
 
   @Override
   public View onCreateView(LayoutInflater infl, ViewGroup vg, Bundle state) {
@@ -211,12 +211,14 @@ public class TabLoginFragment extends Fragment {
 
   @UiThread
   public void loginSuccess() {
+    showProgress(false);
     DialogFactory.alert(getActivity(), "Login Success!", "TODO: actually launch LuperMainActivity_");
     // TODO launch the actual LuperMainActivity_
   }
 
   @UiThread
   public void loginFailure(String errorMessage) {
+    showProgress(false);
     DialogFactory.alert(getActivity(), "Login Failed!", errorMessage);
   }
 

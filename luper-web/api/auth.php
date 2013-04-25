@@ -6,7 +6,7 @@ require_once 'db.php';
 // http://alias.io/2010/01/store-passwords-safely-with-php-and-mysql/
 // with some modifications by me, mainly with challenge salts, etc.
 
-define("HASH_COUNT", 100000);
+define("HASH_COUNT", 10000);
 // HASH_COUNT must match the corresponding setting on the client,
 // or all login attempts will fail as "invalid password".
 

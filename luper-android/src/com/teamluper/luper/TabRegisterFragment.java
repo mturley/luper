@@ -151,6 +151,7 @@ public class TabRegisterFragment extends Fragment {
 
   @UiThread
   public void registrationSuccess(long userid) {
+    showProgress(false);
     DialogFactory.alert(getActivity(), "Registration Complete!",
       "Your new account has been registered!  Please use the login form.");
     // TODO automatically switch to login form, or just automatically log in.
@@ -158,6 +159,7 @@ public class TabRegisterFragment extends Fragment {
 
   @UiThread
   public void registrationFailure(String errorMessage) {
+    showProgress(false);
     DialogFactory.alert(getActivity(), "Registration Failed!", errorMessage);
   }
 
