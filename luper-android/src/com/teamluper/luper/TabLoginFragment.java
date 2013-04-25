@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,22 +20,18 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EFragment;
+import com.googlecode.androidannotations.annotations.UiThread;
+import com.googlecode.androidannotations.annotations.rest.RestService;
+import com.teamluper.luper.rest.LuperRestClient;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.security.MessageDigest;
 
 @EFragment
 public class TabLoginFragment extends Fragment {
-
-  /**
-   * A dummy authentication store containing known user names and passwords.
-   * TODO: remove after connecting to a real authentication system.
-   */
-  private static final String[] DUMMY_CREDENTIALS = new String[] {
-    "foo@example.com:hello", "bar@example.com:world" };
-
-  /**
-   * The default email to populate the email field with.
-   */
-  public static final String EXTRA_EMAIL = "com.example.android.authenticatordemo.extra.EMAIL";
 
   // Values for email and password at the time of the login attempt.
   private String mEmail;
@@ -52,6 +49,11 @@ public class TabLoginFragment extends Fragment {
 
   private SQLiteDataSource dataSource;
 
+  @RestService
+  LuperRestClient rest;
+
+  private static final int HASH_COUNT = 10000;
+
   @Override
   public View onCreateView(LayoutInflater infl, ViewGroup vg, Bundle state) {
     if(vg == null) return null;
@@ -59,15 +61,15 @@ public class TabLoginFragment extends Fragment {
     Activity a = getActivity();
 
     // set up the SQLite database access.
-    dataSource = ((LuperLoginActivity)getActivity()).getDataSource();
+    dataSource = ((LuperLoginActivity)a).getDataSource();
     if(!dataSource.isOpen()) dataSource.open();
 
     // Set up the login form.
-    mEmail = a.getIntent().getStringExtra(EXTRA_EMAIL);
-    mEmailView = (EditText) v.findViewById(R.id.email);
+    mEmail = a.getIntent().getStringExtra("luperPrefilledEmail");
+    mEmailView = (EditText) v.findViewById(R.id.login_email);
     mEmailView.setText(mEmail);
 
-    mPasswordView = (EditText) v.findViewById(R.id.password);
+    mPasswordView = (EditText) v.findViewById(R.id.login_password);
     mPasswordView
       .setOnEditorActionListener(new TextView.OnEditorActionListener() {
         @Override
@@ -84,6 +86,8 @@ public class TabLoginFragment extends Fragment {
     mLoginFormView = v.findViewById(R.id.login_form);
     mLoginStatusView = v.findViewById(R.id.login_status);
     mLoginStatusMessageView = (TextView) v.findViewById(R.id.login_status_message);
+
+    showProgress(false);
 
     v.findViewById(R.id.login_button).setOnClickListener(
       new View.OnClickListener() {
@@ -117,8 +121,13 @@ public class TabLoginFragment extends Fragment {
    * there are form errors (invalid email, missing fields, etc.), the errors are
    * presented and no actual login attempt is made.
    */
+  @UiThread
   public void attemptLogin() {
-    // TODO check if existing REST login call is still in progress, fail if so.
+    Activity a = getActivity();
+    if(!LuperMainActivity.deviceIsOnline(a)) {
+      DialogFactory.alert(a, "Login Failed!", "You are not connected to the internet! " +
+        "You must be online to log in.  Once logged in, however, you can use Lüper while offline.");
+    }
 
     // Reset errors.
     mEmailView.setError(null);
@@ -162,9 +171,107 @@ public class TabLoginFragment extends Fragment {
       // perform the user login attempt.
       mLoginStatusMessageView.setText(R.string.progress_logging_in);
       showProgress(true);
-      DialogFactory.alert(getActivity(), "TODO","This spinner will spin forever.  Still need to implement login.");
-      // TODO start a new login task (JUST CALL A @BACKGROUND REST thing)
+      completeLoginAttempt(mEmail, mPassword);
     }
+  }
+
+  @Background
+  public void completeLoginAttempt(String email, String password) {
+    // first, fetch a challenge salt to hash the password with.
+    try {
+      JSONObject challengeRequest = new JSONObject();
+      challengeRequest.put("email", email);
+      String challengeResponseJSON = rest.getLoginChallengeSalt(challengeRequest.toString());
+      JSONObject challengeResponse = new JSONObject(challengeResponseJSON);
+      if(!isResponseSuccessful(challengeResponse)) {
+        loginFailure(challengeResponse.getString("message"));
+        return;
+      }
+      // now we take the challenge salt and compute the login attempt hash.
+      String salt = challengeResponse.getString("salt");
+      String attemptHash = saltyHashBrowns(sha256(password), salt, HASH_COUNT);
+      // assemble the actual login attempt request
+      JSONObject loginRequest = new JSONObject();
+      loginRequest.put("email", email);
+      loginRequest.put("attemptHash", attemptHash);
+      String loginResponseJSON = rest.validateLoginAttempt(loginRequest.toString());
+      JSONObject loginResponse = new JSONObject(loginResponseJSON);
+      if(!isResponseSuccessful(loginResponse)) {
+        loginFailure(loginResponse.getString("message"));
+        return;
+      }
+      if(!loginResponse.getBoolean("isLoginValid")) {
+        loginFailure("The email address or password you entered was invalid!");
+        return;
+      }
+
+      // if we haven't returned yet at this point, the login is successful!
+      // TODO check if the user object exists locally and...
+      //   if so, set it as the active user
+      //   if not, create one and then set it as the active user
+      loginSuccess();
+    } catch(JSONException e) {
+      Log.e("luper","=== JSON Exception while attempting to validate login === Exception: ", e);
+      loginFailure("Something went wrong while logging in!");
+      return;
+    }
+  }
+
+  @UiThread
+  public void loginSuccess() {
+    if(mEmailView != null) mEmailView.setText("");
+    if(mPasswordView != null) mPasswordView.setText("");
+    Intent intent = new Intent(getActivity(), LuperMainActivity_.class);
+    startActivity(intent);
+  }
+
+  @UiThread
+  public void loginFailure(String errorMessage) {
+    showProgress(false);
+    DialogFactory.alert(getActivity(), "Login Failed!", errorMessage);
+  }
+
+  public boolean isResponseSuccessful(JSONObject response) {
+    try {
+      return response.getBoolean("success");
+    } catch(Exception e) {
+      Log.e("luper","=== A REGISTRATION API RESPONSE WAS UNSUCCESSFUL === Exception: ", e);
+      return false;
+    }
+  }
+
+  private String sha256(String password) {
+    try {
+      MessageDigest md = MessageDigest.getInstance("SHA-256");
+      md.update(password.getBytes("UTF-8")); // Change this to "UTF-16" if needed
+      byte[] digest = md.digest();
+      return bytesToHex(digest);
+    } catch(Exception e) {
+      Log.e("luper", "=== ERROR COMPUTING SHA256 LOGIN ATTEMPT PASSWORD HASH === Exception: ", e);
+      return "";
+    }
+  }
+
+  public static String bytesToHex(byte[] bytes) {
+    final char[] hexArray = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'};
+    char[] hexChars = new char[bytes.length * 2];
+    int v;
+    for ( int j = 0; j < bytes.length; j++ ) {
+      v = bytes[j] & 0xFF;
+      hexChars[j * 2] = hexArray[v >>> 4];
+      hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+    }
+    return new String(hexChars);
+  }
+
+  public String saltyHashBrowns(String simpleHashedPassword, String salt, int hashCount) {
+    // Prefix the password with the salt
+    String hash = salt + simpleHashedPassword;
+    // Hashing our hashes times a hundred thousand, for security!
+    for(int i=0; i<hashCount; i++) {
+      hash = sha256(hash); // hashity hash
+    }
+    return hash;
   }
 
   /**

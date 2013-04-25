@@ -4,11 +4,11 @@ require_once 'db.php';
 
 // this well-salted sha256 password hashing algorithm comes courtesy of:
 // http://alias.io/2010/01/store-passwords-safely-with-php-and-mysql/
-// with some modifications by me, mostly the addition of the "half-baked" approach.
-// this is probably all overkill, but it's better to be safe than sorry.
+// with some modifications by me, mainly with challenge salts, etc.
 
-define("HALF_TOTAL_NUM_HASHES",50000); // we will be hashing twice as many times as this number.
-// this number must match the one on the client or the password will fail to validate.
+define("HASH_COUNT", 10000);
+// HASH_COUNT must match the corresponding setting on the client,
+// or all login attempts will fail as "invalid password".
 
 // computes a new random salt.
 function newRandomSalt($email) {
@@ -21,57 +21,47 @@ function newRandomSalt($email) {
 
 // computes a partial to full hash using the given salt and the given number of hash repeats.
 // if you're passing a plain text password for $semiHashedPassword, you should pass true for $initialize.
-function saltyHashBrowns($semiHashedPassword, $salt, $hashCount, $initialize) {
-  if($initialize) {
-    // Prefix the password with the salt
-    $hash = $salt . $semiHashedPassword;
-  }
+function saltyHashBrowns($simpleHashedPassword, $salt, $hashCount) {
+  // Prefix the password with the salt
+  $hash = $salt . $simpleHashedPassword;
   // Hashing our hashes times a hundred thousand, because security!
   for ( $i = 0; $i < $hashCount; $i++ ) {
-    $hash = hash('sha256', $hash); // hashity hash
+    $hash = sha256($hash); // hashity hash
   }
-  // Prefix the hash with the salt again so we can retrieve it later
-  $hash = $salt . $hash;
   return $hash;
 }
 
-// computes a new random salt, then computes a full hash based on it.
-// use for registering or updating password only. (basically anytime you need to store a new password hash)
-function newRandomSaltedHash($email, $plainPassword) {
-  $salt = newRandomSalt($email);
-  $hash = saltyHashBrowns($plainPassword, $salt, HALF_TOTAL_NUM_HASHES*2, true); // full hash
-  return $hash;
+// computes a simple hash with no salt, for initial password storage.
+function sha256($password) {
+  return hash('sha256', $password);
 }
 
-// a basic authentication from a password which was submitted over the internet in plain text.
-// terrible for regular use on HTTP (vulnerable to very simple man-in-the-middle attacks)
-// but just fine if the password is sent securely over SSL via HTTPS.
-function validatePlainTextLoginAttempt($db, $email, $plainPassword) {
-  $knownHash = getKnownHashForUser($db, $email);
-  if(!$knownHash) return false;
-  $salt = substr($knownHash, 0, 64);
-  $attemptHash = saltyHashBrowns($plainPassword, $salt, HALF_TOTAL_NUM_HASHES*2, true); // full hash
-  return $attemptHash == $knownHash;
-}
-
-// alternatively, you can authenticate by submitting a password that has already been hashed a bunch by the client.
-// as long as the total number of hashes is the same, the result will still match if valid.
-function validateHalfBakedLoginAttempt($db, $email, $halfBakedHash) {
-  // remove the hash from its salty envelope, taking note of the salt.
-  $salt = substr($halfBakedHash, 0, 64);
-  $hash = substr($halfBakedHash, 64);
-  $attemptHash = saltyHashBrowns($hash, $salt, HALF_TOTAL_NUM_HASHES, false);
-  $knownHash = getKnownHashForUser($db, $email);
-  if(!$knownHash) return false;
-  return $attemptHash == $knownHash;
+// validates an attempted login hash that was made using the latest challenge salt.
+function validateLoginAttempt($db, $email, $attemptHash) {
+  $knownSimpleHash = getKnownSimpleHashForUser($db, $email);
+  if(!$knownSimpleHash) return false;
+  // fetch the last challenge salt, the same one that was used on the client.
+  $stmt = $db->prepare("SELECT challengeSalt FROM Users WHERE email = :email");
+  $stmt->bindParam("email", $email);
+  $stmt->execute();
+  $saltObj = $stmt->fetchObject();
+  if(!$saltObj) return false;
+  $salt = $saltObj->challengeSalt;
+  // the db's challenge salt has been used, so expire it by setting it null.
+  // while we're at it, update lastLoginTime to NOW().
+  $stmt = $db->prepare("UPDATE Users SET challengeSalt = NULL, lastLoginTime = NOW() WHERE email = :email");
+  $stmt->bindParam("email", $email);
+  $stmt->execute();
+  $knownCompleteHash = saltyHashBrowns($knownSimpleHash, $salt, HASH_COUNT);
+  return $attemptHash == $knownCompleteHash;
 }
 
 // actually fetches the passwordHash field given a user's email address.
-function getKnownHashForUser($db, $email) {
+function getKnownSimpleHashForUser($db, $email) {
   $query = $db->prepare("SELECT passwordHash FROM Users WHERE email = :email LIMIT 1");
   $query->bindParam("email", $email);
   $query->execute();
   $obj = $query->fetchObject();
   if(!$obj) return false;
-  return $query->fetchObject()->passwordHash;
+  return $obj->passwordHash;
 }

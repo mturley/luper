@@ -46,6 +46,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   private MediaPlayer   mPlayer = null;
   private Track playBackTest = new Track ();
   private AudioManager audioManager;
+  private LinearLayout base;
 
   // TODO these will be moved to within Sequence, and accessed with
   // sequence.getClips() and sequence.getTracks(), etc.
@@ -55,6 +56,11 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   @Override
   public void onCreate(Bundle icicle) {
     super.onCreate(icicle);
+    base = new LinearLayout(this);
+    base.setId(1337);
+    base.setBackgroundColor(Color.parseColor("#e2dfd8"));
+
+    base.setOrientation(LinearLayout.VERTICAL);
     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
     long ID = getIntent().getLongExtra("selectedProjectId", -1);
@@ -65,11 +71,6 @@ public class LuperProjectEditorActivity extends SherlockActivity {
               finish();
             }
           });
-      
-      
-      
-      
-      
       return;
     }
 
@@ -91,13 +92,53 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     render();
   }
 
+  //playhead class view to be implemented --Eric
+  public class Playhead extends View{
+    private final float STARTY = 0;
+    private final float ENDY = 5000;
+    private float X;
+
+    public Playhead(Context context){
+      super(context);
+      init();
+    }
+    public void init(){
+//      this.setX(this.getStartTime());
+//      this.setY(5000);
+//      this.setWidth(this.getStartTime() + this.getLength());
+    }
+
+//    public boolean onTouchEvent(MotionEvent event) {
+//      int action = event.getAction();
+//      switch (action) {
+//        case MotionEvent.ACTION_DOWN:
+//          x = event.getX();
+//          break;
+//        case MotionEvent.ACTION_MOVE:
+//        case MotionEvent.ACTION_UP:
+//        case MotionEvent.ACTION_CANCEL:
+//          x = initialX + event.getX() - offsetX;
+//          y = initialY + event.getY() - offsetY;
+//          break;
+//      }
+//      return (true);
+//    }
+
+//    public void draw(Canvas canvas) {
+//      int width = canvas.getWidth();
+//      int height = canvas.getHeight();
+//      drawLine(X, STARTY, X, float ENDY);
+   //   invalidate();
+  //  }
+  }
+
   @UiThread
   public void render() {
-    LinearLayout base = new LinearLayout(this);
-    base.setId(1337);
-    base.setBackgroundColor(Color.parseColor("#e2dfd8"));
-
-    base.setOrientation(LinearLayout.VERTICAL);
+//    LinearLayout base = new LinearLayout(this);
+//    base.setId(1337);
+//    base.setBackgroundColor(Color.parseColor("#e2dfd8"));
+//
+//    base.setOrientation(LinearLayout.VERTICAL);
 
     int tracksTraversed = 0;
     int clipsTraversed = 0;
@@ -107,7 +148,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
 //      // draw stuff in it
       for(Track track : sequence.tracks) {
         RelativeLayout tracklayout = new RelativeLayout(this);
-        TrackView tv = new TrackView(this);
+        TrackView tv = new TrackView(this, track, dataSource);
         tracklayout.addView(tv);
         base.addView(tracklayout,
             new RelativeLayout.LayoutParams(
@@ -201,7 +242,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     if(item.getItemId() == R.id.editor_play) {
       // TODO
       //incomplete = true;
-    	
+
     	int i=0;
     	while(playBackTest!=null && i!=playBackTest.size())
     	{
@@ -220,7 +261,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
 	        }
     	}
     }
-    if(item.getItemId() == R.id.editor_edit_clip) {
+    if(item.getItemId() == R.id.editor_add_track) {
       // TODO
       incomplete = true;
     }
@@ -238,7 +279,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     0));
 
-        
+
         LinearLayout ll2 = new LinearLayout(this);
         fileSelected = new AutoCompleteTextView(this);
         fileSelected.setHint("Select a File");
@@ -258,7 +299,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
-        
+
         new AlertDialog.Builder(this)
 		.setTitle("Record or Browse?")
 		.setView(custom)
@@ -313,7 +354,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
         "That button hasn't been hooked up to anything.");
     return super.onOptionsItemSelected(item);
   }
-  
+
   class RecordButton extends Button {
       boolean mStartRecording = true;
 

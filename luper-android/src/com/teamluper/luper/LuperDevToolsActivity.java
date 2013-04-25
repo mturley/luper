@@ -70,6 +70,11 @@ public class LuperDevToolsActivity extends Activity {
     DialogFactory.alert(this,"Done!");
   }
 
+  public void dragTest(View view) {
+	    Intent intent = new Intent(this, DragTest_.class);
+	    startActivity(intent);
+	  }
+  
   @UiThread
   public void alert(String title, String message) {
     DialogFactory.alert(this, title, message);

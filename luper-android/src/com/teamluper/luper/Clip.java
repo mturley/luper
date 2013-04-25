@@ -91,6 +91,17 @@ public class Clip {
     dataSource.updateLong("Clips", oldId, "_id", id);
     this.isDirty = true;
 	}
+	
+	public void setBegin(int begin){
+		this.begin = begin;
+	}
+	public void setEnd(int end){
+		this.end = end;
+	}
+	public void setDuration(int duration){
+		this.duration = duration;
+	}
+	
 
 	public long getOwnerUserID() { return ownerUserID; }
 	public void setOwnerUserID(long ownerUserID) {
@@ -152,6 +163,10 @@ public class Clip {
 	public void setDirty(boolean isDirty) {
 		this.isDirty = isDirty;
     dataSource.updateInt("Clips", this.id, "isDirty", (isDirty ? 1 : 0));
+	}
+	
+	public AudioFile getAudioFile() {
+		return this.audioFile;
 	}
 
   public void loadFileMetadata() {

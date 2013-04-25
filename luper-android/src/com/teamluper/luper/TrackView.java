@@ -29,9 +29,11 @@ import android.view.View.OnClickListener;
 import android.widget.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EView;
+import com.googlecode.androidannotations.annotations.UiThread;
 import com.teamluper.luper.AudioRecorderTestActivity.PlayButton;
 import com.teamluper.luper.AudioRecorderTestActivity.playTrackButton;
 
@@ -43,7 +45,9 @@ import com.teamluper.luper.AudioRecorderTestActivity.playTrackButton;
 @EView
 public class TrackView extends RelativeLayout {
 	private static final String LOG_TAG = "TrackView";
-    private static String mFileName = null;
+	
+	private String lastRecordedFileName = null;
+	private AudioFile lastRecordedFile = null;
 
     private RecordButton mRecordButton = null;
     private MediaRecorder mRecorder = null;
@@ -52,6 +56,8 @@ public class TrackView extends RelativeLayout {
     private MediaPlayer   mPlayer = null;
 
     private TextView fileSelected;
+    
+    private SQLiteDataSource dataSource;
 
     Track associated;
 
@@ -59,25 +65,30 @@ public class TrackView extends RelativeLayout {
 	//Track associated;
 
 	//constructor
-	public TrackView(Context context){
+	public TrackView(Context context, Track track, SQLiteDataSource dataSource)
+	{
 		super(context);
-		associated = new Track();
+		associated = track;
+		this.dataSource = dataSource;
 		init();
 	}
 
 	//set a click listener for the buttons that will activate promptDialog() when clicked
 	OnClickListener clicker = new OnClickListener(){
 		public void onClick(View v){
-			promptDialog();
+			promptDialog(0); // later on this will be the time corresponding to where in the empty timeline we touched.
+			// TODO
 		}
 	};
 	OnClickListener playClicker = new OnClickListener(){
 		public void onClick(View v){
-				startPlaying(); //need track playback but track class + audio hook-up not working yet; this does work though
+				startPlayingTrack(); //need track playback but track class + audio hook-up not working yet; this does work though
 		}
 	};
 
 	public void init(){
+		mPlayer = new MediaPlayer();
+		
 		this.setPadding(0, 10, 0, 5);
 
 //		add a linear layout to the left side that will have a playtrack button
@@ -99,9 +110,11 @@ public class TrackView extends RelativeLayout {
 
 		this.addView(trackControl);
 //		testing...
-        Clip clip1 = new Clip(); clip1.begin = 400; clip1.end = 500; clip1.duration = 100;
+        //Clip clip1 = new Clip(); clip1.begin = 100; clip1.end = 350; clip1.duration = 250;
+        //Clip clip2 = new Clip(); clip2.begin = 0; clip2.end = 450; clip2.duration = 450;
         ColorChipButton chip;
-        this.associated.putClip(clip1);
+        //this.associated.putClip(clip1);
+        //this.associated.putClip(clip2);
         for(int i = 0; i < this.associated.clips.size(); i++){
         	System.out.println("Here " + this.associated.getClips().get(i).begin);
         	chip = new ColorChipButton(this.getContext(), this.associated.getClips().get(i));
@@ -111,7 +124,7 @@ public class TrackView extends RelativeLayout {
         }
 	}
 
-	public void promptDialog(){
+	public void promptDialog(int startTime){
 		//our custom layout for inside the dialog
 		LinearLayout custom = new LinearLayout(this.getContext());
 		custom.setOrientation(LinearLayout.VERTICAL);
@@ -143,6 +156,9 @@ public class TrackView extends RelativeLayout {
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
+        
+        final int finalStartTime = startTime;
+        final Track finalTrack = associated;
 
 		new AlertDialog.Builder(getContext())
 			.setTitle("Record or Browse?")
@@ -151,8 +167,9 @@ public class TrackView extends RelativeLayout {
 		        public void onClick(DialogInterface dialog, int whichButton) {
 		        	//want it to pass a new clip back to the editor panel and add it to the screen
 		        	//NEED TO ADD CLIP TO THE TRACK
-		        	Clip newClip = new Clip(mFileName);
+		        	Clip newClip = dataSource.createClip(finalTrack, lastRecordedFile, finalStartTime);
 		        	associated.putClip(newClip);
+		        	
 		        }
 		    })
 		    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -197,23 +214,22 @@ public class TrackView extends RelativeLayout {
 
     private void startRecording() {
     	//Sets the name of the file when you start recording as opposed to when you click "Audio Record Test" from the main screen
-        mFileName = Environment.getExternalStorageDirectory()+"/LuperApp/Clips";
-        mFileName += "/clip_" + System.currentTimeMillis() +".3gp";
+        lastRecordedFileName = Environment.getExternalStorageDirectory()+"/LuperApp/Clips";
+        lastRecordedFileName += "/clip_" + System.currentTimeMillis() +".3gp";
 
         mRecorder = new MediaRecorder();
         //System.out.println("here");
         mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         //System.out.println("and here");
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        mRecorder.setOutputFile(mFileName);
+        mRecorder.setOutputFile(lastRecordedFileName);
 
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
         try {
             mRecorder.prepare();
         } catch (IOException e) {
-        	System.out.println(e.toString());
-            Log.e(LOG_TAG, "prepare() failed2");
+            Log.e(LOG_TAG, "prepare() failed", e);
         }
 
         mRecorder.start();
@@ -223,23 +239,13 @@ public class TrackView extends RelativeLayout {
         mRecorder.stop();
         mRecorder.release();
 
-        Clip newClip = new Clip(mFileName);
+        lastRecordedFile = dataSource.createAudioFile(dataSource.getActiveUser(), lastRecordedFileName);
+        lastRecordedFile.setReadyOnClient(true);
 
-        try {
-			newClip.getDuration();
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-
-        //playBackTest.putClip(newClip);
-        //alertDialog("Clip Created! The clip's length is: " + newClip.duration + "(ms). The tracks size is " + playBackTest.size() + " and it's name in the track is ..." + playBackTest.clips.get(0).name);
-
-       // alertDialog("Clip Created! The clip's length is: " + newClip.duration + "(ms) the clip's name is: " + newClip.name);
-
-        fileSelected.setText(mFileName);
+        fileSelected.setText(lastRecordedFileName);
         mRecorder = null;
     }
-    private void startPlaying() {
+    /*private void startPlaying() {
     	
         mPlayer = new MediaPlayer();
         try {
@@ -250,37 +256,38 @@ public class TrackView extends RelativeLayout {
         } catch (IOException e) {
             Log.e(LOG_TAG, "prepare() failed1");
         }
-    }
+    }*/
 
-    private void stopPlaying() {
+   /*private void stopPlaying() {
       if(mPlayer != null) {
         mPlayer.release();
         mPlayer = null;
       }
+    }*/
+
+    @UiThread
+    public void startPlayingTrack() {
+      ArrayList<Clip> clips = associated.getClips();
+      for(Clip c : clips) {
+    	playClipInBackground(c); // later on will also take a startTime parameter (current playhead time)
+      }
     }
 
+    // later on will also take a startTime parameter (current playhead time)
     @Background
-    public void startPlayingTrack() {
-    	//associated.loadAllClipData();
-    	//associated.loadAllClipAudio();
-    	int i=0;
-    	while(associated!=null && i!=associated.size())
-    	{
-	        mPlayer = new MediaPlayer();
-	        mFileName=associated.clips.get(i).name;
-	        try
-	        {
-	            mPlayer.setDataSource(mFileName);
-	            mPlayer.prepare();
-	            Thread.sleep(associated.clips.get(i).getDuration());
-	            mPlayer.start();
-	            i++;
-	        } catch (Exception e) {
-	        	//handle interrupted exceptions in a different way
-	            Log.e(LOG_TAG, "TRACK PLAYBACK FAILED");
-	        }
+    public void playClipInBackground(Clip c) {
+    	String clipFileName = c.getAudioFile().getClientFilePath();
+    	try {
+    		mPlayer.setDataSource(clipFileName);
+    		mPlayer.prepare();
+    		Thread.sleep(c.getDurationMS());
+    		mPlayer.start();
+    	} catch (Exception e) {
+    		//handle interrupted exceptions in a different way
+    		Log.e(LOG_TAG, "TRACK PLAYBACK FAILED");
     	}
     }
+
     private void stopPlayingTrack() {
         if(mPlayer != null) {
           mPlayer.release();

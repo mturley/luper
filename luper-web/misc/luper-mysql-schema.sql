@@ -1,4 +1,7 @@
 -- Adminer 3.6.3 MySQL dump
+-- Execute this file as mysql root at first server installation.
+-- WARNING: if you are trying to fix a LIVE database, DO NOT use this.
+--   IT WILL DELETE EVERYONE'S PROJECTS PERMANENTLY. ALL OF THEM.
 
 SET NAMES utf8;
 SET foreign_key_checks = 0;
@@ -85,6 +88,8 @@ CREATE TABLE `Users` (
   `username` varchar(128) NOT NULL,
   `email` varchar(128) NOT NULL,
   `passwordHash` varchar(512) NOT NULL,
+  `challengeSalt` varchar(512) DEFAULT NULL,
+  `lastLoginTime` timestamp NULL,
   `isActiveUser` tinyint(1) NOT NULL DEFAULT '0',
   `linkedFacebookID` int(11) DEFAULT NULL,
   `preferences` text,
@@ -94,6 +99,6 @@ CREATE TABLE `Users` (
 DROP USER 'luper'@'localhost';
 CREATE USER 'luper'@'localhost' IDENTIFIED BY 'luper';
 GRANT USAGE ON * . * TO  'luper'@'localhost' IDENTIFIED BY 'luper' WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0 ;
-GRANT ALL PRIVILEGES ON  `luper` . * TO  'luper'@'localhost`';
+GRANT ALL PRIVILEGES ON  `luper` . * TO  'luper'@'localhost';
 
 -- 2013-04-18 01:55:29

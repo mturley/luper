@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:id="@+id/login_status"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center_horizontal"
@@ -19,6 +19,7 @@
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
             android:layout_marginBottom="8dp" />
 
         <TextView
@@ -60,7 +61,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <EditText
-                android:id="@+id/email"
+                android:id="@+id/login_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_email"
@@ -69,7 +70,7 @@
                 android:singleLine="true" />
 
             <EditText
-                android:id="@+id/password"
+                android:id="@+id/login_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_password"
@@ -119,7 +120,7 @@
         		android:onClick="loadActiveSession"
         		android:layout_marginTop="30dp"
            />
-            <!-- 
+            <!--
             <Button
                 android:id="@+id/login_with_facebook_fake_button_steve_replace_this"
                 android:layout_width="wrap_content"

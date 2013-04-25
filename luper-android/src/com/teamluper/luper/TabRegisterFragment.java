@@ -8,18 +8,21 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EFragment;
 import com.googlecode.androidannotations.annotations.UiThread;
 import com.googlecode.androidannotations.annotations.rest.RestService;
 import com.teamluper.luper.rest.LuperRestClient;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.security.MessageDigest;
 
 @EFragment
 public class TabRegisterFragment extends Fragment {
@@ -51,6 +54,11 @@ public class TabRegisterFragment extends Fragment {
   @UiThread
   public void attemptRegistration() {
     Activity a = getActivity();
+    if(!LuperMainActivity.deviceIsOnline(a)) {
+      DialogFactory.alert(a, "Registration Failed!", "You are not connected to the internet! " +
+        "You must be online to register or log in.  Once logged in, however, you can use Lüper while offline.");
+    }
+
     EditText editEmail     = (EditText) a.findViewById(R.id.register_email);
     EditText editPassword  = (EditText) a.findViewById(R.id.register_password);
     EditText editPassword2 = (EditText) a.findViewById(R.id.register_password2);
@@ -103,8 +111,6 @@ public class TabRegisterFragment extends Fragment {
       return;
     }
 
-    DialogFactory.alert(getActivity(),"We're all good to register!");
-
     completeRegistration(email, password, username);
   }
 
@@ -112,41 +118,97 @@ public class TabRegisterFragment extends Fragment {
   public void completeRegistration(String email, String password, String username) {
     JSONObject request = new JSONObject();
     try {
-      request.put("password",password);
+      MessageDigest md = MessageDigest.getInstance("SHA-256");
+      md.update(password.getBytes("UTF-8")); // Change this to "UTF-16" if needed
+      byte[] digest = md.digest();
+      String passwordHash = bytesToHex(digest);
+      request.put("passwordHash",passwordHash);
       request.put("username",username);
       request.put("email",email);
-      String requestJSON = request.toString();
-      showProgress(true);
-      String responseJSON = rest.registerNewAccount(requestJSON);
-      JSONObject response = new JSONObject(responseJSON);
-      showProgress(false);
-      if(response.getBoolean("success")) {
-        registrationSuccess(response.getLong("insertId"));
+    } catch(Exception e) {
+      Log.e("luper","=== Exception while trying to hash password for JSON request ===", e);
+    }
+    String requestJSON = request.toString();
+    showProgress(true);
+
+    String responseJSON = rest.registerNewAccount(requestJSON);
+
+    JSONObject response = null;
+    try {
+      response = new JSONObject(responseJSON);
+    } catch(JSONException e) {
+      Log.e("luper","=== FAILED TO PARSE RESPONSE JSON FROM /api/auth/register", e);
+      Log.e("luper","=== RESPONSE (which failed to parse as JSON) WAS:");
+      Log.e("luper","=== "+responseJSON);
+    }
+    showProgress(false);
+    try {
+      if(isResponseSuccessful(response)) {
+        registrationSuccess(response.getLong("insertId"), email);
       } else {
         registrationFailure(response.getString("message"));
       }
-    } catch(org.json.JSONException e) {
-      registrationFailure(e.getMessage());
+    } catch(JSONException e) {
+      Log.e("luper", "=== POST-PARSE JSON EXCEPTION: ", e);
     }
   }
 
   @UiThread
-  public void registrationSuccess(long userid) {
-    DialogFactory.alert(getActivity(), "Registration Complete!",
-      "Your new account has been registered!  Please use the login form.");
+  public void registrationSuccess(long userId, String email) {
+    showProgress(false);
+    Activity activity = getActivity();
+    EditText editEmail     = (EditText) activity.findViewById(R.id.register_email);
+    EditText editPassword  = (EditText) activity.findViewById(R.id.register_password);
+    EditText editPassword2 = (EditText) activity.findViewById(R.id.register_password2);
+    EditText editUsername  = (EditText) activity.findViewById(R.id.register_username);
+    editEmail.setText("");
+    editPassword.setText("");
+    editPassword2.setText("");
+    editUsername.setText("");
+    final LuperLoginActivity a = (LuperLoginActivity) activity;
+    final String e = email;
+    DialogFactory.alert(activity, "Registration Complete!",
+      "Your new account has been registered!  Please re-enter your password to log in.",
+      new Lambda.VoidCallback() {
+        public void go() {
+          a.prefillLoginForm(e);
+        }
+      });
   }
 
   @UiThread
   public void registrationFailure(String errorMessage) {
-    DialogFactory.alert(getActivity(), "Registration Failed!",
-      errorMessage);
+    showProgress(false);
+    DialogFactory.alert(getActivity(), "Registration Failed!", errorMessage);
+  }
+
+  public boolean isResponseSuccessful(JSONObject response) {
+    try {
+      return response.getBoolean("success");
+    } catch(Exception e) {
+      Log.e("luper","=== A REGISTRATION API RESPONSE WAS UNSUCCESSFUL === Exception: ", e);
+      return false;
+    }
+  }
+
+  public static String bytesToHex(byte[] bytes) {
+    final char[] hexArray = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'};
+    char[] hexChars = new char[bytes.length * 2];
+    int v;
+    for ( int j = 0; j < bytes.length; j++ ) {
+      v = bytes[j] & 0xFF;
+      hexChars[j * 2] = hexArray[v >>> 4];
+      hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+    }
+    return new String(hexChars);
   }
 
   /**
    * Shows the progress UI and hides the register form.
    */
   @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-  private void showProgress(final boolean show) {
+  @UiThread
+  public void showProgress(final boolean show) {
     Activity a = getActivity();
     final View mRegisterFormView = a.findViewById(R.id.register_form);
     final View mRegisterStatusView = a.findViewById(R.id.register_status);
