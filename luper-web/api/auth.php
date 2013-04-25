@@ -58,5 +58,5 @@ function getKnownSimpleHashForUser($db, $email) {
   $query->execute();
   $obj = $query->fetchObject();
   if(!$obj) return false;
-  return $query->fetchObject()->passwordHash;
+  return $obj->passwordHash;
 }
