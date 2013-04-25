@@ -219,8 +219,8 @@ public class TabLoginFragment extends Fragment {
 
   @UiThread
   public void loginSuccess() {
-    mEmailView.setText("");
-    mPasswordView.setText("");
+    if(mEmailView != null) mEmailView.setText("");
+    if(mPasswordView != null) mPasswordView.setText("");
     Intent intent = new Intent(getActivity(), LuperMainActivity_.class);
     startActivity(intent);
   }
