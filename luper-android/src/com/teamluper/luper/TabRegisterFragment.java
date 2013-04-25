@@ -152,19 +152,25 @@ public class TabRegisterFragment extends Fragment {
   @UiThread
   public void registrationSuccess(long userId, String email) {
     showProgress(false);
-    Activity a = getActivity();
-    EditText editEmail     = (EditText) a.findViewById(R.id.register_email);
-    EditText editPassword  = (EditText) a.findViewById(R.id.register_password);
-    EditText editPassword2 = (EditText) a.findViewById(R.id.register_password2);
-    EditText editUsername  = (EditText) a.findViewById(R.id.register_username);
+    Activity activity = getActivity();
+    EditText editEmail     = (EditText) activity.findViewById(R.id.register_email);
+    EditText editPassword  = (EditText) activity.findViewById(R.id.register_password);
+    EditText editPassword2 = (EditText) activity.findViewById(R.id.register_password2);
+    EditText editUsername  = (EditText) activity.findViewById(R.id.register_username);
     editEmail.setText("");
     editPassword.setText("");
     editPassword2.setText("");
     editUsername.setText("");
-    ((LuperLoginActivity) getActivity()).prefillLoginForm(email);
-    DialogFactory.alert(getActivity(), "Registration Complete!",
-      "Your new account has been registered!  Please re-enter your password to log in.");
-  }
+    final LuperLoginActivity a = (LuperLoginActivity) activity;
+    final String e = email;
+    DialogFactory.alert(activity, "Registration Complete!",
+      "Your new account has been registered!  Please re-enter your password to log in.",
+      new Lambda.VoidCallback() {
+        public void go() {
+          a.prefillLoginForm(e);
+        }
+      });
+  } 
 
   @UiThread
   public void registrationFailure(String errorMessage) {
