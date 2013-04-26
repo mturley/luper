@@ -28,6 +28,10 @@ public class DragThingPlayhead extends Playhead{
 
   //constructor!
 
+  public DragThingPlayhead(Context context) {
+    super(context);
+  }
+
   public DragThingPlayhead(Context context, AttributeSet attribute, int style) {
     super(context, attribute, style);
   }

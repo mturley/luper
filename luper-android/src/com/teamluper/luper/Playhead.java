@@ -40,7 +40,7 @@ public class Playhead extends View {
   }
 
 
-  public void draw(Canvas canvas) {
+  public void onDraw(Canvas canvas) {
       canvas.drawLine(X, STARTY, X, ENDY, mpaint);
      invalidate();
   }

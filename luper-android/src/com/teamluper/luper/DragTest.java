@@ -3,6 +3,7 @@ package com.teamluper.luper;
 import android.os.Bundle;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.androidlearner.widget.DragThing;
+import com.androidlearner.widget.DragThingPlayhead;
 import com.googlecode.androidannotations.annotations.EActivity;
 
 
@@ -11,6 +12,7 @@ public class DragTest extends SherlockActivity {
 	
 	//the widget. why can't it be a class? :/
 	DragThing deMovingTxt;
+  DragThingPlayhead theplayhead;
 	int [] paramz;
 
 	@Override
@@ -20,7 +22,9 @@ public class DragTest extends SherlockActivity {
 
 		//the draggable text. Takes from xml
 		deMovingTxt = (DragThing) findViewById(R.id.detext);
-	}
+    theplayhead = new DragThingPlayhead(this);
+    setContentView(theplayhead);
+  }
 
 	@Override
 	protected void onPause() {
