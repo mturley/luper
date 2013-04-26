@@ -52,7 +52,7 @@ public class SQLiteDataSource {
     return getUserWhere("_id = " + id);
   }
   public User getUserByEmail(String email) {
-    return getUserWhere("email = " + email);
+    return getUserWhere("email = '" + email + "'");
   }
   public User getUserWhere(String where) {
     Cursor cursor = database.query("Users", null,
