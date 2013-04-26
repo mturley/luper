@@ -1,6 +1,7 @@
 package com.teamluper.luper;
 
 import android.content.Context;
+import android.util.AttributeSet;
 import android.view.View;
 
 //playhead class view to be implemented --Eric
@@ -13,6 +14,15 @@ public class Playhead extends View {
     super(context);
     init();
   }
+
+  public Playhead(Context context, AttributeSet attribute, int style) {
+    super(context, attribute, style);
+  }
+
+  public Playhead(Context context, AttributeSet attribute) {
+    this(context, attribute, 0);
+  }
+
   public void init(){
 //      this.setX(this.getStartTime());
 //      this.setY(5000);
