@@ -132,16 +132,13 @@ public class TrackView extends RelativeLayout {
 		
 		this.addView(trackControl);
 //		testing...
-<<<<<<< HEAD
-        //Clip clip1 = new Clip(); clip1.begin = 100; clip1.end = 350; clip1.duration = 250;
-        Clip clip2 = new Clip(); clip2.begin = 100; clip2.end = 450; clip2.duration = 450;
-=======
+
         //Clip clip1 = new Clip(); clip1.begin = 100; clip1.end = 4000; clip1.duration = 3900;
         //Clip clip2 = new Clip(); clip2.begin = 0; clip2.end = 450; clip2.duration = 450;
->>>>>>> f4c2bf361d5a95c6ff4f807c667f22e285d47d56
+
         ColorChipButton chip;
         //this.associated.putClip(clip1);
-        this.associated.putClip(clip2);
+        //this.associated.putClip(clip2);
         for(int i = 0; i < this.associated.clips.size(); i++){
         	System.out.println("Here " + this.associated.getClips().get(i).begin);
         	chip = new ColorChipButton(this.getContext(), this.associated.getClips().get(i));
