@@ -38,8 +38,9 @@ public class SQLiteDataSource {
     dbHelper.close();
   }
 
-  public User createUser(String username, String email, String linkedFacebookID) {
+  public User createUser(long id, String username, String email) {
     ContentValues values = new ContentValues();
+    values.put("_id", id);
     values.put("username", username);
     values.put("email", email);
     values.put("isActiveUser", 1);
@@ -75,6 +76,11 @@ public class SQLiteDataSource {
     User u = cursorToUser(cursor);
     cursor.close();
     return u;
+  }
+  public void setActiveUser(User user) {
+    ContentValues values = new ContentValues();
+    values.put("isActiveUser", 1);
+    database.update("Users", values, "_id = "+user.getId(), null);
   }
   public void logoutActiveUser() {
     ContentValues values = new ContentValues();
@@ -228,6 +234,7 @@ public class SQLiteDataSource {
 
   // database-cursor-to-object conversion
   private User cursorToUser(Cursor cursor) {
+    if(cursor.getCount() != 1) return null;
     User user = new User(this,
       cursor.getLong(cursor.getColumnIndex("_id")),
       cursor.getString(cursor.getColumnIndex("username")),
@@ -241,6 +248,7 @@ public class SQLiteDataSource {
   }
 
   private Sequence cursorToSequence(Cursor cursor) {
+    if(cursor.getCount() != 1) return null;
     Sequence sequence = new Sequence(this,
       cursor.getLong(cursor.getColumnIndex("_id")),
       cursor.getLong(cursor.getColumnIndex("ownerUserID")),
@@ -252,6 +260,7 @@ public class SQLiteDataSource {
     return sequence;
   }
   private Track cursorToTrack(Cursor cursor) {
+    if(cursor.getCount() != 1) return null;
     Track track = new Track(this,
       cursor.getLong(cursor.getColumnIndex("_id")),
       cursor.getLong(cursor.getColumnIndex("ownerUserID")),
@@ -265,6 +274,7 @@ public class SQLiteDataSource {
   }
 
   private Clip cursorToClip(Cursor cursor) {
+    if(cursor.getCount() != 1) return null;
     Clip clip = new Clip(this,
       cursor.getLong(cursor.getColumnIndex("_id")),
       cursor.getLong(cursor.getColumnIndex("ownerUserID")),
@@ -281,6 +291,7 @@ public class SQLiteDataSource {
   }
 
   private AudioFile cursorToFile(Cursor cursor) {
+    if(cursor.getCount() != 1) return null;
     AudioFile file = new AudioFile(this,
       cursor.getLong(cursor.getColumnIndex("_id")),
       cursor.getLong(cursor.getColumnIndex("ownerUserID")),
