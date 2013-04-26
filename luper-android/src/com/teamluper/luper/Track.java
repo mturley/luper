@@ -28,7 +28,7 @@ public class Track {
 	private SQLiteDataSource dataSource;
 
 	// references to relevant data
-	public ArrayList<Clip> clips = new ArrayList<Clip>();
+	public ArrayList<Clip> clips;
 
 	// Mike's constructor
   // NOTE: DO NOT CALL THIS CONSTRUCTOR DIRECTLY unless in a cursorToTrack method.
@@ -44,6 +44,7 @@ public class Track {
 	  this.isLocked = isLocked;
 	  this.playbackOptions = playbackOptions;
 	  this.isDirty = isDirty;
+    this.clips = new ArrayList<Clip>();
 	}
 	// temporary constructor for compatability with other files
 	public Track() {

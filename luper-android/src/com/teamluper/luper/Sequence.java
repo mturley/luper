@@ -77,6 +77,9 @@ public class Sequence {
   }
 
   public boolean isReady() { return this.isReady; }
+  public void setReady(boolean ready) {
+    this.isReady = ready;
+  }
 
   public void loadAllTrackData() {
     this.tracks = dataSource.getTracksBySequenceId(this.id);

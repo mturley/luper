@@ -1,17 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path=".apt_generated"/>
-	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
-	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/Android 4.2.2 Platform"/>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="gen"/>
-<<<<<<< HEAD
-	<classpathentry combineaccessrules="false" kind="src" path="/facebook"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/actionbarsherlock"/>
-=======
-	<classpathentry combineaccessrules="false" kind="src" path="/actionbarsherlock"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/facebook"/>
->>>>>>> f4c2bf361d5a95c6ff4f807c667f22e285d47d56
-	<classpathentry kind="output" path="bin/classes"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry kind="output" path="bin"/>
 </classpath>

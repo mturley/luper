@@ -105,13 +105,25 @@ public class LuperProjectEditorActivity extends SherlockActivity {
 
     // TODO: we only want to load stuff if we don't already have it loaded...
     // onCreate gets called a bunch of times, so be careful only to load stuff once per open project
-    loadDataInForeground();
+    //loadDataInForeground();
+
+    sequence.tracks = dataSource.getTracksBySequenceId(sequence.getId());
+    for(Track track : sequence.tracks) {
+      long trackId = track.getId();
+      ArrayList<Clip> clips = dataSource.getClipsByTrackId(trackId);
+      track.clips = clips;
+      for(Clip clip : track.clips) {
+        clip.audioFile = dataSource.getAudioFileById(clip.getAudioFileID());
+      }
+    }
+    sequence.setReady(true);
 
     final ActionBar bar = getSupportActionBar();
     bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS); // Gives us Tabs!
 
     horz.addView(base);
     vert.addView(horz);
+    setContentView(vert);
 
     render();
   }
@@ -175,7 +187,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     int clipsTraversed = 0;
     // RENDERING ROUTINE STARTS HERE
     DialogFactory.alert(this, "RENDER","Render is Happening, and sequence.isReady = "+sequence.isReady());
-//    if(sequence.isReady()) {
+    if(sequence.isReady()) {
 //      // draw stuff in it
       for(Track track : sequence.tracks) {
         RelativeLayout tracklayout = new RelativeLayout(this);
@@ -197,9 +209,9 @@ public class LuperProjectEditorActivity extends SherlockActivity {
         }
       }
       DialogFactory.alert(this,"Done with render sequence","Traversed "+tracksTraversed+" tracks and "+clipsTraversed+" clips.");
-    //}
-
-    setContentView(vert);
+    }
+    vert.invalidate();
+    //setContentView(vert);
   }
 
   @Override
@@ -426,24 +438,13 @@ public class LuperProjectEditorActivity extends SherlockActivity {
       mRecorder = null;
   }
 
-  @Background
-  public void loadDataInBackground() {
-    if(sequence == null || sequence.isReady()) return;
-    sequence.loadAllTrackData();
-    render();
-  }
-
+  /*
   @UiThread
   public void loadDataInForeground() {
     if(sequence == null || sequence.isReady()) return;
     sequence.loadAllTrackData();
   }
-
-  @Background
-  public void loadAudioInBackground() {
-    if(sequence == null) return;
-    sequence.loadAllTrackAudio();
-  }
+  */
 
   @UiThread
   public void alert(String message) {

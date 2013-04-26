@@ -149,6 +149,7 @@ public class SQLiteDataSource {
   public AudioFile getAudioFileById(long id) {
     Cursor cursor = database.query("Files", null,
       "_id = " + id, null, null, null, null);
+    cursor.moveToFirst();
     AudioFile f = cursorToFile(cursor);
     cursor.close();
     return f;
@@ -215,8 +216,8 @@ public class SQLiteDataSource {
     return tracks;
   }
 
-  public List<Clip> getClipsByTrackId(long trackId) {
-    List<Clip> clips = new ArrayList<Clip>();
+  public ArrayList<Clip> getClipsByTrackId(long trackId) {
+    ArrayList<Clip> clips = new ArrayList<Clip>();
     String[] selectionArgs = new String[1];
     selectionArgs[0] = ""+trackId;
     Cursor cursor = database.query("Clips", null, "parentTrackID = ?",
@@ -234,7 +235,7 @@ public class SQLiteDataSource {
 
   // database-cursor-to-object conversion
   private User cursorToUser(Cursor cursor) {
-    if(cursor.getCount() != 1) return null;
+    if(cursor.getCount() < 1) return null;
     User user = new User(this,
       cursor.getLong(cursor.getColumnIndex("_id")),
       cursor.getString(cursor.getColumnIndex("username")),
@@ -248,7 +249,7 @@ public class SQLiteDataSource {
   }
 
   private Sequence cursorToSequence(Cursor cursor) {
-    if(cursor.getCount() != 1) return null;
+    if(cursor.getCount() < 1) return null;
     Sequence sequence = new Sequence(this,
       cursor.getLong(cursor.getColumnIndex("_id")),
       cursor.getLong(cursor.getColumnIndex("ownerUserID")),
@@ -260,7 +261,7 @@ public class SQLiteDataSource {
     return sequence;
   }
   private Track cursorToTrack(Cursor cursor) {
-    if(cursor.getCount() != 1) return null;
+    if(cursor.getCount() < 1) return null;
     Track track = new Track(this,
       cursor.getLong(cursor.getColumnIndex("_id")),
       cursor.getLong(cursor.getColumnIndex("ownerUserID")),
@@ -274,11 +275,11 @@ public class SQLiteDataSource {
   }
 
   private Clip cursorToClip(Cursor cursor) {
-    if(cursor.getCount() != 1) return null;
+    if(cursor.getCount() < 1) return null;
     Clip clip = new Clip(this,
       cursor.getLong(cursor.getColumnIndex("_id")),
       cursor.getLong(cursor.getColumnIndex("ownerUserID")),
-      cursor.getLong(cursor.getColumnIndex("parentSequenceID")),
+      cursor.getLong(cursor.getColumnIndex("parentTrackID")),
       cursor.getLong(cursor.getColumnIndex("audioFileID")),
       cursor.getInt(cursor.getColumnIndex("startTime")),
       cursor.getInt(cursor.getColumnIndex("durationMS")),
@@ -291,7 +292,7 @@ public class SQLiteDataSource {
   }
 
   private AudioFile cursorToFile(Cursor cursor) {
-    if(cursor.getCount() != 1) return null;
+    if(cursor.getCount() < 1) return null;
     AudioFile file = new AudioFile(this,
       cursor.getLong(cursor.getColumnIndex("_id")),
       cursor.getLong(cursor.getColumnIndex("ownerUserID")),
