@@ -5,6 +5,8 @@ local/
 luper-android/local.properties
 luper-android/local/
 luper-android-test/local.properties
+.idea
+luper-android/.idea
 *.dex
 *.class
 *.classpath

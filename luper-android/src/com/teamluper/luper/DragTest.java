@@ -33,7 +33,8 @@ public class DragTest extends SherlockActivity {
 	protected void onResume() {
 		super.onResume();
 		//updates the array in DragThing
-		if(paramz != null) deMovingTxt.layout(paramz[0] , paramz[1], paramz[2], paramz[3]);
+		if(paramz != null) deMovingTxt.layout(paramz[0] , 0, paramz[2], 0);
+		//if(paramz != null) deMovingTxt.layout(paramz[0] , paramz[1], paramz[2], paramz[3]);
 	}
 
 

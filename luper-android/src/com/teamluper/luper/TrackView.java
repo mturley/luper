@@ -18,6 +18,7 @@ package com.teamluper.luper;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -31,11 +32,16 @@ import android.widget.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.androidlearner.widget.DragThing;
 import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EView;
 import com.googlecode.androidannotations.annotations.UiThread;
 import com.teamluper.luper.AudioRecorderTestActivity.PlayButton;
 import com.teamluper.luper.AudioRecorderTestActivity.playTrackButton;
+import android.os.Bundle;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.androidlearner.widget.DragThing;
+import com.googlecode.androidannotations.annotations.EActivity;
 
 /**
  * A custom view for a color chip for an event that can be drawn differently
@@ -46,6 +52,9 @@ import com.teamluper.luper.AudioRecorderTestActivity.playTrackButton;
 public class TrackView extends RelativeLayout {
 	private static final String LOG_TAG = "TrackView";
 	
+	DragThing deMovingTxt;
+	int [] paramz;
+	
 	private String lastRecordedFileName = null;
 	private AudioFile lastRecordedFile = null;
 
@@ -55,10 +64,13 @@ public class TrackView extends RelativeLayout {
     private PlayButton   mPlayButton = null;
     private MediaPlayer   mPlayer = null;
 
+    private Button mBrowseButton;
     private TextView fileSelected;
+    private int MediaFetchResultCode = 11;
     
     private SQLiteDataSource dataSource;
 
+    private Clip newClip;
     Track associated;
 
 	//the track that will be associated with this TrackView
@@ -76,7 +88,7 @@ public class TrackView extends RelativeLayout {
 	//set a click listener for the buttons that will activate promptDialog() when clicked
 	OnClickListener clicker = new OnClickListener(){
 		public void onClick(View v){
-			promptDialog(0); // later on this will be the time corresponding to where in the empty timeline we touched.
+			promptDialog(100); // later on this will be the time corresponding to where in the empty timeline we touched.
 			// TODO
 		}
 	};
@@ -86,6 +98,19 @@ public class TrackView extends RelativeLayout {
 		}
 	};
 
+	protected void onPause() {
+		//super.onPause();
+		//gets the current layout
+		paramz = deMovingTxt.getCurrent();
+	}
+
+	protected void onResume() {
+		//super.onResume();
+		//updates the array in DragThing
+		if(paramz != null) deMovingTxt.layout(paramz[0] , 0, paramz[2], 0);
+		//if(paramz != null) deMovingTxt.layout(paramz[0] , paramz[1], paramz[2], paramz[3]);
+	}
+	
 	public void init(){
 		mPlayer = new MediaPlayer();
 		
@@ -110,7 +135,7 @@ public class TrackView extends RelativeLayout {
 
 		this.addView(trackControl);
 //		testing...
-        //Clip clip1 = new Clip(); clip1.begin = 100; clip1.end = 350; clip1.duration = 250;
+        //Clip clip1 = new Clip(); clip1.begin = 100; clip1.end = 4000; clip1.duration = 3900;
         //Clip clip2 = new Clip(); clip2.begin = 0; clip2.end = 450; clip2.duration = 450;
         ColorChipButton chip;
         //this.associated.putClip(clip1);
@@ -123,12 +148,15 @@ public class TrackView extends RelativeLayout {
         	this.addView(chip);
         }
 	}
+	
 
 	public void promptDialog(int startTime){
 		//our custom layout for inside the dialog
 		LinearLayout custom = new LinearLayout(this.getContext());
 		custom.setOrientation(LinearLayout.VERTICAL);
 
+		deMovingTxt = (DragThing) findViewById(R.id.detext);
+		
 		LinearLayout ll = new LinearLayout(this.getContext());
 		mRecordButton = new RecordButton(this.getContext());
         ll.addView(mRecordButton,
@@ -138,8 +166,15 @@ public class TrackView extends RelativeLayout {
                     0));
 
         LinearLayout ll2 = new LinearLayout(this.getContext());
+		mBrowseButton = new Button(this.getContext());
+		mBrowseButton.setText("Browse");
         fileSelected = new AutoCompleteTextView(this.getContext());
         fileSelected.setHint("Select a File");
+        ll2.addView(mBrowseButton,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        0));
         ll2.addView(fileSelected,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.FILL_PARENT,
@@ -156,6 +191,20 @@ public class TrackView extends RelativeLayout {
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
+        custom.addView(deMovingTxt,
+        		new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                0));
+        
+      //starts a new activity/intent that activates the FileSelector activity
+//        mBrowseButton.setOnClickListener(new View.OnClickListener() {
+//        	   @Override
+//        	   public void onClick(View v) {
+//        	    Intent intent = new Intent(TrackView.this.getContext(), FileSelectorActivity.class);
+//        	    TrackView.this.startActivityForResult(intent, MediaFetchResultCode);
+//        	   }
+//        	  });
         
         final int finalStartTime = startTime;
         final Track finalTrack = associated;
@@ -167,9 +216,11 @@ public class TrackView extends RelativeLayout {
 		        public void onClick(DialogInterface dialog, int whichButton) {
 		        	//want it to pass a new clip back to the editor panel and add it to the screen
 		        	//NEED TO ADD CLIP TO THE TRACK
-		        	Clip newClip = dataSource.createClip(finalTrack, lastRecordedFile, finalStartTime);
-		        	associated.putClip(newClip);
-		        	
+//                    Clip newClip = dataSource.createClip(finalTrack, lastRecordedFile, finalStartTime);
+//                    associated.putClip(newClip);
+                //finishRecording(associated, lastRecordedFile, finalStartTime);
+		        	newClip = dataSource.createClip(associated, lastRecordedFile, finalStartTime);
+		        	associated.putClip(newClip);		
 		        }
 		    })
 		    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -180,7 +231,11 @@ public class TrackView extends RelativeLayout {
 			.show();
 
 	}
-
+    public void finishRecording(Track track, AudioFile file, int startTime)
+    {
+        Clip newClip = dataSource.createClip(track, lastRecordedFile, startTime);
+        associated.putClip(newClip);
+    }
     class RecordButton extends Button {
         boolean mStartRecording = true;
 
@@ -239,7 +294,8 @@ public class TrackView extends RelativeLayout {
         mRecorder.stop();
         mRecorder.release();
 
-        lastRecordedFile = dataSource.createAudioFile(dataSource.getActiveUser(), lastRecordedFileName);
+//        lastRecordedFile = dataSource.createAudioFile(dataSource.getActiveUser(), lastRecordedFileName);
+//        lastRecordedFile = dataSource.createAudioFile(new User(dataSource, (long)-1, "user", "user@user.user", true, (long)-1, "{}", false), lastRecordedFileName);
         lastRecordedFile.setReadyOnClient(true);
 
         fileSelected.setText(lastRecordedFileName);
@@ -294,6 +350,8 @@ public class TrackView extends RelativeLayout {
           mPlayer = null;
         }
       }
+    
+    
 }
 
 

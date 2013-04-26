@@ -16,8 +16,10 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import com.actionbarsherlock.app.ActionBar;
@@ -46,6 +48,8 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   private MediaPlayer   mPlayer = null;
   private Track playBackTest = new Track ();
   private AudioManager audioManager;
+  private ScrollView vert;
+  private HorizontalScrollView horz;
   private LinearLayout base;
 
   // TODO these will be moved to within Sequence, and accessed with
@@ -56,6 +60,8 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   @Override
   public void onCreate(Bundle icicle) {
     super.onCreate(icicle);
+    vert = new ScrollView(this);
+    horz = new HorizontalScrollView(this);
     base = new LinearLayout(this);
     base.setId(1337);
     base.setBackgroundColor(Color.parseColor("#e2dfd8"));
@@ -88,6 +94,9 @@ public class LuperProjectEditorActivity extends SherlockActivity {
 
     final ActionBar bar = getSupportActionBar();
     bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS); // Gives us Tabs!
+
+    horz.addView(base);
+    vert.addView(horz);
 
     render();
   }
@@ -156,65 +165,20 @@ public class LuperProjectEditorActivity extends SherlockActivity {
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
         tracksTraversed++;
+
+        ColorChipButton chip;
+
         for(Clip clip : track.clips) {
           // render the clip
+        	chip = new ColorChipButton(this, clip);
+        	tv.addView(chip);
           clipsTraversed++;
         }
       }
       DialogFactory.alert(this,"Done with render sequence","Traversed "+tracksTraversed+" tracks and "+clipsTraversed+" clips.");
     //}
 
-
-
-
-
-
-
-        /* TESTS FUNCTIONALLITY OF THE TRACK VIEW RENDERING */
-    Clip clip1 = new Clip(); clip1.begin = 0; clip1.end = 500; clip1.duration = 500;
-    Clip clip2 = new Clip(); clip2.begin = 250; clip2.end = 1000; clip2.duration = 650;
-    Clip clip3 = new Clip(); clip3.begin = 100; clip3.end = 600; clip3.duration = 500;
-
-//        TrackView track1 = new TrackView(this);
-
-//        ImageButton addClipButton = new ImageButton(this);
-//        addClipButton.setImageResource(R.drawable.add);
-//
-//        track1.addView(addClipButton);
-
-//        RelativeLayout track1 = new RelativeLayout(this);
-//        RelativeLayout track2 = new RelativeLayout(this);
-//        RelativeLayout track3 = new RelativeLayout(this);
-//
-//        track1.addView(chip1);
-//        track2.addView(chip2);
-//        track3.addView(chip3);
-//
-//        track1.setPadding(0, 10, 0, 5);
-//        track2.setPadding(0, 10, 0, 5);
-//        track3.setPadding(0, 10, 0, 5);
-//
-//        chip1.setBackgroundColor(Color.GRAY);
-//        chip2.setBackgroundColor(Color.RED);
-//        chip3.setBackgroundColor(Color.WHITE);
-
-//        TextView timelinetxt = new TextView(this);
-//        timelinetxt.setText("_____|__________________|___________________|___________________|___________________|_________\n");
-
-//        base.addView(track1,
-//                new RelativeLayout.LayoutParams(
-//                        ViewGroup.LayoutParams.WRAP_CONTENT,
-//                        ViewGroup.LayoutParams.WRAP_CONTENT));
-//        base.addView(track2,
-//                new RelativeLayout.LayoutParams(
-//                        ViewGroup.LayoutParams.WRAP_CONTENT,
-//                        ViewGroup.LayoutParams.WRAP_CONTENT));
-//        base.addView(track3,
-//                new RelativeLayout.LayoutParams(
-//                        ViewGroup.LayoutParams.WRAP_CONTENT,
-//                        ViewGroup.LayoutParams.WRAP_CONTENT));
-
-    setContentView(base);
+    setContentView(vert);
   }
 
   @Override
@@ -262,8 +226,9 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     	}
     }
     if(item.getItemId() == R.id.editor_add_track) {
-      // TODO
-      incomplete = true;
+    	Track addTrack = dataSource.createTrack(sequence);
+    	TrackView addTrackView = new TrackView(this, addTrack, dataSource);
+    	base.addView(addTrackView);
     }
     if(item.getItemId() == R.id.editor_add_clip) {
       // TODO

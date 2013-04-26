@@ -45,12 +45,12 @@ public class ColorChipButton extends Button {
 
 	//returns the length of this button (and inherently its clip)
 	public int getLength(){
-		return this.associated.duration;
+		return this.associated.getDurationMS();
 	}
 
 	//returns the start time of the button (and clip) in this track
 	public int getStartTime(){
-		return this.associated.begin;
+		return this.associated.getStartTime();
 	}
 
 //	when you click the button this method is activated. currently it only shows the length of
