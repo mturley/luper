@@ -61,9 +61,8 @@ public class SQLiteDataSource {
     cursor.close();
     return u;
   }
-  public boolean deleteUser(long id) {
-    // TODO
-    return false;
+  public void deleteUser(long userID) {
+	  database.delete("Users", "_id = " + userID, null);
   }
 
   public User getActiveUser() {
@@ -85,7 +84,7 @@ public class SQLiteDataSource {
   public Sequence createSequence(User owner, String title) {
     if(title == "") title = "Untitled";
     ContentValues values = new ContentValues();
-    values.put("ownerUserID", 0); // FIXME use owner.getID
+    values.put("ownerUserID", owner.getId());
     values.put("title", title);
     values.put("isDirty", 1);
     long insertId = database.insert("Sequences", null, values);
@@ -101,10 +100,8 @@ public class SQLiteDataSource {
     return s;
   }
 
-  public void deleteSequence(Sequence sequence) {
-    long id = sequence.getId();
-    System.out.println("Sequence deleted with id: " + id);
-    database.delete("Sequences", "_id = " + id, null);
+  public void deleteSequence(long sequenceID) {
+    database.delete("Sequences", "_id = " + sequenceID, null);
   }
 
   public Track createTrack(Sequence parentSequence) {
@@ -125,8 +122,8 @@ public class SQLiteDataSource {
     cursor.close();
     return t;
   }
-  public void deleteTrack(Track track) {
-    // TODO
+  public void deleteTrack(long trackID) {
+	  database.delete("Tracks", "_id = " + trackID, null);
   }
 
   public AudioFile createAudioFile(User owner, String filePath) {
@@ -147,8 +144,8 @@ public class SQLiteDataSource {
     cursor.close();
     return f;
   }
-  public void deleteAudioFile(AudioFile file) {
-    // TODO
+  public void deleteAudioFile(long fileID) {
+	  database.delete("Files", "_id = " + fileID, null);
   }
 
   public Clip createClip(Track parentTrack, AudioFile file, int startTime) {
@@ -171,8 +168,8 @@ public class SQLiteDataSource {
     cursor.close();
     return c;
   }
-  public void deleteClip(Clip clip) {
-    // TODO
+  public void deleteClip(long clipID) {
+	  database.delete("Clips", "_id = " + clipID, null);
   }
 
 
