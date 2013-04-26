@@ -51,6 +51,16 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   private ScrollView vert;
   private HorizontalScrollView horz;
   private LinearLayout base;
+  private int currentTime;
+
+  public int getCurrentTime() {
+    return currentTime;
+  }
+
+  public void setCurrentTime(int currentTime) {
+    this.currentTime = currentTime;
+  }
+
 
     //this object is gonna move de move.
     //ClipThing deClip;
@@ -106,6 +116,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     render();
   }
 
+<<<<<<< HEAD
   //playhead class view to be implemented --Eric
   public class Playhead extends View{
     private final float STARTY = 0;
@@ -153,6 +164,8 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   //  }
   }
 
+=======
+>>>>>>> f4c2bf361d5a95c6ff4f807c667f22e285d47d56
   @UiThread
   public void render() {
 //    LinearLayout base = new LinearLayout(this);
@@ -178,8 +191,11 @@ public class LuperProjectEditorActivity extends SherlockActivity {
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
         tracksTraversed++;
+        ColorChipButton chip;
         for(Clip clip : track.clips) {
           // render the clip
+        	chip = new ColorChipButton(this, clip);
+        	tv.addView(chip);
           clipsTraversed++;
         }
       }

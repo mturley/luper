@@ -6,7 +6,12 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/Android 4.2.2 Platform"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
+<<<<<<< HEAD
 	<classpathentry combineaccessrules="false" kind="src" path="/facebook"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/actionbarsherlock"/>
+=======
+	<classpathentry combineaccessrules="false" kind="src" path="/actionbarsherlock"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/facebook"/>
+>>>>>>> f4c2bf361d5a95c6ff4f807c667f22e285d47d56
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

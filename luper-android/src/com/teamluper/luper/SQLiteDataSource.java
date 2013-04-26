@@ -38,8 +38,9 @@ public class SQLiteDataSource {
     dbHelper.close();
   }
 
-  public User createUser(String username, String email, String linkedFacebookID) {
+  public User createUser(long id, String username, String email) {
     ContentValues values = new ContentValues();
+    values.put("_id", id);
     values.put("username", username);
     values.put("email", email);
     values.put("isActiveUser", 1);
@@ -61,9 +62,8 @@ public class SQLiteDataSource {
     cursor.close();
     return u;
   }
-  public boolean deleteUser(long id) {
-    // TODO
-    return false;
+  public void deleteUser(long userID) {
+	  database.delete("Users", "_id = " + userID, null);
   }
 
   public User getActiveUser() {
@@ -76,6 +76,11 @@ public class SQLiteDataSource {
     cursor.close();
     return u;
   }
+  public void setActiveUser(User user) {
+    ContentValues values = new ContentValues();
+    values.put("isActiveUser", 1);
+    database.update("Users", values, "_id = "+user.getId(), null);
+  }
   public void logoutActiveUser() {
     ContentValues values = new ContentValues();
     values.put("isActiveUser", 0);
@@ -85,7 +90,7 @@ public class SQLiteDataSource {
   public Sequence createSequence(User owner, String title) {
     if(title == "") title = "Untitled";
     ContentValues values = new ContentValues();
-    values.put("ownerUserID", 0); // FIXME use owner.getID
+    values.put("ownerUserID", owner.getId());
     values.put("title", title);
     values.put("isDirty", 1);
     long insertId = database.insert("Sequences", null, values);
@@ -101,10 +106,8 @@ public class SQLiteDataSource {
     return s;
   }
 
-  public void deleteSequence(Sequence sequence) {
-    long id = sequence.getId();
-    System.out.println("Sequence deleted with id: " + id);
-    database.delete("Sequences", "_id = " + id, null);
+  public void deleteSequence(long sequenceID) {
+    database.delete("Sequences", "_id = " + sequenceID, null);
   }
 
   public Track createTrack(Sequence parentSequence) {
@@ -125,8 +128,8 @@ public class SQLiteDataSource {
     cursor.close();
     return t;
   }
-  public void deleteTrack(Track track) {
-    // TODO
+  public void deleteTrack(long trackID) {
+	  database.delete("Tracks", "_id = " + trackID, null);
   }
 
   public AudioFile createAudioFile(User owner, String filePath) {
@@ -147,8 +150,8 @@ public class SQLiteDataSource {
     cursor.close();
     return f;
   }
-  public void deleteAudioFile(AudioFile file) {
-    // TODO
+  public void deleteAudioFile(long fileID) {
+	  database.delete("Files", "_id = " + fileID, null);
   }
 
   public Clip createClip(Track parentTrack, AudioFile file, int startTime) {
@@ -171,8 +174,8 @@ public class SQLiteDataSource {
     cursor.close();
     return c;
   }
-  public void deleteClip(Clip clip) {
-    // TODO
+  public void deleteClip(long clipID) {
+	  database.delete("Clips", "_id = " + clipID, null);
   }
 
 
@@ -228,6 +231,7 @@ public class SQLiteDataSource {
 
   // database-cursor-to-object conversion
   private User cursorToUser(Cursor cursor) {
+    if(cursor.getCount() != 1) return null;
     User user = new User(this,
       cursor.getLong(cursor.getColumnIndex("_id")),
       cursor.getString(cursor.getColumnIndex("username")),
@@ -241,6 +245,7 @@ public class SQLiteDataSource {
   }
 
   private Sequence cursorToSequence(Cursor cursor) {
+    if(cursor.getCount() != 1) return null;
     Sequence sequence = new Sequence(this,
       cursor.getLong(cursor.getColumnIndex("_id")),
       cursor.getLong(cursor.getColumnIndex("ownerUserID")),
@@ -252,6 +257,7 @@ public class SQLiteDataSource {
     return sequence;
   }
   private Track cursorToTrack(Cursor cursor) {
+    if(cursor.getCount() != 1) return null;
     Track track = new Track(this,
       cursor.getLong(cursor.getColumnIndex("_id")),
       cursor.getLong(cursor.getColumnIndex("ownerUserID")),
@@ -265,6 +271,7 @@ public class SQLiteDataSource {
   }
 
   private Clip cursorToClip(Cursor cursor) {
+    if(cursor.getCount() != 1) return null;
     Clip clip = new Clip(this,
       cursor.getLong(cursor.getColumnIndex("_id")),
       cursor.getLong(cursor.getColumnIndex("ownerUserID")),
@@ -281,6 +288,7 @@ public class SQLiteDataSource {
   }
 
   private AudioFile cursorToFile(Cursor cursor) {
+    if(cursor.getCount() != 1) return null;
     AudioFile file = new AudioFile(this,
       cursor.getLong(cursor.getColumnIndex("_id")),
       cursor.getLong(cursor.getColumnIndex("ownerUserID")),
