@@ -169,4 +169,16 @@ $api->post('/auth-passwd', function() use ($api) {
   }
 });
 
+$api->get("/fetch-user/:email", function($email) use ($api) {
+  try {
+    $db = getDB();
+    $stmt = $db->prepare("SELECT * FROM Users WHERE email = :email");
+    $stmt->bindParam("email", $email);
+    $stmt->execute();
+    return json_encode($stmt->fetchObject());
+  } catch(PDOException $e) {
+    handlePDOException($api, $e);
+  }
+});
+
 $api->run();
