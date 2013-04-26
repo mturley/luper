@@ -80,6 +80,9 @@ public class SQLiteDataSource {
     ContentValues values = new ContentValues();
     values.put("isActiveUser", 1);
     database.update("Users", values, "_id = "+user.getId(), null);
+    values = new ContentValues();
+    values.put("isActiveUser", 0);
+    database.update("Users", values, "_id != "+user.getId(), null);
   }
   public void logoutActiveUser() {
     ContentValues values = new ContentValues();

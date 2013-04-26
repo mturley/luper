@@ -103,7 +103,8 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
   }
 
   public void skipLogin(View v) {
-    // TODO actually sign in to a dummy account, so we can refuse to launch the main activity if truly logged out.
+    User dummyUser = dataSource.getUserById(-1);
+    dataSource.setActiveUser(dummyUser);
     Intent intent = new Intent(this, LuperMainActivity_.class);
     startActivity(intent);
   }
