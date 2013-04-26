@@ -165,8 +165,11 @@ public class LuperProjectEditorActivity extends SherlockActivity {
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
         tracksTraversed++;
+        ColorChipButton chip;
         for(Clip clip : track.clips) {
           // render the clip
+        	chip = new ColorChipButton(this, clip);
+        	tv.addView(chip);
           clipsTraversed++;
         }
       }
