@@ -11,6 +11,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.facebook.Session;
+import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.UiThread;
 import com.googlecode.androidannotations.annotations.rest.RestService;
@@ -102,9 +103,15 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
     return dataSource;
   }
 
+  @Background
   public void skipLogin(View v) {
     User dummyUser = dataSource.getUserById(-1);
     dataSource.setActiveUser(dummyUser);
+    startMainActivity();
+  }
+
+  @UiThread
+  public void startMainActivity() {
     Intent intent = new Intent(this, LuperMainActivity_.class);
     startActivity(intent);
   }
