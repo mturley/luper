@@ -51,6 +51,16 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   private ScrollView vert;
   private HorizontalScrollView horz;
   private LinearLayout base;
+  private int currentTime;
+
+  public int getCurrentTime() {
+    return currentTime;
+  }
+
+  public void setCurrentTime(int currentTime) {
+    this.currentTime = currentTime;
+  }
+
 
   // TODO these will be moved to within Sequence, and accessed with
   // sequence.getClips() and sequence.getTracks(), etc.
