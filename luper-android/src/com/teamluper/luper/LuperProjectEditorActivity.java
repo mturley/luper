@@ -34,7 +34,7 @@ import com.teamluper.luper.TrackView.RecordButton;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
+import com.androidlearner.widget.ClipThing;
 
 @EActivity
 public class LuperProjectEditorActivity extends SherlockActivity {
@@ -52,6 +52,10 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   private HorizontalScrollView horz;
   private LinearLayout base;
 
+    //this object is gonna move de move.
+    //ClipThing deClip;
+    //int [] paramz;
+
   // TODO these will be moved to within Sequence, and accessed with
   // sequence.getClips() and sequence.getTracks(), etc.
   // ArrayList<Clip> clips = new ArrayList<Clip>();
@@ -68,6 +72,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
 
     base.setOrientation(LinearLayout.VERTICAL);
     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
 
     long ID = getIntent().getLongExtra("selectedProjectId", -1);
     if(ID == -1) {
@@ -112,10 +117,17 @@ public class LuperProjectEditorActivity extends SherlockActivity {
       init();
     }
     public void init(){
-//      this.setX(this.getStartTime());
-//      this.setY(5000);
-//      this.setWidth(this.getStartTime() + this.getLength());
+/*
+        //letz try to make sum magik happen!
+
+      Clip bokdebok = new Clip(); bokdebok.begin = 100; bokdebok.end = 450; bokdebok.duration = 450;
+      ColorChipButton bok;
+      bok = new ColorChipButton(this.getContext(), bokdebok);
+      bok.setBackgroundColor(Color.RED);
+      deClip = (ClipThing) bok;
+      */
     }
+
 
 //    public boolean onTouchEvent(MotionEvent event) {
 //      int action = event.getAction();
@@ -159,6 +171,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
         RelativeLayout tracklayout = new RelativeLayout(this);
         TrackView tv = new TrackView(this, track, dataSource);
         tracklayout.addView(tv);
+        //tv.addView(deClip);
         base.addView(tracklayout,
             new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -186,7 +199,16 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   protected void onResume() {
     if(!dataSource.isOpen()) dataSource.open();
     super.onResume();
+    //if(paramz != null) deClip.layout(paramz[0] , 0, paramz[2], 0);
   }
+
+
+    /*@Override
+    protected void onPause() {
+        super.onPause();
+        //gets the current layout
+        paramz = deClip.getCurrent();
+    }*/
 
   // #Creates the Actionbar
   @Override

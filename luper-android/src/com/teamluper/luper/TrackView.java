@@ -50,7 +50,7 @@ import com.googlecode.androidannotations.annotations.EActivity;
 @EView
 public class TrackView extends RelativeLayout {
 	private static final String LOG_TAG = "TrackView";
-	
+
 	DragThing deMovingTxt;
 	int [] paramz;
 	
@@ -78,8 +78,10 @@ public class TrackView extends RelativeLayout {
 		super(context);
 		associated = track;
 		this.dataSource = dataSource;
+		deMovingTxt = (DragThing) findViewById(R.id.detext);
 		init();
 	}
+	
 
 	//set a click listener for the buttons that will activate promptDialog() when clicked
 	OnClickListener clicker = new OnClickListener(){
@@ -94,18 +96,7 @@ public class TrackView extends RelativeLayout {
 		}
 	};
 
-	protected void onPause() {
-		//super.onPause();
-		//gets the current layout
-		paramz = deMovingTxt.getCurrent();
-	}
 
-	protected void onResume() {
-		//super.onResume();
-		//updates the array in DragThing
-		if(paramz != null) deMovingTxt.layout(paramz[0] , 0, paramz[2], 0);
-		//if(paramz != null) deMovingTxt.layout(paramz[0] , paramz[1], paramz[2], paramz[3]);
-	}
 	
 	public void init(){
 		mPlayer = new MediaPlayer();
@@ -116,6 +107,10 @@ public class TrackView extends RelativeLayout {
 //		as well as a button to add a clip to this track
 		LinearLayout trackControl = new LinearLayout(this.getContext());
 		trackControl.setOrientation(LinearLayout.VERTICAL);
+		
+		//wai doesnt this werrrkk???
+		//deMovingTxt = (DragThing) findViewById(R.id.detext);
+		//this.addView(deMovingTxt);
 
 //		create the addClipButton then set its image to add and add it to the trackControl
 		ImageButton addClipButton = new ImageButton(this.getContext());
@@ -129,20 +124,24 @@ public class TrackView extends RelativeLayout {
 		playButton.setOnClickListener(playClicker);
 		trackControl.addView(playButton);
 
+	
+		
 		this.addView(trackControl);
 //		testing...
         //Clip clip1 = new Clip(); clip1.begin = 100; clip1.end = 350; clip1.duration = 250;
-        //Clip clip2 = new Clip(); clip2.begin = 0; clip2.end = 450; clip2.duration = 450;
+        Clip clip2 = new Clip(); clip2.begin = 100; clip2.end = 450; clip2.duration = 450;
         ColorChipButton chip;
         //this.associated.putClip(clip1);
-        //this.associated.putClip(clip2);
+        this.associated.putClip(clip2);
         for(int i = 0; i < this.associated.clips.size(); i++){
         	System.out.println("Here " + this.associated.getClips().get(i).begin);
         	chip = new ColorChipButton(this.getContext(), this.associated.getClips().get(i));
         	chip.setBackgroundColor(Color.RED);
         	System.out.println("Chips x pos " + chip.associated.begin);
         	this.addView(chip);
+        	//this.addView(deMovingTxt);
         }
+        
 	}
 	
 
@@ -150,8 +149,6 @@ public class TrackView extends RelativeLayout {
 		//our custom layout for inside the dialog
 		LinearLayout custom = new LinearLayout(this.getContext());
 		custom.setOrientation(LinearLayout.VERTICAL);
-
-		deMovingTxt = (DragThing) findViewById(R.id.detext);
 		
 		LinearLayout ll = new LinearLayout(this.getContext());
 		mRecordButton = new RecordButton(this.getContext());
@@ -180,11 +177,7 @@ public class TrackView extends RelativeLayout {
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
-        custom.addView(deMovingTxt,
-        		new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                0));
+
         
         final int finalStartTime = startTime;
         final Track finalTrack = associated;

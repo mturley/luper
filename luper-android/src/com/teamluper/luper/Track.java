@@ -9,6 +9,8 @@ package com.teamluper.luper;
 
 import java.util.ArrayList;
 
+import com.androidlearner.widget.DragThing;
+
 public class Track {
   // Mike's database field variables
 	private long id;
@@ -18,6 +20,9 @@ public class Track {
 	private boolean isLocked;
 	private String playbackOptions;
 	private boolean isDirty; // dirty = contains unsynced changes
+	
+	DragThing deMovingTxt;
+	int [] paramz;
 
 	// Mike's database access variables
 	private SQLiteDataSource dataSource;
