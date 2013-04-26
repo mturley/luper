@@ -116,7 +116,6 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     render();
   }
 
-<<<<<<< HEAD
   //playhead class view to be implemented --Eric
   public class Playhead extends View{
     private final float STARTY = 0;
@@ -164,8 +163,6 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   //  }
   }
 
-=======
->>>>>>> f4c2bf361d5a95c6ff4f807c667f22e285d47d56
   @UiThread
   public void render() {
 //    LinearLayout base = new LinearLayout(this);

@@ -52,7 +52,7 @@ public interface LuperRestClient {
   String changeUserPassword(String requestJSON);
   // requestJSON must contain: email, oldPasswordAttemptHash, newPasswordHash
 
-  @Get("/api/fetch-user/:email")
+  @Get("/api/fetch-user/{email}")
   String fetchUserByEmail(String email);
 
 }
