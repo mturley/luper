@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
@@ -31,6 +32,10 @@ import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.UiThread;
 import com.teamluper.luper.TrackView.RecordButton;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.BitmapFactory;
+import android.graphics.Shader;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,6 +57,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   private HorizontalScrollView horz;
   private LinearLayout base;
   private int currentTime;
+
 
   public int getCurrentTime() {
     return currentTime;
@@ -78,7 +84,13 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     horz = new HorizontalScrollView(this);
     base = new LinearLayout(this);
     base.setId(1337);
-    base.setBackgroundColor(Color.parseColor("#e2dfd8"));
+    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+              LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
+    base.setLayoutParams(params);
+      Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.line);
+      BitmapDrawable bitmapDrawable = new BitmapDrawable(bmp);
+      bitmapDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
+      base.setBackgroundDrawable(bitmapDrawable);
 
     base.setOrientation(LinearLayout.VERTICAL);
     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
