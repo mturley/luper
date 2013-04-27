@@ -19,7 +19,11 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Environment;
@@ -106,6 +110,10 @@ public class TrackView extends RelativeLayout {
 		mPlayer = new MediaPlayer();
 		
 		this.setPadding(0, 10, 0, 5);
+        //LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+        //        LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        //layoutParams.setMargins(5, 0, 5, 0);
+        //this.setLayoutParams(layoutParams);
 
 //		add a linear layout to the left side that will have a playtrack button
 //		as well as a button to add a clip to this track
@@ -128,6 +136,7 @@ public class TrackView extends RelativeLayout {
 		playButton.setOnClickListener(playClicker);
 		trackControl.addView(playButton);
 
+        trackControl.setBackgroundColor(Color.parseColor("#50e2dfd8"));
 	
 		
 		this.addView(trackControl);
@@ -145,6 +154,15 @@ public class TrackView extends RelativeLayout {
         	chip.setBackgroundColor(Color.RED);
         	System.out.println("Chips x pos " + chip.associated.begin);
         	this.addView(chip);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            this.setLayoutParams(params);
+            Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.line);
+            BitmapDrawable bitmapDrawable = new BitmapDrawable(bmp);
+            bitmapDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
+            this.setBackgroundDrawable(bitmapDrawable);
+            //this.setBackgroundColor(Color.parseColor("#e2dfd8"));
+            //this.setBackgroundColor(Color.TRANSPARENT);
         	//this.addView(deMovingTxt);
         }
         

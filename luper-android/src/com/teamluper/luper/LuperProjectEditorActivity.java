@@ -85,12 +85,13 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     base = new LinearLayout(this);
     base.setId(1337);
     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-              LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
+              LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
     base.setLayoutParams(params);
       Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.line);
       BitmapDrawable bitmapDrawable = new BitmapDrawable(bmp);
       bitmapDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
       base.setBackgroundDrawable(bitmapDrawable);
+    // base.setBackgroundColor(Color.parseColor("#e2dfd8"));
 
     base.setOrientation(LinearLayout.VERTICAL);
     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);

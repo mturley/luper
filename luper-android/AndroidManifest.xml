@@ -67,6 +67,7 @@
                 android:value="com.teamluper.luper.LuperMainActivity_" />
         </activity>
 
+
         <activity
             android:name="com.teamluper.luper.LuperSettingsActivity_"
             android:label="@string/title_activity_luper_settings"
@@ -116,6 +117,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.teamluper.luper.LuperMainActivity_" />
         </activity>
+
+        <activity
+                android:name="com.teamluper.luper.LuperHelp_"
+                android:label="Help"
+                android:parentActivityName="com.teamluper.luper.LuperHelp_" >
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="com.teamluper.luper.LuperMainActivity_" />
+        </activity>
+
         <activity
             android:name="com.teamluper.luper.AudioRecorderTestActivity_"
             android:label="@string/title_activity_audio_recorder_test"
