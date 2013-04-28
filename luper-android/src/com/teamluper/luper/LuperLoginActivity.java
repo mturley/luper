@@ -69,11 +69,10 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
 		    // callback after Graph API response with user object
 		    @Override
 		    public void onCompleted(GraphUser user, Response response) {
-          String email = "";
-		    	//if (user != null) {
-		    	//	  TextView welcome = (TextView) findViewById(R.id.welcome);
-		    	//	  welcome.setText("Hello " + user.getName() + "!");
-		    	//	}
+		    	if (user != null) {
+		    		  TextView welcome = (TextView) findViewById(R.id.welcome);
+		    		  welcome.setText("Hello " + user.getName() + "!");
+		    		}
 		    }
 
 		  });
