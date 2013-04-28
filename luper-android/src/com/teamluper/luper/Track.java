@@ -20,7 +20,9 @@ public class Track {
 	private boolean isLocked;
 	private String playbackOptions;
 	private boolean isDirty; // dirty = contains unsynced changes
-	
+
+  private TrackView associatedView = null;
+
 	DragThing deMovingTxt;
 	int [] paramz;
 
@@ -96,6 +98,13 @@ public class Track {
     dataSource.updateInt("Tracks", this.id, "isDirty", (isDirty ? 1 : 0));
   }
 
+  public TrackView getAssociatedView() {
+    return this.associatedView;
+  }
+  public void setAssociatedView(TrackView v) {
+    this.associatedView = v;
+  }
+
   public void loadAllClipData() {
     this.clips = (ArrayList<Clip>) dataSource.getClipsByTrackId(this.id);
     for(Clip clip : this.clips) {
@@ -115,11 +124,11 @@ public class Track {
   {
     return clips.size();
   }
-  
+
   public ArrayList<Clip> getClips() {
 		return this.clips;
 	}
-  
+
   /*DEPRECATE OR DELETE
 	public void createPBList()
 	{

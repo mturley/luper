@@ -83,11 +83,11 @@ public class TrackView extends RelativeLayout {
 	//Track associated;
 
 	//constructor
-	public TrackView(LuperProjectEditorActivity context, Track track, SQLiteDataSource dataSource)
-	{
+	public TrackView(LuperProjectEditorActivity context, Track track, SQLiteDataSource dataSource) {
 		super(context);
     editorActivity = context;
 		associated = track;
+    track.setAssociatedView(this);
 		this.dataSource = dataSource;
 		deMovingTxt = (DragThing) findViewById(R.id.detext);
 		init();
