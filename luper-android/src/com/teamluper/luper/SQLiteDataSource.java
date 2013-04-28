@@ -8,8 +8,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SQLiteDataSource {
@@ -69,7 +71,7 @@ public class SQLiteDataSource {
     return u;
   }
   public boolean deleteUser(long userID) {
-	  int affected = database.delete("Users", "_id = ?", new String[]{ ""+userID });
+	  int affected = database.delete("Users", "_id = ?", new String[]{"" + userID});
     return affected == 1;
   }
 
@@ -188,6 +190,7 @@ public class SQLiteDataSource {
   public Clip getClipById(long id) {
     Cursor cursor = database.query("Clips", null,
       "_id = " + id, null, null, null, null);
+    cursor.moveToFirst();
     Clip c = cursorToClip(cursor);
     cursor.close();
     return c;
