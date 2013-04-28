@@ -226,6 +226,10 @@ public class LuperProjectEditorActivity extends SherlockActivity {
         //handle interrupted exceptions in a different way
         Log.e(LOG_TAG, "prepare() failed1");
       }*/
+      for(Track track  : sequence.tracks)
+      {
+        track.getAssociatedView().startPlayingTrackInBackground(); // doesn't actually run them in parallel - see trackview
+      }
 
     }
     if(item.getItemId() == R.id.editor_add_track) {
