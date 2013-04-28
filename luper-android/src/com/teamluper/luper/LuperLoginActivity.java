@@ -69,10 +69,11 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
 		    // callback after Graph API response with user object
 		    @Override
 		    public void onCompleted(GraphUser user, Response response) {
-		    	if (user != null) {
-		    		  TextView welcome = (TextView) findViewById(R.id.welcome);
-		    		  welcome.setText("Hello " + user.getName() + "!");
-		    		}
+          String email = "";
+		    	//if (user != null) {
+		    	//	  TextView welcome = (TextView) findViewById(R.id.welcome);
+		    	//	  welcome.setText("Hello " + user.getName() + "!");
+		    	//	}
 		    }
 
 		  });
@@ -171,8 +172,8 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
 
   @Background
   public void skipLogin(View v) {
-    User dummyUser = dataSource.getUserById(-1);
-//    dataSource.setActiveUser(dummyUser);
+    User dummyUser = dataSource.getUserById(1);
+    dataSource.setActiveUser(dummyUser);
     startMainActivity();
   }
 
