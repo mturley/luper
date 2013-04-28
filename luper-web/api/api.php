@@ -175,9 +175,7 @@ $api->get("/fetch-user/:email", function($email) use ($api) {
     $stmt = $db->prepare("SELECT * FROM Users WHERE email = :email");
     $stmt->bindParam("email", $email);
     $stmt->execute();
-    $obj = $stmt->fetchObject();
-    $api->getLog()->error("obj is: ".print_r($obj, true));
-    return json_encode($stmt->fetchObject());
+    echo json_encode($stmt->fetchObject());
   } catch(PDOException $e) {
     handlePDOException($api, $e);
   }
