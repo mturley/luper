@@ -1,33 +1,23 @@
 package com.teamluper.luper;
 
-// TODO: generalize this to all database tables, and do something more clever with the cursors.
-// TODO: instead of selection by id, use composite key of id and ownerUserId
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class SQLiteDataSource {
   // Database fields
   private SQLiteDatabase database = null;
   private SQLiteHelper dbHelper = null;
-  private long activeUserID;
+  private User activeUser = null;
   private Context context;
 
   public SQLiteDataSource(Context context) {
-    this(context, -1);
-  }
-  public SQLiteDataSource(Context context, long userID) {
     this.context = context;
     this.dbHelper = new SQLiteHelper(context);
-    activeUserID = userID;
   }
 
   public boolean isOpen() {
@@ -76,14 +66,16 @@ public class SQLiteDataSource {
   }
 
   public User getActiveUser() {
-    Cursor cursor = database.query("Users", null,
-      "isActiveUser = 1", null, null, null, null);
-    int numResults = cursor.getCount();
-    if(numResults < 1) return null;
-    cursor.moveToFirst();
-    User u = cursorToUser(cursor);
-    cursor.close();
-    return u;
+    if(activeUser == null) {
+      Cursor cursor = database.query("Users", null,
+        "isActiveUser = 1", null, null, null, null);
+      int numResults = cursor.getCount();
+      if(numResults < 1) return null;
+      cursor.moveToFirst();
+      activeUser = cursorToUser(cursor);
+      cursor.close();
+    }
+    return activeUser;
   }
   public void setActiveUser(User user) {
     ContentValues values = new ContentValues();

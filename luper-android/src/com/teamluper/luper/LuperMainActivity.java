@@ -211,7 +211,7 @@ public class LuperMainActivity extends SherlockFragmentActivity {
   }
 
   public void newProject(String title) {
-    Sequence newSequence = dataSource.createSequence(null, title);
+    Sequence newSequence = dataSource.createSequence(dataSource.getActiveUser(), title);
     ListView lv = (ListView) findViewById(R.id.projectsListView);
     @SuppressWarnings("unchecked")
     ArrayAdapter<Sequence> adapter = (ArrayAdapter<Sequence>) lv.getAdapter();
