@@ -147,6 +147,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.teamluper.luper.LuperDevToolsActivity_" />
         </activity>
+        <receiver android:name="com.teamluper.luper.LuperMainActivity_">
+            <intent-filter>
+                <action android:name="com.package.ACTION_LOGOUT" />
+            </intent-filter>
+        </receiver>
         
     </application>
 

@@ -15,6 +15,7 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -58,6 +59,14 @@ public class LuperMainActivity extends SherlockFragmentActivity {
   @Override
     protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    
+    /** Following the guide posted on Stackoverflow for creating broadcast receivers:
+     * http://stackoverflow.com/questions/3007998/on-logout-clear-activity-history-stack-preventing-back-button-from-opening-l
+     * registers a new broadcast receiver to handle logout intents
+    **/
+    
+//    IntentFilter intentFilter = new IntentFilter();
+//    intentFilter.setAction("com.package.ACTION_LOGOUT");
 
     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
