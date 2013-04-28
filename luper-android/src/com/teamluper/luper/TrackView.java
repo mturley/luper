@@ -58,20 +58,20 @@ public class TrackView extends RelativeLayout {
 
 	DragThing deMovingTxt;
 	int [] paramz;
-	
+
 	private String lastRecordedFileName = null;
 	private AudioFile lastRecordedFile = null;
 
     private RecordButton mRecordButton = null;
     private MediaRecorder mRecorder = null;
-    
+
     private PlayButton   mPlayButton = null;
     private MediaPlayer   mPlayer = null;
 
     private Button mBrowseButton;
     private TextView fileSelected;
     private int MediaFetchResultCode = 11;
-    
+
     private SQLiteDataSource dataSource;
 
     private Clip newClip;
@@ -89,7 +89,7 @@ public class TrackView extends RelativeLayout {
 		deMovingTxt = (DragThing) findViewById(R.id.detext);
 		init();
 	}
-	
+
 
 	//set a click listener for the buttons that will activate promptDialog() when clicked
 	OnClickListener clicker = new OnClickListener(){
@@ -105,10 +105,10 @@ public class TrackView extends RelativeLayout {
 	};
 
 
-	
+
 	public void init(){
 		mPlayer = new MediaPlayer();
-		
+
 		this.setPadding(0, 10, 0, 5);
         //LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
         //        LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -119,7 +119,7 @@ public class TrackView extends RelativeLayout {
 //		as well as a button to add a clip to this track
 		LinearLayout trackControl = new LinearLayout(this.getContext());
 		trackControl.setOrientation(LinearLayout.VERTICAL);
-		
+
 		//wai doesnt this werrrkk???
 		//deMovingTxt = (DragThing) findViewById(R.id.detext);
 		//this.addView(deMovingTxt);
@@ -137,8 +137,8 @@ public class TrackView extends RelativeLayout {
 		trackControl.addView(playButton);
 
         trackControl.setBackgroundColor(Color.parseColor("#50e2dfd8"));
-	
-		
+
+
 		this.addView(trackControl);
 //		testing...
 
@@ -165,15 +165,15 @@ public class TrackView extends RelativeLayout {
             //this.setBackgroundColor(Color.TRANSPARENT);
         	//this.addView(deMovingTxt);
         }
-        
+
 	}
-	
+
 
 	public void promptDialog(int startTime){
 		//our custom layout for inside the dialog
 		LinearLayout custom = new LinearLayout(this.getContext());
 		custom.setOrientation(LinearLayout.VERTICAL);
-		
+
 		LinearLayout ll = new LinearLayout(this.getContext());
 		mRecordButton = new RecordButton(this.getContext());
         ll.addView(mRecordButton,
@@ -209,7 +209,7 @@ public class TrackView extends RelativeLayout {
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
 
-        
+
       //starts a new activity/intent that activates the FileSelector activity
 //        mBrowseButton.setOnClickListener(new View.OnClickListener() {
 //        	   @Override
@@ -218,7 +218,7 @@ public class TrackView extends RelativeLayout {
 //        	    TrackView.this.startActivityForResult(intent, MediaFetchResultCode);
 //        	   }
 //        	  });
-        
+
         final int finalStartTime = startTime;
         final Track finalTrack = associated;
 
@@ -233,7 +233,7 @@ public class TrackView extends RelativeLayout {
 //                    associated.putClip(newClip);
                 //finishRecording(associated, lastRecordedFile, finalStartTime);
 		        	newClip = dataSource.createClip(associated, lastRecordedFile, finalStartTime);
-		        	associated.putClip(newClip);		
+		        	associated.putClip(newClip);
 		        }
 		    })
 		    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -307,15 +307,14 @@ public class TrackView extends RelativeLayout {
         mRecorder.stop();
         mRecorder.release();
 
-//        lastRecordedFile = dataSource.createAudioFile(dataSource.getActiveUser(), lastRecordedFileName);
-//        lastRecordedFile = dataSource.createAudioFile(new User(dataSource, (long)-1, "user", "user@user.user", true, (long)-1, "{}", false), lastRecordedFileName);
+        lastRecordedFile = dataSource.createAudioFile(dataSource.getActiveUser(), lastRecordedFileName);
         lastRecordedFile.setReadyOnClient(true);
 
         fileSelected.setText(lastRecordedFileName);
         mRecorder = null;
     }
     /*private void startPlaying() {
-    	
+
         mPlayer = new MediaPlayer();
         try {
             mPlayer.setDataSource(mFileName);
@@ -336,6 +335,7 @@ public class TrackView extends RelativeLayout {
 
     @UiThread
     public void startPlayingTrack() {
+      mPlayer = new MediaPlayer();
       ArrayList<Clip> clips = associated.getClips();
       for(Clip c : clips) {
     	playClipInBackground(c); // later on will also take a startTime parameter (current playhead time)
@@ -345,6 +345,8 @@ public class TrackView extends RelativeLayout {
     // later on will also take a startTime parameter (current playhead time)
     @Background
     public void playClipInBackground(Clip c) {
+      // if mPlayer is null we probably stopped playback before it was done, so abort.
+      if(mPlayer == null) return;
     	String clipFileName = c.getAudioFile().getClientFilePath();
     	try {
     		mPlayer.setDataSource(clipFileName);
@@ -363,8 +365,8 @@ public class TrackView extends RelativeLayout {
           mPlayer = null;
         }
       }
-    
-    
+
+
 }
 
 
