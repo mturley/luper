@@ -56,16 +56,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   private ScrollView vert;
   private HorizontalScrollView horz;
   private LinearLayout base;
-  private int currentTime;
-
-
-  public int getCurrentTime() {
-    return currentTime;
-  }
-
-  public void setCurrentTime(int currentTime) {
-    this.currentTime = currentTime;
-  }
+  private Playhead playhead;
 
 
     //this object is gonna move de move.
@@ -134,53 +125,6 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     render();
   }
 
-  //playhead class view to be implemented --Eric
-  public class Playhead extends View{
-    private final float STARTY = 0;
-    private final float ENDY = 5000;
-    private float X;
-
-    public Playhead(Context context){
-      super(context);
-      init();
-    }
-    public void init(){
-/*
-        //letz try to make sum magik happen!
-
-      Clip bokdebok = new Clip(); bokdebok.begin = 100; bokdebok.end = 450; bokdebok.duration = 450;
-      ColorChipButton bok;
-      bok = new ColorChipButton(this.getContext(), bokdebok);
-      bok.setBackgroundColor(Color.RED);
-      deClip = (ClipThing) bok;
-      */
-    }
-
-
-//    public boolean onTouchEvent(MotionEvent event) {
-//      int action = event.getAction();
-//      switch (action) {
-//        case MotionEvent.ACTION_DOWN:
-//          x = event.getX();
-//          break;
-//        case MotionEvent.ACTION_MOVE:
-//        case MotionEvent.ACTION_UP:
-//        case MotionEvent.ACTION_CANCEL:
-//          x = initialX + event.getX() - offsetX;
-//          y = initialY + event.getY() - offsetY;
-//          break;
-//      }
-//      return (true);
-//    }
-
-//    public void draw(Canvas canvas) {
-//      int width = canvas.getWidth();
-//      int height = canvas.getHeight();
-//      drawLine(X, STARTY, X, float ENDY);
-   //   invalidate();
-  //  }
-  }
-
   @UiThread
   public void render() {
 //    LinearLayout base = new LinearLayout(this);
@@ -228,6 +172,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   protected void onResume() {
     if(!dataSource.isOpen()) dataSource.open();
     super.onResume();
+    //playhead.setCurrentTime();
     //if(paramz != null) deClip.layout(paramz[0] , 0, paramz[2], 0);
   }
 
@@ -253,9 +198,9 @@ public class LuperProjectEditorActivity extends SherlockActivity {
       // TODO
       //incomplete = true;
 
-    	int i=0;
-    	while(playBackTest!=null && i!=playBackTest.size())
-    	{
+    	/*int i=0;
+    	//while(playBackTest!=null && i!=playBackTest.size())
+    	//{
 	        mPlayer = new MediaPlayer();
 	        mFileName=playBackTest.clips.get(i).name;
 	        try
@@ -269,7 +214,17 @@ public class LuperProjectEditorActivity extends SherlockActivity {
 	        	//handle interrupted exceptions in a different way
 	            Log.e(LOG_TAG, "prepare() failed1");
 	        }
-    	}
+    	}*/
+      mPlayer = new MediaPlayer();
+      try{
+      mPlayer.setDataSource(mFileName);
+      mPlayer.prepare();
+      mPlayer.start();
+      playhead.moveHead(mPlayer);
+      } catch (Exception e) {
+        //handle interrupted exceptions in a different way
+        Log.e(LOG_TAG, "prepare() failed1");
+      }
     }
     if(item.getItemId() == R.id.editor_add_track) {
     	Track addTrack = dataSource.createTrack(sequence);
@@ -403,9 +358,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
       mFileName += "/clip_" + System.currentTimeMillis() +".3gp";
 
       mRecorder = new MediaRecorder();
-      //System.out.println("here");
       mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-      //System.out.println("and here");
       mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
       mRecorder.setOutputFile(mFileName);
 
@@ -432,11 +385,6 @@ public class LuperProjectEditorActivity extends SherlockActivity {
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
-
-      //playBackTest.putClip(newClip);
-      //alertDialog("Clip Created! The clip's length is: " + newClip.duration + "(ms). The tracks size is " + playBackTest.size() + " and it's name in the track is ..." + playBackTest.clips.get(0).name);
-
-     // alertDialog("Clip Created! The clip's length is: " + newClip.duration + "(ms) the clip's name is: " + newClip.name);
 
       fileSelected.setText(mFileName);
       mRecorder = null;
