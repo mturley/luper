@@ -38,8 +38,9 @@ public class SQLiteDataSource {
     dbHelper.close();
   }
 
-  public User createUser(String username, String email, String linkedFacebookID) {
+  public User createUser(long id, String username, String email) {
     ContentValues values = new ContentValues();
+    values.put("_id", id);
     values.put("username", username);
     values.put("email", email);
     values.put("isActiveUser", 1);
@@ -51,7 +52,7 @@ public class SQLiteDataSource {
     return getUserWhere("_id = " + id);
   }
   public User getUserByEmail(String email) {
-    return getUserWhere("email = " + email);
+    return getUserWhere("email = '" + email + "'");
   }
   public User getUserWhere(String where) {
     Cursor cursor = database.query("Users", null,
@@ -74,6 +75,14 @@ public class SQLiteDataSource {
     User u = cursorToUser(cursor);
     cursor.close();
     return u;
+  }
+  public void setActiveUser(User user) {
+    ContentValues values = new ContentValues();
+    values.put("isActiveUser", 1);
+    database.update("Users", values, "_id = "+user.getId(), null);
+    values = new ContentValues();
+    values.put("isActiveUser", 0);
+    database.update("Users", values, "_id != "+user.getId(), null);
   }
   public void logoutActiveUser() {
     ContentValues values = new ContentValues();
@@ -140,6 +149,7 @@ public class SQLiteDataSource {
   public AudioFile getAudioFileById(long id) {
     Cursor cursor = database.query("Files", null,
       "_id = " + id, null, null, null, null);
+    cursor.moveToFirst();
     AudioFile f = cursorToFile(cursor);
     cursor.close();
     return f;
@@ -206,8 +216,8 @@ public class SQLiteDataSource {
     return tracks;
   }
 
-  public List<Clip> getClipsByTrackId(long trackId) {
-    List<Clip> clips = new ArrayList<Clip>();
+  public ArrayList<Clip> getClipsByTrackId(long trackId) {
+    ArrayList<Clip> clips = new ArrayList<Clip>();
     String[] selectionArgs = new String[1];
     selectionArgs[0] = ""+trackId;
     Cursor cursor = database.query("Clips", null, "parentTrackID = ?",
@@ -225,6 +235,7 @@ public class SQLiteDataSource {
 
   // database-cursor-to-object conversion
   private User cursorToUser(Cursor cursor) {
+    if(cursor.getCount() < 1) return null;
     User user = new User(this,
       cursor.getLong(cursor.getColumnIndex("_id")),
       cursor.getString(cursor.getColumnIndex("username")),
@@ -238,6 +249,7 @@ public class SQLiteDataSource {
   }
 
   private Sequence cursorToSequence(Cursor cursor) {
+    if(cursor.getCount() < 1) return null;
     Sequence sequence = new Sequence(this,
       cursor.getLong(cursor.getColumnIndex("_id")),
       cursor.getLong(cursor.getColumnIndex("ownerUserID")),
@@ -249,6 +261,7 @@ public class SQLiteDataSource {
     return sequence;
   }
   private Track cursorToTrack(Cursor cursor) {
+    if(cursor.getCount() < 1) return null;
     Track track = new Track(this,
       cursor.getLong(cursor.getColumnIndex("_id")),
       cursor.getLong(cursor.getColumnIndex("ownerUserID")),
@@ -262,10 +275,11 @@ public class SQLiteDataSource {
   }
 
   private Clip cursorToClip(Cursor cursor) {
+    if(cursor.getCount() < 1) return null;
     Clip clip = new Clip(this,
       cursor.getLong(cursor.getColumnIndex("_id")),
       cursor.getLong(cursor.getColumnIndex("ownerUserID")),
-      cursor.getLong(cursor.getColumnIndex("parentSequenceID")),
+      cursor.getLong(cursor.getColumnIndex("parentTrackID")),
       cursor.getLong(cursor.getColumnIndex("audioFileID")),
       cursor.getInt(cursor.getColumnIndex("startTime")),
       cursor.getInt(cursor.getColumnIndex("durationMS")),
@@ -278,6 +292,7 @@ public class SQLiteDataSource {
   }
 
   private AudioFile cursorToFile(Cursor cursor) {
+    if(cursor.getCount() < 1) return null;
     AudioFile file = new AudioFile(this,
       cursor.getLong(cursor.getColumnIndex("_id")),
       cursor.getLong(cursor.getColumnIndex("ownerUserID")),

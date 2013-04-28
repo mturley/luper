@@ -22,7 +22,7 @@ public class Clip {
   private SQLiteDataSource dataSource;
 
   // references to relevant data
-  private AudioFile audioFile = null;
+  public AudioFile audioFile = null;
 
   // Brad's variables
 	String name = null;

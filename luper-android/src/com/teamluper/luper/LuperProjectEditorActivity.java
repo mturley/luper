@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
@@ -31,10 +32,14 @@ import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.UiThread;
 import com.teamluper.luper.TrackView.RecordButton;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.BitmapFactory;
+import android.graphics.Shader;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
+import com.androidlearner.widget.ClipThing;
 
 @EActivity
 public class LuperProjectEditorActivity extends SherlockActivity {
@@ -51,6 +56,21 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   private ScrollView vert;
   private HorizontalScrollView horz;
   private LinearLayout base;
+  private int currentTime;
+
+
+  public int getCurrentTime() {
+    return currentTime;
+  }
+
+  public void setCurrentTime(int currentTime) {
+    this.currentTime = currentTime;
+  }
+
+
+    //this object is gonna move de move.
+    //ClipThing deClip;
+    //int [] paramz;
 
   // TODO these will be moved to within Sequence, and accessed with
   // sequence.getClips() and sequence.getTracks(), etc.
@@ -64,10 +84,18 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     horz = new HorizontalScrollView(this);
     base = new LinearLayout(this);
     base.setId(1337);
-    base.setBackgroundColor(Color.parseColor("#e2dfd8"));
+    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+              LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+    base.setLayoutParams(params);
+      Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.line);
+      BitmapDrawable bitmapDrawable = new BitmapDrawable(bmp);
+      bitmapDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
+      base.setBackgroundDrawable(bitmapDrawable);
+    // base.setBackgroundColor(Color.parseColor("#e2dfd8"));
 
     base.setOrientation(LinearLayout.VERTICAL);
     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
 
     long ID = getIntent().getLongExtra("selectedProjectId", -1);
     if(ID == -1) {
@@ -90,13 +118,25 @@ public class LuperProjectEditorActivity extends SherlockActivity {
 
     // TODO: we only want to load stuff if we don't already have it loaded...
     // onCreate gets called a bunch of times, so be careful only to load stuff once per open project
-    loadDataInForeground();
+    //loadDataInForeground();
+
+    sequence.tracks = dataSource.getTracksBySequenceId(sequence.getId());
+    for(Track track : sequence.tracks) {
+      long trackId = track.getId();
+      ArrayList<Clip> clips = dataSource.getClipsByTrackId(trackId);
+      track.clips = clips;
+      for(Clip clip : track.clips) {
+        clip.audioFile = dataSource.getAudioFileById(clip.getAudioFileID());
+      }
+    }
+    sequence.setReady(true);
 
     final ActionBar bar = getSupportActionBar();
     bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS); // Gives us Tabs!
 
     horz.addView(base);
     vert.addView(horz);
+    setContentView(vert);
 
     render();
   }
@@ -112,10 +152,17 @@ public class LuperProjectEditorActivity extends SherlockActivity {
       init();
     }
     public void init(){
-//      this.setX(this.getStartTime());
-//      this.setY(5000);
-//      this.setWidth(this.getStartTime() + this.getLength());
+/*
+        //letz try to make sum magik happen!
+
+      Clip bokdebok = new Clip(); bokdebok.begin = 100; bokdebok.end = 450; bokdebok.duration = 450;
+      ColorChipButton bok;
+      bok = new ColorChipButton(this.getContext(), bokdebok);
+      bok.setBackgroundColor(Color.RED);
+      deClip = (ClipThing) bok;
+      */
     }
+
 
 //    public boolean onTouchEvent(MotionEvent event) {
 //      int action = event.getAction();
@@ -153,27 +200,31 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     int clipsTraversed = 0;
     // RENDERING ROUTINE STARTS HERE
     DialogFactory.alert(this, "RENDER","Render is Happening, and sequence.isReady = "+sequence.isReady());
-//    if(sequence.isReady()) {
+    if(sequence.isReady()) {
 //      // draw stuff in it
       for(Track track : sequence.tracks) {
         RelativeLayout tracklayout = new RelativeLayout(this);
         TrackView tv = new TrackView(this, track, dataSource);
         tracklayout.addView(tv);
+        //tv.addView(deClip);
         base.addView(tracklayout,
             new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
         tracksTraversed++;
+        ColorChipButton chip;
         for(Clip clip : track.clips) {
           // render the clip
+        	chip = new ColorChipButton(this, clip);
+        	tv.addView(chip);
           clipsTraversed++;
         }
       }
       DialogFactory.alert(this,"Done with render sequence","Traversed "+tracksTraversed+" tracks and "+clipsTraversed+" clips.");
-    //}
-
-    setContentView(vert);
+    }
+    vert.invalidate();
+    //setContentView(vert);
   }
 
   @Override
@@ -186,7 +237,16 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   protected void onResume() {
     if(!dataSource.isOpen()) dataSource.open();
     super.onResume();
+    //if(paramz != null) deClip.layout(paramz[0] , 0, paramz[2], 0);
   }
+
+
+    /*@Override
+    protected void onPause() {
+        super.onPause();
+        //gets the current layout
+        paramz = deClip.getCurrent();
+    }*/
 
   // #Creates the Actionbar
   @Override
@@ -391,24 +451,13 @@ public class LuperProjectEditorActivity extends SherlockActivity {
       mRecorder = null;
   }
 
-  @Background
-  public void loadDataInBackground() {
-    if(sequence == null || sequence.isReady()) return;
-    sequence.loadAllTrackData();
-    render();
-  }
-
+  /*
   @UiThread
   public void loadDataInForeground() {
     if(sequence == null || sequence.isReady()) return;
     sequence.loadAllTrackData();
   }
-
-  @Background
-  public void loadAudioInBackground() {
-    if(sequence == null) return;
-    sequence.loadAllTrackAudio();
-  }
+  */
 
   @UiThread
   public void alert(String message) {

@@ -1,12 +1,7 @@
 Mike's TODO list for development:
 =================================
 
-1. ~~Write getSequenceById, and other get_____ById methods in SQLiteDataSource~~ Done 4/15
-2. ~~use those getters in LuperProjectEditorActivity to load the sequence data for rendering~~ Done 4/15
-3. ~~implement the proper fields in the data classes (Sequence, Track, Clip, etc) for wiring up to the database~~ Done 4/15
-4. ~~Wire up all the setter methods in the data classes so that they actually update the SQLiteDataSource (in the background).~~ Done 4/15
-5. Build a username/password login with initial creation at the MySQL end.  use the Rest API.
-6. Build a sync routine for updating the cloud database with local changes, and updating the local database with cloud changes (less important)
+1. Build a sync routine for updating the cloud database with local changes, and updating the local database with cloud changes (less important)
 
 	a) make use of the isDirty flags, always set dirty on setter call
 
@@ -19,5 +14,5 @@ Mike's TODO list for development:
 	e) send these JSON digests in a queue with something like a 15 second delay.
 
 	f) after the queue has been emptied, calulate the sha1 or md5 checksum of the entire local database and server database (or just the rows that were altered) and compare them.  in the event of mismatch, reattempt a sync.  If the mismatch persists, ask the user if they want the server version or the phone version.
-7. Register the sync routine properly as a passive notification (so it shows up in the pulldown).
-8. Make the sync frequency be a configurable field in the settings.  Also make it possible to disable sync entirely.
+2. Register the sync routine properly as a passive notification (so it shows up in the pulldown).
+3. Make the sync frequency be a configurable field in the settings.  Also make it possible to disable sync entirely.

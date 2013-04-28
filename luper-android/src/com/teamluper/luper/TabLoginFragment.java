@@ -204,11 +204,14 @@ public class TabLoginFragment extends Fragment {
         loginFailure("The email address or password you entered was invalid!");
         return;
       }
+      User existingUser = dataSource.getUserByEmail(email);
+      if(existingUser == null) {
+        // we need to create a user first, matching the user from the server
+        JSONObject userFromServer = new JSONObject(rest.fetchUserByEmail(email));
 
-      // if we haven't returned yet at this point, the login is successful!
-      // TODO check if the user object exists locally and...
-      //   if so, set it as the active user
-      //   if not, create one and then set it as the active user
+        existingUser = dataSource.createUser(userFromServer.getLong("_id"),userFromServer.getString("username"),email);
+      }
+      dataSource.setActiveUser(existingUser);
       loginSuccess();
     } catch(JSONException e) {
       Log.e("luper","=== JSON Exception while attempting to validate login === Exception: ", e);

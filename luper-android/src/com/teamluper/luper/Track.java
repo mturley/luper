@@ -9,6 +9,8 @@ package com.teamluper.luper;
 
 import java.util.ArrayList;
 
+import com.androidlearner.widget.DragThing;
+
 public class Track {
   // Mike's database field variables
 	private long id;
@@ -18,12 +20,15 @@ public class Track {
 	private boolean isLocked;
 	private String playbackOptions;
 	private boolean isDirty; // dirty = contains unsynced changes
+	
+	DragThing deMovingTxt;
+	int [] paramz;
 
 	// Mike's database access variables
 	private SQLiteDataSource dataSource;
 
 	// references to relevant data
-	public ArrayList<Clip> clips = new ArrayList<Clip>();
+	public ArrayList<Clip> clips;
 
 	// Mike's constructor
   // NOTE: DO NOT CALL THIS CONSTRUCTOR DIRECTLY unless in a cursorToTrack method.
@@ -39,6 +44,7 @@ public class Track {
 	  this.isLocked = isLocked;
 	  this.playbackOptions = playbackOptions;
 	  this.isDirty = isDirty;
+    this.clips = new ArrayList<Clip>();
 	}
 	// temporary constructor for compatability with other files
 	public Track() {
