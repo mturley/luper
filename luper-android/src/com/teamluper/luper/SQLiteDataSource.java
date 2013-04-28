@@ -256,7 +256,6 @@ public class SQLiteDataSource {
       cursor.getString(cursor.getColumnIndex("username")),
       cursor.getString(cursor.getColumnIndex("email")),
       cursor.getInt(cursor.getColumnIndex("isActiveUser")) == 1,
-      cursor.getLong(cursor.getColumnIndex("linkedFacebookID")),
       cursor.getString(cursor.getColumnIndex("preferences")),
       cursor.getInt(cursor.getColumnIndex("isDirty")) == 1
     );
