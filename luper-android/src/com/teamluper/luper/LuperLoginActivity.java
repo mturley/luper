@@ -3,6 +3,7 @@ package com.teamluper.luper;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -43,8 +44,8 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
   private Session session;
   private String accessToken;
 
-  protected void loadActiveSession() {
-	  session = Session.getActiveSession();
+  protected void loadActiveSession(View v) {
+    session = Session.getActiveSession();
 	  accessToken = session.getAccessToken();
   }
 

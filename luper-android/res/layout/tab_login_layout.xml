@@ -120,15 +120,7 @@
         		android:onClick="loadActiveSession"
         		android:layout_marginTop="30dp"
            />
-            <!--
-            <Button
-                android:id="@+id/login_with_facebook_fake_button_steve_replace_this"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:text="Someone Replace this Fake Button with a Real One" />
-        	-->
+           <!-- loadActiveSession IS NOT GETTING CALLED AT ALL -->
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
