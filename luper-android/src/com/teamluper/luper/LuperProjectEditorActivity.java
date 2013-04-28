@@ -214,7 +214,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
 	        	//handle interrupted exceptions in a different way
 	            Log.e(LOG_TAG, "prepare() failed1");
 	        }
-    	}*/
+    	}
       mPlayer = new MediaPlayer();
 
       try{
@@ -225,7 +225,8 @@ public class LuperProjectEditorActivity extends SherlockActivity {
       } catch (Exception e) {
         //handle interrupted exceptions in a different way
         Log.e(LOG_TAG, "prepare() failed1");
-      }
+      }*/
+
     }
     if(item.getItemId() == R.id.editor_add_track) {
     	Track addTrack = dataSource.createTrack(sequence);
