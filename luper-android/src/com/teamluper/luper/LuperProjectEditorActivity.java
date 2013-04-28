@@ -56,7 +56,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   private ScrollView vert;
   private HorizontalScrollView horz;
   private LinearLayout base;
-  private Playhead playhead;
+  public Playhead playhead;
 
 
     //this object is gonna move de move.
@@ -216,6 +216,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
 	        }
     	}*/
       mPlayer = new MediaPlayer();
+
       try{
       mPlayer.setDataSource(mFileName);
       mPlayer.prepare();
@@ -381,7 +382,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
       Clip newClip = new Clip(mFileName);
 
       try {
-			newClip.getDuration();
+			newClip.getDurationMS();
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}

@@ -44,7 +44,11 @@ public class Playhead extends View {
     if(mPlayer.isPlaying())
     {
       currentTime++;
+      this.invalidate();
     }
+    else
+      stopHead(mPlayer);
+
 
   }
   public void stopHead(MediaPlayer mPlayer){

@@ -135,7 +135,7 @@ public class Track {
 		long sum = 0;
 		for(Clip c:clips)
 		{
-			sum+=c.getDuration();
+			sum+=c.getDurationMS();
 		}
 		return sum;
 	}

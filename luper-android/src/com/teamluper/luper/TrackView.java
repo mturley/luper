@@ -77,13 +77,16 @@ public class TrackView extends RelativeLayout {
     private Clip newClip;
     Track associated;
 
+    private LuperProjectEditorActivity editorActivity;
+
 	//the track that will be associated with this TrackView
 	//Track associated;
 
 	//constructor
-	public TrackView(Context context, Track track, SQLiteDataSource dataSource)
+	public TrackView(LuperProjectEditorActivity context, Track track, SQLiteDataSource dataSource)
 	{
 		super(context);
+    editorActivity = context;
 		associated = track;
 		this.dataSource = dataSource;
 		deMovingTxt = (DragThing) findViewById(R.id.detext);
@@ -286,9 +289,7 @@ public class TrackView extends RelativeLayout {
         lastRecordedFileName += "/clip_" + System.currentTimeMillis() +".3gp";
 
         mRecorder = new MediaRecorder();
-        //System.out.println("here");
-        mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        //System.out.println("and here");
+        mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);;
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         mRecorder.setOutputFile(lastRecordedFileName);
 
@@ -310,6 +311,8 @@ public class TrackView extends RelativeLayout {
         lastRecordedFile = dataSource.createAudioFile(dataSource.getActiveUser(), lastRecordedFileName);
         lastRecordedFile.setReadyOnClient(true);
 
+        lastRecordedFile.setDurationMS(lastRecordedFile.calcDuration());
+
         fileSelected.setText(lastRecordedFileName);
         mRecorder = null;
     }
@@ -317,16 +320,17 @@ public class TrackView extends RelativeLayout {
 
         mPlayer = new MediaPlayer();
         try {
-            mPlayer.setDataSource(mFileName);
+            mPlayer.setDataSource(lastRecordedFileName);
             mPlayer.prepare();
             //playFrom(1000);
             mPlayer.start();
+          editorActivity.playhead.moveHead(mPlayer);
         } catch (IOException e) {
             Log.e(LOG_TAG, "prepare() failed1");
         }
-    }*/
+    }
 
-   /*private void stopPlaying() {
+   private void stopPlaying() {
       if(mPlayer != null) {
         mPlayer.release();
         mPlayer = null;
@@ -335,10 +339,10 @@ public class TrackView extends RelativeLayout {
 
     @UiThread
     public void startPlayingTrack() {
-      mPlayer = new MediaPlayer();
+      //mPlayer = new MediaPlayer();
       ArrayList<Clip> clips = associated.getClips();
       for(Clip c : clips) {
-    	playClipInBackground(c); // later on will also take a startTime parameter (current playhead time)
+    	  playClipInBackground(c); // later on will also take a startTime parameter (current playhead time)
       }
     }
 
@@ -346,6 +350,7 @@ public class TrackView extends RelativeLayout {
     @Background
     public void playClipInBackground(Clip c) {
       // if mPlayer is null we probably stopped playback before it was done, so abort.
+      mPlayer = new MediaPlayer(); //this NEEDS to happen here instead of in the start playing track method
       if(mPlayer == null) return;
     	String clipFileName = c.getAudioFile().getClientFilePath();
     	try {

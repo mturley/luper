@@ -1,5 +1,10 @@
 package com.teamluper.luper;
 
+import android.media.MediaPlayer;
+
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
+
 public class AudioFile {
   private SQLiteDataSource dataSource;
 
@@ -118,5 +123,24 @@ public class AudioFile {
 	  //String fp = this.getClientFilePath();
 	  
 	
+  }
+  //Extra length method using mediaplayer which oddly uses an integer for the duration
+  public int calcDuration() //FIXME update database with current duration , refactor
+  {
+    try {
+      MediaPlayer mp = new MediaPlayer();
+      FileInputStream fs;
+      FileDescriptor fd;
+      fs = new FileInputStream(this.getClientFilePath());
+      fd = fs.getFD();
+      mp.setDataSource(fd);
+      mp.prepare();
+      int length = mp.getDuration();
+      mp.release();
+      return length;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return 0;
+    }
   }
 }
