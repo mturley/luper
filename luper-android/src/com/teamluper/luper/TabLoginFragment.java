@@ -207,7 +207,8 @@ public class TabLoginFragment extends Fragment {
       User existingUser = dataSource.getUserByEmail(email);
       if(existingUser == null) {
         // we need to create a user first, matching the user from the server
-        JSONObject userFromServer = new JSONObject(rest.fetchUserByEmail(email));
+        String userFromServerJSON = rest.fetchUserByEmail(email);
+        JSONObject userFromServer = new JSONObject(userFromServerJSON);
 
         existingUser = dataSource.createUser(userFromServer.getLong("_id"),userFromServer.getString("username"),email);
       }

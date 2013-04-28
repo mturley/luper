@@ -64,6 +64,7 @@ public class LuperMainActivity extends SherlockFragmentActivity {
     final ActionBar bar = getSupportActionBar();
     bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS); // Gives us Tabs!
     bar.setDisplayShowTitleEnabled(false);
+    bar.setDisplayHomeAsUpEnabled(false);
 
     // set up the ViewPager, which we will use in conjunction with tabs.
     // this makes it possible to swipe left and right between the tabs.
@@ -162,6 +163,7 @@ public class LuperMainActivity extends SherlockFragmentActivity {
     if(item.getItemId() == R.id.menu_logout) {
       Intent intent = new Intent(this, LuperLoginActivity_.class);
       intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+      intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
       startActivity(intent);
       finish();
     }
@@ -231,6 +233,6 @@ public class LuperMainActivity extends SherlockFragmentActivity {
       System.out.println(accounts[i].toString());
     }
   }
-  
+
   public TabsAdapter checkTabs() { return mTabsAdapter; }
 }

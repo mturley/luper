@@ -15,14 +15,16 @@ import java.util.List;
 public class SQLiteDataSource {
   // Database fields
   private SQLiteDatabase database = null;
-  private SQLiteHelper dbHelper;
+  private SQLiteHelper dbHelper = null;
   private long activeUserID;
+  private Context context;
 
   public SQLiteDataSource(Context context) {
     this(context, -1);
   }
   public SQLiteDataSource(Context context, long userID) {
-    dbHelper = new SQLiteHelper(context);
+    this.context = context;
+    this.dbHelper = new SQLiteHelper(context);
     activeUserID = userID;
   }
 
@@ -31,11 +33,14 @@ public class SQLiteDataSource {
   }
 
   public void open() throws SQLException {
+    if(dbHelper == null) dbHelper = new SQLiteHelper(context);
     database = dbHelper.getWritableDatabase();
   }
 
   public void close() {
     dbHelper.close();
+    database = null;
+    dbHelper = null;
   }
 
   public User createUser(long id, String username, String email) {
