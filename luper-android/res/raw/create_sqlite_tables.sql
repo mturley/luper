@@ -8,7 +8,6 @@ create table Users (
   username          text      not null,
   email             text      not null,
   isActiveUser      integer   not null,
-  linkedFacebookID  integer,
   preferences       text,
   isDirty           integer   not null
 );
