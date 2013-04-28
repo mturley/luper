@@ -231,4 +231,6 @@ public class LuperMainActivity extends SherlockFragmentActivity {
       System.out.println(accounts[i].toString());
     }
   }
+  
+  public TabsAdapter checkTabs() { return mTabsAdapter; }
 }
