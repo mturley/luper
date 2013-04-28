@@ -176,6 +176,7 @@ $api->get("/fetch-user/:email", function($email) use ($api) {
     $stmt->bindParam("email", $email);
     $stmt->execute();
     $api->getLog()->error("fetch-user was called on email (unknown?)");
+    $api->getLog()->error("the email is: ".$email);
     return json_encode($stmt->fetchObject());
   } catch(PDOException $e) {
     handlePDOException($api, $e);
