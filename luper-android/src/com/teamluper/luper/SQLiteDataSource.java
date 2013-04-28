@@ -16,7 +16,7 @@ public class SQLiteDataSource {
   // Database fields
   private SQLiteDatabase database = null;
   private SQLiteHelper dbHelper;
-  private long activeUserID; // TODO change this on register / login
+  private long activeUserID;
 
   public SQLiteDataSource(Context context) {
     this(context, -1);
@@ -46,6 +46,7 @@ public class SQLiteDataSource {
     values.put("isActiveUser", 1);
     values.put("isDirty", 1);
     long insertId = database.insert("Users", null, values);
+    if(insertId == -1) return null;
     return getUserById(insertId);
   }
   public User getUserById(long id) {
@@ -62,8 +63,9 @@ public class SQLiteDataSource {
     cursor.close();
     return u;
   }
-  public void deleteUser(long userID) {
-	  database.delete("Users", "_id = " + userID, null);
+  public boolean deleteUser(long userID) {
+	  int affected = database.delete("Users", "_id = ?", new String[]{ ""+userID });
+    return affected == 1;
   }
 
   public User getActiveUser() {
@@ -97,6 +99,7 @@ public class SQLiteDataSource {
     values.put("title", title);
     values.put("isDirty", 1);
     long insertId = database.insert("Sequences", null, values);
+    if(insertId == 1) return null;
     return getSequenceById(insertId);
   }
 
@@ -109,8 +112,9 @@ public class SQLiteDataSource {
     return s;
   }
 
-  public void deleteSequence(long sequenceID) {
-    database.delete("Sequences", "_id = " + sequenceID, null);
+  public boolean deleteSequence(long sequenceID) {
+    int affected = database.delete("Sequences", "_id = ?", new String[]{ ""+sequenceID });
+    return affected == 1;
   }
 
   public Track createTrack(Sequence parentSequence) {
@@ -121,6 +125,7 @@ public class SQLiteDataSource {
     values.put("isLocked", false);
     values.put("isDirty", 1);
     long insertId = database.insert("Tracks", null, values);
+    if(insertId == -1) return null;
     return getTrackById(insertId);
   }
   public Track getTrackById(long id) {
@@ -131,8 +136,9 @@ public class SQLiteDataSource {
     cursor.close();
     return t;
   }
-  public void deleteTrack(long trackID) {
-	  database.delete("Tracks", "_id = " + trackID, null);
+  public boolean deleteTrack(long trackID) {
+    int affected = database.delete("Tracks", "_id = ?", new String[]{ ""+trackID });
+    return affected == 1;
   }
 
   public AudioFile createAudioFile(User owner, String filePath) {
@@ -144,6 +150,7 @@ public class SQLiteDataSource {
     values.put("isReadyOnServer", 0);
     values.put("isDirty", 1);
     long insertId = database.insert("Files", null, values);
+    if(insertId == -1) return null;
     return getAudioFileById(insertId);
   }
   public AudioFile getAudioFileById(long id) {
@@ -154,8 +161,9 @@ public class SQLiteDataSource {
     cursor.close();
     return f;
   }
-  public void deleteAudioFile(long fileID) {
-	  database.delete("Files", "_id = " + fileID, null);
+  public boolean deleteAudioFile(long fileID) {
+    int affected = database.delete("Files", "_id = ?", new String[]{ ""+fileID });
+    return affected == 1;
   }
 
   public Clip createClip(Track parentTrack, AudioFile file, int startTime) {
@@ -169,6 +177,7 @@ public class SQLiteDataSource {
     values.put("playbackOptions", "{}");
     values.put("isDirty",1);
     long insertId = database.insert("Clips", null, values);
+    if(insertId == -1) return null;
     return getClipById(insertId);
   }
   public Clip getClipById(long id) {
@@ -178,8 +187,9 @@ public class SQLiteDataSource {
     cursor.close();
     return c;
   }
-  public void deleteClip(long clipID) {
-	  database.delete("Clips", "_id = " + clipID, null);
+  public boolean deleteClip(long clipID) {
+    int affected = database.delete("Clips", "_id = ?", new String[]{ ""+clipID });
+    return affected == 1;
   }
 
 
