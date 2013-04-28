@@ -112,13 +112,6 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     dataSource.open();
 
     sequence = dataSource.getSequenceById(ID);
-    // TODO use the data within the sequence object to render the clips.
-    DialogFactory.alert(this, "Successfully Loaded Project ID #"+ID+
-        "!  The title is '"+sequence.getTitle()+"'");
-
-    // TODO: we only want to load stuff if we don't already have it loaded...
-    // onCreate gets called a bunch of times, so be careful only to load stuff once per open project
-    //loadDataInForeground();
 
     sequence.tracks = dataSource.getTracksBySequenceId(sequence.getId());
     for(Track track : sequence.tracks) {
@@ -199,9 +192,8 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     int tracksTraversed = 0;
     int clipsTraversed = 0;
     // RENDERING ROUTINE STARTS HERE
-    DialogFactory.alert(this, "RENDER","Render is Happening, and sequence.isReady = "+sequence.isReady());
     if(sequence.isReady()) {
-//      // draw stuff in it
+      // draw stuff in it
       for(Track track : sequence.tracks) {
         RelativeLayout tracklayout = new RelativeLayout(this);
         TrackView tv = new TrackView(this, track, dataSource);
@@ -221,7 +213,6 @@ public class LuperProjectEditorActivity extends SherlockActivity {
           clipsTraversed++;
         }
       }
-      DialogFactory.alert(this,"Done with render sequence","Traversed "+tracksTraversed+" tracks and "+clipsTraversed+" clips.");
     }
     vert.invalidate();
     //setContentView(vert);

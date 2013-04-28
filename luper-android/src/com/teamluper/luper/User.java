@@ -6,7 +6,6 @@ public class User {
   private String username;
   private String email;
   private boolean isActiveUser;
-  private long linkedFacebookID;
   private String preferences;
   private boolean isDirty; // dirty = contains unsynced changes
 
@@ -16,14 +15,13 @@ public class User {
   // NOTE: DO NOT CALL THIS CONSTRUCTOR DIRECTLY unless in a cursorToUser method.
   // instead, use SQLiteDataSource.createUser()!
   public User(SQLiteDataSource dataSource, long id, String username,
-              String email, boolean isActiveUser, long linkedFacebookID,
+              String email, boolean isActiveUser,
               String preferences, boolean isDirty) {
     this.dataSource = dataSource;
     this.id = id;
     this.username = username;
     this.email = email;
     this.isActiveUser = isActiveUser;
-    this.linkedFacebookID = linkedFacebookID;
     this.preferences = preferences;
     this.isDirty = isDirty;
   }
@@ -54,13 +52,6 @@ public class User {
   public void setActiveUser(boolean activeUser) {
     isActiveUser = activeUser;
     dataSource.updateInt("Users", this.id, "isActiveUser", (activeUser ? 1 : 0));
-    this.isDirty = true;
-  }
-
-  public long getLinkedFacebookID() { return linkedFacebookID; }
-  public void setLinkedFacebookID(long linkedFacebookID) {
-    this.linkedFacebookID = linkedFacebookID;
-    dataSource.updateLong("Users", this.id, "linkedFacebookID", linkedFacebookID);
     this.isDirty = true;
   }
 
