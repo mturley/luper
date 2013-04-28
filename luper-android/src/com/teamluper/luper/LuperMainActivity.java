@@ -13,6 +13,7 @@ package com.teamluper.luper;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -65,8 +66,16 @@ public class LuperMainActivity extends SherlockFragmentActivity {
      * registers a new broadcast receiver to handle logout intents
     **/
     
-//    IntentFilter intentFilter = new IntentFilter();
-//    intentFilter.setAction("com.package.ACTION_LOGOUT");
+    IntentFilter intentFilter = new IntentFilter();
+//    intentFilter.setAction("com.package.ACTION_LOGOUT"); -- setAction is a typo, i suppose, should be:
+    intentFilter.addAction("com.package.ACTION_LOGOUT");
+    
+    registerReceiver(new BroadcastReceiver() {
+    	@Override
+    	public void onReceive(Context context, Intent intent) {
+    		finish();
+    	}
+    }, intentFilter);
 
     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
