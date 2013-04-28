@@ -13,6 +13,7 @@ package com.teamluper.luper;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -161,11 +162,19 @@ public class LuperMainActivity extends SherlockFragmentActivity {
       startActivity(intent);
     }
     if(item.getItemId() == R.id.menu_logout) {
-      Intent intent = new Intent(this, LuperLoginActivity_.class);
-      intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-      intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-      startActivity(intent);
-      finish();
+      final Activity a = this;
+      DialogFactory.confirm(this, "Log Out", "Are you sure?",
+        new Lambda.BooleanCallback() {
+          public void go(boolean userPressedYes) {
+            if(userPressedYes) {
+              Intent intent = new Intent(a, LuperLoginActivity_.class);
+              intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+              intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+              a.startActivity(intent);
+              a.finish();
+            }
+          }
+        });
     }
     if(item.getItemId() == R.id.devtools) {
       Intent intent = new Intent(this, LuperDevToolsActivity_.class);

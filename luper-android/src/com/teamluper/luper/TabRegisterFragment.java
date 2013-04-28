@@ -46,6 +46,12 @@ public class TabRegisterFragment extends Fragment {
     return v;
   }
 
+  @Override
+  public void onResume() {
+    super.onResume();
+    showProgress(false);
+  }
+
   @UiThread
   public void alert(String title, String message) {
     DialogFactory.alert(getActivity(), title, message);

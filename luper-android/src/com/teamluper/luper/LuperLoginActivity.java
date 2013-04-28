@@ -52,13 +52,13 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
   LuperRestClient restClient;
 
   private SQLiteDataSource dataSource;
-  
+
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
 	  super.onActivityResult(requestCode,resultCode,data);
 	  Session.getActiveSession().onActivityResult(this,requestCode,resultCode,data);
   }
-  
+
   // How Luper should behave when user logs into or out of facebook
   protected void onSessionStateChange(Session sesh, SessionState seshState, Exception e) {
 	  if (seshState.isOpened()) {
@@ -82,14 +82,14 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
 		  // probably shouldn't be here
 	  }
   }
-  
+
   private Session.StatusCallback callback = new Session.StatusCallback() {
 	  @Override
 	  public void call(Session sesh, SessionState seshState, Exception e) {
 		  onSessionStateChange(sesh,seshState,e);
 	  }
   };
-  
+
   private UiLifecycleHelper uiHelper;
 
   @Override
@@ -117,7 +117,7 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
     // connect to the database
     dataSource = new SQLiteDataSource(this);
     dataSource.open();
-    
+
     // UI handler - Facebook login
     uiHelper = new UiLifecycleHelper(this,callback);
     uiHelper.onCreate(savedInstanceState);
@@ -128,7 +128,7 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
     if(dataSource.isOpen()) dataSource.close();
     super.onStop();
   }
-  
+
   @Override
   public void onDestroy() {
       super.onDestroy();
@@ -142,7 +142,7 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
     super.onResume();
     uiHelper.onResume();
   }
-  
+
   @Override
   public void onSaveInstanceState(Bundle outState) {
       super.onSaveInstanceState(outState);

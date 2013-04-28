@@ -37,6 +37,29 @@ public class DialogFactory {
     dialog.show();
   }
 
+  public static void confirm(Context context, String message,
+      final Lambda.BooleanCallback callback) {
+    confirm(context, null, message, callback);
+  }
+  public static void confirm(Context context, String title, String message,
+      final Lambda.BooleanCallback callback) {
+    AlertDialog.Builder dialog = new AlertDialog.Builder(context)
+      .setCancelable(false)
+      .setMessage(message)
+      .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int which) {
+          if(callback != null) callback.go(true);
+        }
+      })
+      .setNegativeButton("No", new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int which) {
+          if(callback != null) callback.go(false);
+        }
+      });
+    if(title != null) dialog.setTitle(title);
+    dialog.show();
+  }
+
   public static void prompt(Context context, String title, String message,
                             final Lambda.StringCallback callback) {
     final EditText input = new EditText(context);

@@ -41,4 +41,7 @@ public class Lambda {
   public static interface StringCallback {
     void go(String value);
   }
+  public static interface BooleanCallback {
+    void go(boolean value);
+  }
 }
