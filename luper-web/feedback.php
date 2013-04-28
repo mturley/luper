@@ -19,53 +19,18 @@ header('Location: index-mobile.php');
       <button type="button"><a href="feedback.php">Feedback</a></button>
     </div>
   	<div align="center" id="content">
-      <div class="halfcolumn">
-        <img src="luper.png" />
-        <h1>Beta Release (4/2/2013)</h1>
-        <a id="downloadlink" href="download/LuperBeta.apk">
-          <img src="ic_launcher.png" id="appicon"><br />
-          <strong>Click to Download</strong><br />
-          LuperBeta.apk
-        </a>
-        <br /><br /><br />
-        <h2 class="darkred">NOTE: Your device must be set to allow installation of applications from "Unknown Sources" (found in Settings > Security)</h2>
-      </div>
-      <div class="halfcolumn">
-        <br />
-        <h1>Installation Instructions</h1>
-        <ol class="leftalign">
-          <li>Navigate to this page (TeamLuper.com) in your Android device's browser.</li>
-          <li>Download LuperBeta.apk directly to your device by touching the icon at left.</li>
-          <li>When the download is complete, pull down your notifications pane and touch the LuperBeta.apk Download Complete notification.  You will be prompted to install the application.</li>
-        </ol>
-        <h2>OR</h2>
-        <ol class="leftalign">
-          <li>Download LuperBeta.apk on your PC and copy it to your Android device's storage.</li>
-          <li>Make sure you have a File Manager application on your device, such as <a href="https://play.google.com/store/apps/details?id=com.metago.astro&hl=en">ASTRO (available on Google Play)</a></li>
-          <li>Using your File Manager, navigate to and open the LuperBeta.apk file.  You will be prompted to install the application.</li>
-        </ol>
-      </div>
-      <div class="fullcolumn alignleft">
-        <br />
-        <div class="bigindent">
-          <h1>Luper Project Documentation:</h1>
-          <h2>
-            <a href="https://docs.google.com/document/d/1_9iY-CbKjMrHwbM1HPnjRyZs-nU5rbPeuXvCtY9m0FI/edit">
-            Click Here to read the Beta Release Notes
-            </a>
-            <br />
-            <a href="https://docs.google.com/document/d/1zzYt0WOMM9ZO24DtscgJJ3vRmZ808cYjxcJRq_FCwLQ/edit">
-            Click Here to read the Requirements Specification (updated 4/2)
-            </a>
-            <br />
-            <a href="https://docs.google.com/document/d/1_pbSkRCXVBt0ycZDsRQcn6zgjMj9KoIOc83PRVLPSoc/edit">
-            Click Here to read the Design Specification (updated 4/2)
-            </a>
-          </h2>
-        </div>
-      </div>
-	  </div>
-  </div>
+        <h1><font color="darkred">Feedback Form</font></h1><br/>
+		<form action="send.php" method="post">
+			<table><tr><td align="right">
+			Name: </td><td align="right" width="310px">  <input name="name" class="inputSize" type="text"/>
+			</td></tr><tr><td align="right">
+			Email: </td><td align="right" width="310px"> <input name="email" class="inputSize" type="text"/>
+			</td></tr><tr><td align="right">
+			Message: </td><td align="right" width="310px"> <textarea class="form" name="content"></textarea>
+			</td></tr></table>
+			<input value="send" type="submit"/>
+		</form>
+	</div>
   <div id="footer">
     <p><strong>Team Luper is:</strong> Ben Foster, Brad Bullman, Cameron Smith, Eric Smith, Mike Turley, Josh Chudy, Steve Donahue, Sofya Vorotnikova, Xian Chen</p>
   </div>
