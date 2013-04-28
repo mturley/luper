@@ -61,26 +61,26 @@ public class Clip {
 	{
 	  dataSource = null;
 	}
-	//Extra length method using mediaplayer which oddly uses an integer for the duration
-	public int getDuration() //FIXME update database with current duration , refactor
-	{
-		try {
-			MediaPlayer mp = new MediaPlayer();
-			FileInputStream fs;
-			FileDescriptor fd;
-			fs = new FileInputStream(name);
-			fd = fs.getFD();
-			mp.setDataSource(fd);
-			mp.prepare();
-			int length = mp.getDuration();
-			mp.release();
-			duration = length;
-		} catch (Exception e) {
-			e.printStackTrace();
-			duration = 0;
-		}
-		return duration;
-	}
+  /*//Extra length method using mediaplayer which oddly uses an integer for the duration
+  public int getDuration() //FIXME update database with current duration , refactor
+  {
+    try {
+      MediaPlayer mp = new MediaPlayer();
+      FileInputStream fs;
+      FileDescriptor fd;
+      fs = new FileInputStream(this.audioFile.getClientFilePath());
+      fd = fs.getFD();
+      mp.setDataSource(fd);
+      mp.prepare();
+      int length = mp.getDuration();
+      mp.release();
+      duration = length;
+    } catch (Exception e) {
+      e.printStackTrace();
+      duration = 0;
+    }
+    return duration;
+  }*/
 
   // mike's database getters and setters.
   // TODO migrate all above stuff to use the below fields, setters, and getters

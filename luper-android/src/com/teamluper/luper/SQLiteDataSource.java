@@ -171,6 +171,7 @@ public class SQLiteDataSource {
     values.put("parentTrackID", parentTrack.getId());
     values.put("audioFileID", file.getId());
     values.put("startTime", startTime);
+    values.put("durationMS", file.getDurationMS()); // temporary... later, clips can be cut down, etc
     values.put("loopCount", 1);
     values.put("isLocked", 0);
     values.put("playbackOptions", "{}");

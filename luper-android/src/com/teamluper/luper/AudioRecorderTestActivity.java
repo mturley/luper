@@ -116,7 +116,7 @@ public class AudioRecorderTestActivity extends SherlockActivity
 	        {
 	            mPlayer.setDataSource(mFileName);
 	            mPlayer.prepare();
-	            Thread.sleep(playBackTest.clips.get(i).getDuration());
+	            Thread.sleep(playBackTest.clips.get(i).getDurationMS());
 	            mPlayer.start();
 	            i++;
 	        } catch (Exception e) {
@@ -175,7 +175,7 @@ public class AudioRecorderTestActivity extends SherlockActivity
         Clip newClip = new Clip(mFileName);
 
         try {
-			newClip.getDuration();
+			newClip.getDurationMS();
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
