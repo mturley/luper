@@ -177,7 +177,9 @@ public class SQLiteDataSource {
     values.put("isDirty",1);
     long insertId = database.insert("Clips", null, values);
     if(insertId == -1) return null;
-    return getClipById(insertId);
+    Clip c = getClipById(insertId);
+    c.audioFile = file;
+    return c;
   }
   public Clip getClipById(long id) {
     Cursor cursor = database.query("Clips", null,
