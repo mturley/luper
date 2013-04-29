@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.view.View;
 import android.widget.Button;
+import java.util.Random;
+import android.graphics.Color;
 
 public class ColorChipButton extends Button {
 
@@ -12,6 +14,9 @@ public class ColorChipButton extends Button {
 
 	//the clip that is associated with this CCB
 	Clip associated;
+  int mColor;
+  Random rnd = new Random();
+
 
 	//set a click listener for the buttons that will activate promptDialog() when clicked
 	OnClickListener clicker = new OnClickListener(){
@@ -24,6 +29,7 @@ public class ColorChipButton extends Button {
 	public ColorChipButton(Context context, Clip clip){
 		super(context);
 		associated = clip;
+    mColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));;
 		init();
 		setOnClickListener(clicker);
 	}
@@ -52,13 +58,22 @@ public class ColorChipButton extends Button {
 	public int getStartTime(){
 		return this.associated.getStartTime();
 	}
-
+  public void setColor(int color) {
+    mColor = color;
+    this.setBackgroundColor(mColor);
+    invalidate();
+  }
+  public void setRandColor(Random r) {
+    mColor = Color.argb(255, r.nextInt(256), r.nextInt(256), r.nextInt(256));
+    this.setBackgroundColor(mColor);
+    invalidate();
+  }
 //	when you click the button this method is activated. currently it only shows the length of
 //	the clip. eventually it should allow you to modify things about the clip
 	public void promptDialog(){
 		new AlertDialog.Builder(getContext())
-			.setTitle("Clip Details Yo!")
-			.setMessage("Length " + associated.duration + " ms")
+			.setTitle("Clip Details")
+			.setMessage("Length " + associated.getDurationMS() + " ms" + "    The Current Color is: " + mColor)
 		    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 		        public void onClick(DialogInterface dialog, int whichButton) {
 		      	  //Do nothing for now
