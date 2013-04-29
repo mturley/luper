@@ -38,7 +38,7 @@ public interface LuperRestClient {
 
   @Post("/api/auth-register")
   String registerNewAccount(String requestJSON);
-  // requestJSON must contain: email, password, username
+  // requestJSON must contain: email, passwordHash, username
 
   @Post("/api/auth-challenge")
   String getLoginChallengeSalt(String requestJSON);

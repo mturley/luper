@@ -27,6 +27,8 @@ import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.UiThread;
 import com.googlecode.androidannotations.annotations.rest.RestService;
 import com.teamluper.luper.rest.LuperRestClient;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -193,6 +195,40 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
     if(dataSource != null && dataSource.isOpen() && dataSource.getActiveUser() != null) {
       // we're already logged in!  skip the login screen entirely.
       startMainActivity();
+    }
+  }
+
+  @Background
+  // to be called by the facebook callback biznaz when a user has successfully logged in.
+  // must pass a valid email for the database to track this user
+  public void completeFacebookLogin(String email, String name) {
+    try {
+      User existingUser = dataSource.getUserByEmail(email);
+      if(existingUser == null) {
+        // no user found on the phone with this email, let's check the server...
+        JSONObject userFromServer = new JSONObject(restClient.fetchUserByEmail(email));
+        existingUser = dataSource.createUser(userFromServer.getLong("_id"),userFromServer.getString("username"),email);
+      }
+      // if existingUser is STILL null, we have no account at all with this email, time to register.
+      if(existingUser == null) {
+        JSONObject request = new JSONObject();
+        request.put("email", email);
+        request.put("username", name);
+        request.put("passwordHash", "FB_PROXY_ACCOUNT");
+        String responseJSON = restClient.registerNewAccount(request.toString());
+        JSONObject response = new JSONObject(responseJSON);
+        if(response.getBoolean("success")) {
+          JSONObject userFromServer = new JSONObject(restClient.fetchUserByEmail(email));
+          existingUser = dataSource.createUser(userFromServer.getLong("_id"),userFromServer.getString("username"),email);
+        }
+      }
+      // at this point existingUser has either been fetched or created and is valid, so we just log in with it.
+      if(existingUser != null) {
+        dataSource.setActiveUser(existingUser);
+        startMainActivity();
+      }
+    } catch (JSONException e) {
+      e.printStackTrace();
     }
   }
 
