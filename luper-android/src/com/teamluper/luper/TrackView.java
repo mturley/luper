@@ -112,7 +112,6 @@ public class TrackView extends RelativeLayout {
 	public void init(){
 		mPlayer = new MediaPlayer();
 
-		this.setPadding(0, 10, 0, 5);
         //LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
         //        LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         //layoutParams.setMargins(5, 0, 5, 0);
@@ -139,7 +138,7 @@ public class TrackView extends RelativeLayout {
 		playButton.setOnClickListener(playClicker);
 		trackControl.addView(playButton);
 
-        trackControl.setBackgroundColor(Color.parseColor("#50e2dfd8"));
+        trackControl.setBackgroundColor(Color.parseColor("#e2dfd8"));
 
 
 		this.addView(trackControl);
@@ -152,11 +151,12 @@ public class TrackView extends RelativeLayout {
         //this.associated.putClip(clip1);
         //this.associated.putClip(clip2);
         for(int i = 0; i < this.associated.clips.size(); i++){
+
         	System.out.println("Here " + this.associated.getClips().get(i).begin);
         	chip = new ColorChipButton(this.getContext(), this.associated.getClips().get(i));
         	chip.setRandColor(chip.rnd);
         	System.out.println("Chips x pos " + chip.associated.begin);
-        	this.addView(chip);
+            this.addView(chip);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             this.setLayoutParams(params);

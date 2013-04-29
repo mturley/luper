@@ -28,6 +28,7 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.androidlearner.widget.DragThingPlayhead;
 import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.UiThread;
@@ -58,6 +59,8 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   private LinearLayout base;
   public Playhead playhead;
 
+    DragThingPlayhead theplayhead;
+
 
     //this object is gonna move de move.
     //ClipThing deClip;
@@ -87,6 +90,8 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     base.setOrientation(LinearLayout.VERTICAL);
     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
+
+      theplayhead = new DragThingPlayhead(this);
 
     long ID = getIntent().getLongExtra("selectedProjectId", -1);
     if(ID == -1) {

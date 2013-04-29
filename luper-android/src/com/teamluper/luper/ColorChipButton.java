@@ -36,8 +36,8 @@ public class ColorChipButton extends Button {
 
 	//this method will determine where the clip should be placed, based on its start time
 	public void init(){
-		this.setX(this.getStartTime());
-		this.setWidth(this.getStartTime() + this.getLength());
+		this.setX(this.getStartTime()+100);
+		this.setWidth(this.getStartTime()+100 + this.getLength());
 	}
 
 	public void displayStats(){
