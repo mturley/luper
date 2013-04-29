@@ -47,7 +47,7 @@
                 android:id="@+id/header_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="0dp"
                 android:layout_marginBottom="5dp"
                 android:text="@string/header_login_welcome"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -55,10 +55,37 @@
                 android:id="@+id/subheader_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="0dp"
                 android:layout_marginBottom="10dp"
                 android:text="@string/subheader_login"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/login_header_facebook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/login_header_facebook"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+            <!-- Facebook Button -->
+            <com.facebook.widget.LoginButton
+                android:id="@+id/authButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                />
+            <TextView
+                android:id="@+id/login_header_or"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="5dp"
+                android:text="@string/login_header_or"
+                android:layout_gravity="center_horizontal"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <EditText
                 android:id="@+id/login_email"
@@ -91,36 +118,15 @@
                 android:paddingRight="32dp"
                 android:text="@string/action_login" />
 
-            <Button
-                android:id="@+id/skip_sign_in"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginTop="10dp"
-                android:paddingLeft="32dp"
-                android:paddingRight="32dp"
-                android:onClick="skipLogin"
-                android:text="SKIP LOGIN!" />
-
             <TextView
-                android:id="@+id/header_or_facebook"
+                android:id="@+id/login_extra_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:text="@string/or_login_facebook"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:text="@string/login_extra_details"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-           <!-- Facebook Button -->
-           <com.facebook.widget.LoginButton
-        		android:id="@+id/authButton"
-        		android:layout_width="wrap_content"
-        		android:layout_height="wrap_content"
-        		android:layout_gravity="center_horizontal"
-        		android:onClick="loadActiveSession"
-        		android:layout_marginTop="30dp"
-           />
-           <!-- loadActiveSession IS NOT GETTING CALLED AT ALL -->
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

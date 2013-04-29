@@ -36,7 +36,8 @@
     <!-- Strings related to login -->
     <string name="login_title">Welcome to Lüper!</string>
     <string name="header_login_welcome">Hi There! Have We Met?</string>
-    <string name="subheader_login">If you already have a Lüper Account, use it to log in. If you\'re new to Lüper, use the Register tab above.\nDEVELOPERS: JUST PRESS SKIP SIGN IN FOR NOW</string>
+    <string name="subheader_login">You\'ll need to log in so Lüper can keep all your recordings and projects in sync with the cloud.</string>
+    <string name="login_header_facebook">Log in with Facebook:</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_login">Log In</string>
@@ -47,10 +48,11 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
-    <string name="or_login_facebook">or, Log In with Facebook:</string>
+    <string name="login_header_or">or, use your Lüper account:</string>
+    <string name="login_extra_details">You can create a new Lüper account using the Register tab at the top of this screen. Note that if you don\'t log in with Facebook, you won\'t be able to use Lüper\'s social features until you activate Facebook in Account Settings.</string>
     <!-- Strings related to register -->
     <string name="header_register_welcome">New to Lüper? Start Here!</string>
-    <string name="register_description">Using a Lüper account allows you to save your projects in the cloud, and form a friends list for sharing and collaboration.  You can also link Facebook with your Luper account to log in with facebook and bring in your facebook friends.</string>
+    <string name="register_description">The preferred way to use Lüper is via Facebook Login, so you can easily share your creations with friends.  However, if you prefer to remain slightly more anonymous, you can register here: </string>
     <string name="prompt_password2">Re-enter Password</string>
     <string name="prompt_username">Display Name</string>
     <string name="action_register">Register</string>
@@ -58,5 +60,5 @@
     <string name="or_register_facebook">or, Register with Facebook:</string>
     <string name="title_activity_Luper_Login">Luper Login</string>
     <string name="title_activity_Luper_register">Luper Register</string>
-    
+
 </resources>

@@ -4,7 +4,7 @@
     android:layout_height="match_parent" >
 
     <TextView
-        android:id="@+id/welcome"
+        android:id="@+id/mainWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -18,7 +18,7 @@
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/welcome"
+        android:layout_below="@+id/mainWelcome"
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:onClick="devTools"
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:text="@string/devtoolsexplanation"
             android:id="@+id/textView" android:layout_centerHorizontal="true" android:layout_below="@+id/button1"
-            android:layout_marginTop="10dp" android:layout_alignLeft="@+id/welcome"
-            android:layout_alignRight="@+id/welcome"/>
+            android:layout_marginTop="10dp" android:layout_alignLeft="@+id/mainWelcome"
+            android:layout_alignRight="@+id/mainWelcome"/>
 
 </RelativeLayout>

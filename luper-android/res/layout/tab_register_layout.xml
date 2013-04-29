@@ -106,22 +106,6 @@
                 android:paddingRight="32dp"
                 android:text="@string/action_register" />
 
-            <TextView
-                android:id="@+id/header_or_facebook"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"
-                android:text="@string/or_register_facebook"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <Button
-                android:id="@+id/register_with_facebook_fake_button_steve_replace_this"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:text="Someone Replace this Fake Button with a Real One" />
         </LinearLayout>
     </ScrollView>
 

@@ -29,15 +29,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
+import android.widget.*;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.UiThread;
@@ -119,7 +117,6 @@ public class LuperMainActivity extends SherlockFragmentActivity {
     MenuInflater inf = getSupportMenuInflater();
     inf.inflate(R.menu.activity_main, menu);
 
-    // TODO remove this code if we want the New Project button to stay the way it is now.
     // because one of the action items is a custom view,
     // we need the next few lines to force it to use onOptionsItemSelected
     // when it's clicked.
@@ -130,19 +127,6 @@ public class LuperMainActivity extends SherlockFragmentActivity {
         onOptionsItemSelected(item);
       }
     });
-
-    // TODO replace this code with a better way to make sure when we're logged in we see "Logout" instead of "Login/Register"
-    /*
-    User activeUser = dataSource.getActiveUser();
-    if(activeUser == null) {
-      // we're logged out
-      menu.add(0,1,0,"Log In");
-      menu.add(0,2,0,"Register");
-    } else {
-      // we're logged in
-      menu.add(0,3,0,"Log Out "+activeUser.getEmail());
-    }
-    */
 
     return super.onCreateOptionsMenu(menu);
   }
@@ -165,14 +149,18 @@ public class LuperMainActivity extends SherlockFragmentActivity {
     }
     if(item.getItemId() == R.id.menu_logout) {
       final Activity a = this;
-      DialogFactory.confirm(this, "Log Out", "Are you sure?",
+      final SQLiteDataSource ds = dataSource;
+      DialogFactory.confirm(this, "Really Log Out?", "You will lose the ability to work offline until the next time you log in (while online) and sync.",
         new Lambda.BooleanCallback() {
           public void go(boolean userPressedYes) {
             if(userPressedYes) {
+              ds.logoutActiveUser();
               Intent intent = new Intent(a, LuperLoginActivity_.class);
               intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
               intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+              intent.putExtra("luperLoggingOutFlag", true);
               a.startActivity(intent);
+              DialogFactory.toastMessage(a, "Logged out. Thanks for using Lüper!");
               a.finish();
             }
           }

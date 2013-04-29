@@ -44,7 +44,8 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
   private Session session;
   private String accessToken;
 
-  protected void loadActiveSession(View v) {
+  // THIS IS NOT BEING CALLED AT ALL...
+  protected void loadActiveSession() {
     session = Session.getActiveSession();
 	  accessToken = session.getAccessToken();
   }
@@ -57,7 +58,8 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
 	  super.onActivityResult(requestCode,resultCode,data);
-	  Session.getActiveSession().onActivityResult(this,requestCode,resultCode,data);
+	  //Session.getActiveSession().onActivityResult(this,requestCode,resultCode,data);
+    uiHelper.onActivityResult(requestCode, resultCode, data);
   }
 
   // How Luper should behave when user logs into or out of facebook
@@ -97,6 +99,15 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
+    // connect to the database
+    dataSource = new SQLiteDataSource(this);
+    dataSource.open();
+
+    boolean loggingOut = getIntent().getBooleanExtra("luperLoggingOutFlag", false);
+    if(!loggingOut) checkForExistingLogin();
+
+    // disable the software keyboard at first, keeps it from covering up the facebook login button.
+    // ALWAYS_HIDDEN isn't what it sounds like, the user can still tap text fields to open the keyboard.
     this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
     // enable tabs in the ActionBar
@@ -114,10 +125,6 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
       TabLoginFragment_.class, null);
     mTabsAdapter.addTab(bar.newTab().setText(""+"Register"),
       TabRegisterFragment_.class, null);
-
-    // connect to the database
-    dataSource = new SQLiteDataSource(this);
-    dataSource.open();
 
     // UI handler - Facebook login
     uiHelper = new UiLifecycleHelper(this,callback);
@@ -138,9 +145,13 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
 
   @Override
   protected void onResume() {
-    if(!dataSource.isOpen()) dataSource.open();
-    session = Session.getActiveSession();
     super.onResume();
+    if(!dataSource.isOpen()) dataSource.open();
+
+    session = Session.getActiveSession();
+    if(session != null && (session.isOpened() || session.isClosed())) {
+      onSessionStateChange(session, session.getState(), null);
+    }
     uiHelper.onResume();
   }
 
@@ -170,16 +181,26 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
     return dataSource;
   }
 
-  @Background
+  @UiThread
   public void skipLogin(View v) {
     User dummyUser = dataSource.getUserById(1);
     dataSource.setActiveUser(dummyUser);
-    startMainActivity();
+    checkForExistingLogin();
+  }
+
+  @UiThread
+  public void checkForExistingLogin() {
+    if(dataSource != null && dataSource.isOpen() && dataSource.getActiveUser() != null) {
+      // we're already logged in!  skip the login screen entirely.
+      startMainActivity();
+    }
   }
 
   @UiThread
   public void startMainActivity() {
     Intent intent = new Intent(this, LuperMainActivity_.class);
+    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     startActivity(intent);
   }
 

@@ -44,9 +44,6 @@ public class TabLoginFragment extends Fragment {
   private View mLoginStatusView;
   private TextView mLoginStatusMessageView;
 
-  //Instance of FacebookLoginFragment
-  //private FacebookLoginFragment facebookLoginFragment;
-
   private SQLiteDataSource dataSource;
 
   @RestService
@@ -97,22 +94,6 @@ public class TabLoginFragment extends Fragment {
         }
       });
 
-
-    //facebook button implementation
-    /*
-    if (savedInstanceState == null) {
-        // Add the fragment on initial activity setup
-        facebookLoginFragment = new FacebookLoginFragment();
-        getSupportFragmentManager()
-        .beginTransaction()
-        .add(android.R.id.content, facebookLoginFragment)
-        .commit();
-    } else {
-        // Or set the fragment from restored state info
-        facebookLoginFragment = (FacebookLoginFragment) getSupportFragmentManager()
-        .findFragmentById(android.R.id.content);
-    }
-    */
     return v;
   }
 

@@ -81,11 +81,13 @@ public class SQLiteDataSource {
     ContentValues values = new ContentValues();
     values.put("isActiveUser", 1);
     database.update("Users", values, "_id = "+user.getId(), null);
+    this.activeUser = user;
     values = new ContentValues();
     values.put("isActiveUser", 0);
     database.update("Users", values, "_id != "+user.getId(), null);
   }
   public void logoutActiveUser() {
+    this.activeUser = null;
     ContentValues values = new ContentValues();
     values.put("isActiveUser", 0);
     database.update("Users", values, "isActiveUser = 1", null);
