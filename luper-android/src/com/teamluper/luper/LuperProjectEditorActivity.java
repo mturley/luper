@@ -44,7 +44,7 @@ import com.androidlearner.widget.ClipThing;
 
 @EActivity
 public class LuperProjectEditorActivity extends SherlockActivity {
-  SQLiteDataSource dataSource;
+  public SQLiteDataSource dataSource;
   Sequence sequence = null;
   private static String mFileName = null;
   private MediaRecorder mRecorder = null;

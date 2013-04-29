@@ -4,11 +4,13 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.View;
-import android.widget.Button;
+import android.widget.*;
 import java.util.Random;
 import android.graphics.Color;
 
+
 public class ColorChipButton extends Button {
+
 
 	private static final String TAG = "ColorClipButton";
 
@@ -21,9 +23,57 @@ public class ColorChipButton extends Button {
 	//set a click listener for the buttons that will activate promptDialog() when clicked
 	OnClickListener clicker = new OnClickListener(){
 		public void onClick(View v){
-			promptDialog();
+			//promptDialog();
+            showListDialog();
 		}
 	};
+
+    public void showListDialog(){
+        final CharSequence[] items = {"Details", "Edit", "Delete", "Cancel"};
+        new AlertDialog.Builder(getContext())
+                .setTitle("Clip Options")
+                .setItems(items, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                if (items[item].equals("Details"))
+                {
+                    new AlertDialog.Builder(getContext())
+                            .setTitle("Length " + associated.getDurationMS() + " ms")
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    //Do nothing for now
+                                }
+                            })
+                            .show();
+                }
+                if (items[item].equals("Edit"))
+                {
+                    // does nothing for nao
+                }
+                else if (items[item].equals("Delete"))
+                {
+                    LuperProjectEditorActivity a = (LuperProjectEditorActivity) getContext();
+                    a.dataSource.deleteClip(associated.getId());
+                    // TODO remove clip from editor
+
+                    new AlertDialog.Builder(getContext())
+                            .setTitle("Done")
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    //Do nothing for now
+                                }
+                            })
+                            .show();
+                }
+                else if (items[item].equals("Cancel"))
+                {
+                    // does nothing and will never do anything
+                }
+            }
+        }).show();
+    }
+
+
+
 
 	//constructor sets the associated clip, calls init, and sets the onclicklistener
 	public ColorChipButton(Context context, Clip clip){
@@ -72,7 +122,7 @@ public class ColorChipButton extends Button {
 //	the clip. eventually it should allow you to modify things about the clip
 	public void promptDialog(){
 		new AlertDialog.Builder(getContext())
-			.setTitle("Clip Details")
+            .setTitle("Clip Details")
 			.setMessage("Length " + associated.getDurationMS() + " ms" + "    The Current Color is: " + mColor)
 		    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 		        public void onClick(DialogInterface dialog, int whichButton) {
