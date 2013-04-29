@@ -14,6 +14,7 @@ public class Clip {
   private int startTime;
   private int durationMS;
   private int loopCount;
+  private int color;
   private boolean isLocked;
   private String playbackOptions;
   private boolean isDirty; // dirty = contains unsynced changes
@@ -35,7 +36,7 @@ public class Clip {
   // instead, use SQLiteDataSource.createClip()!
 	public Clip(SQLiteDataSource dataSource, long id, long ownerUserID,
               long parentTrackID, long audioFileID, int startTime,
-              int durationMS, int loopCount, boolean isLocked,
+              int durationMS, int loopCount, int color, boolean isLocked,
               String playbackOptions, boolean isDirty) {
 	  this.dataSource = dataSource;
 	  this.id = id;
@@ -45,6 +46,7 @@ public class Clip {
 	  this.startTime = startTime;
 	  this.durationMS = durationMS;
 	  this.loopCount = loopCount;
+    this.color = color;
 	  this.isLocked = isLocked;
 	  this.playbackOptions = playbackOptions;
 	  this.isDirty = isDirty;
@@ -54,33 +56,6 @@ public class Clip {
 		begin = 0;
 		end = duration;
 	}
-	public Clip() {
-	  dataSource = null;
-	}
-	public Clip(String cName)
-	{
-	  dataSource = null;
-	}
-  /*//Extra length method using mediaplayer which oddly uses an integer for the duration
-  public int getDuration() //FIXME update database with current duration , refactor
-  {
-    try {
-      MediaPlayer mp = new MediaPlayer();
-      FileInputStream fs;
-      FileDescriptor fd;
-      fs = new FileInputStream(this.audioFile.getClientFilePath());
-      fd = fs.getFD();
-      mp.setDataSource(fd);
-      mp.prepare();
-      int length = mp.getDuration();
-      mp.release();
-      duration = length;
-    } catch (Exception e) {
-      e.printStackTrace();
-      duration = 0;
-    }
-    return duration;
-  }*/
 
   // mike's database getters and setters.
   // TODO migrate all above stuff to use the below fields, setters, and getters
@@ -91,7 +66,7 @@ public class Clip {
     dataSource.updateLong("Clips", oldId, "_id", id);
     this.isDirty = true;
 	}
-	
+
 	public void setBegin(int begin){
 		this.begin = begin;
 	}
@@ -101,7 +76,7 @@ public class Clip {
 	public void setDuration(int duration){
 		this.duration = duration;
 	}
-	
+
 
 	public long getOwnerUserID() { return ownerUserID; }
 	public void setOwnerUserID(long ownerUserID) {
@@ -145,6 +120,12 @@ public class Clip {
     this.isDirty = true;
 	}
 
+  public int getColor() { return color; }
+  public void setColor(int color) {
+    this.color = color;
+    dataSource.updateInt("Clips", this.id, "color", color);
+  }
+
 	public boolean isLocked() { return isLocked; }
 	public void setLocked(boolean isLocked) {
 		this.isLocked = isLocked;
@@ -164,7 +145,7 @@ public class Clip {
 		this.isDirty = isDirty;
     dataSource.updateInt("Clips", this.id, "isDirty", (isDirty ? 1 : 0));
 	}
-	
+
 	public AudioFile getAudioFile() {
 		return this.audioFile;
 	}

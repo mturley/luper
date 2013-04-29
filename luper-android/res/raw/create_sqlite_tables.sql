@@ -58,6 +58,7 @@ create table Clips (
   startTime         integer   not null,
   durationMS        integer,
   loopCount         integer   not null,
+  color             integer,
   isLocked          integer   not null,
   playbackOptions   text,
   isDirty           integer   not null,
@@ -76,11 +77,11 @@ insert into Tracks (_id, ownerUserID, parentSequenceID, isMuted, isLocked, isDir
             VALUES (2,   1,          1,                0,       0,        0);
 insert into Tracks (_id, ownerUserID, parentSequenceID, isMuted, isLocked, isDirty)
             VALUES (3,   1,          1,                0,       0,        0);
-insert into Clips (ownerUserID, parentTrackID, audioFileID, startTime, durationMS, loopCount, isLocked, isDirty)
+insert into Clips (ownerUserID, parentTrackID, audioFileID, startTime, durationMS, loopCount, color, isLocked, isDirty)
            VALUES (1,          1,             1,           200,       300,        1,         0,        0);
-insert into Clips (ownerUserID, parentTrackID, audioFileID, startTime, durationMS, loopCount, isLocked, isDirty)
+insert into Clips (ownerUserID, parentTrackID, audioFileID, startTime, durationMS, loopCount, color, isLocked, isDirty)
            VALUES (1,          1,             1,           600,       200,        1,         0,        0);
-insert into Clips (ownerUserID, parentTrackID, audioFileID, startTime, durationMS, loopCount, isLocked, isDirty)
+insert into Clips (ownerUserID, parentTrackID, audioFileID, startTime, durationMS, loopCount, color, isLocked, isDirty)
            VALUES (1,          2,             1,           0,         300,        1,         0,        0);
-insert into Clips (ownerUserID, parentTrackID, audioFileID, startTime, durationMS, loopCount, isLocked, isDirty)
+insert into Clips (ownerUserID, parentTrackID, audioFileID, startTime, durationMS, loopCount, color, isLocked, isDirty)
            VALUES (1,          3,             1,           400,       500,        1,         0,        0);

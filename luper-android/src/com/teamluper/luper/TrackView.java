@@ -35,6 +35,7 @@ import android.widget.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import com.androidlearner.widget.DragThing;
 import com.googlecode.androidannotations.annotations.Background;
@@ -238,7 +239,6 @@ public class TrackView extends RelativeLayout {
 //		        	newClip = dataSource.createClip(associated, lastRecordedFile, finalStartTime);
 //		        	associated.putClip(newClip);
               finishRecording(associated, lastRecordedFile, finalStartTime);
-
 		        }
 		    })
 		    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -251,7 +251,9 @@ public class TrackView extends RelativeLayout {
 	}
     public void finishRecording(Track track, AudioFile file, int startTime)
     {
-        Clip newClip = dataSource.createClip(track, lastRecordedFile, startTime);
+        Random rnd = new Random();
+        int newColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+        Clip newClip = dataSource.createClip(track, lastRecordedFile, startTime, newColor);
         associated.putClip(newClip);
         ColorChipButton newButton = new ColorChipButton(this.getContext(), newClip);
         this.addView(newButton);
