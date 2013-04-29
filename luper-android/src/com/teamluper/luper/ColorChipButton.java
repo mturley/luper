@@ -87,7 +87,7 @@ public class ColorChipButton extends Button {
 	//this method will determine where the clip should be placed, based on its start time
 	public void init(){
 		this.setX(this.getStartTime()+100);
-		this.setWidth(this.getStartTime()+100 + this.getLength());
+		this.setWidth((this.getStartTime()+100) + this.getLength()/10);
 	}
 
 	public void displayStats(){
@@ -113,8 +113,8 @@ public class ColorChipButton extends Button {
     this.setBackgroundColor(mColor);
     invalidate();
   }
-  public void setRandColor(Random r) {
-    mColor = Color.argb(255, r.nextInt(256), r.nextInt(256), r.nextInt(256));
+  public void setRandColor() {
+    mColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
     this.setBackgroundColor(mColor);
     invalidate();
   }

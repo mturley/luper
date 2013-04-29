@@ -167,12 +167,13 @@ public class SQLiteDataSource {
     return affected == 1;
   }
 
-  public Clip createClip(Track parentTrack, AudioFile file, int startTime) {
+  public Clip createClip(Track parentTrack, AudioFile file, int startTime, int color) {
     ContentValues values = new ContentValues();
     values.put("ownerUserID", parentTrack.getOwnerUserID());
     values.put("parentTrackID", parentTrack.getId());
     values.put("audioFileID", file.getId());
     values.put("startTime", startTime);
+    values.put("color", color);
     values.put("durationMS", file.getDurationMS()); // temporary... later, clips can be cut down, etc
     values.put("loopCount", 1);
     values.put("isLocked", 0);
@@ -298,6 +299,7 @@ public class SQLiteDataSource {
       cursor.getInt(cursor.getColumnIndex("startTime")),
       cursor.getInt(cursor.getColumnIndex("durationMS")),
       cursor.getInt(cursor.getColumnIndex("loopCount")),
+      cursor.getInt(cursor.getColumnIndex("color")),
       cursor.getInt(cursor.getColumnIndex("isLocked")) == 1,
       cursor.getString(cursor.getColumnIndex("playbackOptions")),
       cursor.getInt(cursor.getColumnIndex("isDirty")) == 1

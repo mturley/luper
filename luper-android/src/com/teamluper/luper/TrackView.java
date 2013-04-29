@@ -35,6 +35,7 @@ import android.widget.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import com.androidlearner.widget.DragThing;
 import com.googlecode.androidannotations.annotations.Background;
@@ -154,7 +155,7 @@ public class TrackView extends RelativeLayout {
 
         	System.out.println("Here " + this.associated.getClips().get(i).begin);
         	chip = new ColorChipButton(this.getContext(), this.associated.getClips().get(i));
-        	chip.setRandColor(chip.rnd);
+          chip.setRandColor();
         	System.out.println("Chips x pos " + chip.associated.begin);
             this.addView(chip);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -235,8 +236,9 @@ public class TrackView extends RelativeLayout {
 //                    Clip newClip = dataSource.createClip(finalTrack, lastRecordedFile, finalStartTime);
 //                    associated.putClip(newClip);
                 //finishRecording(associated, lastRecordedFile, finalStartTime);
-		        	newClip = dataSource.createClip(associated, lastRecordedFile, finalStartTime);
-		        	associated.putClip(newClip);
+//		        	newClip = dataSource.createClip(associated, lastRecordedFile, finalStartTime);
+//		        	associated.putClip(newClip);
+              clipMaker(associated, lastRecordedFile, finalStartTime);
 		        }
 		    })
 		    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -247,10 +249,14 @@ public class TrackView extends RelativeLayout {
 			.show();
 
 	}
-    public void finishRecording(Track track, AudioFile file, int startTime)
+    public void clipMaker(Track track, AudioFile file, int startTime)
     {
-        Clip newClip = dataSource.createClip(track, lastRecordedFile, startTime);
-        associated.putClip(newClip);
+        Random rnd = new Random();
+        int newColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+        Clip newClip = dataSource.createClip(track, file, startTime, newColor);
+        track.putClip(newClip);
+        ColorChipButton newButton = new ColorChipButton(this.getContext(), newClip);
+        this.addView(newButton);
     }
     class RecordButton extends Button {
         boolean mStartRecording = true;
@@ -289,7 +295,7 @@ public class TrackView extends RelativeLayout {
         lastRecordedFileName += "/clip_" + System.currentTimeMillis() +".3gp";
 
         mRecorder = new MediaRecorder();
-        mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);;
+        mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         mRecorder.setOutputFile(lastRecordedFileName);
 
