@@ -238,7 +238,7 @@ public class TrackView extends RelativeLayout {
                 //finishRecording(associated, lastRecordedFile, finalStartTime);
 //		        	newClip = dataSource.createClip(associated, lastRecordedFile, finalStartTime);
 //		        	associated.putClip(newClip);
-              finishRecording(associated, lastRecordedFile, finalStartTime);
+              clipMaker(associated, lastRecordedFile, finalStartTime);
 		        }
 		    })
 		    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -249,12 +249,12 @@ public class TrackView extends RelativeLayout {
 			.show();
 
 	}
-    public void finishRecording(Track track, AudioFile file, int startTime)
+    public void clipMaker(Track track, AudioFile file, int startTime)
     {
         Random rnd = new Random();
         int newColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-        Clip newClip = dataSource.createClip(track, lastRecordedFile, startTime, newColor);
-        associated.putClip(newClip);
+        Clip newClip = dataSource.createClip(track, file, startTime, newColor);
+        track.putClip(newClip);
         ColorChipButton newButton = new ColorChipButton(this.getContext(), newClip);
         this.addView(newButton);
     }
