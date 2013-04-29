@@ -79,7 +79,7 @@ public class ColorChipButton extends Button {
 	public ColorChipButton(Context context, Clip clip){
 		super(context);
 		associated = clip;
-    mColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+    mColor = clip.getColor();
 		init();
 		setOnClickListener(clicker);
 	}
