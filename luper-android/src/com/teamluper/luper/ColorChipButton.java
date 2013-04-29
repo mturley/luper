@@ -63,8 +63,8 @@ public class ColorChipButton extends Button {
     this.setBackgroundColor(mColor);
     invalidate();
   }
-  public void setRandColor(Random r) {
-    mColor = Color.argb(255, r.nextInt(256), r.nextInt(256), r.nextInt(256));
+  public void setRandColor() {
+    mColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
     this.setBackgroundColor(mColor);
     invalidate();
   }
