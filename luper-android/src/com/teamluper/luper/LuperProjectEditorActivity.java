@@ -196,36 +196,10 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     boolean incomplete = false;
     if(item.getItemId() == R.id.editor_play) {
       // TODO
-      //incomplete = true;
-
-    	/*int i=0;
-    	//while(playBackTest!=null && i!=playBackTest.size())
-    	//{
-	        mPlayer = new MediaPlayer();
-	        mFileName=playBackTest.clips.get(i).name;
-	        try
-	        {
-	            mPlayer.setDataSource(mFileName);
-	            mPlayer.prepare();
-	            Thread.sleep(playBackTest.clips.get(i).getDuration());
-	            mPlayer.start();
-	            i++;
-	        } catch (Exception e) {
-	        	//handle interrupted exceptions in a different way
-	            Log.e(LOG_TAG, "prepare() failed1");
-	        }
-    	}
-      mPlayer = new MediaPlayer();
-
-      try{
-      mPlayer.setDataSource(mFileName);
-      mPlayer.prepare();
-      mPlayer.start();
-      playhead.moveHead(mPlayer);
-      } catch (Exception e) {
-        //handle interrupted exceptions in a different way
-        Log.e(LOG_TAG, "prepare() failed1");
-      }*/
+      for(Track track  : sequence.tracks)
+      {
+        track.getAssociatedView().startPlayingTrackInBackground(); // doesn't actually run them in parallel - see trackview
+      }
 
     }
     if(item.getItemId() == R.id.editor_add_track) {

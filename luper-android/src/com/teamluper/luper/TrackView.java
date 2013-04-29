@@ -339,14 +339,21 @@ public class TrackView extends RelativeLayout {
 
     @UiThread
     public void startPlayingTrack() {
+      startPlayingTrackInBackground();
+    }
+
+    @Background // doesn't actually run them in parallel - might be related to the sleep call in track playback
+    public void startPlayingTrackInBackground() {
       //mPlayer = new MediaPlayer();
       ArrayList<Clip> clips = associated.getClips();
       for(Clip c : clips) {
-    	  playClipInBackground(c); // later on will also take a startTime parameter (current playhead time)
+        playClipInBackground(c); // later on will also take a startTime parameter (current playhead time)
       }
     }
 
     // later on will also take a startTime parameter (current playhead time)
+
+
     @Background
     public void playClipInBackground(Clip c) {
       // if mPlayer is null we probably stopped playback before it was done, so abort.
