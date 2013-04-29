@@ -295,7 +295,7 @@ public class TrackView extends RelativeLayout {
         lastRecordedFileName += "/clip_" + System.currentTimeMillis() +".3gp";
 
         mRecorder = new MediaRecorder();
-        mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);;
+        mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         mRecorder.setOutputFile(lastRecordedFileName);
 
