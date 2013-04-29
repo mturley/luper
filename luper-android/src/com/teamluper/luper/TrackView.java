@@ -235,8 +235,10 @@ public class TrackView extends RelativeLayout {
 //                    Clip newClip = dataSource.createClip(finalTrack, lastRecordedFile, finalStartTime);
 //                    associated.putClip(newClip);
                 //finishRecording(associated, lastRecordedFile, finalStartTime);
-		        	newClip = dataSource.createClip(associated, lastRecordedFile, finalStartTime);
-		        	associated.putClip(newClip);
+//		        	newClip = dataSource.createClip(associated, lastRecordedFile, finalStartTime);
+//		        	associated.putClip(newClip);
+              finishRecording(associated, lastRecordedFile, finalStartTime);
+
 		        }
 		    })
 		    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -251,6 +253,8 @@ public class TrackView extends RelativeLayout {
     {
         Clip newClip = dataSource.createClip(track, lastRecordedFile, startTime);
         associated.putClip(newClip);
+        ColorChipButton newButton = new ColorChipButton(this.getContext(), newClip);
+        this.addView(newButton);
     }
     class RecordButton extends Button {
         boolean mStartRecording = true;
