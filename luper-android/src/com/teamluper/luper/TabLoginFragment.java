@@ -86,7 +86,7 @@ public class TabLoginFragment extends Fragment {
     // Give facebook loginbutton email permissions
     LoginButton authButton = (LoginButton) v.findViewById(R.id.authButton);
     authButton.setFragment(this);
-    authButton.setReadPermissions(Arrays.asList("user_likes", "user_status"));
+    authButton.setReadPermissions(Arrays.asList("email"));
 
     mLoginFormView = v.findViewById(R.id.login_form);
     mLoginStatusView = v.findViewById(R.id.login_status);
