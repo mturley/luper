@@ -5,10 +5,12 @@ import android.util.AttributeSet;
 import android.graphics.*;
 import android.view.*;
 import android.media.MediaPlayer;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 
 //playhead class view to be implemented --Eric
-public class Playhead extends View {
+public class Playhead extends LinearLayout {
   private final float STARTY = 0;
   private final float ENDY = 5000;
   //private float X;
