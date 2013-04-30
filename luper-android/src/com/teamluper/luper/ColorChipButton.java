@@ -13,6 +13,7 @@ public class ColorChipButton extends Button {
 
 
 	private static final String TAG = "ColorClipButton";
+  private static final float PIXELS_PER_MILLISECOND = 0.4f;
 
 	//the clip that is associated with this CCB
 	Clip associated;
@@ -86,8 +87,8 @@ public class ColorChipButton extends Button {
 
 	//this method will determine where the clip should be placed, based on its start time
 	public void init(){
-		this.setX(this.getStartTime()+100);
-		this.setWidth((this.getStartTime()+100) + this.getLength()/10);
+		this.setX(this.getStartTime()*PIXELS_PER_MILLISECOND);
+		this.setWidth(Math.round(this.getLength()*PIXELS_PER_MILLISECOND));
 	}
 
 	public void displayStats(){
