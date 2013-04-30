@@ -70,7 +70,7 @@ create table Clips (
 insert into Users VALUES (1, 'anonymous', 'foo@bar.baz', 0, "{}", 0);
 insert into Files (_id, ownerUserID, clientFilePath, fileFormat, isReadyOnClient, isReadyOnServer, isDirty)
            VALUES (1, 1,          '',             '',         0,               0,               0);
-insert into Sequences (_id, ownerUserID, title, isDirty) VALUES (1, 1, 'DUMMY SEQUENCE', 0);
+insert into Sequences (_id, ownerUserID, title, isDirty) VALUES (1, 1, 'A Simple Beat', 0);
 insert into Tracks (_id, ownerUserID, parentSequenceID, isMuted, isLocked, isDirty)
             VALUES (1,   1,          1,                0,       0,        0);
 insert into Tracks (_id, ownerUserID, parentSequenceID, isMuted, isLocked, isDirty)
