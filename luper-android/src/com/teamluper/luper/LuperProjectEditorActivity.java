@@ -219,7 +219,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     if(item.getItemId() == R.id.editor_play) {
       for(Track track  : sequence.tracks) {
         for(View v : track.getAssociatedViews()) {
-          if(v instanceof TrackView) {
+          if(TrackView.class.isInstance(v)) {
             ((TrackView) v).startPlayingTrack(); // doesn't actually run them in parallel - see trackview
           }
         }
