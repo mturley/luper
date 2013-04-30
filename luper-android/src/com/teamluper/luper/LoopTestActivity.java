@@ -25,7 +25,7 @@ import java.util.ArrayList;
 @SuppressLint("WrongCall")
 public class LoopTestActivity extends Activity {
 	ArrayList<Clip> cliplist = new ArrayList<Clip>();
-	ColorClipView CCV;
+//	ColorClipView CCV;
 	int numTimes;
 
 	private OnClickListener onClickListener = new OnClickListener() {
@@ -130,7 +130,7 @@ public class LoopTestActivity extends Activity {
     }
 	static public class ProjectView extends View {
 //		ArrayList<ColorChipView> chipList = new ArrayList<ColorChipView>();
-		ColorClipView chip;
+//		ColorClipView chip;
 		protected Canvas canvas;
 
 	    public ProjectView(Context context) {
