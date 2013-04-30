@@ -168,7 +168,7 @@ public class TabLoginFragment extends Fragment {
   private UiLifecycleHelper uiHelper;
   
   protected void onSessionStateChange(Session sesh, SessionState seshState, Exception e) {
-	  final Activity a = getActivity();
+	  final LuperLoginActivity_ a = (LuperLoginActivity_)getActivity();
 	  if (seshState.isOpened()) {
 		  /** usr logged in **/
 		  // Create new request to facebook API
@@ -194,6 +194,7 @@ public class TabLoginFragment extends Fragment {
 		    				  + user.getLink() + ", "
 		    				  + user.getFirstName()+ user.asMap().get("email"));
 		    		}
+		    	a.completeFacebookLogin(user.asMap().get("email").toString(),user.getUsername());
 		    }
 
 		  });
