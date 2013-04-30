@@ -94,8 +94,11 @@ public class ColorChipButton extends Button {
 	public void init(){
 		//this.setX(this.getStartTime() + 50);
 		//this.setWidth((this.getStartTime() + 50) + this.getLength()/10);
-		this.setX(this.getStartTime()*PIXELS_PER_MILLISECOND + 100);
-		this.setWidth(Math.round(this.getLength()*PIXELS_PER_MILLISECOND) + 100);
+		this.setX(this.getStartTime()*PIXELS_PER_MILLISECOND + 99);
+		this.setWidth(Math.round(this.getLength()*PIXELS_PER_MILLISECOND) + 99);
+        this.setHeight(140);
+        mColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+        this.setBackgroundColor(mColor);
 	}
 
 	public void displayStats(){
