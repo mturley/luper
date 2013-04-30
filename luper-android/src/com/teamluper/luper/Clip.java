@@ -57,6 +57,11 @@ public class Clip {
 		end = duration;
 	}
 
+  //CANNOT USE THIS, NEED TO USE THE DB CALLS. THIS IS ONLY HERE SO AudioRecorderTest COMPILES, ART IS OUTDATED.
+  Clip(String Cname){
+    dataSource = null;
+  }
+
   // mike's database getters and setters.
   // TODO migrate all above stuff to use the below fields, setters, and getters
 	public long getId() { return id; }
