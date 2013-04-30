@@ -13,7 +13,6 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -29,10 +28,8 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.androidlearner.widget.DragThingPlayhead;
-import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.UiThread;
-import com.teamluper.luper.TrackView.RecordButton;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.BitmapFactory;
@@ -40,7 +37,6 @@ import android.graphics.Shader;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import com.androidlearner.widget.ClipThing;
 
 @EActivity
 public class LuperProjectEditorActivity extends SherlockActivity {
@@ -77,9 +73,19 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     vert = new ScrollView(this);
     horz = new HorizontalScrollView(this);
     base = new DragThingPlayhead(this);
+
+      //LinearLayout top = new LinearLayout(this);
+      TextView a = new TextView(this);
+      a.setText("Timeline");
+      a.setBackgroundColor(Color.parseColor("#f5f5f5"));
+      base.addView(a);
+      //this.addView(top);
+
+
     base.setId(1337);
+
     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-              LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+              LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
     base.setLayoutParams(params);
       Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.line);
       BitmapDrawable bitmapDrawable = new BitmapDrawable(bmp);
