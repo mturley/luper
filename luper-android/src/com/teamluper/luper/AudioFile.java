@@ -1,9 +1,11 @@
 package com.teamluper.luper;
 
 import android.media.MediaPlayer;
+import android.view.View;
 
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
+import java.util.ArrayList;
 
 public class AudioFile {
   private SQLiteDataSource dataSource;
@@ -19,6 +21,9 @@ public class AudioFile {
   private boolean isReadyOnServer;
   private long renderSequenceID;
   private boolean isDirty;
+
+  // references to any views depending on this data, so we can invalidate them automatically on set___ calls.
+  public ArrayList<View> associatedViews = null;
 
   // NOTE: DO NOT CALL THIS CONSTRUCTOR DIRECTLY unless in a cursorToAudioFile method.
   // instead, use SQLiteDataSource.createAudioFile()!
@@ -39,6 +44,14 @@ public class AudioFile {
     this.isReadyOnServer = isReadyOnServer;
     this.renderSequenceID = renderSequenceID;
     this.isDirty = isDirty;
+    this.associatedViews = new ArrayList<View>();
+  }
+
+  public void addAssociatedView(View view) {
+    this.associatedViews.add(view);
+  }
+  public void removeAssociatedView(View view) {
+    this.associatedViews.remove(view);
   }
 
   public long getId() { return id; }
@@ -121,8 +134,8 @@ public class AudioFile {
   public void loadAudio() {
     // TODO doesn't do anything, find out where to use it or remove it
 	  //String fp = this.getClientFilePath();
-	  
-	
+
+
   }
   //Extra length method using mediaplayer which oddly uses an integer for the duration
   public int calcDuration() //FIXME update database with current duration , refactor

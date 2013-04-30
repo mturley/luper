@@ -1,12 +1,16 @@
 package com.teamluper.luper;
 
 import android.media.MediaPlayer;
+import android.view.View;
 
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
+import java.util.ArrayList;
 
 public class Clip {
-  // Mike's database field variables
+  private SQLiteDataSource dataSource;
+
+  // database field variables
   private long id;
   private long ownerUserID;
   private long parentTrackID;
@@ -19,13 +23,13 @@ public class Clip {
   private String playbackOptions;
   private boolean isDirty; // dirty = contains unsynced changes
 
-  // Mike's database access variables
-  private SQLiteDataSource dataSource;
-
   // references to relevant data
   public AudioFile audioFile = null;
 
-  // Brad's variables
+  // references to any views depending on this data, so we can invalidate them automatically on set___ calls.
+  public ArrayList<View> associatedViews = null;
+
+  // Brad's variables (WE NEED TO REMOVE THESE)
 	String name = null;
 	int begin, end, duration; // FIXME these will need to be removed and instead the above stuff used
 
@@ -50,15 +54,23 @@ public class Clip {
 	  this.isLocked = isLocked;
 	  this.playbackOptions = playbackOptions;
 	  this.isDirty = isDirty;
+    this.associatedViews = new ArrayList<View>();
+
 	  // brad's stuff
 		name = null;
-		durationMS = 0;
 		begin = 0;
 		end = duration;
 	}
 
+  public void addAssociatedView(View view) {
+    this.associatedViews.add(view);
+  }
+  public void removeAssociatedView(View view) {
+    this.associatedViews.remove(view);
+  }
+
   //CANNOT USE THIS, NEED TO USE THE DB CALLS. THIS IS ONLY HERE SO AudioRecorderTest COMPILES, ART IS OUTDATED.
-  Clip(String Cname){
+  Clip(String Cname) {
     dataSource = null;
   }
 

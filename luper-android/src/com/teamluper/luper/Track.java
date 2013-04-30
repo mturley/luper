@@ -9,10 +9,13 @@ package com.teamluper.luper;
 
 import java.util.ArrayList;
 
+import android.view.View;
 import com.androidlearner.widget.DragThing;
 
 public class Track {
-  // Mike's database field variables
+  private SQLiteDataSource dataSource;
+
+  // database field variables
 	private long id;
 	private long ownerUserID;
 	private long parentSequenceID;
@@ -23,16 +26,16 @@ public class Track {
 
   private TrackView associatedView = null;
 
+  // what's going on with these??
 	DragThing deMovingTxt;
 	int [] paramz;
-
-	// Mike's database access variables
-	private SQLiteDataSource dataSource;
 
 	// references to relevant data
 	public ArrayList<Clip> clips;
 
-	// Mike's constructor
+  // references to any views depending on this data, so we can invalidate them automatically on set___ calls.
+  public ArrayList<View> associatedViews = null;
+
   // NOTE: DO NOT CALL THIS CONSTRUCTOR DIRECTLY unless in a cursorToTrack method.
   // instead, use SQLiteDataSource.createTrack()!
 	public Track(SQLiteDataSource dataSource, long id, long ownerUserID,
@@ -47,8 +50,19 @@ public class Track {
 	  this.playbackOptions = playbackOptions;
 	  this.isDirty = isDirty;
     this.clips = new ArrayList<Clip>();
+    this.associatedViews = new ArrayList<View>();
 	}
+
+  public void addAssociatedView(View view) {
+    this.associatedViews.add(view);
+  }
+  public void removeAssociatedView(View view) {
+    this.associatedViews.remove(view);
+  }
+
+
 	// temporary constructor for compatability with other files
+  // TODO: WE NEED TO REMOVE THIS!
 	public Track() {
 	  this.dataSource = null;
 	}

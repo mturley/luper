@@ -1,6 +1,12 @@
 package com.teamluper.luper;
 
+import android.view.View;
+
+import java.util.ArrayList;
+
 public class User {
+  private SQLiteDataSource dataSource;
+
   // database field variables
   private long id;
   private String username;
@@ -9,8 +15,8 @@ public class User {
   private String preferences;
   private boolean isDirty; // dirty = contains unsynced changes
 
-  // database access variables
-  private SQLiteDataSource dataSource;
+  // references to any views depending on this data, so we can invalidate them automatically on set___ calls.
+  public ArrayList<View> associatedViews = null;
 
   // NOTE: DO NOT CALL THIS CONSTRUCTOR DIRECTLY unless in a cursorToUser method.
   // instead, use SQLiteDataSource.createUser()!
@@ -24,7 +30,16 @@ public class User {
     this.isActiveUser = isActiveUser;
     this.preferences = preferences;
     this.isDirty = isDirty;
+    this.associatedViews = new ArrayList<View>();
   }
+
+  public void addAssociatedView(View view) {
+    this.associatedViews.add(view);
+  }
+  public void removeAssociatedView(View view) {
+    this.associatedViews.remove(view);
+  }
+
   // getters and setters for everything, for custom onChange-style hooks
   public long getId() { return id; }
   public void setId(long id) {

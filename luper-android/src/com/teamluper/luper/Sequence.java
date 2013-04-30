@@ -1,8 +1,12 @@
 package com.teamluper.luper;
 
+import android.view.View;
+
 import java.util.ArrayList;
 
 public class Sequence {
+  private SQLiteDataSource dataSource;
+
   // database field variables
   private long id;
   private long ownerUserID;
@@ -15,8 +19,8 @@ public class Sequence {
   // references to related objects
   public ArrayList<Track> tracks = null;
 
-  // database access variables
-  private SQLiteDataSource dataSource;
+  // references to any views depending on this data, so we can invalidate them automatically on set___ calls.
+  public ArrayList<View> associatedViews = null;
 
   // NOTE: DO NOT CALL THIS CONSTRUCTOR DIRECTLY unless in a cursorToSequence method.
   // instead, use SQLiteDataSource.createSequence()!
@@ -31,6 +35,14 @@ public class Sequence {
     this.playbackOptions = playbackOptions;
     this.isDirty = isDirty;
     this.isReady = false;
+    this.associatedViews = new ArrayList<View>();
+  }
+
+  public void addAssociatedView(View view) {
+    this.associatedViews.add(view);
+  }
+  public void removeAssociatedView(View view) {
+    this.associatedViews.remove(view);
   }
 
   // getters and setters for everything, for custom onChange-style hooks
