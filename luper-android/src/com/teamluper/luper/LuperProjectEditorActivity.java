@@ -212,10 +212,12 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   public boolean onOptionsItemSelected(MenuItem item) {
     boolean incomplete = false;
     if(item.getItemId() == R.id.editor_play) {
-      // TODO
-      for(Track track  : sequence.tracks) //for(int i = 0; i<=sequence.tracks.size(); i++)
-      {
-        track.getAssociatedView().startPlayingTrack(); // doesn't actually run them in parallel - see trackview
+      for(Track track  : sequence.tracks) {
+        for(View v : track.getAssociatedViews()) {
+          if(v instanceof TrackView) {
+            ((TrackView) v).startPlayingTrack(); // doesn't actually run them in parallel - see trackview
+          }
+        }
       }
 
     }
@@ -225,54 +227,52 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     	base.addView(addTrackView);
     }
     if(item.getItemId() == R.id.editor_add_clip) {
-      // TODO
-      //incomplete = true;
     	LinearLayout custom = new LinearLayout(this);
-		custom.setOrientation(LinearLayout.VERTICAL);
+		  custom.setOrientation(LinearLayout.VERTICAL);
 
     	LinearLayout ll = new LinearLayout(this);
-    	mRecordButton = new RecordButton(this);
-        ll.addView(mRecordButton,
-                new LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    0));
+      mRecordButton = new RecordButton(this);
+      ll.addView(mRecordButton,
+        new LinearLayout.LayoutParams(
+          ViewGroup.LayoutParams.WRAP_CONTENT,
+          ViewGroup.LayoutParams.WRAP_CONTENT,
+          0));
 
 
-        LinearLayout ll2 = new LinearLayout(this);
-        fileSelected = new AutoCompleteTextView(this);
-        fileSelected.setHint("Select a File");
-        ll2.addView(fileSelected,
-                new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.FILL_PARENT,
-                        ViewGroup.LayoutParams.FILL_PARENT,
-                        0));
+      LinearLayout ll2 = new LinearLayout(this);
+      fileSelected = new AutoCompleteTextView(this);
+      fileSelected.setHint("Select a File");
+      ll2.addView(fileSelected,
+        new LinearLayout.LayoutParams(
+          ViewGroup.LayoutParams.FILL_PARENT,
+          ViewGroup.LayoutParams.FILL_PARENT,
+          0));
 
-        custom.addView(ll,
-                new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        0));
-        custom.addView(ll2,
-                new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        0));
+      custom.addView(ll,
+        new LinearLayout.LayoutParams(
+          ViewGroup.LayoutParams.WRAP_CONTENT,
+          ViewGroup.LayoutParams.WRAP_CONTENT,
+          0));
+      custom.addView(ll2,
+        new LinearLayout.LayoutParams(
+          ViewGroup.LayoutParams.MATCH_PARENT,
+          ViewGroup.LayoutParams.WRAP_CONTENT,
+          0));
 
-        new AlertDialog.Builder(this)
-		.setTitle("Record or Browse?")
-		.setView(custom)
-	    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-	        public void onClick(DialogInterface dialog, int whichButton) {
-	        	//want it to pass a new clip back to the editor panel and add it to the screen
-	        }
-	    })
-	    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-	        public void onClick(DialogInterface dialog, int whichButton) {
-	            // Do nothing.
-	        }
-	    })
-		.show();
+      new AlertDialog.Builder(this)
+        .setTitle("Record or Browse?")
+        .setView(custom)
+        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int whichButton) {
+            //want it to pass a new clip back to the editor panel and add it to the screen
+          }
+        })
+        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int whichButton) {
+            // Do nothing.
+          }
+        })
+        .show();
     }
     if(item.getItemId() == R.id.editor_delete_clip) {
       // TODO

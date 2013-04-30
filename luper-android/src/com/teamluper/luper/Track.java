@@ -59,6 +59,14 @@ public class Track {
   public void removeAssociatedView(View view) {
     this.associatedViews.remove(view);
   }
+  public ArrayList<View> getAssociatedViews() {
+    return this.associatedViews;
+  }
+  public void invalidateAssociatedViews() {
+    for(View v : this.associatedViews) {
+      v.invalidate();
+    }
+  }
 
 
 	// temporary constructor for compatability with other files
@@ -73,6 +81,7 @@ public class Track {
     long oldId = this.id;
 	  this.id = id;
     dataSource.updateLong("Tracks", oldId, "_id", id);
+    invalidateAssociatedViews();
     this.isDirty = true;
 	}
 
@@ -80,43 +89,42 @@ public class Track {
 	public void setOwnerUserID(long ownerUserID) {
     this.ownerUserID = ownerUserID;
     dataSource.updateLong("Tracks", this.id, "ownerUserID", ownerUserID);
+    invalidateAssociatedViews();
     this.isDirty = true;
 	}
 	public long getParentSequenceID() { return parentSequenceID; }
   public void setParentSequenceID(long parentSequenceID) {
     this.parentSequenceID = parentSequenceID;
     dataSource.updateLong("Tracks", this.id, "parentSequenceID", parentSequenceID);
+    invalidateAssociatedViews();
     this.isDirty = true;
   }
 	public boolean isMuted() { return isMuted; }
   public void setMuted(boolean isMuted) {
     this.isMuted = isMuted;
     dataSource.updateInt("Tracks", this.id, "isMuted", (isMuted ? 1 : 0));
+    invalidateAssociatedViews();
     this.isDirty = true;
   }
   public boolean isLocked() { return isLocked; }
   public void setLocked(boolean isLocked) {
     this.isLocked = isLocked;
     dataSource.updateInt("Tracks", this.id, "isLocked", (isLocked ? 1 : 0));
+    invalidateAssociatedViews();
     this.isDirty = true;
   }
   public String getPlaybackOptions() { return playbackOptions; }
   public void setPlaybackOptions(String playbackOptions) {
     this.playbackOptions = playbackOptions;
     dataSource.updateString("Tracks", this.id, "playbackOptions", playbackOptions);
+    invalidateAssociatedViews();
     this.isDirty = true;
   }
   public boolean isDirty() { return isDirty; }
   public void setDirty(boolean isDirty) {
     this.isDirty = isDirty;
     dataSource.updateInt("Tracks", this.id, "isDirty", (isDirty ? 1 : 0));
-  }
-
-  public TrackView getAssociatedView() {
-    return this.associatedView;
-  }
-  public void setAssociatedView(TrackView v) {
-    this.associatedView = v;
+    invalidateAssociatedViews();
   }
 
   public void loadAllClipData() {

@@ -39,6 +39,14 @@ public class User {
   public void removeAssociatedView(View view) {
     this.associatedViews.remove(view);
   }
+  public ArrayList<View> getAssociatedViews() {
+    return this.associatedViews;
+  }
+  public void invalidateAssociatedViews() {
+    for(View v : this.associatedViews) {
+      v.invalidate();
+    }
+  }
 
   // getters and setters for everything, for custom onChange-style hooks
   public long getId() { return id; }

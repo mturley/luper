@@ -44,6 +44,14 @@ public class Sequence {
   public void removeAssociatedView(View view) {
     this.associatedViews.remove(view);
   }
+  public ArrayList<View> getAssociatedViews() {
+    return this.associatedViews;
+  }
+  public void invalidateAssociatedViews() {
+    for(View v : this.associatedViews) {
+      v.invalidate();
+    }
+  }
 
   // getters and setters for everything, for custom onChange-style hooks
   public long getId() { return id; }
@@ -51,6 +59,7 @@ public class Sequence {
     long oldId = this.id;
     this.id = id;
     dataSource.updateLong("Sequences", oldId, "_id", id);
+    invalidateAssociatedViews();
     this.isDirty = true;
   }
 
@@ -58,6 +67,7 @@ public class Sequence {
   public void setOwnerUserID(long ownerUserID) {
     this.ownerUserID = ownerUserID;
     dataSource.updateLong("Sequences", this.id, "ownerUserID", ownerUserID);
+    invalidateAssociatedViews();
     this.isDirty = true;
   }
 
@@ -65,6 +75,7 @@ public class Sequence {
   public void setTitle(String title) {
     this.title = title;
     dataSource.updateString("Sequences", this.id, "title", title);
+    invalidateAssociatedViews();
     this.isDirty = true;
   }
 
@@ -72,6 +83,7 @@ public class Sequence {
   public void setSharingLevel(int sharingLevel) {
     this.sharingLevel = sharingLevel;
     dataSource.updateInt("Sequences", this.id, "sharingLevel", sharingLevel);
+    invalidateAssociatedViews();
     this.isDirty = true;
   }
 
@@ -79,6 +91,7 @@ public class Sequence {
   public void setPlaybackOptions(String playbackOptions) {
     this.playbackOptions = playbackOptions;
     dataSource.updateString("Sequences", this.id, "playbackOptions", playbackOptions);
+    invalidateAssociatedViews();
     this.isDirty = true;
   }
 
@@ -86,6 +99,7 @@ public class Sequence {
   public void setDirty(boolean isDirty) {
     this.isDirty = isDirty;
     dataSource.updateInt("Sequences", this.id, "isDirty", (isDirty ? 1 : 0));
+    invalidateAssociatedViews();
   }
 
   public boolean isReady() { return this.isReady; }

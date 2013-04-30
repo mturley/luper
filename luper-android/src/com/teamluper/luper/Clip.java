@@ -68,6 +68,14 @@ public class Clip {
   public void removeAssociatedView(View view) {
     this.associatedViews.remove(view);
   }
+  public ArrayList<View> getAssociatedViews() {
+    return this.associatedViews;
+  }
+  public void invalidateAssociatedViews() {
+    for(View v : this.associatedViews) {
+      v.invalidate();
+    }
+  }
 
   //CANNOT USE THIS, NEED TO USE THE DB CALLS. THIS IS ONLY HERE SO AudioRecorderTest COMPILES, ART IS OUTDATED.
   Clip(String Cname) {
@@ -81,9 +89,12 @@ public class Clip {
 		long oldId = this.id;
     this.id = id;
     dataSource.updateLong("Clips", oldId, "_id", id);
+    invalidateAssociatedViews();
     this.isDirty = true;
 	}
 
+
+  // TODO: THIS STUFF NEEDS TO BE REMOVED!!!
 	public void setBegin(int begin){
 		this.begin = begin;
 	}
@@ -99,6 +110,7 @@ public class Clip {
 	public void setOwnerUserID(long ownerUserID) {
 		this.ownerUserID = ownerUserID;
     dataSource.updateLong("Clips", this.id, "ownerUserID", ownerUserID);
+    invalidateAssociatedViews();
     this.isDirty = true;
 	}
 
@@ -106,6 +118,7 @@ public class Clip {
 	public void setParentTrackID(long parentTrackID) {
 		this.parentTrackID = parentTrackID;
     dataSource.updateLong("Clips", this.id, "parentTrackID", parentTrackID);
+    invalidateAssociatedViews();
     this.isDirty = true;
 	}
 
@@ -113,6 +126,7 @@ public class Clip {
 	public void setAudioFileID(long audioFileID) {
 		this.audioFileID = audioFileID;
     dataSource.updateLong("Clips", this.id, "audioFileID", audioFileID);
+    invalidateAssociatedViews();
     this.isDirty = true;
 	}
 
@@ -120,6 +134,7 @@ public class Clip {
 	public void setStartTime(int startTime) {
 		this.startTime = startTime;
     dataSource.updateInt("Clips", this.id, "startTime", startTime);
+    invalidateAssociatedViews();
     this.isDirty = true;
 	}
 
@@ -127,6 +142,7 @@ public class Clip {
 	public void setDurationMS(int durationMS) {
 		this.durationMS = durationMS;
     dataSource.updateInt("Clips", this.id, "durationMS", durationMS);
+    invalidateAssociatedViews();
     this.isDirty = true;
 	}
 
@@ -134,6 +150,7 @@ public class Clip {
 	public void setLoopCount(int loopCount) {
 		this.loopCount = loopCount;
     dataSource.updateInt("Clips", this.id, "loopCount", loopCount);
+    invalidateAssociatedViews();
     this.isDirty = true;
 	}
 
@@ -141,12 +158,15 @@ public class Clip {
   public void setColor(int color) {
     this.color = color;
     dataSource.updateInt("Clips", this.id, "color", color);
+    invalidateAssociatedViews();
+    this.isDirty = true;
   }
 
 	public boolean isLocked() { return isLocked; }
 	public void setLocked(boolean isLocked) {
 		this.isLocked = isLocked;
     dataSource.updateInt("Clips", this.id, "isLocked", (isLocked ? 1 : 0));
+    invalidateAssociatedViews();
     this.isDirty = true;
 	}
 
@@ -154,6 +174,7 @@ public class Clip {
 	public void setPlaybackOptions(String playbackOptions) {
 		this.playbackOptions = playbackOptions;
     dataSource.updateString("Clips", this.id, "playbackOptions", playbackOptions);
+    invalidateAssociatedViews();
     this.isDirty = true;
 	}
 
@@ -161,6 +182,7 @@ public class Clip {
 	public void setDirty(boolean isDirty) {
 		this.isDirty = isDirty;
     dataSource.updateInt("Clips", this.id, "isDirty", (isDirty ? 1 : 0));
+    invalidateAssociatedViews();
 	}
 
 	public AudioFile getAudioFile() {
