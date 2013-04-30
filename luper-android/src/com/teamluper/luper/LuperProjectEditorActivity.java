@@ -114,7 +114,6 @@ public class LuperProjectEditorActivity extends SherlockActivity {
       return;
     }
 
-
     // set up a connection to the phone's SQLite database.
     dataSource = new SQLiteDataSource(this);
     dataSource.open();
