@@ -55,7 +55,6 @@
     <string name="register_description">The preferred way to use Lüper is via Facebook Login, so you can easily share your creations with friends.  However, if you prefer to remain slightly more anonymous, you can register here: </string>
     <string name="prompt_password2">Re-enter Password</string>
     <string name="prompt_username">Display Name</string>
-    <string name="action_register">Register</string>
     <string name="progress_registering">Registering&#8230;</string>
     <string name="or_register_facebook">or, Register with Facebook:</string>
     <string name="title_activity_Luper_Login">Luper Login</string>

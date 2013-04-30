@@ -20,6 +20,7 @@ import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.Request;
 import com.facebook.model.GraphUser;
+import com.facebook.widget.LoginButton;
 
 import com.googlecode.androidannotations.annotations.Background;
 
@@ -32,6 +33,7 @@ import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
@@ -45,11 +47,15 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
   // Facebook Login Session
   private Session session;
   private String accessToken;
+  private String userEmail;
+  private String userLink;
 
-  // THIS IS NOT BEING CALLED AT ALL...
-  protected void loadActiveSession() {
+  // Loads sessin data - Requires email permissions that are being handled by TabLoginFragment
+  protected void loadActiveSession(GraphUser user) {
+	userEmail = user.getFirstName()+ user.asMap().get("email");
+	userLink = user.getLink();
     session = Session.getActiveSession();
-	  accessToken = session.getAccessToken();
+	accessToken = session.getAccessToken();
   }
 
   @RestService
@@ -60,11 +66,10 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
 	  super.onActivityResult(requestCode,resultCode,data);
-	  //Session.getActiveSession().onActivityResult(this,requestCode,resultCode,data);
     uiHelper.onActivityResult(requestCode, resultCode, data);
   }
 
-  // How Luper should behave when user logs into or out of facebook
+  // Updates the Luper interface once usr is logged into Facebook.
   protected void onSessionStateChange(Session sesh, SessionState seshState, Exception e) {
 	  if (seshState.isOpened()) {
 		  /** usr logged in **/
@@ -75,14 +80,29 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
 		    @Override
 		    public void onCompleted(GraphUser user, Response response) {
 		    	if (user != null) {
-		    		  TextView welcome = (TextView) findViewById(R.id.welcome);
-		    		  welcome.setText("Hello " + user.getName() + "!");
+		    		  loadActiveSession(user);
+//		    		  TextView welcome = (TextView) findViewById(R.id.welcome);
+//		    		  welcome.setText("Hello " + user.getName() + "!");
+		    		  
+		    		  // Let's snag the user's email address to create a unique ID for Mike's DB
+		    		  // updates the header on the login tab
+		    		  
+		    		  // If email doesn't work, let's use the GraphUser's facebook link as unique ID
+		    		  // naturally each link is associated with at most one user
+		    		  TextView header_login = (TextView)findViewById(R.id.header_login);
+		    		  header_login.setText(user.getName() + ", "
+		    				  + user.getUsername() + ", "
+		    				  + user.getId() + ", "
+		    				  + user.getLink() + ", "
+		    				  + user.getFirstName()+ user.asMap().get("email"));
 		    		}
 		    }
 
 		  });
 	  } else if (seshState.isClosed()) {
 		  // usr logged out
+		  TextView header_login = (TextView) findViewById(R.id.header_login);
+		  header_login.setText("Come back soon!");
 	  } else {
 		  // probably shouldn't be here
 	  }
@@ -131,6 +151,11 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
     // UI handler - Facebook login
     uiHelper = new UiLifecycleHelper(this,callback);
     uiHelper.onCreate(savedInstanceState);
+    // Have to find a new home for this stuff
+//    LoginButton authButton = (LoginButton) view.findViewById(R.id.authButton);
+//    authButton.setFragment(this);
+//    authButton.setReadPermissions(Arrays.asList("email"));
+    
   }
 
   @Override

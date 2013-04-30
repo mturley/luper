@@ -20,6 +20,8 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.facebook.widget.LoginButton;
 import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EFragment;
 import com.googlecode.androidannotations.annotations.UiThread;
@@ -29,6 +31,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.security.MessageDigest;
+import java.util.Arrays;
 
 @EFragment
 public class TabLoginFragment extends Fragment {
@@ -79,6 +82,11 @@ public class TabLoginFragment extends Fragment {
           return false;
         }
       });
+    
+    // Give facebook loginbutton email permissions
+    LoginButton authButton = (LoginButton) v.findViewById(R.id.authButton);
+    authButton.setFragment(this);
+    authButton.setReadPermissions(Arrays.asList("user_likes", "user_status"));
 
     mLoginFormView = v.findViewById(R.id.login_form);
     mLoginStatusView = v.findViewById(R.id.login_status);
