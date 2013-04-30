@@ -3,7 +3,7 @@ package com.teamluper.luper;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
+//import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -20,7 +20,7 @@ import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.Request;
 import com.facebook.model.GraphUser;
-import com.facebook.widget.LoginButton;
+//import com.facebook.widget.LoginButton;
 
 import com.googlecode.androidannotations.annotations.Background;
 
@@ -33,7 +33,7 @@ import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
+//import java.util.Arrays;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
