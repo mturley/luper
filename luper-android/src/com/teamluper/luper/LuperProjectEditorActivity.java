@@ -76,7 +76,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     super.onCreate(icicle);
     vert = new ScrollView(this);
     horz = new HorizontalScrollView(this);
-    base = new LinearLayout(this);
+    base = new DragThingPlayhead(this);
     base.setId(1337);
     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
               LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
@@ -91,7 +91,9 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
 
-      theplayhead = new DragThingPlayhead(this);
+    //
+    //
+    //theplayhead = new DragThingPlayhead(this);
 
     long ID = getIntent().getLongExtra("selectedProjectId", -1);
     if(ID == -1) {
@@ -123,6 +125,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     final ActionBar bar = getSupportActionBar();
     bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS); // Gives us Tabs!
 
+    //base.addView(theplayhead);
     horz.addView(base);
     vert.addView(horz);
     setContentView(vert);

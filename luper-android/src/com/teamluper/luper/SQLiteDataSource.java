@@ -248,6 +248,21 @@ public class SQLiteDataSource {
     return clips;
   }
 
+  public ArrayList<AudioFile> getAudioFilesByUserId(long userId) {
+    ArrayList<AudioFile> files = new ArrayList<AudioFile>();
+    String[] selectionArgs = new String[1];
+    selectionArgs[0] = ""+userId;
+    Cursor cursor = database.query("Files", null, "ownerUserId = ?",
+      selectionArgs, null, null, null);
+    cursor.moveToFirst();
+    while(!cursor.isAfterLast()) {
+      AudioFile file = cursorToFile(cursor);
+      files.add(file);
+      cursor.moveToNext();
+    }
+    cursor.close();
+    return files;
+  }
 
   // database-cursor-to-object conversion
   private User cursorToUser(Cursor cursor) {
