@@ -5,6 +5,5 @@
 	<classpathentry kind="src" path=".apt_generated"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
-	<classpathentry kind="lib" path="C:/Users/Steve Donahue/git/luper/facebook-android-sdk-3.0.1/facebook/bin/facebooksdk.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

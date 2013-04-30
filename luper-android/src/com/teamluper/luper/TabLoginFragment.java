@@ -21,6 +21,12 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.facebook.Request;
+import com.facebook.Response;
+import com.facebook.Session;
+import com.facebook.SessionState;
+import com.facebook.UiLifecycleHelper;
+import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
 import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EFragment;
@@ -53,6 +59,51 @@ public class TabLoginFragment extends Fragment {
   LuperRestClient rest;
 
   private static final int HASH_COUNT = 10000;
+  
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+      super.onCreate(savedInstanceState);
+      uiHelper = new UiLifecycleHelper(getActivity(), callback);
+      uiHelper.onCreate(savedInstanceState);
+  }
+  
+  @Override
+  public void onResume() {
+      super.onResume();
+      // Gets called when login activity gets called and session
+      // is not null
+      Session session = Session.getActiveSession();
+      if (session != null &&
+             (session.isOpened() || session.isClosed()) ) {
+          onSessionStateChange(session, session.getState(), null);
+      }
+      uiHelper.onResume();
+      showProgress(false);
+  }
+
+  @Override
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+      super.onActivityResult(requestCode, resultCode, data);
+      uiHelper.onActivityResult(requestCode, resultCode, data);
+  }
+
+  @Override
+  public void onPause() {
+      super.onPause();
+      uiHelper.onPause();
+  }
+
+  @Override
+  public void onDestroy() {
+      super.onDestroy();
+      uiHelper.onDestroy();
+  }
+
+  @Override
+  public void onSaveInstanceState(Bundle outState) {
+      super.onSaveInstanceState(outState);
+      uiHelper.onSaveInstanceState(outState);
+  }
 
   @Override
   public View onCreateView(LayoutInflater infl, ViewGroup vg, Bundle state) {
@@ -104,12 +155,62 @@ public class TabLoginFragment extends Fragment {
 
     return v;
   }
+  //Updates the Luper interface once usr is logged into Facebook.
+  private static final String TAG = "LoginFragment";
+  
+  private Session.StatusCallback callback = new Session.StatusCallback() {
+	  @Override
+	  public void call(Session sesh, SessionState seshState, Exception e) {
+		  onSessionStateChange(sesh,seshState,e);
+	  }
+  };
+  
+  private UiLifecycleHelper uiHelper;
+  
+  protected void onSessionStateChange(Session sesh, SessionState seshState, Exception e) {
+	  final Activity a = getActivity();
+	  if (seshState.isOpened()) {
+		  /** usr logged in **/
+		  // Create new request to facebook API
+		  Request.executeMeRequestAsync(sesh, new Request.GraphUserCallback() {
 
-  @Override
-  public void onResume() {
-    super.onResume();
-    showProgress(false);
+		    // callback after Graph API response with user object
+		    @Override
+		    public void onCompleted(GraphUser user, Response response) {
+		    	if (user != null) {
+		    		  //loadActiveSession(user);
+//		    		  TextView welcome = (TextView) findViewById(R.id.welcome);
+//		    		  welcome.setText("Hello " + user.getName() + "!");
+		    		  
+		    		  // Let's snag the user's email address to create a unique ID for Mike's DB
+		    		  // updates the header on the login tab
+		    		  
+		    		  // If email doesn't work, let's use the GraphUser's facebook link as unique ID
+		    		  // naturally each link is associated with at most one user
+		    		  TextView header_login = (TextView) a.findViewById(R.id.header_login);
+		    		  header_login.setText(user.getName() + ", "
+		    				  + user.getUsername() + ", "
+		    				  + user.getId() + ", "
+		    				  + user.getLink() + ", "
+		    				  + user.getFirstName()+ user.asMap().get("email"));
+		    		}
+		    }
+
+		  });
+	  } else if (seshState.isClosed()) {
+		  // usr logged out
+		  TextView header_login = (TextView) a.findViewById(R.id.header_login);
+		  header_login.setText("Come back soon!");
+	  } else {
+		  // probably shouldn't be here
+	  }
   }
+
+//  @Override
+//  public void onResume() {
+//    super.onResume();
+//    showProgress(false);
+//  }
 
   /**
    * Attempts to sign in or register the account specified by the login form. If

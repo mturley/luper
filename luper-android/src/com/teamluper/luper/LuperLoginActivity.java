@@ -7,18 +7,18 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.TextView;
+//import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.facebook.Response;
+//import com.facebook.Response;
 import com.facebook.Session;
 
-import com.facebook.SessionState;
-import com.facebook.UiLifecycleHelper;
-import com.facebook.Request;
+//import com.facebook.SessionState;
+//import com.facebook.UiLifecycleHelper;
+//import com.facebook.Request;
 import com.facebook.model.GraphUser;
 //import com.facebook.widget.LoginButton;
 
@@ -43,6 +43,8 @@ import java.security.NoSuchAlgorithmException;
 public class LuperLoginActivity extends SherlockFragmentActivity {
   ViewPager mViewPager;
   TabsAdapter mTabsAdapter;
+  
+  private static TabLoginFragment_ loginFragment;
 
   // Facebook Login Session
   private Session session;
@@ -63,59 +65,16 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
 
   private SQLiteDataSource dataSource;
 
-  @Override
-  public void onActivityResult(int requestCode, int resultCode, Intent data) {
-	  super.onActivityResult(requestCode,resultCode,data);
-    uiHelper.onActivityResult(requestCode, resultCode, data);
-  }
+  // This belongs in TabLoginFragment - #ScatterBrainSteve 
+//  @Override
+//  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//	  super.onActivityResult(requestCode,resultCode,data);
+//    uiHelper.onActivityResult(requestCode, resultCode, data);
+//  } 
 
-  // Updates the Luper interface once usr is logged into Facebook.
-  protected void onSessionStateChange(Session sesh, SessionState seshState, Exception e) {
-	  if (seshState.isOpened()) {
-		  /** usr logged in **/
-		  // Create new request to facebook API
-		  Request.executeMeRequestAsync(session, new Request.GraphUserCallback() {
-
-		    // callback after Graph API response with user object
-		    @Override
-		    public void onCompleted(GraphUser user, Response response) {
-		    	if (user != null) {
-		    		  loadActiveSession(user);
-//		    		  TextView welcome = (TextView) findViewById(R.id.welcome);
-//		    		  welcome.setText("Hello " + user.getName() + "!");
-		    		  
-		    		  // Let's snag the user's email address to create a unique ID for Mike's DB
-		    		  // updates the header on the login tab
-		    		  
-		    		  // If email doesn't work, let's use the GraphUser's facebook link as unique ID
-		    		  // naturally each link is associated with at most one user
-		    		  TextView header_login = (TextView)findViewById(R.id.header_login);
-		    		  header_login.setText(user.getName() + ", "
-		    				  + user.getUsername() + ", "
-		    				  + user.getId() + ", "
-		    				  + user.getLink() + ", "
-		    				  + user.getFirstName()+ user.asMap().get("email"));
-		    		}
-		    }
-
-		  });
-	  } else if (seshState.isClosed()) {
-		  // usr logged out
-		  TextView header_login = (TextView) findViewById(R.id.header_login);
-		  header_login.setText("Come back soon!");
-	  } else {
-		  // probably shouldn't be here
-	  }
-  }
-
-  private Session.StatusCallback callback = new Session.StatusCallback() {
-	  @Override
-	  public void call(Session sesh, SessionState seshState, Exception e) {
-		  onSessionStateChange(sesh,seshState,e);
-	  }
-  };
-
-  private UiLifecycleHelper uiHelper;
+ 
+// this doesn't belong here...
+//  private UiLifecycleHelper uiHelper;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +83,10 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
     // connect to the database
     dataSource = new SQLiteDataSource(this);
     dataSource.open();
+    
+    if(savedInstanceState == null) {
+    	loginFragment = new TabLoginFragment_();	
+    }
 
     boolean loggingOut = getIntent().getBooleanExtra("luperLoggingOutFlag", false);
     if(!loggingOut) checkForExistingLogin();
@@ -145,16 +108,10 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
     mTabsAdapter = new TabsAdapter(this, mViewPager);
     mTabsAdapter.addTab(bar.newTab().setText(""+"Log In"),
       TabLoginFragment_.class, null);
+
     mTabsAdapter.addTab(bar.newTab().setText(""+"Register"),
       TabRegisterFragment_.class, null);
 
-    // UI handler - Facebook login
-    uiHelper = new UiLifecycleHelper(this,callback);
-    uiHelper.onCreate(savedInstanceState);
-    // Have to find a new home for this stuff
-//    LoginButton authButton = (LoginButton) view.findViewById(R.id.authButton);
-//    authButton.setFragment(this);
-//    authButton.setReadPermissions(Arrays.asList("email"));
     
   }
 
@@ -165,27 +122,9 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
   }
 
   @Override
-  public void onDestroy() {
-      super.onDestroy();
-      uiHelper.onDestroy();
-  }
-
-  @Override
   protected void onResume() {
     super.onResume();
     if(!dataSource.isOpen()) dataSource.open();
-
-    session = Session.getActiveSession();
-    if(session != null && (session.isOpened() || session.isClosed())) {
-      onSessionStateChange(session, session.getState(), null);
-    }
-    uiHelper.onResume();
-  }
-
-  @Override
-  public void onSaveInstanceState(Bundle outState) {
-      super.onSaveInstanceState(outState);
-      uiHelper.onSaveInstanceState(outState);
   }
 
   @Override
