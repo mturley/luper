@@ -85,7 +85,7 @@ private static final String TAG = "ColorClipButton";
 	public ColorChipButton(Context context, Clip clip){
 		super(context);
 		associated = clip;
-        mColor = clip.getColor();
+    mColor = clip.getColor();
 		init();
 		setOnClickListener(clicker);
 	}
@@ -125,9 +125,11 @@ private static final String TAG = "ColorClipButton";
     invalidate();
   }
   public void setRandColor() {
-    mColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-    this.setBackgroundColor(mColor);
-    invalidate();
+    // DEPRECATED... calls to this should be removed, the clip colors are set at creation time.
+    // although, we should also make it possible for the user to change clip colors.
+    //mColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+    //this.setBackgroundColor(mColor);
+    //invalidate();
   }
 //	when you click the button this method is activated. currently it only shows the length of
 //	the clip. eventually it should allow you to modify things about the clip

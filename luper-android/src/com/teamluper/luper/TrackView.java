@@ -88,7 +88,7 @@ public class TrackView extends RelativeLayout {
 		super(context);
     editorActivity = context;
 		associated = track;
-    track.setAssociatedView(this);
+    track.addAssociatedView(this);
 		this.dataSource = dataSource;
 		deMovingTxt = (DragThing) findViewById(R.id.detext);
 		init();

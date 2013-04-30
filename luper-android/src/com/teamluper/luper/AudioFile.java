@@ -1,9 +1,11 @@
 package com.teamluper.luper;
 
 import android.media.MediaPlayer;
+import android.view.View;
 
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
+import java.util.ArrayList;
 
 public class AudioFile {
   private SQLiteDataSource dataSource;
@@ -19,6 +21,9 @@ public class AudioFile {
   private boolean isReadyOnServer;
   private long renderSequenceID;
   private boolean isDirty;
+
+  // references to any views depending on this data, so we can invalidate them automatically on set___ calls.
+  public ArrayList<View> associatedViews = null;
 
   // NOTE: DO NOT CALL THIS CONSTRUCTOR DIRECTLY unless in a cursorToAudioFile method.
   // instead, use SQLiteDataSource.createAudioFile()!
@@ -39,6 +44,22 @@ public class AudioFile {
     this.isReadyOnServer = isReadyOnServer;
     this.renderSequenceID = renderSequenceID;
     this.isDirty = isDirty;
+    this.associatedViews = new ArrayList<View>();
+  }
+
+  public void addAssociatedView(View view) {
+    this.associatedViews.add(view);
+  }
+  public void removeAssociatedView(View view) {
+    this.associatedViews.remove(view);
+  }
+  public ArrayList<View> getAssociatedViews() {
+    return this.associatedViews;
+  }
+  public void invalidateAssociatedViews() {
+    for(View v : this.associatedViews) {
+      v.invalidate();
+    }
   }
 
   public long getId() { return id; }
@@ -46,6 +67,7 @@ public class AudioFile {
     long oldId = this.id;
     this.id = id;
     dataSource.updateLong("Files", oldId, "_id", id);
+    invalidateAssociatedViews();
     this.isDirty = true;
   }
 
@@ -53,6 +75,7 @@ public class AudioFile {
   public void setOwnerUserID(long ownerUserID) {
     this.ownerUserID = ownerUserID;
     dataSource.updateLong("Files", this.id, "ownerUserID", ownerUserID);
+    invalidateAssociatedViews();
     this.isDirty = true;
   }
 
@@ -60,6 +83,7 @@ public class AudioFile {
   public void setClientFilePath(String clientFilePath) {
     this.clientFilePath = clientFilePath;
     dataSource.updateString("Files", this.id, "clientFilePath", clientFilePath);
+    invalidateAssociatedViews();
     this.isDirty = true;
   }
 
@@ -67,6 +91,7 @@ public class AudioFile {
   public void setServerFilePath(String serverFilePath) {
     this.serverFilePath = serverFilePath;
     dataSource.updateString("Files", this.id, "serverFilePath", serverFilePath);
+    invalidateAssociatedViews();
     this.isDirty = true;
   }
 
@@ -74,6 +99,7 @@ public class AudioFile {
   public void setFileFormat(String fileFormat) {
     this.fileFormat = fileFormat;
     dataSource.updateString("Files", this.id, "fileFormat", fileFormat);
+    invalidateAssociatedViews();
     this.isDirty = true;
   }
 
@@ -81,6 +107,7 @@ public class AudioFile {
   public void setBitrate(double bitrate) {
     this.bitrate = bitrate;
     dataSource.updateDouble("Files", this.id, "bitrate", bitrate);
+    invalidateAssociatedViews();
     this.isDirty = true;
   }
 
@@ -88,6 +115,7 @@ public class AudioFile {
   public void setDurationMS(double durationMS) {
     this.durationMS = durationMS;
     dataSource.updateDouble("Files", this.id, "durationMS", durationMS);
+    invalidateAssociatedViews();
     this.isDirty = true;
   }
 
@@ -95,6 +123,7 @@ public class AudioFile {
   public void setReadyOnClient(boolean isReadyOnClient) {
     this.isReadyOnClient = isReadyOnClient;
     dataSource.updateInt("Files", this.id, "isReadyOnClient", (isReadyOnClient ? 1 : 0));
+    invalidateAssociatedViews();
     this.isDirty = true;
   }
 
@@ -102,6 +131,7 @@ public class AudioFile {
   public void setReadyOnServer(boolean isReadyOnServer) {
     this.isReadyOnServer = isReadyOnServer;
     dataSource.updateInt("Files", this.id, "isReadyOnServer", (isReadyOnServer ? 1 : 0));
+    invalidateAssociatedViews();
     this.isDirty = true;
   }
 
@@ -109,6 +139,7 @@ public class AudioFile {
   public void setRenderSequenceID(long renderSequenceID) {
     this.renderSequenceID = renderSequenceID;
     dataSource.updateLong("Files", this.id, "renderSequenceID", renderSequenceID);
+    invalidateAssociatedViews();
     this.isDirty = true;
   }
 
@@ -116,17 +147,17 @@ public class AudioFile {
   public void setDirty(boolean isDirty) {
     this.isDirty = isDirty;
     dataSource.updateInt("Files", this.id, "isDirty", (isDirty ? 1 : 0));
+    invalidateAssociatedViews();
   }
 
   public void loadAudio() {
     // TODO doesn't do anything, find out where to use it or remove it
 	  //String fp = this.getClientFilePath();
-	  
-	
+
+
   }
   //Extra length method using mediaplayer which oddly uses an integer for the duration
-  public int calcDuration() //FIXME update database with current duration , refactor
-  {
+  public int calcDuration() { //FIXME update database with current duration , refactor
     try {
       MediaPlayer mp = new MediaPlayer();
       FileInputStream fs;

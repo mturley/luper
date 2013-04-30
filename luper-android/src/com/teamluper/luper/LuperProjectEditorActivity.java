@@ -101,6 +101,8 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     //
     //theplayhead = new DragThingPlayhead(this);
 
+    // to figure out which sequence data to load, we fetch the Sequences _id from the Intent.
+    // this is put into the intent when you press the project in the Projects list in LuperMainActivity.
     long ID = getIntent().getLongExtra("selectedProjectId", -1);
     if(ID == -1) {
       DialogFactory.alert(this,"ERROR","No project ID found!  Aborting.",
@@ -112,12 +114,18 @@ public class LuperProjectEditorActivity extends SherlockActivity {
       return;
     }
 
+
+    // set up a connection to the phone's SQLite database.
     dataSource = new SQLiteDataSource(this);
     dataSource.open();
 
+    // fetch the sequence object we're editing from SQLite.
     sequence = dataSource.getSequenceById(ID);
 
+    // fetch all the Track objects associated with this sequence from SQLite.
     sequence.tracks = dataSource.getTracksBySequenceId(sequence.getId());
+
+    // for each track in the sequence, we fetch all the associated Clip and AudioFile objects.
     for(Track track : sequence.tracks) {
       long trackId = track.getId();
       ArrayList<Clip> clips = dataSource.getClipsByTrackId(trackId);
@@ -126,6 +134,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
         clip.audioFile = dataSource.getAudioFileById(clip.getAudioFileID());
       }
     }
+    // now that all the Sequence, Track, Clip, and AudioFile objects are in memory, this sequence is ready for editing!
     sequence.setReady(true);
 
     final ActionBar bar = getSupportActionBar();
@@ -209,10 +218,12 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   public boolean onOptionsItemSelected(MenuItem item) {
     boolean incomplete = false;
     if(item.getItemId() == R.id.editor_play) {
-      // TODO
-      for(Track track  : sequence.tracks) //for(int i = 0; i<=sequence.tracks.size(); i++)
-      {
-        track.getAssociatedView().startPlayingTrack(); // doesn't actually run them in parallel - see trackview
+      for(Track track  : sequence.tracks) {
+        for(View v : track.getAssociatedViews()) {
+          if(v instanceof TrackView) {
+            ((TrackView) v).startPlayingTrack(); // doesn't actually run them in parallel - see trackview
+          }
+        }
       }
 
     }
@@ -222,54 +233,52 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     	base.addView(addTrackView);
     }
     if(item.getItemId() == R.id.editor_add_clip) {
-      // TODO
-      //incomplete = true;
     	LinearLayout custom = new LinearLayout(this);
-		custom.setOrientation(LinearLayout.VERTICAL);
+		  custom.setOrientation(LinearLayout.VERTICAL);
 
     	LinearLayout ll = new LinearLayout(this);
-    	mRecordButton = new RecordButton(this);
-        ll.addView(mRecordButton,
-                new LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    0));
+      mRecordButton = new RecordButton(this);
+      ll.addView(mRecordButton,
+        new LinearLayout.LayoutParams(
+          ViewGroup.LayoutParams.WRAP_CONTENT,
+          ViewGroup.LayoutParams.WRAP_CONTENT,
+          0));
 
 
-        LinearLayout ll2 = new LinearLayout(this);
-        fileSelected = new AutoCompleteTextView(this);
-        fileSelected.setHint("Select a File");
-        ll2.addView(fileSelected,
-                new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.FILL_PARENT,
-                        ViewGroup.LayoutParams.FILL_PARENT,
-                        0));
+      LinearLayout ll2 = new LinearLayout(this);
+      fileSelected = new AutoCompleteTextView(this);
+      fileSelected.setHint("Select a File");
+      ll2.addView(fileSelected,
+        new LinearLayout.LayoutParams(
+          ViewGroup.LayoutParams.FILL_PARENT,
+          ViewGroup.LayoutParams.FILL_PARENT,
+          0));
 
-        custom.addView(ll,
-                new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        0));
-        custom.addView(ll2,
-                new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        0));
+      custom.addView(ll,
+        new LinearLayout.LayoutParams(
+          ViewGroup.LayoutParams.WRAP_CONTENT,
+          ViewGroup.LayoutParams.WRAP_CONTENT,
+          0));
+      custom.addView(ll2,
+        new LinearLayout.LayoutParams(
+          ViewGroup.LayoutParams.MATCH_PARENT,
+          ViewGroup.LayoutParams.WRAP_CONTENT,
+          0));
 
-        new AlertDialog.Builder(this)
-		.setTitle("Record or Browse?")
-		.setView(custom)
-	    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-	        public void onClick(DialogInterface dialog, int whichButton) {
-	        	//want it to pass a new clip back to the editor panel and add it to the screen
-	        }
-	    })
-	    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-	        public void onClick(DialogInterface dialog, int whichButton) {
-	            // Do nothing.
-	        }
-	    })
-		.show();
+      new AlertDialog.Builder(this)
+        .setTitle("Record or Browse?")
+        .setView(custom)
+        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int whichButton) {
+            //want it to pass a new clip back to the editor panel and add it to the screen
+          }
+        })
+        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int whichButton) {
+            // Do nothing.
+          }
+        })
+        .show();
     }
     if(item.getItemId() == R.id.editor_delete_clip) {
       // TODO
