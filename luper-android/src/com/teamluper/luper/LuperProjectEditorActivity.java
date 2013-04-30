@@ -201,9 +201,9 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     boolean incomplete = false;
     if(item.getItemId() == R.id.editor_play) {
       // TODO
-      for(Track track  : sequence.tracks)
+      for(Track track  : sequence.tracks) //for(int i = 0; i<=sequence.tracks.size(); i++)
       {
-        track.getAssociatedView().startPlayingTrackInBackground(); // doesn't actually run them in parallel - see trackview
+        track.getAssociatedView().startPlayingTrack(); // doesn't actually run them in parallel - see trackview
       }
 
     }
