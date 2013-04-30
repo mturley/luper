@@ -120,7 +120,6 @@ public class TrackView extends RelativeLayout {
 
 	public void init(){
 		mPlayer = new MediaPlayer();
-
         //LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
         //        LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         //layoutParams.setMargins(5, 0, 5, 0);
