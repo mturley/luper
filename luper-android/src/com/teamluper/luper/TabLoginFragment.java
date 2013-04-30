@@ -195,6 +195,9 @@ public class TabLoginFragment extends Fragment {
 		    				  + user.getFirstName()+ user.asMap().get("email"));
 		    		}
 		    	a.completeFacebookLogin(user.asMap().get("email").toString(),user.getUsername());
+		    	// this shouldn't need to be called. but for some reason LuperLogin isn't switching
+		    	// over to Main automatically.
+		    	a.startMainActivity();
 		    }
 
 		  });
