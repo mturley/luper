@@ -213,16 +213,6 @@ public class TrackView extends RelativeLayout {
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
 
-
-      //starts a new activity/intent that activates the FileSelector activity
-//        mBrowseButton.setOnClickListener(new View.OnClickListener() {
-//        	   @Override
-//        	   public void onClick(View v) {
-//        	    Intent intent = new Intent(TrackView.this.getContext(), FileSelectorActivity.class);
-//        	    TrackView.this.startActivityForResult(intent, MediaFetchResultCode);
-//        	   }
-//        	  });
-
         final int finalStartTime = startTime;
         final Track finalTrack = associated;
 
@@ -232,12 +222,6 @@ public class TrackView extends RelativeLayout {
 		    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 		        public void onClick(DialogInterface dialog, int whichButton) {
 		        	//want it to pass a new clip back to the editor panel and add it to the screen
-		        	//NEED TO ADD CLIP TO THE TRACK
-//                    Clip newClip = dataSource.createClip(finalTrack, lastRecordedFile, finalStartTime);
-//                    associated.putClip(newClip);
-                //finishRecording(associated, lastRecordedFile, finalStartTime);
-//		        	newClip = dataSource.createClip(associated, lastRecordedFile, finalStartTime);
-//		        	associated.putClip(newClip);
               clipMaker(associated, lastRecordedFile, finalStartTime);
 		        }
 		    })
@@ -247,7 +231,6 @@ public class TrackView extends RelativeLayout {
 		        }
 		    })
 			.show();
-
 	}
     public void clipMaker(Track track, AudioFile file, int startTime)
     {
