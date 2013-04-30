@@ -52,7 +52,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   private AudioManager audioManager;
   private ScrollView vert;
   private HorizontalScrollView horz;
-  private LinearLayout base;
+  private Playhead base;
   public Playhead playhead;
 
     DragThingPlayhead theplayhead;
@@ -72,7 +72,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     super.onCreate(icicle);
     vert = new ScrollView(this);
     horz = new HorizontalScrollView(this);
-    base = new DragThingPlayhead(this);
+    base = new Playhead(this);
 
       //LinearLayout top = new LinearLayout(this);
       TextView a = new TextView(this);
