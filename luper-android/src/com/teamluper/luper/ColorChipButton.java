@@ -48,7 +48,14 @@ public class ColorChipButton extends Button {
                 }
                 if (items[item].equals("Edit"))
                 {
-                    // does nothing for nao
+                    DialogFactory.prompt(getContext(),"Edit Start Time","",
+                            new Lambda.StringCallback() {
+                                public void go(String value) {
+                                    int val= Integer.parseInt(value);
+                                    associated.setStartTime(val);
+                                }
+                            }
+                    );
                 }
                 else if (items[item].equals("Delete"))
                 {
@@ -74,19 +81,19 @@ public class ColorChipButton extends Button {
     }
 
 
-
-
 	//constructor sets the associated clip, calls init, and sets the onclicklistener
 	public ColorChipButton(Context context, Clip clip){
 		super(context);
 		associated = clip;
-    mColor = clip.getColor();
+        mColor = clip.getColor();
 		init();
 		setOnClickListener(clicker);
 	}
 
 	//this method will determine where the clip should be placed, based on its start time
 	public void init(){
+		this.setX(this.getStartTime());
+		this.setWidth((this.getStartTime()) + this.getLength()/10);
 		this.setX(this.getStartTime()*PIXELS_PER_MILLISECOND);
 		this.setWidth(Math.round(this.getLength()*PIXELS_PER_MILLISECOND));
 	}

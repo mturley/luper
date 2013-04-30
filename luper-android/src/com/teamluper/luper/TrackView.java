@@ -96,17 +96,25 @@ public class TrackView extends RelativeLayout {
 
 
 	//set a click listener for the buttons that will activate promptDialog() when clicked
-	OnClickListener clicker = new OnClickListener(){
+	OnClickListener addClipClicker = new OnClickListener(){
 		public void onClick(View v){
-			promptDialog(100); // later on this will be the time corresponding to where in the empty timeline we touched.
+			addClipPromptDialog(100); // later on this will be the time corresponding to where in the empty timeline we touched.
 			// TODO
 		}
 	};
+  //TODO: Implement the listener for the play button, so we can play a track
 	OnClickListener playClicker = new OnClickListener(){
 		public void onClick(View v){
 				startPlayingTrack(); //need track playback but track class + audio hook-up not working yet; this does work though
 		}
 	};
+
+  //listener for the browse button in the record or browse alertdialog
+  OnClickListener browseClicker = new OnClickListener(){
+    public void onClick(View v){
+      browsePromptDialog();
+    }
+  };
 
 
 
@@ -130,7 +138,7 @@ public class TrackView extends RelativeLayout {
 //		create the addClipButton then set its image to add and add it to the trackControl
 		ImageButton addClipButton = new ImageButton(this.getContext());
 		addClipButton.setImageResource(R.drawable.add);
-		addClipButton.setOnClickListener(clicker);
+		addClipButton.setOnClickListener(addClipClicker);
 		trackControl.addView(addClipButton);
 
 //		create the playButton then set its image to play and add it to the trackControl
@@ -153,7 +161,7 @@ public class TrackView extends RelativeLayout {
         //this.associated.putClip(clip2);
         for(int i = 0; i < this.associated.clips.size(); i++){
 
-        	System.out.println("Here " + this.associated.getClips().get(i).begin);
+        	//System.out.println("Here " + this.associated.getClips().get(i).begin);
         	chip = new ColorChipButton(this.getContext(), this.associated.getClips().get(i));
         	System.out.println("Chips x pos " + chip.associated.begin);
             this.addView(chip);
@@ -172,7 +180,8 @@ public class TrackView extends RelativeLayout {
 	}
 
 
-	public void promptDialog(int startTime){
+  //Creates the dialog for record or browse, for adding clips to tracks,
+	public void addClipPromptDialog(int startTime){
 		//our custom layout for inside the dialog
 		LinearLayout custom = new LinearLayout(this.getContext());
 		custom.setOrientation(LinearLayout.VERTICAL);
@@ -188,6 +197,7 @@ public class TrackView extends RelativeLayout {
         LinearLayout ll2 = new LinearLayout(this.getContext());
 		mBrowseButton = new Button(this.getContext());
 		mBrowseButton.setText("Browse");
+    mBrowseButton.setOnClickListener(browseClicker);
         fileSelected = new AutoCompleteTextView(this.getContext());
         fileSelected.setHint("Select a File");
         ll2.addView(mBrowseButton,
@@ -231,6 +241,30 @@ public class TrackView extends RelativeLayout {
 		    })
 			.show();
 	}
+
+  //creates a dialog for browsing a list of the user's audiofiles, for adding clips to a track with a file youve already
+  //recorded.
+  public void browsePromptDialog(){
+    System.out.println("Here");
+    final AudioFile[] audioFilesByUser = this.dataSource.getAudioFilesByUserId(this.dataSource.getActiveUser().getId());
+    final String[] fileNames = new String[audioFilesByUser.length];
+    for(int i = 0; i < audioFilesByUser.length; i++){
+      fileNames[i] = audioFilesByUser[i].getClientFilePath();
+    }
+    new AlertDialog.Builder(getContext())
+        .setTitle("Select Audio File for New Clip Homie")
+        .setItems(fileNames, new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int which) {
+            // The 'which' argument contains the index position
+            // of the selected item
+            lastRecordedFile = audioFilesByUser[which];
+            fileSelected.setText(lastRecordedFile.getClientFilePath());
+          }
+          })
+          .show();
+    }
+
+
     public void clipMaker(Track track, AudioFile file, int startTime)
     {
         Random rnd = new Random();
