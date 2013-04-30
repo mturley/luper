@@ -95,6 +95,8 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     //
     //theplayhead = new DragThingPlayhead(this);
 
+    // to figure out which sequence data to load, we fetch the Sequences _id from the Intent.
+    // this is put into the intent when you press the project in the Projects list in LuperMainActivity.
     long ID = getIntent().getLongExtra("selectedProjectId", -1);
     if(ID == -1) {
       DialogFactory.alert(this,"ERROR","No project ID found!  Aborting.",
@@ -106,12 +108,18 @@ public class LuperProjectEditorActivity extends SherlockActivity {
       return;
     }
 
+
+    // set up a connection to the phone's SQLite database.
     dataSource = new SQLiteDataSource(this);
     dataSource.open();
 
+    // fetch the sequence object we're editing from SQLite.
     sequence = dataSource.getSequenceById(ID);
 
+    // fetch all the Track objects associated with this sequence from SQLite.
     sequence.tracks = dataSource.getTracksBySequenceId(sequence.getId());
+
+    // for each track in the sequence, we fetch all the associated Clip and AudioFile objects.
     for(Track track : sequence.tracks) {
       long trackId = track.getId();
       ArrayList<Clip> clips = dataSource.getClipsByTrackId(trackId);
@@ -120,6 +128,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
         clip.audioFile = dataSource.getAudioFileById(clip.getAudioFileID());
       }
     }
+    // now that all the Sequence, Track, Clip, and AudioFile objects are in memory, this sequence is ready for editing!
     sequence.setReady(true);
 
     final ActionBar bar = getSupportActionBar();
