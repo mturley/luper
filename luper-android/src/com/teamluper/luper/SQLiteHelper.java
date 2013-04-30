@@ -9,7 +9,7 @@ import java.io.InputStream;
 
 public class SQLiteHelper extends SQLiteOpenHelper {
   private static final String DATABASE_NAME = "luperlocal.db";
-  private static final int DATABASE_VERSION = 12;
+  private static final int DATABASE_VERSION = 13;
 
   private Context context;
 
