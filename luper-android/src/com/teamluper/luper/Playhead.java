@@ -26,10 +26,10 @@ public class Playhead extends LinearLayout {
   private long playbackTimestamp; // what the system clock time was when startPlayback() was called
   private float xPosition;   // pixel value representation of currentTimeMS
 
-  private Context context;
-
   ScheduledExecutorService playbackClock = null;
   Handler monitorHandler;
+
+  private LuperProjectEditorActivity editorActivity = null;
 
   //PAINT ASSOCIATED WITH THE PLAYHEAD
   Paint mpaint;
@@ -37,14 +37,14 @@ public class Playhead extends LinearLayout {
 
   public Playhead(Context context) {
     super(context);
-    this.context = context;
+    this.editorActivity = (LuperProjectEditorActivity) context;
     currentTimeMS = 0;
     init();
   }
 
   public Playhead(Context context, AttributeSet attribute, int style) {
     super(context, attribute, style);
-    this.context = context;
+    this.editorActivity = (LuperProjectEditorActivity) context;
     currentTimeMS = 0;
     init();
   }
@@ -83,7 +83,7 @@ public class Playhead extends LinearLayout {
   private void updateTime() {
     long elapsedMS = (System.nanoTime() - playbackTimestamp) / 1000000;
     setCurrentTimeMS((int) (elapsedMS + startTimeMS));
-    ((LuperProjectEditorActivity) context).playNextClipIfExistsAtTime(currentTimeMS);
+    editorActivity.playNextClipIfExistsAtTime(currentTimeMS);
   }
 
   public void startPlayback(int startTime) {
@@ -95,9 +95,11 @@ public class Playhead extends LinearLayout {
     startTimeMS = currentTimeMS;
     playbackTimestamp = System.nanoTime();
 
-    for(Track t : ((LuperProjectEditorActivity) this.context).sequence.tracks) {
+    for(Track t : editorActivity.sequence.tracks) {
       t.prepareNextClip(startTimeMS);
     }
+
+    editorActivity.findVeryLastClip();
 
     if(isPlaying()) stopPlayback();
     playbackClock = Executors.newScheduledThreadPool(1);
@@ -112,7 +114,7 @@ public class Playhead extends LinearLayout {
         1, //delay
         TimeUnit.MILLISECONDS);
 
-    ((LuperProjectEditorActivity) this.context).supportInvalidateOptionsMenu();
+    editorActivity.supportInvalidateOptionsMenu();
   }
 
   public void stopPlayback(int newCurrentTimeMS) {
@@ -121,9 +123,9 @@ public class Playhead extends LinearLayout {
   }
 
   public void stopPlayback() {
-    playbackClock.shutdown();
+    if(playbackClock != null) playbackClock.shutdown();
     playbackClock = null;
-    ((LuperProjectEditorActivity) this.context).supportInvalidateOptionsMenu();
+    editorActivity.supportInvalidateOptionsMenu();
   }
 
   public boolean isPlaying() {

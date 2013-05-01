@@ -53,6 +53,8 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   //private LinearLayout base1;
   private DragThingPlayhead base;
 
+  public Clip veryLastClip = null;
+
   //this object is gonna move de move.
   //ClipThing deClip;
   //int [] paramz;
@@ -131,7 +133,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     base.setBackgroundDrawable(bitmapDrawable);
     base.setOrientation(LinearLayout.VERTICAL);
     base.setPadding(0, 0, 50, 0);
-    
+
 //    ll2.addView(fileSelected,
 //        new LinearLayout.LayoutParams(
 //            ViewGroup.LayoutParams.FILL_PARENT,
@@ -330,6 +332,25 @@ public class LuperProjectEditorActivity extends SherlockActivity {
         }
       }
     }
+  }
+
+  public boolean findVeryLastClip() {
+    int latestFinishTime = 0;
+    Clip lastClip = null;
+    for(Track t : sequence.tracks) {
+      for(Clip c : t.clips) {
+        int finishTime = c.getStartTime() + c.getDurationMS();
+        if(finishTime > latestFinishTime) {
+          latestFinishTime = finishTime;
+          lastClip = c;
+        }
+      }
+    }
+    if(lastClip != null) {
+      this.veryLastClip = lastClip;
+      return true;
+    }
+    return false;
   }
 
   public void stopAllMediaPlayers() {

@@ -416,6 +416,7 @@ public class TrackView extends RelativeLayout {
   public void playPreparedClip(final Clip optionalNextClip) {
     try {
       final Track t = associated;
+      final Clip justPlayedClip = this.preparedClip;
       mPlayer.start();
       mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
         public void onCompletion(MediaPlayer mp) {
@@ -425,6 +426,10 @@ public class TrackView extends RelativeLayout {
             t.trackView.prepareClip(optionalNextClip);
           } else {
             // we've played the last clip!
+            if(justPlayedClip == editorActivity.veryLastClip) {
+              ((Playhead) editorActivity.findViewById(1337)).stopPlayback(0);
+              editorActivity.supportInvalidateOptionsMenu();
+            }
           }
         }
       });
