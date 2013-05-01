@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.*;
 import java.util.Random;
 import android.graphics.Color;
+import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EView;
 import com.googlecode.androidannotations.annotations.UiThread;
 
@@ -58,11 +59,11 @@ public class ColorChipButton extends Button {
                 }
               }
             );*/
-          } else if (items[item].equals("Delete")) {
-            final Clip c = associated;
-            DialogFactory.confirm(getContext(), "Really Delete Clip?", "The recording used in this clip will " +
-              "not be deleted, only this instance of that audio will be deleted.  You can find the AudioFile " +
-              "again by using the Browse button in the Add Clip dialog.", new Lambda.BooleanCallback() {
+            } else if (items[item].equals("Delete")) {
+              final Clip c = associated;
+              DialogFactory.confirm(getContext(), "Really Delete Clip?", "The recording used in this clip will " +
+                  "not be deleted, only this instance of that audio will be deleted.  You can find the AudioFile " +
+                  "again by using the Browse button in the Add Clip dialog.", new Lambda.BooleanCallback() {
                 @Override
                 public void go(boolean pressedYes) {
                   if (pressedYes) {
@@ -85,28 +86,26 @@ public class ColorChipButton extends Button {
         .setItems(items, new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialog, int item) {
             if (items[item].equals("Start Time")) {
-              DialogFactory.prompt(getContext(),"Edit Start Time","",
+              DialogFactory.prompt(getContext(), "Edit Start Time", "",
                   new Lambda.StringCallback() {
                     public void go(String value) {
-                      int val= Integer.parseInt(value);
+                      int val = Integer.parseInt(value);
                       associated.setStartTime(val);
                     }
                   }
               );
 
-            }
-            else if (items[item].equals("Loop Count")) {
-              DialogFactory.prompt(getContext(),"Number of times to Lüp this clip","",
+            } else if (items[item].equals("Loop Count")) {
+              DialogFactory.prompt(getContext(), "Number of times to Lüp this clip", "",
                   new Lambda.StringCallback() {
                     public void go(String value) {
-                      int val= Integer.parseInt(value);
+                      int val = Integer.parseInt(value);
                       associated.setLoopCount(val);
                     }
                   }
               );
 
-            }
-            else if (items[item].equals("Cancel")) {
+            } else if (items[item].equals("Cancel")) {
               // should bring user back to the previous dialog menu
               showListDialog();
             }
@@ -145,6 +144,7 @@ public class ColorChipButton extends Button {
 
   @UiThread
   public void init(){
+    //this.setStartToEnd();
     //promptDialog();
     this.setX(this.getStartTime()*PIXELS_PER_MILLISECOND+100);
     this.setWidth(Math.round(this.getLength()*PIXELS_PER_MILLISECOND));
@@ -181,7 +181,7 @@ public class ColorChipButton extends Button {
   public void promptDialog(){
     new AlertDialog.Builder(getContext())
         .setTitle("Clip Details")
-        .setMessage("Length " + associated.getDurationMS() + " ms" + "    The Current Color is: " + mColor)
+        .setMessage("starttime " + associated.parentTrack.findLastClip())
         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialog, int whichButton) {
             //Do nothing for now
@@ -204,6 +204,11 @@ public class ColorChipButton extends Button {
       // we're in a background thread.
       this.postInvalidate();
     }
+  }
+  @Background
+  public void setStartToEnd()
+  {
+    this.setX(associated.parentTrack.findLastClip());
   }
 
 }
