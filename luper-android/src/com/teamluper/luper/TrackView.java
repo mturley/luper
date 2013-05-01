@@ -151,17 +151,17 @@ public class TrackView extends RelativeLayout {
     ImageButton addClipButton = new ImageButton(this.getContext());
     addClipButton.setImageResource(R.drawable.add);
     addClipButton.setOnClickListener(addClipClicker);
-    addClipButton.setBackgroundColor(Color.parseColor("#f5f5f5"));
+    //addClipButton.setBackgroundColor(Color.parseColor("#f5f5f5"));
     trackControl.addView(addClipButton);
 
 //		create the playButton then set its image to play and add it to the trackControl
     ImageButton playButton = new ImageButton(this.getContext());
     playButton.setImageResource(R.drawable.play);
     playButton.setOnClickListener(playClicker);
-    playButton.setBackgroundColor(Color.parseColor("#f5f5f5"));
+    //playButton.setBackgroundColor(Color.parseColor("#f5f5f5"));
     trackControl.addView(playButton);
 
-    //trackControl.setBackgroundColor(Color.parseColor("#000000"));
+    trackControl.setBackgroundColor(Color.parseColor("#f5f5f5"));
 
 
     this.addView(trackControl);
