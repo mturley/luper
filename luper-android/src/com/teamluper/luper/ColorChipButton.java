@@ -125,7 +125,7 @@ public class ColorChipButton extends Button {
         detailLayout.addView(startTimeView);
 
             new AlertDialog.Builder(getContext())
-                .setTitle("Clip Details You Fuck")
+                .setTitle("Clip Details")
                 .setView(detailLayout)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
@@ -144,8 +144,6 @@ public class ColorChipButton extends Button {
 
   @UiThread
   public void init(){
-    //this.setStartToEnd();
-    //promptDialog();
     this.setX(this.getStartTime()*PIXELS_PER_MILLISECOND+100);
     this.setWidth(Math.round(this.getLength()*PIXELS_PER_MILLISECOND));
     this.setHeight(140);
@@ -181,7 +179,7 @@ public class ColorChipButton extends Button {
   public void promptDialog(){
     new AlertDialog.Builder(getContext())
         .setTitle("Clip Details")
-        .setMessage("starttime " + associated.parentTrack.findLastClip())
+        .setMessage("starttime " + associated.parentTrack.findLastClip() + "PARENT SIZE" + associated.parentTrack.size())
         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialog, int whichButton) {
             //Do nothing for now
