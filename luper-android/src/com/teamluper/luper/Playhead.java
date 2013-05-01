@@ -1,16 +1,11 @@
 package com.teamluper.luper;
 
 import android.content.Context;
-import android.renderscript.Font;
 import android.util.AttributeSet;
 import android.graphics.*;
-import android.view.*;
 import android.os.Handler;
 import android.os.Message;
-import android.media.MediaPlayer;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import com.teamluper.luper.ColorChipButton;
 
 //Libraries for Media Player Listening
 import java.util.concurrent.Executors;
@@ -18,26 +13,26 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 
-//playhead class view to be implemented --Eric
+//playhead class view
 public class Playhead extends LinearLayout {
 
-  private static final float PPM = ColorChipButton.PIXELS_PER_MILLISECOND;
+  private static final float PPM = TrackView.PIXELS_PER_MILLISECOND;
   //PIXELS FOR MILLISECOND
   private final float STARTY = 0;
   private final float ENDY = 5000;
-  //private float X;
-  private float currentTime;
-  Handler monitorHandler;
 
-  //MEDIA PLAYER OBJECT ASSOCIATED WITH THE PLAYHEAD
-  private MediaPlayer MP;
+  private int currentTimeMS; // time we are at w/r/t the beginning of the whole project
+  private int startTimeMS;   // what the value of currentTimeMS was when playback() was called
+  private long playbackTimestamp; // what the system clock time was when playback() was called
+  private float xPosition;   // pixel value representation of currentTimeMS
+
+  Handler monitorHandler;
 
   //PAINT ASSOCIATED WITH THE PLAYHEAD
   Paint mpaint;
   private final int lineColor = Color.BLACK;
-  //
 
-  public Playhead(Context context){
+  public Playhead(Context context) {
     super(context);
     init();
   }
@@ -52,62 +47,46 @@ public class Playhead extends LinearLayout {
     init();
   }
 
-  public float getCurrentTime(){
-    return currentTime;
+  public float getXPosition() { return xPosition; }
+  public void setXPosition(float x) {
+    xPosition = x;
   }
 
-  public void setCurrentTime(float x){
-    currentTime = x;
+  public int getCurrentTimeMS() { return currentTimeMS; }
+  public void setCurrentTimeMS(int x) {
+    currentTimeMS = x;
+    setXPosition(currentTimeMS * PPM + TrackView.LEFT_MARGIN);
   }
 
-  public void init(){
-    currentTime = 50;
+  public void init() {
+    currentTimeMS = 0;
     mpaint = new Paint();
     mpaint.setColor(lineColor);
     mpaint.setStyle(Paint.Style.STROKE);
     mpaint.setPathEffect(new DashPathEffect(new float[]{10, 20}, 0));
-//      this.setX(this.getStartTime());
-//      this.setY(5000);
-//      this.setWidth(this.getStartTime() + this.getLength());
-  }
 
-  //method used for syncing playhead with the media player during playback
-  public void setHandler(final MediaPlayer mPlayer){
-    MP = mPlayer;
     monitorHandler = new Handler(){
       @Override
       public void handleMessage(Message msg) {
-        mediaPlayerMonitor(mPlayer);
+        updateTime();
       }
     };
   }
 
-  private void mediaPlayerMonitor(MediaPlayer mPlayer){
-    if (MP == null){
-      //do nothing
-    }else{
-      if(MP.isPlaying()){
-        setCurrentTime(MP.getCurrentPosition() * PPM);
-        this.invalidate();
-
-//        timeLine.setVisibility(View.VISIBLE);
-//        timeFrame.setVisibility(View.VISIBLE);
-//
-//        int mediaDuration = mediaPlayer.getDuration();
-//        int mediaPosition = mediaPlayer.getCurrentPosition();
-//        timeLine.setMax(mediaDuration);
-//        timeLine.setProgress(mediaPosition);
-//        timePos.setText(String.valueOf((float)mediaPosition/1000) + "s");
-//        timeDur.setText(String.valueOf((float)mediaDuration/1000) + "s");
-      }//else{
-//        timeLine.setVisibility(View.INVISIBLE);
-//        timeFrame.setVisibility(View.INVISIBLE);
-    }
+  private void updateTime() {
+    long elapsedMS = (System.nanoTime() - playbackTimestamp) * 1000000;
+    setXPosition((elapsedMS + startTimeMS) * PPM);
+    this.invalidate();
   }
 
-  public void playback(){
-//    if(mPlayer.isPlaying())
-//    {
+  public void playback(int startTime) {
+    this.setCurrentTimeMS(startTime);
+    playback();
+  }
+
+  public void playback() {
+    startTimeMS = currentTimeMS;
+    playbackTimestamp = System.nanoTime();
 
     ScheduledExecutorService myScheduledExecutorService = Executors.newScheduledThreadPool(1);
 
@@ -122,18 +101,9 @@ public class Playhead extends LinearLayout {
         TimeUnit.MILLISECONDS);
   }
 
-  //}
-//    else
-//      stopHead(mPlayer);
-
-
-  public void stopHead(MediaPlayer mPlayer){
-    currentTime=mPlayer.getCurrentPosition();
-  }
-
   @Override
   public void onDraw(Canvas canvas) {
-    canvas.drawLine(currentTime, STARTY, currentTime, ENDY, mpaint);
+    canvas.drawLine(xPosition, STARTY, xPosition, ENDY, mpaint);
     invalidate();
   }
 }

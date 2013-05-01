@@ -16,7 +16,7 @@ import com.googlecode.androidannotations.annotations.UiThread;
 public class ColorChipButton extends Button {
 
   private static final String TAG = "ColorClipButton";
-  public static final float PIXELS_PER_MILLISECOND = 0.3f;
+  public static final float PIXELS_PER_MILLISECOND = TrackView.PIXELS_PER_MILLISECOND;
 
   //the clip that is associated with this CCB
   Clip associated;
@@ -144,7 +144,7 @@ public class ColorChipButton extends Button {
 
   @UiThread
   public void init(){
-    this.setX(this.getStartTime()*PIXELS_PER_MILLISECOND+100);
+    this.setX(this.getStartTime()*PIXELS_PER_MILLISECOND + TrackView.LEFT_MARGIN);
     this.setWidth(Math.round(this.getLength()*PIXELS_PER_MILLISECOND));
     this.setHeight(140);
     this.setBackgroundColor(mColor);

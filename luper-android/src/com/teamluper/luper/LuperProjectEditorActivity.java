@@ -199,7 +199,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   protected void onResume() {
     if(!dataSource.isOpen()) dataSource.open();
     super.onResume();
-    //playhead.setCurrentTime();
+    //playhead.setXPosition();
     //if(paramz != null) deClip.layout(paramz[0] , 0, paramz[2], 0);
   }
 
@@ -222,6 +222,8 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   public boolean onOptionsItemSelected(MenuItem item) {
     boolean incomplete = false;
     if(item.getItemId() == R.id.editor_play) {
+      base.playback(0);
+      /*
       for(Track track  : sequence.tracks) {
         for(View v : track.getAssociatedViews()) {
           if(TrackView.class.isInstance(v)) {
@@ -229,7 +231,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
           }
         }
       }
-
+      */
     }
     if(item.getItemId() == R.id.editor_add_track) {
     	Track addTrack = dataSource.createTrack(sequence);

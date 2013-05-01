@@ -2,9 +2,7 @@ package com.androidlearner.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
-import android.widget.TextView;
 import com.teamluper.luper.Playhead;
 
 
@@ -18,7 +16,7 @@ import com.teamluper.luper.Playhead;
 
 
 //Dragging Widget Associated with Playhead
-public class DragThingPlayhead extends Playhead{
+public class DragThingPlayhead extends Playhead {
 
   //private variable shtuff
   private int current; // the position
@@ -54,7 +52,7 @@ public class DragThingPlayhead extends Playhead{
 
     switch(action){
       case MotionEvent.ACTION_DOWN:
-        setCurrentTime(x);
+        setXPosition(x);
         invalidate();
         break;
 

@@ -59,6 +59,7 @@ import com.googlecode.androidannotations.annotations.EActivity;
 public class TrackView extends RelativeLayout {
   private static final String LOG_TAG = "TrackView";
   public static final float PIXELS_PER_MILLISECOND = 0.3f;
+  public static final int LEFT_MARGIN = 100;
 
   DragThing deMovingTxt;
   int [] paramz;
@@ -430,10 +431,8 @@ public class TrackView extends RelativeLayout {
     try {
       mPlayer.setDataSource(clipFileName);
       mPlayer.prepare();
-      playhead.setHandler(mPlayer);
-      //Thread.sleep(c.getDurationMS());
       mPlayer.start();
-      playhead.playback();
+      //playhead.playback();
     } catch (Exception e) {
       //handle interrupted exceptions in a different way
       Log.e(LOG_TAG, "TRACK PLAYBACK FAILED");
