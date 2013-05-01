@@ -135,43 +135,49 @@ public class TrackView extends RelativeLayout {
     //this.addView(deMovingTxt);
 
 //		create the addClipButton then set its image to add and add it to the trackControl
-    ImageButton addClipButton = new ImageButton(this.getContext());
-    addClipButton.setImageResource(R.drawable.add);
-    addClipButton.setOnClickListener(addClipClicker);
-    addClipButton.setBackgroundColor(Color.parseColor("#e2dfd8"));
-    trackControl.addView(addClipButton);
+
+		ImageButton addClipButton = new ImageButton(this.getContext());
+		addClipButton.setImageResource(R.drawable.add);
+		addClipButton.setOnClickListener(addClipClicker);
+        addClipButton.setBackgroundColor(Color.parseColor("#f5f5f5"));
+		trackControl.addView(addClipButton);
 
 //		create the playButton then set its image to play and add it to the trackControl
-    ImageButton playButton = new ImageButton(this.getContext());
-    playButton.setImageResource(R.drawable.play);
-    playButton.setOnClickListener(playClicker);
-    playButton.setBackgroundColor(Color.parseColor("#e2dfd8"));
-    trackControl.addView(playButton);
+		ImageButton playButton = new ImageButton(this.getContext());
+		playButton.setImageResource(R.drawable.play);
+		playButton.setOnClickListener(playClicker);
+        playButton.setBackgroundColor(Color.parseColor("#f5f5f5"));
+		trackControl.addView(playButton);
 
-    //trackControl.setBackgroundColor(Color.parseColor("#000000"));
+        //trackControl.setBackgroundColor(Color.parseColor("#000000"));
 
 
-    this.addView(trackControl);
+		this.addView(trackControl);
+//		testing...
 
-    ColorChipButton chip;
-    for(int i = 0; i < this.associated.clips.size(); i++){
+        //Clip clip1 = new Clip(); clip1.begin = 100; clip1.end = 4000; clip1.duration = 3900;
+        //Clip clip2 = new Clip(); clip2.begin = 0; clip2.end = 450; clip2.duration = 450;
 
-      //System.out.println("Here " + this.associated.getClips().get(i).begin);
-      chip = new ColorChipButton(this.getContext(), this.associated.getClips().get(i));
-      System.out.println("Chips x pos " + chip.associated.begin);
-      this.addView(chip);
-      LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-      this.setLayoutParams(params);
-      Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.line);
-      BitmapDrawable bitmapDrawable = new BitmapDrawable(bmp);
-      bitmapDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
-      this.setBackgroundDrawable(bitmapDrawable);
-      //this.setBackgroundColor(Color.parseColor("#e2dfd8"));
-      //this.setBackgroundColor(Color.TRANSPARENT);
-      //this.addView(deMovingTxt);
-    }
+        ColorChipButton chip;
+        //this.associated.putClip(clip1);
+        //this.associated.putClip(clip2);
+        for(int i = 0; i < this.associated.clips.size(); i++){
 
+        	//System.out.println("Here " + this.associated.getClips().get(i).begin);
+        	chip = new ColorChipButton(this.getContext(), this.associated.getClips().get(i));
+        	System.out.println("Chips x pos " + chip.associated.begin);
+            this.addView(chip);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            this.setLayoutParams(params);
+            Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.line);
+            BitmapDrawable bitmapDrawable = new BitmapDrawable(bmp);
+            bitmapDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
+            this.setBackgroundDrawable(bitmapDrawable);
+            //this.setBackgroundColor(Color.parseColor("#e2dfd8"));
+            //this.setBackgroundColor(Color.TRANSPARENT);
+        	//this.addView(deMovingTxt);
+        }
   }
 
 

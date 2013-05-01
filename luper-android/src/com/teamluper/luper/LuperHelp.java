@@ -14,16 +14,7 @@ public class LuperHelp extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        LinearLayout bok= new LinearLayout(this);
-
-        TextView derp = new TextView(this);
-        derp.setText("dis is gonna be the help page");
-
-        bok.setGravity(Gravity.CENTER);
-        derp.setPadding(0,10,0,0);
-        bok.addView(derp);
-
-        setContentView(bok);
+        setContentView(R.layout.luper_help);
 
     }
 

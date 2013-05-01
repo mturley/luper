@@ -3,6 +3,7 @@ package com.teamluper.luper;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.media.AudioManager;
@@ -13,7 +14,6 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
@@ -269,7 +269,9 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     }
     if(item.getItemId() == R.id.editor_help) {
       // TODO
-      incomplete = true;
+      //incomplete = true;
+        Intent intent = new Intent(this, LuperHelp_.class);
+        startActivity(intent);
     }
     if(incomplete) DialogFactory.alert(this,"Incomplete Feature",
         "That button hasn't been hooked up to anything.");

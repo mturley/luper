@@ -12,7 +12,7 @@ import android.graphics.Color;
 public class ColorChipButton extends Button {
 
 private static final String TAG = "ColorClipButton";
-private static final float PIXELS_PER_MILLISECOND = 0.5f;
+private static final float PIXELS_PER_MILLISECOND = 0.3f;
 
   //the clip that is associated with this CCB
   Clip associated;
@@ -53,14 +53,15 @@ private static final float PIXELS_PER_MILLISECOND = 0.5f;
               .show();
           }
           if (items[item].equals("Edit")) {
-            DialogFactory.prompt(getContext(),"Edit Start Time","",
+            showEditDialog();
+            /*DialogFactory.prompt(getContext(),"Edit Start Time","",
               new Lambda.StringCallback() {
                 public void go(String value) {
                   int val= Integer.parseInt(value);
                   associated.setStartTime(val);
                 }
               }
-            );
+            );*/
           } else if (items[item].equals("Delete")) {
             final Clip c = associated;
             DialogFactory.confirm(getContext(), "Really Delete Clip?", "The recording used in this clip will " +
@@ -79,11 +80,47 @@ private static final float PIXELS_PER_MILLISECOND = 0.5f;
         }
       }).show();
   }
+  public void showEditDialog(){
+    final CharSequence[] items = {"Start Time", "Loop Count", "Cancel"};
+    new AlertDialog.Builder(getContext())
+        .setTitle("Clip Edit Options")
+        .setItems(items, new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int item) {
+           if (items[item].equals("Start Time")) {
+              DialogFactory.prompt(getContext(),"Edit Start Time","",
+                  new Lambda.StringCallback() {
+                    public void go(String value) {
+                      int val= Integer.parseInt(value);
+                      associated.setStartTime(val);
+                    }
+                  }
+              );
 
+            }
+            else if (items[item].equals("Loop Count")) {
+              DialogFactory.prompt(getContext(),"Number of times to Lüp this clip","",
+                  new Lambda.StringCallback() {
+                    public void go(String value) {
+                      int val= Integer.parseInt(value);
+                      associated.setLoopCount(val);
+                    }
+                  }
+              );
+
+            }
+            else if (items[item].equals("Cancel")) {
+                // should bring user back to the previous dialog menu
+                showListDialog();
+            }
+          }
+        }).show();
+  }
+
+  public void moveClip(){
+      this.invalidate();
+  }
   //this method will determine where the clip should be placed, based on its start time
   public void init(){
-    //this.setX(this.getStartTime() + 50);
-    //this.setWidth((this.getStartTime() + 50) + this.getLength()/10);
     this.setX(this.getStartTime()*PIXELS_PER_MILLISECOND + 100);
     this.setWidth(Math.round(this.getLength()*PIXELS_PER_MILLISECOND) + 100);
     this.setHeight(140);
