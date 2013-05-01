@@ -124,6 +124,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
       track.clips = clips;
       for(Clip clip : track.clips) {
         clip.audioFile = dataSource.getAudioFileById(clip.getAudioFileID());
+        clip.parentTrack = track;
       }
     }
     // now that all the Sequence, Track, Clip, and AudioFile objects are in memory, this sequence is ready for editing!
@@ -288,7 +289,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
         .show();
     }
     if(item.getItemId() == R.id.editor_delete_clip) {
-      // TODO
+      // TODO get rid of this
       incomplete = true;
     }
     if(item.getItemId() == R.id.editor_volume) {
@@ -383,26 +384,9 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   private void stopRecording() {
       mRecorder.stop();
       mRecorder.release();
-
-      Clip newClip = new Clip(mFileName);
-
-      try {
-			newClip.getDurationMS();
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-
       fileSelected.setText(mFileName);
       mRecorder = null;
   }
-
-  /*
-  @UiThread
-  public void loadDataInForeground() {
-    if(sequence == null || sequence.isReady()) return;
-    sequence.loadAllTrackData();
-  }
-  */
 
   @UiThread
   public void alert(String message) {

@@ -2,6 +2,7 @@ package com.teamluper.luper;
 
 import android.media.MediaPlayer;
 import android.view.View;
+import android.view.ViewGroup;
 
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
@@ -25,6 +26,7 @@ public class Clip {
 
   // references to relevant data
   public AudioFile audioFile = null;
+  public Track parentTrack = null;
 
   // references to any views depending on this data, so we can invalidate them automatically on set___ calls.
   public ArrayList<View> associatedViews = null;
@@ -196,5 +198,15 @@ public class Clip {
   public void loadAudio() {
     if(this.audioFile == null) loadFileMetadata();
     this.audioFile.loadAudio();
+  }
+
+  public void deleteFromProject() {
+    this.dataSource.deleteClip(this.id);
+    for(View v : this.associatedViews) {
+      ((ViewGroup) v.getParent()).removeView(v);
+    }
+    if(this.parentTrack != null) {
+      this.parentTrack.clips.remove(this);
+    }
   }
 }

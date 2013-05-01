@@ -62,21 +62,32 @@ private static final float PIXELS_PER_MILLISECOND = 0.5f;
               }
             );
           } else if (items[item].equals("Delete")) {
-            LuperProjectEditorActivity a = (LuperProjectEditorActivity) getContext();
-            a.dataSource.deleteClip(associated.getId());
-            // TODO remove clip from editor
+            final Clip c = associated;
+            DialogFactory.confirm(getContext(), "Really Delete Clip?", "The recording used in this clip will " +
+              "not be deleted, only this instance of that audio will be deleted.  You can find the AudioFile " +
+              "again by using the Browse button in the Add Clip dialog.", new Lambda.BooleanCallback() {
+              @Override
+              public void go(boolean pressedYes) {
+                if(pressedYes) c.deleteFromProject();
+              }
+            });
+            associated.deleteFromProject();
 
-            new AlertDialog.Builder(getContext())
-              .setTitle("Done")
-              .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int whichButton) {
-                  //Do nothing for now
-                }
-              })
-              .show();
           } else if (items[item].equals("Cancel")) {
             // does nothing and will never do anything
           }
+          //sets the loop count
+          if (items[item].equals("Set Loop Count")) {
+            DialogFactory.prompt(getContext(),"Set Loop Count","",
+                new Lambda.StringCallback() {
+                  public void go(String value) {
+                    int val= Integer.parseInt(value);
+                    associated.setLoopCount(val);
+                  }
+                }
+            );
+          }
+
         }
       }).show();
   }

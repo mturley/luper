@@ -11,7 +11,7 @@ import com.googlecode.androidannotations.annotations.EActivity;
 
 @EActivity
 public class DragTest extends SherlockActivity {
-	
+
 	//the widget. why can't it be a class? :/
 	DragThing deMovingTxt;
     DragThingPlayhead theplayhead;
@@ -27,8 +27,6 @@ public class DragTest extends SherlockActivity {
 		//the draggable text. Takes from xml
 		deMovingTxt = (DragThing) findViewById(R.id.detext);
         theplayhead = new DragThingPlayhead(this);
-//        Clip clip2 = new Clip(); clip2.begin = 0; clip2.end = 450; clip2.duration = 450;
-//        deMovingClip = (ClipThing) new ColorChipButton(this, clip2);
         deMovingClip.setBackgroundColor(Color.BLUE);
         setContentView(deMovingClip);
   }
