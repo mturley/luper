@@ -27,6 +27,8 @@ public class Playhead extends LinearLayout {
   private long playbackTimestamp; // what the system clock time was when startPlayback() was called
   private float xPosition;   // pixel value representation of currentTimeMS
 
+  private Context context;
+
   ScheduledExecutorService playbackClock = null;
   Handler monitorHandler;
 
@@ -36,17 +38,18 @@ public class Playhead extends LinearLayout {
 
   public Playhead(Context context) {
     super(context);
+    this.context = context;
     init();
   }
 
   public Playhead(Context context, AttributeSet attribute, int style) {
     super(context, attribute, style);
+    this.context = context;
     init();
   }
 
   public Playhead(Context context, AttributeSet attribute) {
     this(context, attribute, 0);
-    init();
   }
 
   public float getXPosition() { return xPosition; }
@@ -103,11 +106,14 @@ public class Playhead extends LinearLayout {
         1, //initialDelay
         1, //delay
         TimeUnit.MILLISECONDS);
+
+    ((LuperProjectEditorActivity) this.context).supportInvalidateOptionsMenu();
   }
 
   public void stopPlayback() {
     playbackClock.shutdown();
     playbackClock = null;
+    ((LuperProjectEditorActivity) this.context).supportInvalidateOptionsMenu();
   }
 
   public boolean isPlaying() {

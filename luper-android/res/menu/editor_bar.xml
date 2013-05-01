@@ -2,6 +2,19 @@
     <item android:id="@+id/editor_play"
         android:icon="@drawable/ic_av_play"
         android:title="@string/editor_play"
+        android:visible="true"
+        android:showAsAction="always|withText"
+        />
+    <item android:id="@+id/editor_pause"
+        android:icon="@drawable/ic_av_pause"
+        android:title="@string/editor_pause"
+        android:visible="false"
+        android:showAsAction="always|withText"
+        />
+    <item android:id="@+id/editor_stop"
+        android:icon="@drawable/ic_av_stop"
+        android:title="@string/editor_stop"
+        android:visible="false"
         android:showAsAction="always|withText"
         />
     <item android:id="@+id/editor_add_track"

@@ -214,6 +214,24 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     inf.inflate(R.menu.editor_bar, menu);
     return super.onCreateOptionsMenu(menu);
   }
+
+  @Override
+  public boolean onPrepareOptionsMenu(Menu menu) {
+    MenuItem playButton = menu.findItem(R.id.editor_play);
+    MenuItem pauseButton = menu.findItem(R.id.editor_pause);
+    MenuItem stopButton = menu.findItem(R.id.editor_stop);
+    if(base.isPlaying()) {
+      playButton.setVisible(false);
+      pauseButton.setVisible(true);
+      stopButton.setVisible(true);
+    } else {
+      playButton.setVisible(true);
+      pauseButton.setVisible(false);
+      stopButton.setVisible(false);
+    }
+    return super.onPrepareOptionsMenu(menu);
+  }
+
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     boolean incomplete = false;
