@@ -80,6 +80,7 @@ public class TrackView extends RelativeLayout {
 
   private Clip newClip;
   Track associated;
+  public int startTimeSetter;
 
   private LuperProjectEditorActivity editorActivity;
 
@@ -101,7 +102,7 @@ public class TrackView extends RelativeLayout {
   //set a click listener for the buttons that will activate promptDialog() when clicked
   OnClickListener addClipClicker = new OnClickListener(){
     public void onClick(View v){
-      addClipPromptDialog(100); // later on this will be the time corresponding to where in the empty timeline we touched.
+      addClipPromptDialog(); // later on this will be the time corresponding to where in the empty timeline we touched.
       // TODO
     }
   };
@@ -193,7 +194,7 @@ public class TrackView extends RelativeLayout {
 
 
   //Creates the dialog for record or browse, for adding clips to tracks,
-  public void addClipPromptDialog(int startTime){
+  public void addClipPromptDialog(){
     //our custom layout for inside the dialog
     LinearLayout custom = new LinearLayout(this.getContext());
     custom.setOrientation(LinearLayout.VERTICAL);
@@ -234,24 +235,25 @@ public class TrackView extends RelativeLayout {
             ViewGroup.LayoutParams.WRAP_CONTENT,
             0));
 
-    final int finalStartTime = startTime;
+    //final int finalStartTime = startTime;
     final Track finalTrack = associated;
 
     new AlertDialog.Builder(getContext())
-        .setTitle("Record or Browse?")
-        .setView(custom)
-        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-          public void onClick(DialogInterface dialog, int whichButton) {
-            //want it to pass a new clip back to the editor panel and add it to the screen
-            clipMaker(associated, lastRecordedFile, finalStartTime);
-          }
-        })
-        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-          public void onClick(DialogInterface dialog, int whichButton) {
-            // Do nothing.
-          }
-        })
-        .show();
+      .setTitle("Record or Browse?")
+      .setView(custom)
+      .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int whichButton) {
+          //want it to pass a new clip back to the editor panel and add it to the screen
+          //startTimePrompt(finalStartTime);
+          startTimePrompt();
+        }
+      })
+      .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int whichButton) {
+          // Do nothing.
+        }
+      })
+      .show();
   }
 
   //creates a dialog for browsing a list of the user's audiofiles, for adding clips to a track with a file youve already
@@ -276,6 +278,24 @@ public class TrackView extends RelativeLayout {
         .show();
   }
 
+  public void setStart(int time){
+    this.startTimeSetter = time;
+  }
+
+  public void startTimePrompt(){
+    DialogFactory.prompt(getContext(),"Gimme a Start Time Bitch","",
+        new Lambda.StringCallback() {
+          public void go(String value) {
+            if(value != "") {
+              int val = Integer.parseInt(value);
+              clipMaker(associated, lastRecordedFile, val);
+            } else {
+              DialogFactory.alert(getContext(),"Oops!","That isn't a valid start time.");
+            }
+          }
+        }
+    );
+  }
 
   public void clipMaker(Track track, AudioFile file, int startTime)
   {
@@ -289,6 +309,8 @@ public class TrackView extends RelativeLayout {
     this.addView(newButton);
     this.invalidateSafely();
   }
+
+
   class RecordButton extends Button {
     boolean mStartRecording = true;
 
