@@ -148,6 +148,7 @@ public class ColorChipButton extends Button {
     this.setX(this.getStartTime()*PIXELS_PER_MILLISECOND + TrackView.LEFT_MARGIN);
     this.setWidth(Math.round(this.getLength()*PIXELS_PER_MILLISECOND));
     this.setHeight(140);
+    //this.setPadding(0, 20, 0, 0);
     this.setBackgroundColor(mColor);
   }
 
