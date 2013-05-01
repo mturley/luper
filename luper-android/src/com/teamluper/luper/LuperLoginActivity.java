@@ -43,7 +43,7 @@ import java.security.NoSuchAlgorithmException;
 public class LuperLoginActivity extends SherlockFragmentActivity {
   ViewPager mViewPager;
   TabsAdapter mTabsAdapter;
-  
+
   private static TabLoginFragment_ loginFragment;
 
   // Facebook Login Session
@@ -65,14 +65,14 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
 
   private SQLiteDataSource dataSource;
 
-  // This belongs in TabLoginFragment - #ScatterBrainSteve 
+  // This belongs in TabLoginFragment - #ScatterBrainSteve
 //  @Override
 //  public void onActivityResult(int requestCode, int resultCode, Intent data) {
 //	  super.onActivityResult(requestCode,resultCode,data);
 //    uiHelper.onActivityResult(requestCode, resultCode, data);
-//  } 
+//  }
 
- 
+
 // this doesn't belong here...
 //  private UiLifecycleHelper uiHelper;
 
@@ -83,9 +83,9 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
     // connect to the database
     dataSource = new SQLiteDataSource(this);
     dataSource.open();
-    
+
     if(savedInstanceState == null) {
-    	loginFragment = new TabLoginFragment_();	
+    	loginFragment = new TabLoginFragment_();
     }
 
     boolean loggingOut = getIntent().getBooleanExtra("luperLoggingOutFlag", false);
@@ -112,7 +112,7 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
     mTabsAdapter.addTab(bar.newTab().setText(""+"Register"),
       TabRegisterFragment_.class, null);
 
-    
+
   }
 
   @Override

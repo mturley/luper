@@ -240,58 +240,6 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     	TrackView addTrackView = new TrackView(this, addTrack, dataSource);
     	base.addView(addTrackView);
     }
-    if(item.getItemId() == R.id.editor_add_clip) {
-    	LinearLayout custom = new LinearLayout(this);
-		  custom.setOrientation(LinearLayout.VERTICAL);
-
-    	LinearLayout ll = new LinearLayout(this);
-      mRecordButton = new RecordButton(this);
-      ll.addView(mRecordButton,
-        new LinearLayout.LayoutParams(
-          ViewGroup.LayoutParams.WRAP_CONTENT,
-          ViewGroup.LayoutParams.WRAP_CONTENT,
-          0));
-
-
-      LinearLayout ll2 = new LinearLayout(this);
-      fileSelected = new AutoCompleteTextView(this);
-      fileSelected.setHint("Select a File");
-      ll2.addView(fileSelected,
-        new LinearLayout.LayoutParams(
-          ViewGroup.LayoutParams.FILL_PARENT,
-          ViewGroup.LayoutParams.FILL_PARENT,
-          0));
-
-      custom.addView(ll,
-          new LinearLayout.LayoutParams(
-              ViewGroup.LayoutParams.WRAP_CONTENT,
-              ViewGroup.LayoutParams.WRAP_CONTENT,
-              0));
-      custom.addView(ll2,
-        new LinearLayout.LayoutParams(
-          ViewGroup.LayoutParams.MATCH_PARENT,
-          ViewGroup.LayoutParams.WRAP_CONTENT,
-          0));
-
-      new AlertDialog.Builder(this)
-        .setTitle("Record or Browse?")
-        .setView(custom)
-        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-          public void onClick(DialogInterface dialog, int whichButton) {
-            //want it to pass a new clip back to the editor panel and add it to the screen
-          }
-        })
-        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-          public void onClick(DialogInterface dialog, int whichButton) {
-            // Do nothing.
-          }
-        })
-        .show();
-    }
-    if(item.getItemId() == R.id.editor_delete_clip) {
-      // TODO get rid of this
-      incomplete = true;
-    }
     if(item.getItemId() == R.id.editor_volume) {
       // TODO
       //incomplete = true;

@@ -9,16 +9,6 @@
         android:title="@string/editor_add_track"
         android:showAsAction="always|withText"
         />
-    <item android:id="@+id/editor_add_clip"
-        android:icon="@drawable/ic_content_new"
-        android:title="@string/editor_add_clip"
-        android:showAsAction="always|withText"
-        />
-    <item android:id="@+id/editor_delete_clip"
-        android:icon="@drawable/ic_content_discard"
-        android:title="@string/editor_delete_clip"
-        android:showAsAction="always|withText"
-        />
     <item android:id="@+id/editor_volume"
         android:icon="@drawable/ic_device_access_volume_on"
         android:title="@string/editor_volume"
