@@ -29,7 +29,7 @@ public class Playhead extends LinearLayout {
   ScheduledExecutorService playbackClock = null;
   Handler monitorHandler;
 
-  private LuperProjectEditorActivity editorActivity = null;
+  public LuperProjectEditorActivity editorActivity = null;
 
   //PAINT ASSOCIATED WITH THE PLAYHEAD
   Paint mpaint;
