@@ -58,7 +58,7 @@ public class TabProjectsFragment extends Fragment {
   }
   
   public void showListDialog(){
-	    final CharSequence[] items = {"Open", "Delete", "Share", "Export as mp3"};
+	    final CharSequence[] items = {"Open", "Delete", "Share", "Export as mp3", "Cancel"};
 	    new AlertDialog.Builder(getActivity())
 	        .setTitle("Project Options")
 	        .setItems(items, new DialogInterface.OnClickListener() {
