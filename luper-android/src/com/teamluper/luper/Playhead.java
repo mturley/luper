@@ -27,6 +27,8 @@ public class Playhead extends LinearLayout {
   private long playbackTimestamp; // what the system clock time was when startPlayback() was called
   private float xPosition;   // pixel value representation of currentTimeMS
 
+  private Context context;
+
   ScheduledExecutorService playbackClock = null;
   Handler monitorHandler;
 
@@ -36,23 +38,26 @@ public class Playhead extends LinearLayout {
 
   public Playhead(Context context) {
     super(context);
+    this.context = context;
+    currentTimeMS = 0;
     init();
   }
 
   public Playhead(Context context, AttributeSet attribute, int style) {
     super(context, attribute, style);
+    this.context = context;
+    currentTimeMS = 0;
     init();
   }
 
   public Playhead(Context context, AttributeSet attribute) {
     this(context, attribute, 0);
-    init();
   }
 
   public float getXPosition() { return xPosition; }
   public void setXPosition(float x) {
     xPosition = x;
-    Log.i("luper","PLAYHEAD IS MOVING TO X POSITION: "+x);
+    this.invalidate();
   }
 
   public int getCurrentTimeMS() { return currentTimeMS; }
@@ -79,7 +84,6 @@ public class Playhead extends LinearLayout {
   private void updateTime() {
     long elapsedMS = (System.nanoTime() - playbackTimestamp) / 1000000;
     setCurrentTimeMS((int) (elapsedMS + startTimeMS));
-    this.invalidate();
   }
 
   public void startPlayback(int startTime) {
@@ -103,11 +107,19 @@ public class Playhead extends LinearLayout {
         1, //initialDelay
         1, //delay
         TimeUnit.MILLISECONDS);
+
+    ((LuperProjectEditorActivity) this.context).supportInvalidateOptionsMenu();
+  }
+
+  public void stopPlayback(int newCurrentTimeMS) {
+    stopPlayback();
+    setCurrentTimeMS(newCurrentTimeMS);
   }
 
   public void stopPlayback() {
     playbackClock.shutdown();
     playbackClock = null;
+    ((LuperProjectEditorActivity) this.context).supportInvalidateOptionsMenu();
   }
 
   public boolean isPlaying() {

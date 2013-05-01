@@ -309,7 +309,7 @@ public class TrackView extends RelativeLayout {
 
   public void clipMaker(Track track, AudioFile file, int startTime) {
     Random rnd = new Random();
-    int newColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+    int newColor = Color.argb(168, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
     Clip newClip = dataSource.createClip(track, file, startTime, newColor);
     newClip.parentTrack = track;
     track.clips.add(newClip);

@@ -215,11 +215,29 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     inf.inflate(R.menu.editor_bar, menu);
     return super.onCreateOptionsMenu(menu);
   }
+
+  @Override
+  public boolean onPrepareOptionsMenu(Menu menu) {
+    MenuItem playButton = menu.findItem(R.id.editor_play);
+    MenuItem pauseButton = menu.findItem(R.id.editor_pause);
+    MenuItem stopButton = menu.findItem(R.id.editor_stop);
+    if(base.isPlaying()) {
+      playButton.setVisible(false);
+      pauseButton.setVisible(true);
+      stopButton.setVisible(true);
+    } else {
+      playButton.setVisible(true);
+      pauseButton.setVisible(false);
+      stopButton.setVisible(false);
+    }
+    return super.onPrepareOptionsMenu(menu);
+  }
+
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     boolean incomplete = false;
     if(item.getItemId() == R.id.editor_play) {
-      base.startPlayback(0);
+      base.startPlayback();
       /*
       for(Track track  : sequence.tracks) {
         for(View v : track.getAssociatedViews()) {
@@ -229,6 +247,13 @@ public class LuperProjectEditorActivity extends SherlockActivity {
         }
       }
       */
+    }
+    if(item.getItemId() == R.id.editor_pause) {
+      base.stopPlayback();
+    }
+    if(item.getItemId() == R.id.editor_stop) {
+      base.stopPlayback(0);
+      base.postInvalidate();
     }
     if(item.getItemId() == R.id.editor_add_track) {
     	Track addTrack = dataSource.createTrack(sequence);

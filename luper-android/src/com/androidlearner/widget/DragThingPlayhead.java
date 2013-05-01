@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import com.teamluper.luper.Playhead;
+import com.teamluper.luper.TrackView;
 
 
 /**
@@ -17,9 +18,6 @@ import com.teamluper.luper.Playhead;
 
 //Dragging Widget Associated with Playhead
 public class DragThingPlayhead extends Playhead {
-
-  //private variable shtuff
-  private int current; // the position
 
   //original x and y vals (to be changed when dragged)
   private int prevX = 100;
@@ -39,7 +37,7 @@ public class DragThingPlayhead extends Playhead {
   }
 
   //returns the position
-  public int getCurrent(){ return current; }
+  public int getCurrent(){ return this.getCurrentTimeMS(); }
 
 
   @Override
@@ -47,12 +45,12 @@ public class DragThingPlayhead extends Playhead {
 
     final int action = event.getAction();
 
-    final int x = (int)event.getX(); //teh current x val
-    //final int y = (int)event.getY(); //teh current y val
+    final float x = event.getX(); //teh current x val
+    //final float y = event.getY(); //teh current y val
 
     switch(action){
       case MotionEvent.ACTION_DOWN:
-        setXPosition(x);
+        setCurrentTimeMS(Math.round(x / TrackView.PIXELS_PER_MILLISECOND));
         invalidate();
         break;
 
