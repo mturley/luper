@@ -165,10 +165,32 @@ public class Track {
 		return this.clips;
 	}
 
-	//gets the track length by calculating the length of all the clips it contains
-	public int getTrackLength()
+  //test methods
+  public int findLargestClip()
   {
-    return 1;
-	}
-
+    int max=0, length;
+    for(Clip c : clips)
+    {
+      length = c.getDurationMS()-c.getStartTime();
+      if(length>max)
+        max=length;
+    }
+    return max;
+  }
+  public int findLastClip()
+  {
+    int temp = 0, last=0;
+    for(Clip c : clips)
+    {
+      if(c!=null)
+      {
+        temp = c.getStartTime()+c.getDurationMS();
+        if(temp>last)
+          last=temp;
+      }
+      else
+        last = 100;
+    }
+    return last;
+  }
 }
