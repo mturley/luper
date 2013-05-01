@@ -177,7 +177,7 @@ public class Track {
     }
     return max;
   }
-  public int findLastClip()
+  public int findLastClipTime()
   {
     int temp = 0, last=0;
     for(Clip c : clips)

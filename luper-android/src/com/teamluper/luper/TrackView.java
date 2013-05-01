@@ -288,10 +288,14 @@ public class TrackView extends RelativeLayout {
   }
 
   public void startTimePrompt(){
-    DialogFactory.prompt(getContext(),"Gimme a Start Time Bitch","",
+    DialogFactory.prompt(getContext(),"Enter a start time or add it to the end of the track by entering nothing.","",
         new Lambda.StringCallback() {
           public void go(String value) {
-            if(!isNumeric(value)) {
+            if(value.isEmpty()){
+              int val = associated.findLastClipTime()+25;
+              clipMaker(associated, lastRecordedFile, val);
+            }
+            else if(isNumeric(value)) {
               int val = Integer.parseInt(value);
               clipMaker(associated, lastRecordedFile, val);
             } else {

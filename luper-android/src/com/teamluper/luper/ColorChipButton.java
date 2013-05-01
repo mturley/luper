@@ -179,7 +179,7 @@ public class ColorChipButton extends Button {
   public void promptDialog(){
     new AlertDialog.Builder(getContext())
         .setTitle("Clip Details")
-        .setMessage("starttime " + associated.parentTrack.findLastClip() + "PARENT SIZE" + associated.parentTrack.size())
+        .setMessage("starttime PARENT SIZE" + associated.parentTrack.size())
         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialog, int whichButton) {
             //Do nothing for now
@@ -202,11 +202,6 @@ public class ColorChipButton extends Button {
       // we're in a background thread.
       this.postInvalidate();
     }
-  }
-  @Background
-  public void setStartToEnd()
-  {
-    this.setX(associated.parentTrack.findLastClip());
   }
 
 }
