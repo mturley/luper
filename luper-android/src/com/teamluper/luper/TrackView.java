@@ -406,6 +406,32 @@ public class TrackView extends RelativeLayout {
       }
     }*/
 
+  @Background
+  public void playPreparedClip() {
+    playPreparedClip(null);
+  }
+
+  // later on will also take a startTime parameter (current playhead time)
+  @Background
+  public void playPreparedClip(final Clip optionalNextClip) {
+    try {
+      final Track t = associated;
+      mPlayer.start();
+      mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+        public void onCompletion(MediaPlayer mp) {
+          if(optionalNextClip == null) {
+            t.prepareNextClip(t.nextClip.getStartTime()+10);
+          } else {
+            t.trackView.prepareClip(optionalNextClip);
+          }
+        }
+      });
+    } catch(Exception e) {
+      //handle interrupted exceptions in a different way
+      Log.e(LOG_TAG, "CLIP PREPARE FAILED", e);
+    }
+  }
+
   @UiThread
   public void startPlayingTrack() {
     startPlayingTrackInBackground();
@@ -415,25 +441,21 @@ public class TrackView extends RelativeLayout {
   public void startPlayingTrackInBackground() {
     //mPlayer = new MediaPlayer();
     ArrayList<Clip> clips = associated.getClips();
-    for(Clip c : clips) {
-      playClipInBackground(c); // later on will also take a startTime parameter (current playhead time)
-    }
-  }
-
-  // later on will also take a startTime parameter (current playhead time)
-  @Background
-  public void playPreparedClip() {
-    try {
-      mPlayer.start();
-    } catch(Exception e) {
-      //handle interrupted exceptions in a different way
-      Log.e(LOG_TAG, "CLIP PREPARE FAILED", e);
+    for(int i=0; i<clips.size(); i++) {
+      Clip c = clips.get(i);
+      prepareClip(c);
+      try {
+        Thread.sleep(c.getDurationMS());
+      } catch(InterruptedException e) {
+        Log.e("luper", "THREAD.SLEEP WAS INTERRUPTED WHILE PLAYING INDIVIDUAL TRACK");
+      }
+      playPreparedClip(i+1 < clips.size() ? clips.get(i+1) : null);
     }
   }
 
   @Background
   public void stopPlaying() {
-    mPlayer.stop();
+    if(mPlayer.isPlaying()) mPlayer.stop();
   }
 
   @Background
@@ -449,7 +471,7 @@ public class TrackView extends RelativeLayout {
     try {
       mPlayer.setDataSource(clipFileName);
       mPlayer.prepare();
-      // TODO make an onPrepared!
+      // TODO make an onPrepared and check if we're behind playhead
     } catch(Exception e) {
       //handle interrupted exceptions in a different way
       Log.e(LOG_TAG, "CLIP PREPARE FAILED", e);

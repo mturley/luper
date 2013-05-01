@@ -38,6 +38,7 @@ public class Track {
 
   // references to any views depending on this data, so we can invalidate them automatically on set___ calls.
   public ArrayList<View> associatedViews = null;
+  public TrackView trackView = null;
 
   // NOTE: DO NOT CALL THIS CONSTRUCTOR DIRECTLY unless in a cursorToTrack method.
   // instead, use SQLiteDataSource.createTrack()!
@@ -59,7 +60,9 @@ public class Track {
 
   public void addAssociatedView(View view) {
     this.associatedViews.add(view);
-    Log.i("luper","TRACK ASSOCIATED VIEWS SIZE: "+this.associatedViews.size());
+    if(TrackView.class.isInstance(view)) {
+      this.trackView = (TrackView) view;
+    }
   }
   public void removeAssociatedView(View view) {
     this.associatedViews.remove(view);
@@ -176,6 +179,7 @@ public class Track {
     }
     if(found != null) {
       this.nextClip = found;
+      this.trackView.prepareClip(this.nextClip);
       return true;
     }
     return false;

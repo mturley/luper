@@ -242,9 +242,11 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     }
     if(item.getItemId() == R.id.editor_pause) {
       base.stopPlayback();
+      stopAllMediaPlayers();
     }
     if(item.getItemId() == R.id.editor_stop) {
       base.stopPlayback(0);
+      stopAllMediaPlayers();
       base.postInvalidate();
     }
     if(item.getItemId() == R.id.editor_add_track) {
@@ -318,17 +320,18 @@ public class LuperProjectEditorActivity extends SherlockActivity {
 
   public void playNextClipIfExistsAtTime(int timeMS) {
     for(Track t : sequence.tracks) {
-      if(t.nextClip.getStartTime() == timeMS) {
-        TrackView tv = null;
-        ArrayList<View> av = t.getAssociatedViews();
-        for(View v : av) {
-          if(TrackView.class.isInstance(v)) {
-            tv = (TrackView) v;
-            break;
-          }
-        }
-        tv.
+      int nextStartTime = t.nextClip.getStartTime();
+      if(nextStartTime < timeMS) {
+        t.nextClip = null;
+        // todo factor all the playback stuff into the Track instead of the TrackView.
+        t.trackView.playPreparedClip();
       }
+    }
+  }
+
+  public void stopAllMediaPlayers() {
+    for(Track t : sequence.tracks) {
+      t.trackView.stopPlaying();
     }
   }
 
