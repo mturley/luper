@@ -81,6 +81,7 @@ public class TrackView extends RelativeLayout {
   private SQLiteDataSource dataSource;
 
   private Clip newClip;
+  private Clip preparedClip = null;
   Track associated;
   public int startTimeSetter;
 
@@ -405,6 +406,32 @@ public class TrackView extends RelativeLayout {
       }
     }*/
 
+  @Background
+  public void playPreparedClip() {
+    playPreparedClip(null);
+  }
+
+  // later on will also take a startTime parameter (current playhead time)
+  @Background
+  public void playPreparedClip(final Clip optionalNextClip) {
+    try {
+      final Track t = associated;
+      mPlayer.start();
+      mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+        public void onCompletion(MediaPlayer mp) {
+          if(optionalNextClip == null) {
+            t.prepareNextClip(t.nextClip.getStartTime()+10);
+          } else {
+            t.trackView.prepareClip(optionalNextClip);
+          }
+        }
+      });
+    } catch(Exception e) {
+      //handle interrupted exceptions in a different way
+      Log.e(LOG_TAG, "CLIP PREPARE FAILED", e);
+    }
+  }
+
   @UiThread
   public void startPlayingTrack() {
     startPlayingTrackInBackground();
@@ -414,28 +441,40 @@ public class TrackView extends RelativeLayout {
   public void startPlayingTrackInBackground() {
     //mPlayer = new MediaPlayer();
     ArrayList<Clip> clips = associated.getClips();
-    for(Clip c : clips) {
-      playClipInBackground(c); // later on will also take a startTime parameter (current playhead time)
+    for(int i=0; i<clips.size(); i++) {
+      Clip c = clips.get(i);
+      prepareClip(c);
+      try {
+        Thread.sleep(c.getDurationMS());
+      } catch(InterruptedException e) {
+        Log.e("luper", "THREAD.SLEEP WAS INTERRUPTED WHILE PLAYING INDIVIDUAL TRACK");
+      }
+      playPreparedClip(i+1 < clips.size() ? clips.get(i+1) : null);
     }
   }
 
-  // later on will also take a startTime parameter (current playhead time)
-
+  @Background
+  public void stopPlaying() {
+    if(mPlayer.isPlaying()) mPlayer.stop();
+  }
 
   @Background
-  public void playClipInBackground(Clip c) {
-    // if mPlayer is null we probably stopped startPlayback before it was done, so abort.
-    mPlayer = new MediaPlayer(); //this NEEDS to happen here instead of in the start playing track method
-    if(mPlayer == null) return;
+  public void prepareClip(Clip c) {
+    this.preparedClip = c;
+    if(mPlayer != null) {
+      mPlayer.reset();
+    } else {
+      mPlayer = new MediaPlayer();
+    }
+    // mPlayer is now idle
     String clipFileName = c.getAudioFile().getClientFilePath();
     try {
       mPlayer.setDataSource(clipFileName);
       mPlayer.prepare();
-      mPlayer.start();
-      //playhead.startPlayback();
-    } catch (Exception e) {
+      // TODO make an onPrepared and check if we're behind playhead
+    } catch(Exception e) {
       //handle interrupted exceptions in a different way
-      Log.e(LOG_TAG, "TRACK PLAYBACK FAILED");
+      Log.e(LOG_TAG, "CLIP PREPARE FAILED", e);
     }
   }
 

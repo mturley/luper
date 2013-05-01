@@ -5,7 +5,6 @@ import android.util.AttributeSet;
 import android.graphics.*;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.widget.LinearLayout;
 
 //Libraries for Media Player Listening
@@ -84,6 +83,7 @@ public class Playhead extends LinearLayout {
   private void updateTime() {
     long elapsedMS = (System.nanoTime() - playbackTimestamp) / 1000000;
     setCurrentTimeMS((int) (elapsedMS + startTimeMS));
+    ((LuperProjectEditorActivity) context).playNextClipIfExistsAtTime(currentTimeMS);
   }
 
   public void startPlayback(int startTime) {
@@ -94,6 +94,10 @@ public class Playhead extends LinearLayout {
   public void startPlayback() {
     startTimeMS = currentTimeMS;
     playbackTimestamp = System.nanoTime();
+
+    for(Track t : ((LuperProjectEditorActivity) this.context).sequence.tracks) {
+      t.prepareNextClip(startTimeMS);
+    }
 
     if(isPlaying()) stopPlayback();
     playbackClock = Executors.newScheduledThreadPool(1);

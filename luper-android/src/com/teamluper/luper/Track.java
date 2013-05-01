@@ -8,6 +8,8 @@
 package com.teamluper.luper;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import android.os.Looper;
 import android.util.Log;
@@ -30,11 +32,13 @@ public class Track {
 	DragThing deMovingTxt;
 	int [] paramz;
 
-	// references to relevant data
+	// references to related data
 	public ArrayList<Clip> clips;
+  public Clip nextClip;
 
   // references to any views depending on this data, so we can invalidate them automatically on set___ calls.
   public ArrayList<View> associatedViews = null;
+  public TrackView trackView = null;
 
   // NOTE: DO NOT CALL THIS CONSTRUCTOR DIRECTLY unless in a cursorToTrack method.
   // instead, use SQLiteDataSource.createTrack()!
@@ -51,11 +55,14 @@ public class Track {
 	  this.isDirty = isDirty;
     this.clips = new ArrayList<Clip>();
     this.associatedViews = new ArrayList<View>();
+    this.nextClip = null;
 	}
 
   public void addAssociatedView(View view) {
     this.associatedViews.add(view);
-    Log.i("luper","TRACK ASSOCIATED VIEWS SIZE: "+this.associatedViews.size());
+    if(TrackView.class.isInstance(view)) {
+      this.trackView = (TrackView) view;
+    }
   }
   public void removeAssociatedView(View view) {
     this.associatedViews.remove(view);
@@ -153,6 +160,29 @@ public class Track {
     for(Clip clip : this.clips) {
       clip.loadAudio();
     }
+  }
+
+  public boolean prepareNextClip(int afterTimeMS) {
+    // sort all clips by startTime
+    Collections.sort(this.clips, new Comparator<Clip>() {
+      public int compare(Clip a, Clip b) {
+        return a.getStartTime() - b.getStartTime();
+      }
+    });
+    // iterate through them and find the one following afterTimeMS
+    Clip found = null;
+    for(Clip c : this.clips) {
+      if(c.getStartTime() > afterTimeMS) {
+        found = c;
+        break;
+      }
+    }
+    if(found != null) {
+      this.nextClip = found;
+      this.trackView.prepareClip(this.nextClip);
+      return true;
+    }
+    return false;
   }
 
   //SIZE
