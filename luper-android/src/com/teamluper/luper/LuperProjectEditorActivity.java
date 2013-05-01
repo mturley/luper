@@ -117,7 +117,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
         clip.audioFile = dataSource.getAudioFileById(clip.getAudioFileID());
         clip.parentTrack = track;
       }
-      track.nextClip = track.clips.get(0);
+      if(track.clips.size() > 0) track.nextClip = track.clips.get(0);
     }
     // now that all the Sequence, Track, Clip, and AudioFile objects are in memory, this sequence is ready for editing!
     sequence.setReady(true);
@@ -380,7 +380,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   public void resumeAllMediaPlayers() {
     for(Track t : sequence.tracks) {
       MediaPlayer mp = t.trackView.getMediaPlayer();
-      if(!mp.isPlaying()) mp.start();
+      if(mp != null && !mp.isPlaying()) mp.start();
     }
   }
 

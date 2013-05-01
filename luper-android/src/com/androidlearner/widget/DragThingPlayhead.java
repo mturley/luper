@@ -50,8 +50,8 @@ public class DragThingPlayhead extends Playhead {
 
     switch(action){
       case MotionEvent.ACTION_DOWN:
-        this.editorActivity.isPaused = true;
         setCurrentTimeMS(Math.round(x / TrackView.PIXELS_PER_MILLISECOND));
+        this.editorActivity.isPaused = true;
         invalidate();
         break;
 
