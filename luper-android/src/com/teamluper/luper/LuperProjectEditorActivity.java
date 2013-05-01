@@ -141,7 +141,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     BitmapDrawable bitmapDrawable = new BitmapDrawable(bmp);
     bitmapDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
     horz.setBackgroundDrawable(bitmapDrawable);
-    base.setBackgroundDrawable(bitmapDrawable);
+    //base.setBackgroundDrawable(bitmapDrawable);
     base.setOrientation(LinearLayout.VERTICAL);
 
 //    ll2.addView(fileSelected,

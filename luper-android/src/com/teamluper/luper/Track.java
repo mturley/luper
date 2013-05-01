@@ -152,14 +152,9 @@ public class Track {
 	}
 
 	//gets the track length by calculating the length of all the clips it contains
-	public long getTrackLength()
-	{
-		long sum = 0;
-		for(Clip c:clips)
-		{
-			sum+=c.getDurationMS();
-		}
-		return sum;
+	public int getTrackLength()
+  {
+    return 1;
 	}
 
 }
