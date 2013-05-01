@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent">
+
+    <ImageView
+            android:id="@+id/LuperLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:paddingTop="50px"
+            android:src="@drawable/luper"
+            />
+
+    <TextView
+            android:id="@+id/help_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            android:paddingTop="70px"
+            android:text="HELP ME" />
+
+    <TextView
+            android:id="@+id/help_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:paddingTop="20px"
+            android:paddingLeft="20px"
+            android:paddingRight="20px"
+            android:layout_gravity="center_horizontal"
+            android:text="Hey! I see you are confused! Let me clarify some shtuff for you!" />
+
+</LinearLayout>
