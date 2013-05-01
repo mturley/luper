@@ -33,16 +33,16 @@ public class TabHomeFragment extends Fragment {
     if(dataSource != null) {
       activeUser = dataSource.getActiveUser();
       if(activeUser != null) {
-        ((TextView) v.findViewById(R.id.mainWelcome)).setText("Welcome to LŸper, "+activeUser.getUsername()+"!");
+        ((TextView) v.findViewById(R.id.mainWelcome)).setText("Welcome to LÃ¼per, "+activeUser.getUsername()+"!");
       }
     }
-   
+
     /*String video_path = "http://www.youtube.com/watch?v=fpo58HKmZXs";
     Uri uri = Uri.parse(video_path);
     uri = Uri.parse("vnd.youtube:"  + uri.getQueryParameter("v"));
     Intent intent = new Intent(Intent.ACTION_VIEW, uri);
     startActivity(intent);*/
-    
+
     return v;
   }
 
