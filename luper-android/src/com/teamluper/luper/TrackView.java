@@ -419,10 +419,12 @@ public class TrackView extends RelativeLayout {
       mPlayer.start();
       mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
         public void onCompletion(MediaPlayer mp) {
-          if(optionalNextClip == null) {
+          if(optionalNextClip == null && t.nextClip != null) {
             t.prepareNextClip(t.nextClip.getStartTime()+10);
-          } else {
+          } else if(optionalNextClip != null) {
             t.trackView.prepareClip(optionalNextClip);
+          } else {
+            // we've played the last clip!
           }
         }
       });
