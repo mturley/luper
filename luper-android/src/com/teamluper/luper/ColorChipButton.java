@@ -130,8 +130,8 @@ public class ColorChipButton extends Button {
   @UiThread
   public void init(){
     //promptDialog();
-    this.setX(this.getStartTime()*PIXELS_PER_MILLISECOND+100); //
-    this.setWidth(Math.round(this.getLength()*PIXELS_PER_MILLISECOND) + 100);
+    this.setX(this.getStartTime()*PIXELS_PER_MILLISECOND+100);
+    this.setWidth(Math.round(this.getLength()*PIXELS_PER_MILLISECOND));
     this.setHeight(140);
     this.setBackgroundColor(mColor);
   }
