@@ -14,8 +14,8 @@ import com.googlecode.androidannotations.annotations.UiThread;
 @EView
 public class ColorChipButton extends Button {
 
-private static final String TAG = "ColorClipButton";
-private static final float PIXELS_PER_MILLISECOND = 0.3f;
+  private static final String TAG = "ColorClipButton";
+  public static final float PIXELS_PER_MILLISECOND = 0.3f;
 
   //the clip that is associated with this CCB
   Clip associated;
@@ -42,21 +42,21 @@ private static final float PIXELS_PER_MILLISECOND = 0.3f;
   public void showListDialog(){
     final CharSequence[] items = {"Details", "Edit", "Delete", "Cancel"};
     new AlertDialog.Builder(getContext())
-      .setTitle("Clip Options")
-      .setItems(items, new DialogInterface.OnClickListener() {
-        public void onClick(DialogInterface dialog, int item) {
-          if (items[item].equals("Details")) {
-            new AlertDialog.Builder(getContext())
-              .setTitle("Length " + associated.getDurationMS() + " ms")
-              .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int whichButton) {
-                  //Do nothing for now
-                }
-              })
-              .show();
-          }
-          if (items[item].equals("Edit")) {
-            showEditDialog();
+        .setTitle("Clip Options")
+        .setItems(items, new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int item) {
+            if (items[item].equals("Details")) {
+              new AlertDialog.Builder(getContext())
+                  .setTitle("Length " + associated.getDurationMS() + " ms")
+                  .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                      //Do nothing for now
+                    }
+                  })
+                  .show();
+            }
+            if (items[item].equals("Edit")) {
+              showEditDialog();
             /*DialogFactory.prompt(getContext(),"Edit Start Time","",
               new Lambda.StringCallback() {
                 public void go(String value) {
@@ -70,21 +70,20 @@ private static final float PIXELS_PER_MILLISECOND = 0.3f;
             DialogFactory.confirm(getContext(), "Really Delete Clip?", "The recording used in this clip will " +
               "not be deleted, only this instance of that audio will be deleted.  You can find the AudioFile " +
               "again by using the Browse button in the Add Clip dialog.", new Lambda.BooleanCallback() {
-              @Override
-              public void go(boolean pressedYes) {
-                if (pressedYes) {
-                  if (!c.deleteFromProject()) {
-                    DialogFactory.alert(getContext(), "Error", "Failed to delete clip");
+                @Override
+                public void go(boolean pressedYes) {
+                  if (pressedYes) {
+                    if (!c.deleteFromProject()) {
+                      DialogFactory.alert(getContext(), "Error", "Failed to delete clip");
+                    }
                   }
                 }
-              }
-            });
-
-          } else if (items[item].equals("Cancel")) {
-            // does nothing and will never do anything
+              });
+            } else if (items[item].equals("Cancel")) {
+              // does nothing and will never do anything
+            }
           }
-        }
-      }).show();
+        }).show();
   }
   public void showEditDialog(){
     final CharSequence[] items = {"Start Time", "Loop Count", "Cancel"};
@@ -92,17 +91,12 @@ private static final float PIXELS_PER_MILLISECOND = 0.3f;
         .setTitle("Clip Edit Options")
         .setItems(items, new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialog, int item) {
-           if (items[item].equals("Start Time")) {
+            if (items[item].equals("Start Time")) {
               DialogFactory.prompt(getContext(),"Edit Start Time","",
                   new Lambda.StringCallback() {
                     public void go(String value) {
-                      if(value != "") {
-                        int val= Integer.parseInt(value);
-                        associated.setStartTime(val);
-                        associated.parentTrack.invalidateAssociatedViews();
-                      } else {
-                        DialogFactory.alert(getContext(),"Oops!","That isn't a valid start time.");
-                      }
+                      int val= Integer.parseInt(value);
+                      associated.setStartTime(val);
                     }
                   }
               );
@@ -120,8 +114,8 @@ private static final float PIXELS_PER_MILLISECOND = 0.3f;
 
             }
             else if (items[item].equals("Cancel")) {
-                // should bring user back to the previous dialog menu
-                showListDialog();
+              // should bring user back to the previous dialog menu
+              showListDialog();
             }
           }
         }).show();
@@ -169,19 +163,19 @@ private static final float PIXELS_PER_MILLISECOND = 0.3f;
 //	the clip. eventually it should allow you to modify things about the clip
   public void promptDialog(){
     new AlertDialog.Builder(getContext())
-      .setTitle("Clip Details")
-      .setMessage("Length " + associated.getDurationMS() + " ms" + "    The Current Color is: " + mColor)
-      .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-        public void onClick(DialogInterface dialog, int whichButton) {
-          //Do nothing for now
-        }
-      })
-      .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-        public void onClick(DialogInterface dialog, int whichButton) {
-          // Do nothing.
-        }
-      })
-      .show();
+        .setTitle("Clip Details")
+        .setMessage("Length " + associated.getDurationMS() + " ms" + "    The Current Color is: " + mColor)
+        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int whichButton) {
+            //Do nothing for now
+          }
+        })
+        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int whichButton) {
+            // Do nothing.
+          }
+        })
+        .show();
   }
 
   public void invalidateSafely() {

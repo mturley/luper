@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.androidlearner.widget.DragThing;
+import com.androidlearner.widget.DragThingPlayhead;
 import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EView;
 import com.googlecode.androidannotations.annotations.UiThread;
@@ -46,7 +47,7 @@ import com.teamluper.luper.AudioRecorderTestActivity.PlayButton;
 import com.teamluper.luper.AudioRecorderTestActivity.playTrackButton;
 import android.os.Bundle;
 import com.actionbarsherlock.app.SherlockActivity;
-import com.androidlearner.widget.DragThing;
+import com.androidlearner.widget.DragThingPlayhead;
 import com.googlecode.androidannotations.annotations.EActivity;
 
 /**
@@ -72,6 +73,7 @@ public class TrackView extends RelativeLayout {
 
   private Button mBrowseButton;
   private TextView fileSelected;
+  private DragThingPlayhead playhead;
   private int MediaFetchResultCode = 11;
 
   private SQLiteDataSource dataSource;
@@ -88,6 +90,7 @@ public class TrackView extends RelativeLayout {
   public TrackView(LuperProjectEditorActivity context, Track track, SQLiteDataSource dataSource) {
     super(context);
     editorActivity = context;
+    playhead = (DragThingPlayhead)editorActivity.findViewById(1337);
     associated = track;
     this.dataSource = dataSource;
     deMovingTxt = (DragThing) findViewById(R.id.detext);
@@ -142,50 +145,50 @@ public class TrackView extends RelativeLayout {
 
 //		create the addClipButton then set its image to add and add it to the trackControl
 
-		ImageButton addClipButton = new ImageButton(this.getContext());
-		addClipButton.setImageResource(R.drawable.add);
-		addClipButton.setOnClickListener(addClipClicker);
-        addClipButton.setBackgroundColor(Color.parseColor("#f5f5f5"));
-		trackControl.addView(addClipButton);
+    ImageButton addClipButton = new ImageButton(this.getContext());
+    addClipButton.setImageResource(R.drawable.add);
+    addClipButton.setOnClickListener(addClipClicker);
+    addClipButton.setBackgroundColor(Color.parseColor("#f5f5f5"));
+    trackControl.addView(addClipButton);
 
 //		create the playButton then set its image to play and add it to the trackControl
-		ImageButton playButton = new ImageButton(this.getContext());
-		playButton.setImageResource(R.drawable.play);
-		playButton.setOnClickListener(playClicker);
-        playButton.setBackgroundColor(Color.parseColor("#f5f5f5"));
-		trackControl.addView(playButton);
+    ImageButton playButton = new ImageButton(this.getContext());
+    playButton.setImageResource(R.drawable.play);
+    playButton.setOnClickListener(playClicker);
+    playButton.setBackgroundColor(Color.parseColor("#f5f5f5"));
+    trackControl.addView(playButton);
 
-        //trackControl.setBackgroundColor(Color.parseColor("#000000"));
+    //trackControl.setBackgroundColor(Color.parseColor("#000000"));
 
 
-		this.addView(trackControl);
+    this.addView(trackControl);
 //		testing...
 
-        //Clip clip1 = new Clip(); clip1.begin = 100; clip1.end = 4000; clip1.duration = 3900;
-        //Clip clip2 = new Clip(); clip2.begin = 0; clip2.end = 450; clip2.duration = 450;
+    //Clip clip1 = new Clip(); clip1.begin = 100; clip1.end = 4000; clip1.duration = 3900;
+    //Clip clip2 = new Clip(); clip2.begin = 0; clip2.end = 450; clip2.duration = 450;
 
-        ColorChipButton chip;
-        //this.associated.putClip(clip1);
-        //this.associated.putClip(clip2);
-        for(int i = 0; i < this.associated.clips.size(); i++){
+    ColorChipButton chip;
+    //this.associated.putClip(clip1);
+    //this.associated.putClip(clip2);
+    for(int i = 0; i < this.associated.clips.size(); i++){
 
-        	//System.out.println("Here " + this.associated.getClips().get(i).begin);
-          Clip c = this.associated.getClips().get(i);
-          chip = new ColorChipButton(this.getContext(), c);
-          c.addAssociatedView(chip);
-        	System.out.println("Chips x pos " + chip.associated.begin);
-            this.addView(chip);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-            this.setLayoutParams(params);
-            Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.line);
-            BitmapDrawable bitmapDrawable = new BitmapDrawable(bmp);
-            bitmapDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
-            //this.setBackgroundDrawable(bitmapDrawable);
-            //this.setBackgroundColor(Color.parseColor("#e2dfd8"));
-            //this.setBackgroundColor(Color.TRANSPARENT);
-        	//this.addView(deMovingTxt);
-        }
+      //System.out.println("Here " + this.associated.getClips().get(i).begin);
+      Clip c = this.associated.getClips().get(i);
+      chip = new ColorChipButton(this.getContext(), c);
+      c.addAssociatedView(chip);
+      System.out.println("Chips x pos " + chip.associated.begin);
+      this.addView(chip);
+      LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+      this.setLayoutParams(params);
+      Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.line);
+      BitmapDrawable bitmapDrawable = new BitmapDrawable(bmp);
+      bitmapDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
+      //this.setBackgroundDrawable(bitmapDrawable);
+      //this.setBackgroundColor(Color.parseColor("#e2dfd8"));
+      //this.setBackgroundColor(Color.TRANSPARENT);
+      //this.addView(deMovingTxt);
+    }
   }
 
 
@@ -198,10 +201,10 @@ public class TrackView extends RelativeLayout {
     LinearLayout ll = new LinearLayout(this.getContext());
     mRecordButton = new RecordButton(this.getContext());
     ll.addView(mRecordButton,
-      new LinearLayout.LayoutParams(
-        ViewGroup.LayoutParams.WRAP_CONTENT,
-        ViewGroup.LayoutParams.WRAP_CONTENT,
-        0));
+        new LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            0));
 
     LinearLayout ll2 = new LinearLayout(this.getContext());
     mBrowseButton = new Button(this.getContext());
@@ -210,45 +213,45 @@ public class TrackView extends RelativeLayout {
     fileSelected = new AutoCompleteTextView(this.getContext());
     fileSelected.setHint("Select a File");
     ll2.addView(mBrowseButton,
-      new LinearLayout.LayoutParams(
-        ViewGroup.LayoutParams.WRAP_CONTENT,
-        ViewGroup.LayoutParams.WRAP_CONTENT,
-        0));
+        new LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            0));
     ll2.addView(fileSelected,
-      new LinearLayout.LayoutParams(
-        ViewGroup.LayoutParams.FILL_PARENT,
-        ViewGroup.LayoutParams.FILL_PARENT,
-        0));
+        new LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.FILL_PARENT,
+            ViewGroup.LayoutParams.FILL_PARENT,
+            0));
 
     custom.addView(ll,
-      new LinearLayout.LayoutParams(
-        ViewGroup.LayoutParams.WRAP_CONTENT,
-        ViewGroup.LayoutParams.WRAP_CONTENT,
-        0));
+        new LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            0));
     custom.addView(ll2,
-      new LinearLayout.LayoutParams(
-        ViewGroup.LayoutParams.MATCH_PARENT,
-        ViewGroup.LayoutParams.WRAP_CONTENT,
-        0));
+        new LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            0));
 
     final int finalStartTime = startTime;
     final Track finalTrack = associated;
 
     new AlertDialog.Builder(getContext())
-      .setTitle("Record or Browse?")
-      .setView(custom)
-      .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-        public void onClick(DialogInterface dialog, int whichButton) {
-          //want it to pass a new clip back to the editor panel and add it to the screen
-          clipMaker(associated, lastRecordedFile, finalStartTime);
-        }
-      })
-      .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-        public void onClick(DialogInterface dialog, int whichButton) {
-          // Do nothing.
-        }
-      })
-      .show();
+        .setTitle("Record or Browse?")
+        .setView(custom)
+        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int whichButton) {
+            //want it to pass a new clip back to the editor panel and add it to the screen
+            clipMaker(associated, lastRecordedFile, finalStartTime);
+          }
+        })
+        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int whichButton) {
+            // Do nothing.
+          }
+        })
+        .show();
   }
 
   //creates a dialog for browsing a list of the user's audiofiles, for adding clips to a track with a file youve already
@@ -261,16 +264,16 @@ public class TrackView extends RelativeLayout {
       fileNames[i] = audioFilesByUser[i].getClientFilePath();
     }
     new AlertDialog.Builder(getContext())
-      .setTitle("Select Audio File for New Clip Homie")
-      .setItems(fileNames, new DialogInterface.OnClickListener() {
-        public void onClick(DialogInterface dialog, int which) {
-          // The 'which' argument contains the index position
-          // of the selected item
-          lastRecordedFile = audioFilesByUser[which];
-          fileSelected.setText(lastRecordedFile.getClientFilePath());
-        }
-      })
-      .show();
+        .setTitle("Select Audio File for New Clip Homie")
+        .setItems(fileNames, new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int which) {
+            // The 'which' argument contains the index position
+            // of the selected item
+            lastRecordedFile = audioFilesByUser[which];
+            fileSelected.setText(lastRecordedFile.getClientFilePath());
+          }
+        })
+        .show();
   }
 
 
@@ -397,8 +400,10 @@ public class TrackView extends RelativeLayout {
     try {
       mPlayer.setDataSource(clipFileName);
       mPlayer.prepare();
-      Thread.sleep(c.getDurationMS());
+      playhead.setHandler(mPlayer);
+      //Thread.sleep(c.getDurationMS());
       mPlayer.start();
+      playhead.playback();
     } catch (Exception e) {
       //handle interrupted exceptions in a different way
       Log.e(LOG_TAG, "TRACK PLAYBACK FAILED");
