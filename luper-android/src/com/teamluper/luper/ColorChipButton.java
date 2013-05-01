@@ -46,14 +46,7 @@ public class ColorChipButton extends Button {
         .setItems(items, new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialog, int item) {
             if (items[item].equals("Details")) {
-              new AlertDialog.Builder(getContext())
-                  .setTitle("Length " + associated.getDurationMS() + " ms")
-                  .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                      //Do nothing for now
-                    }
-                  })
-                  .show();
+              showDetailDialog();
             }
             if (items[item].equals("Edit")) {
               showEditDialog();
@@ -120,6 +113,29 @@ public class ColorChipButton extends Button {
           }
         }).show();
   }
+
+    public void showDetailDialog(){
+       LinearLayout detailLayout = new LinearLayout(this.getContext());
+        detailLayout.setOrientation(LinearLayout.VERTICAL);
+        TextView lengthView = new TextView(this.getContext());
+        lengthView.setText("Length: " + this.associated.getDurationMS() + " ms");
+        TextView startTimeView = new TextView(this.getContext());
+        startTimeView.setText("Start Time: " + this.associated.getStartTime() + " ms");
+
+            detailLayout.addView(lengthView);
+        detailLayout.addView(startTimeView);
+
+            new AlertDialog.Builder(getContext())
+                .setTitle("Clip Details You Fuck")
+                .setView(detailLayout)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+
+                      }
+              })
+                .show();
+      }
+
 
   public void render() {
     init();
