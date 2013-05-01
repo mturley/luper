@@ -173,7 +173,7 @@ public class TrackView extends RelativeLayout {
             Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.line);
             BitmapDrawable bitmapDrawable = new BitmapDrawable(bmp);
             bitmapDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
-            this.setBackgroundDrawable(bitmapDrawable);
+            //this.setBackgroundDrawable(bitmapDrawable);
             //this.setBackgroundColor(Color.parseColor("#e2dfd8"));
             //this.setBackgroundColor(Color.TRANSPARENT);
         	//this.addView(deMovingTxt);

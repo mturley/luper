@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<ScrollView android:id="@+id/scroll"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
-              android:paddingLeft="20px"
-              android:paddingRight="20px"
+              android:paddingLeft="30px"
+              android:paddingRight="40px"
               android:layout_width="fill_parent"
-              android:layout_height="fill_parent">
+              android:layout_height="fill_parent"
+              android:stretchColumns="1"
+              android:scrollbars="vertical"
+              android:isScrollContainer="true"
+              android:scrollbarAlwaysDrawVerticalTrack="true" >
+
+
 
     <ImageView
             android:id="@+id/LuperLogo"
@@ -68,5 +79,22 @@
             android:text="To add a clip, you must have a track already created to add it to. If not, create a new track by clicking new + Add Track in the project editor. A new track should be created at the bottom of the screen. Simply click the + button to add a clip." />
 
 
+    <TextView
+            android:id="@+id/help_edit_clip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="40px"
+            android:textStyle="bold"
+            android:text="Editing a clip" />
+
+
+    <TextView
+            android:id="@+id/help_edit_clip2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10px"
+            android:text="Simple. Click the clip to be edited and a dialog window will be displayed. Select your desired option" />
+
 
 </LinearLayout>
+</ScrollView>
