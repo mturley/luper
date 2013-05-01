@@ -85,7 +85,7 @@ public class AudioRecorderTestActivity extends SherlockActivity
     }
 
     private void startPlaying() {
-    	
+
         mPlayer = new MediaPlayer();
         try {
             mPlayer.setDataSource(mFileName);
@@ -125,7 +125,7 @@ public class AudioRecorderTestActivity extends SherlockActivity
 	        }
     	}
     }
-    
+
     //Used to initialize a playhead from a specific point - literally just a sleep call on the thread in question
     public void playFrom(int ms)
     {
@@ -179,9 +179,6 @@ public class AudioRecorderTestActivity extends SherlockActivity
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
-
-        //playBackTest.putClip(newClip);
-        //alertDialog("Clip Created! The clip's length is: " + newClip.duration + "(ms). The tracks size is " + playBackTest.size() + " and it's name in the track is ..." + playBackTest.clips.get(0).name);
 
         DialogFactory.alert(this,"Clip Created! The clip's length is: "
           + newClip.duration + "(ms) the clip's name is: " + newClip.name);
@@ -254,7 +251,7 @@ public class AudioRecorderTestActivity extends SherlockActivity
             setOnClickListener(clicker);
         }
     }
- 
+
     public AudioRecorderTestActivity() {
         mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/LuperApp/";
         //System.out.println(mFileName);
@@ -379,7 +376,7 @@ public class AudioRecorderTestActivity extends SherlockActivity
 			public void onClick(View v) {
 				if(mFileName != null){
 					Clip newClip = new Clip(mFileName);
-					playBackTest.putClip(newClip);
+					playBackTest.clips.add(newClip);
 				}
 			}
 		});

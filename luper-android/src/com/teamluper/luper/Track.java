@@ -170,10 +170,5 @@ public class Track {
 		}
 		return sum;
 	}
-	//DEPRECATE
-	public void putClip(Clip clip)
-	{
-		clips.add(clip);
-	}
 
 }
