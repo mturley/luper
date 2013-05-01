@@ -84,6 +84,7 @@ public class Playhead extends LinearLayout {
   private void updateTime() {
     long elapsedMS = (System.nanoTime() - playbackTimestamp) / 1000000;
     setCurrentTimeMS((int) (elapsedMS + startTimeMS));
+    ((LuperProjectEditorActivity) context).playClipIfExistsAtTime(currentTimeMS);
   }
 
   public void startPlayback(int startTime) {

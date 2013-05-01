@@ -323,6 +323,10 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     }
   }
 
+  public void playClipIfExistsAtTime(int timeMS) {
+    // TODO
+  }
+
   class RecordButton extends Button {
     boolean mStartRecording = true;
 
