@@ -134,13 +134,14 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS); // Gives us Tabs!
 
     //base.addView(theplayhead);
-    DragThingPlayhead.LayoutParams params = new DragThingPlayhead.LayoutParams(
-        ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+        ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
     base.setLayoutParams(params);
     Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.line);
     BitmapDrawable bitmapDrawable = new BitmapDrawable(bmp);
     bitmapDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
     horz.setBackgroundDrawable(bitmapDrawable);
+    base.setBackgroundDrawable(bitmapDrawable);
     base.setOrientation(LinearLayout.VERTICAL);
 
 //    ll2.addView(fileSelected,
