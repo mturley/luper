@@ -200,13 +200,20 @@ public class Clip {
     this.audioFile.loadAudio();
   }
 
-  public void deleteFromProject() {
+  public boolean deleteFromProject() {
+    // first, delete from the db
     this.dataSource.deleteClip(this.id);
-    for(View v : this.associatedViews) {
-      ((ViewGroup) v.getParent()).removeView(v);
+    // fail if we have no reference to parentTrack (set immediately after construction)
+    if(this.parentTrack == null) return false;
+    for(View trackview : this.parentTrack.getAssociatedViews()) {
+      if(TrackView.class.isInstance(trackview)) { // is this really a TrackView?
+        // remove any and all colorchips associated with this clip
+        for(View clipview : this.associatedViews) {
+          ((TrackView) trackview).removeView(clipview);
+        }
+        trackview.invalidate();
+      }
     }
-    if(this.parentTrack != null) {
-      this.parentTrack.clips.remove(this);
-    }
+    return true;
   }
 }

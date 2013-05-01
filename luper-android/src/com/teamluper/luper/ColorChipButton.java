@@ -23,6 +23,7 @@ private static final float PIXELS_PER_MILLISECOND = 0.3f;
   public ColorChipButton(Context context, Clip clip){
     super(context);
     associated = clip;
+    clip.addAssociatedView(this);
     mColor = clip.getColor();
     init();
     setOnClickListener(clicker);
@@ -69,10 +70,13 @@ private static final float PIXELS_PER_MILLISECOND = 0.3f;
               "again by using the Browse button in the Add Clip dialog.", new Lambda.BooleanCallback() {
               @Override
               public void go(boolean pressedYes) {
-                if(pressedYes) c.deleteFromProject();
+                if(pressedYes) {
+                  if(!c.deleteFromProject()) {
+                    DialogFactory.alert(getContext(), "Error", "Failed to delete clip");
+                  }
+                }
               }
             });
-            associated.deleteFromProject();
 
           } else if (items[item].equals("Cancel")) {
             // does nothing and will never do anything
@@ -90,8 +94,13 @@ private static final float PIXELS_PER_MILLISECOND = 0.3f;
               DialogFactory.prompt(getContext(),"Edit Start Time","",
                   new Lambda.StringCallback() {
                     public void go(String value) {
-                      int val= Integer.parseInt(value);
-                      associated.setStartTime(val);
+                      if(value != "") {
+                        int val= Integer.parseInt(value);
+                        associated.setStartTime(val);
+                        associated.parentTrack.invalidateAssociatedViews();
+                      } else {
+                        DialogFactory.alert(getContext(),"Oops!","That isn't a valid start time.");
+                      }
                     }
                   }
               );
