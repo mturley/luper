@@ -53,7 +53,6 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   //private LinearLayout base1;
   private DragThingPlayhead base;
 
-
   //this object is gonna move de move.
   //ClipThing deClip;
   //int [] paramz;
@@ -78,16 +77,9 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     base.addView(a);
     //this.addView(top);
 
-
     base.setId(1337);
 
-
     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-
-
-    //
-    //
-    //theplayhead = new DragThingPlayhead(this);
 
     // to figure out which sequence data to load, we fetch the Sequences _id from the Intent.
     // this is put into the intent when you press the project in the Projects list in LuperMainActivity.
@@ -112,7 +104,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     // fetch all the Track objects associated with this sequence from SQLite.
     sequence.tracks = dataSource.getTracksBySequenceId(sequence.getId());
 
-    // for each track in the sequence, we fetch all the associated Clip and AudioFile objects.
+    // for each track in the sequence, fetch all the associated Clip and AudioFile objects.
     for(Track track : sequence.tracks) {
       long trackId = track.getId();
       ArrayList<Clip> clips = dataSource.getClipsByTrackId(trackId);
@@ -121,6 +113,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
         clip.audioFile = dataSource.getAudioFileById(clip.getAudioFileID());
         clip.parentTrack = track;
       }
+      track.nextClip = track.clips.get(0);
     }
     // now that all the Sequence, Track, Clip, and AudioFile objects are in memory, this sequence is ready for editing!
     sequence.setReady(true);
@@ -323,8 +316,20 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     }
   }
 
-  public void playClipIfExistsAtTime(int timeMS) {
-    // TODO
+  public void playNextClipIfExistsAtTime(int timeMS) {
+    for(Track t : sequence.tracks) {
+      if(t.nextClip.getStartTime() == timeMS) {
+        TrackView tv = null;
+        ArrayList<View> av = t.getAssociatedViews();
+        for(View v : av) {
+          if(TrackView.class.isInstance(v)) {
+            tv = (TrackView) v;
+            break;
+          }
+        }
+        tv.
+      }
+    }
   }
 
   class RecordButton extends Button {

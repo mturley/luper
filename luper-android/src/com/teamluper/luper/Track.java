@@ -8,6 +8,8 @@
 package com.teamluper.luper;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import android.os.Looper;
 import android.util.Log;
@@ -30,8 +32,9 @@ public class Track {
 	DragThing deMovingTxt;
 	int [] paramz;
 
-	// references to relevant data
+	// references to related data
 	public ArrayList<Clip> clips;
+  public Clip nextClip;
 
   // references to any views depending on this data, so we can invalidate them automatically on set___ calls.
   public ArrayList<View> associatedViews = null;
@@ -51,6 +54,7 @@ public class Track {
 	  this.isDirty = isDirty;
     this.clips = new ArrayList<Clip>();
     this.associatedViews = new ArrayList<View>();
+    this.nextClip = null;
 	}
 
   public void addAssociatedView(View view) {
@@ -153,6 +157,28 @@ public class Track {
     for(Clip clip : this.clips) {
       clip.loadAudio();
     }
+  }
+
+  public boolean prepareNextClip(int afterTimeMS) {
+    // sort all clips by startTime
+    Collections.sort(this.clips, new Comparator<Clip>() {
+      public int compare(Clip a, Clip b) {
+        return a.getStartTime() - b.getStartTime();
+      }
+    });
+    // iterate through them and find the one following afterTimeMS
+    Clip found = null;
+    for(Clip c : this.clips) {
+      if(c.getStartTime() > afterTimeMS) {
+        found = c;
+        break;
+      }
+    }
+    if(found != null) {
+      this.nextClip = found;
+      return true;
+    }
+    return false;
   }
 
   //SIZE
