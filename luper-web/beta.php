@@ -12,7 +12,12 @@ header('Location: index-mobile.php');
   <body>
 
   <div id="container">
-    // include
+    <div id="header">
+      <button type="button" class="active"><a href="/">Home (Beta Release)</a></button>
+      <button type="button"><a href="alpha.html">Archived Alpha Release</a></button>
+      <button type="button"><a href="download/LuperBeta.apk">Download Beta APK</a></button>
+      <button type="button"><a href="feedback.php">Feedback</a></button>
+    </div>
   	<div align="center" id="content">
       <div class="halfcolumn">
         <img src="luper.png" />
