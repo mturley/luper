@@ -236,7 +236,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   public boolean onOptionsItemSelected(MenuItem item) {
     boolean incomplete = false;
     if(item.getItemId() == R.id.editor_play) {
-      base.startPlayback(0);
+      base.startPlayback();
       /*
       for(Track track  : sequence.tracks) {
         for(View v : track.getAssociatedViews()) {
@@ -246,6 +246,13 @@ public class LuperProjectEditorActivity extends SherlockActivity {
         }
       }
       */
+    }
+    if(item.getItemId() == R.id.editor_pause) {
+      base.stopPlayback();
+    }
+    if(item.getItemId() == R.id.editor_stop) {
+      base.stopPlayback(0);
+      base.postInvalidate();
     }
     if(item.getItemId() == R.id.editor_add_track) {
     	Track addTrack = dataSource.createTrack(sequence);

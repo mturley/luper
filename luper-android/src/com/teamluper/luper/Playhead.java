@@ -39,12 +39,14 @@ public class Playhead extends LinearLayout {
   public Playhead(Context context) {
     super(context);
     this.context = context;
+    currentTimeMS = 0;
     init();
   }
 
   public Playhead(Context context, AttributeSet attribute, int style) {
     super(context, attribute, style);
     this.context = context;
+    currentTimeMS = 0;
     init();
   }
 
@@ -55,7 +57,7 @@ public class Playhead extends LinearLayout {
   public float getXPosition() { return xPosition; }
   public void setXPosition(float x) {
     xPosition = x;
-    Log.i("luper","PLAYHEAD IS MOVING TO X POSITION: "+x);
+    this.invalidate();
   }
 
   public int getCurrentTimeMS() { return currentTimeMS; }
@@ -82,7 +84,6 @@ public class Playhead extends LinearLayout {
   private void updateTime() {
     long elapsedMS = (System.nanoTime() - playbackTimestamp) / 1000000;
     setCurrentTimeMS((int) (elapsedMS + startTimeMS));
-    this.invalidate();
   }
 
   public void startPlayback(int startTime) {
@@ -108,6 +109,11 @@ public class Playhead extends LinearLayout {
         TimeUnit.MILLISECONDS);
 
     ((LuperProjectEditorActivity) this.context).supportInvalidateOptionsMenu();
+  }
+
+  public void stopPlayback(int newCurrentTimeMS) {
+    stopPlayback();
+    setCurrentTimeMS(newCurrentTimeMS);
   }
 
   public void stopPlayback() {
