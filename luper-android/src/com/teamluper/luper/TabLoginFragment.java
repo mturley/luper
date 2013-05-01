@@ -59,14 +59,14 @@ public class TabLoginFragment extends Fragment {
   LuperRestClient rest;
 
   private static final int HASH_COUNT = 10000;
-  
+
   @Override
   public void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       uiHelper = new UiLifecycleHelper(getActivity(), callback);
       uiHelper.onCreate(savedInstanceState);
   }
-  
+
   @Override
   public void onResume() {
       super.onResume();
@@ -133,7 +133,7 @@ public class TabLoginFragment extends Fragment {
           return false;
         }
       });
-    
+
     // Give facebook loginbutton email permissions
     LoginButton authButton = (LoginButton) v.findViewById(R.id.authButton);
     authButton.setFragment(this);
@@ -157,16 +157,16 @@ public class TabLoginFragment extends Fragment {
   }
   //Updates the Luper interface once usr is logged into Facebook.
   private static final String TAG = "LoginFragment";
-  
+
   private Session.StatusCallback callback = new Session.StatusCallback() {
 	  @Override
 	  public void call(Session sesh, SessionState seshState, Exception e) {
 		  onSessionStateChange(sesh,seshState,e);
 	  }
   };
-  
+
   private UiLifecycleHelper uiHelper;
-  
+
   protected void onSessionStateChange(Session sesh, SessionState seshState, Exception e) {
 	  final LuperLoginActivity_ a = (LuperLoginActivity_)getActivity();
 	  if (seshState.isOpened()) {
@@ -181,10 +181,10 @@ public class TabLoginFragment extends Fragment {
 		    		  //loadActiveSession(user);
 //		    		  TextView welcome = (TextView) findViewById(R.id.welcome);
 //		    		  welcome.setText("Hello " + user.getName() + "!");
-		    		  
+
 		    		  // Let's snag the user's email address to create a unique ID for Mike's DB
 		    		  // updates the header on the login tab
-		    		  
+
 		    		  // If email doesn't work, let's use the GraphUser's facebook link as unique ID
 		    		  // naturally each link is associated with at most one user
 		    		  TextView header_login = (TextView) a.findViewById(R.id.header_login);
@@ -197,7 +197,7 @@ public class TabLoginFragment extends Fragment {
 		    	a.completeFacebookLogin(user.asMap().get("email").toString(),user.getUsername());
 		    	// this shouldn't need to be called. but for some reason LuperLogin isn't switching
 		    	// over to Main automatically.
-		    	a.startMainActivity();
+		    	//a.startMainActivity();
 		    }
 
 		  });

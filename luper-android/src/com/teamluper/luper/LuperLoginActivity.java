@@ -177,7 +177,7 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
     }
   }
 
-  @Background
+  @UiThread
   // to be called by the facebook callback biznaz when a user has successfully logged in.
   // must pass a valid email for the database to track this user
   public void completeFacebookLogin(String email, String name) {
@@ -205,6 +205,8 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
       if(existingUser != null) {
         dataSource.setActiveUser(existingUser);
         startMainActivity();
+      } else {
+        DialogFactory.alert(this, "Error logging in", "completeFacebookLogin isn't working.");
       }
     } catch (JSONException e) {
       e.printStackTrace();
