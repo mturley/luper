@@ -58,6 +58,7 @@ import com.googlecode.androidannotations.annotations.EActivity;
 @EView
 public class TrackView extends RelativeLayout {
   private static final String LOG_TAG = "TrackView";
+  public static final float PIXELS_PER_MILLISECOND = 0.3f;
 
   DragThing deMovingTxt;
   int [] paramz;
@@ -282,11 +283,15 @@ public class TrackView extends RelativeLayout {
     this.startTimeSetter = time;
   }
 
+  public boolean isNumeric(String s) {
+    return s.matches("[-+]?\\d*\\.?\\d+");
+  }
+
   public void startTimePrompt(){
     DialogFactory.prompt(getContext(),"Gimme a Start Time Bitch","",
         new Lambda.StringCallback() {
           public void go(String value) {
-            if(value != "") {
+            if(!isNumeric(value)) {
               int val = Integer.parseInt(value);
               clipMaker(associated, lastRecordedFile, val);
             } else {
@@ -297,8 +302,7 @@ public class TrackView extends RelativeLayout {
     );
   }
 
-  public void clipMaker(Track track, AudioFile file, int startTime)
-  {
+  public void clipMaker(Track track, AudioFile file, int startTime) {
     Random rnd = new Random();
     int newColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
     Clip newClip = dataSource.createClip(track, file, startTime, newColor);
