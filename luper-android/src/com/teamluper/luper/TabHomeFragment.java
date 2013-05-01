@@ -1,5 +1,7 @@
 package com.teamluper.luper;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -7,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.VideoView;
+
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.EFragment;
 
@@ -29,9 +33,16 @@ public class TabHomeFragment extends Fragment {
     if(dataSource != null) {
       activeUser = dataSource.getActiveUser();
       if(activeUser != null) {
-        ((TextView) v.findViewById(R.id.mainWelcome)).setText("Welcome to LÃ¼per, "+activeUser.getUsername()+"!");
+        ((TextView) v.findViewById(R.id.mainWelcome)).setText("Welcome to LŸper, "+activeUser.getUsername()+"!");
       }
     }
+   
+    /*String video_path = "http://www.youtube.com/watch?v=fpo58HKmZXs";
+    Uri uri = Uri.parse(video_path);
+    uri = Uri.parse("vnd.youtube:"  + uri.getQueryParameter("v"));
+    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+    startActivity(intent);*/
+    
     return v;
   }
 

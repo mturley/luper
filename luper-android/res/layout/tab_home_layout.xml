@@ -2,6 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
+    
+    <ImageView
+            android:id="@+id/LuperLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="50px"
+            android:src="@drawable/luper" />
 
     <TextView
         android:id="@+id/mainWelcome"
@@ -9,12 +17,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="210px"
         android:layout_marginBottom="20dp"
         android:text="@string/welcome"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <Button
+    <!--  <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,13 +30,17 @@
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:onClick="devTools"
-        android:text="Developer Tools" />
+        android:text="Developer Tools" />-->
+    
+    
     <TextView
+        	android:id="@+id/textView" 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/devtoolsexplanation"
-            android:id="@+id/textView" android:layout_centerHorizontal="true" android:layout_below="@+id/button1"
-            android:layout_marginTop="10dp" android:layout_alignLeft="@+id/mainWelcome"
-            android:layout_alignRight="@+id/mainWelcome"/>
+            android:layout_centerHorizontal="true" 
+            android:layout_below="@+id/mainWelcome"
+            android:layout_marginTop="10dp" 
+            />
 
 </RelativeLayout>

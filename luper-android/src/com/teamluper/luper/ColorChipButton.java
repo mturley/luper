@@ -116,6 +116,7 @@ public class ColorChipButton extends Button {
     public void showDetailDialog(){
        LinearLayout detailLayout = new LinearLayout(this.getContext());
         detailLayout.setOrientation(LinearLayout.VERTICAL);
+        detailLayout.setPadding(20, 10, 0, 0);
         TextView lengthView = new TextView(this.getContext());
         lengthView.setText("Length: " + this.associated.getDurationMS() + " ms");
         TextView startTimeView = new TextView(this.getContext());
