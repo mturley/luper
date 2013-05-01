@@ -44,14 +44,15 @@ private static final float PIXELS_PER_MILLISECOND = 0.3f;
       .setItems(items, new DialogInterface.OnClickListener() {
         public void onClick(DialogInterface dialog, int item) {
           if (items[item].equals("Details")) {
-            new AlertDialog.Builder(getContext())
-              .setTitle("Length " + associated.getDurationMS() + " ms")
-              .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int whichButton) {
-                  //Do nothing for now
-                }
-              })
-              .show();
+            showDetailDialog();
+//            new AlertDialog.Builder(getContext())
+//              .setTitle("Details " + associated.getDurationMS() + " ms")
+//              .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//                public void onClick(DialogInterface dialog, int whichButton) {
+//                  //Do nothing for now
+//                }
+//              })
+//              .show();
           }
           if (items[item].equals("Edit")) {
             showEditDialog();
@@ -66,12 +67,12 @@ private static final float PIXELS_PER_MILLISECOND = 0.3f;
           } else if (items[item].equals("Delete")) {
             final Clip c = associated;
             DialogFactory.confirm(getContext(), "Really Delete Clip?", "The recording used in this clip will " +
-              "not be deleted, only this instance of that audio will be deleted.  You can find the AudioFile " +
-              "again by using the Browse button in the Add Clip dialog.", new Lambda.BooleanCallback() {
+                "not be deleted, only this instance of that audio will be deleted.  You can find the AudioFile " +
+                "again by using the Browse button in the Add Clip dialog.", new Lambda.BooleanCallback() {
               @Override
               public void go(boolean pressedYes) {
-                if(pressedYes) {
-                  if(!c.deleteFromProject()) {
+                if (pressedYes) {
+                  if (!c.deleteFromProject()) {
                     DialogFactory.alert(getContext(), "Error", "Failed to delete clip");
                   }
                 }
@@ -123,6 +124,28 @@ private static final float PIXELS_PER_MILLISECOND = 0.3f;
             }
           }
         }).show();
+  }
+
+  public void showDetailDialog(){
+    LinearLayout detailLayout = new LinearLayout(this.getContext());
+    detailLayout.setOrientation(LinearLayout.VERTICAL);
+    TextView lengthView = new TextView(this.getContext());
+    lengthView.setText("Length: " + this.associated.getDurationMS() + " ms");
+    TextView startTimeView = new TextView(this.getContext());
+    startTimeView.setText("Start Time: " + this.associated.getStartTime() + " ms");
+
+    detailLayout.addView(lengthView);
+    detailLayout.addView(startTimeView);
+
+    new AlertDialog.Builder(getContext())
+        .setTitle("Details")
+        .setView(detailLayout)
+        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int whichButton) {
+
+          }
+        })
+        .show();
   }
 
   public void moveClip(){
