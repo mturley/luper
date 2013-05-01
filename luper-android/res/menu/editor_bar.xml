@@ -31,16 +31,4 @@
         android:title="@string/editor_help"
         android:showAsAction="ifRoom"
         />
-    <item android:id="@+id/invalidateTrackViews"
-        android:title="DEBUG: Invalidate TrackViews"
-        android:showAsAction="ifRoom"
-        />
-    <item android:id="@+id/invalidateClipViews"
-        android:title="DEBUG: Invalidate ClipViews"
-        android:showAsAction="ifRoom"
-        />
-    <item android:id="@+id/callRender"
-        android:title="DEBUG: call render() on the editor"
-        android:showAsAction="ifRoom"
-        />
 </menu>

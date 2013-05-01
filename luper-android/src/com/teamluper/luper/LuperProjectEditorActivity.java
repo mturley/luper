@@ -304,15 +304,6 @@ public class LuperProjectEditorActivity extends SherlockActivity {
       Intent intent = new Intent(this, LuperHelp_.class);
       startActivity(intent);
     }
-    if(item.getItemId() == R.id.invalidateTrackViews) {
-      invalidateTrackViews();
-    }
-    if(item.getItemId() == R.id.invalidateClipViews) {
-      invalidateClipViews();
-    }
-    if(item.getItemId() == R.id.callRender) {
-      render();
-    }
     if(incomplete) DialogFactory.alert(this,"Incomplete Feature",
         "That button hasn't been hooked up to anything.");
     return super.onOptionsItemSelected(item);
