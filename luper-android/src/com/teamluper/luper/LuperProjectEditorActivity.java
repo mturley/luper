@@ -137,7 +137,8 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     bitmapDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
     base.setBackgroundDrawable(bitmapDrawable);
     base.setOrientation(LinearLayout.VERTICAL);
-
+    base.setPadding(0, 0, 50, 0);
+    
 //    ll2.addView(fileSelected,
 //        new LinearLayout.LayoutParams(
 //            ViewGroup.LayoutParams.FILL_PARENT,
