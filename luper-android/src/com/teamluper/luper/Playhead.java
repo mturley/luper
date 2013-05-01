@@ -117,6 +117,14 @@ public class Playhead extends LinearLayout {
     editorActivity.supportInvalidateOptionsMenu();
   }
 
+  public void resumePlayback() {
+
+  }
+
+  public void pausePlayback() {
+
+  }
+
   public void stopPlayback(int newCurrentTimeMS) {
     stopPlayback();
     setCurrentTimeMS(newCurrentTimeMS);

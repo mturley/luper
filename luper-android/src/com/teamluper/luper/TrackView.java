@@ -503,6 +503,10 @@ public class TrackView extends RelativeLayout {
     }
   }
 
+  public MediaPlayer getMediaPlayer() {
+    return this.mPlayer;
+  }
+
 
 }
 

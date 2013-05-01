@@ -55,6 +55,8 @@ public class LuperProjectEditorActivity extends SherlockActivity {
 
   public Clip veryLastClip = null;
 
+  public boolean isPaused = false;
+
   //this object is gonna move de move.
   //ClipThing deClip;
   //int [] paramz;
@@ -232,7 +234,13 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   public boolean onOptionsItemSelected(MenuItem item) {
     boolean incomplete = false;
     if(item.getItemId() == R.id.editor_play) {
-      base.startPlayback();
+      if(!isPaused) {
+        base.startPlayback(0);
+      } else {
+        base.startPlayback();
+        resumeAllMediaPlayers();
+      }
+
       /*
       for(Track track  : sequence.tracks) {
         for(View v : track.getAssociatedViews()) {
@@ -244,16 +252,19 @@ public class LuperProjectEditorActivity extends SherlockActivity {
       */
     }
     if(item.getItemId() == R.id.editor_pause) {
+      isPaused = true;
       base.stopPlayback();
-      stopAllMediaPlayers();
+      pauseAllMediaPlayers();
     }
     if(item.getItemId() == R.id.editor_stop) {
+      isPaused = false;
       base.stopPlayback(0);
       stopAllMediaPlayers();
       base.postInvalidate();
     }
     if(item.getItemId() == R.id.editor_add_track) {
     	Track addTrack = dataSource.createTrack(sequence);
+      sequence.tracks.add(addTrack);
     	TrackView addTrackView = new TrackView(this, addTrack, dataSource);
       addTrack.addAssociatedView(addTrackView);
     	base.addView(addTrackView);
@@ -356,6 +367,20 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   public void stopAllMediaPlayers() {
     for(Track t : sequence.tracks) {
       t.trackView.stopPlaying();
+    }
+  }
+
+  public void pauseAllMediaPlayers() {
+    for(Track t : sequence.tracks) {
+      MediaPlayer mp = t.trackView.getMediaPlayer();
+      if(mp.isPlaying()) mp.pause();
+    }
+  }
+
+  public void resumeAllMediaPlayers() {
+    for(Track t : sequence.tracks) {
+      MediaPlayer mp = t.trackView.getMediaPlayer();
+      if(!mp.isPlaying()) mp.start();
     }
   }
 
