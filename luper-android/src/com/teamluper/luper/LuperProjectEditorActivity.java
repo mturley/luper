@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
+import android.graphics.drawable.DrawableContainer;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -54,14 +55,11 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   private HorizontalScrollView horz;
   //private LinearLayout base1;
   private DragThingPlayhead base;
-  public Playhead playhead;
-
-    DragThingPlayhead theplayhead;
 
 
-    //this object is gonna move de move.
-    //ClipThing deClip;
-    //int [] paramz;
+  //this object is gonna move de move.
+  //ClipThing deClip;
+  //int [] paramz;
 
   // TODO these will be moved to within Sequence, and accessed with
   // sequence.getClips() and sequence.getTracks(), etc.
@@ -76,12 +74,12 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     base = new DragThingPlayhead(this);
 
 
-      //LinearLayout top = new LinearLayout(this);
-      TextView a = new TextView(this);
-      a.setText("Timeline");
-      a.setBackgroundColor(Color.parseColor("#f5f5f5"));
-      base.addView(a);
-      //this.addView(top);
+    //LinearLayout top = new LinearLayout(this);
+    TextView a = new TextView(this);
+    a.setText("Timeline");
+    a.setBackgroundColor(Color.parseColor("#f5f5f5"));
+    base.addView(a);
+    //this.addView(top);
 
 
     base.setId(1337);
@@ -141,7 +139,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     BitmapDrawable bitmapDrawable = new BitmapDrawable(bmp);
     bitmapDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
     horz.setBackgroundDrawable(bitmapDrawable);
-    //base.setBackgroundDrawable(bitmapDrawable);
+    base.setBackgroundDrawable(bitmapDrawable);
     base.setOrientation(LinearLayout.VERTICAL);
 
 //    ll2.addView(fileSelected,
@@ -184,8 +182,8 @@ public class LuperProjectEditorActivity extends SherlockActivity {
         ColorChipButton chip;
         for(Clip clip : track.clips) {
           // render the clip
-        	chip = new ColorChipButton(this, clip);
-        	tv.addView(chip);
+          chip = new ColorChipButton(this, clip);
+          tv.addView(chip);
           clipsTraversed++;
         }
       }
@@ -237,42 +235,42 @@ public class LuperProjectEditorActivity extends SherlockActivity {
 
     }
     if(item.getItemId() == R.id.editor_add_track) {
-    	Track addTrack = dataSource.createTrack(sequence);
-    	TrackView addTrackView = new TrackView(this, addTrack, dataSource);
-    	base.addView(addTrackView);
+      Track addTrack = dataSource.createTrack(sequence);
+      TrackView addTrackView = new TrackView(this, addTrack, dataSource);
+      base.addView(addTrackView);
     }
     if(item.getItemId() == R.id.editor_volume) {
       // TODO
       //incomplete = true;
-    	LinearLayout ll3 = new LinearLayout(this);
-        SeekBar volBar = new SeekBar(this);
-        ll3.addView(volBar,
-                new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        0));//what we need to get the volume bar to work
-        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-        int curVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-        volBar.setMax(maxVolume);
-        volBar.setProgress(curVolume);
-        volBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-  			public void onStopTrackingTouch(SeekBar seekBar) {}
-  			public void onStartTrackingTouch(SeekBar seekBar) {}
-  			public void onProgressChanged(SeekBar seekBar, int progress,
-  					boolean fromUser) {
-  				audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
-  			}
-        });
-    	new AlertDialog.Builder(this)
-    	.setView(ll3)
-    	.show();
+      LinearLayout ll3 = new LinearLayout(this);
+      SeekBar volBar = new SeekBar(this);
+      ll3.addView(volBar,
+          new LinearLayout.LayoutParams(
+              ViewGroup.LayoutParams.MATCH_PARENT,
+              ViewGroup.LayoutParams.WRAP_CONTENT,
+              0));//what we need to get the volume bar to work
+      audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+      int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+      int curVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+      volBar.setMax(maxVolume);
+      volBar.setProgress(curVolume);
+      volBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        public void onStopTrackingTouch(SeekBar seekBar) {}
+        public void onStartTrackingTouch(SeekBar seekBar) {}
+        public void onProgressChanged(SeekBar seekBar, int progress,
+                                      boolean fromUser) {
+          audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
+        }
+      });
+      new AlertDialog.Builder(this)
+          .setView(ll3)
+          .show();
     }
     if(item.getItemId() == R.id.editor_help) {
       // TODO
       //incomplete = true;
-        Intent intent = new Intent(this, LuperHelp_.class);
-        startActivity(intent);
+      Intent intent = new Intent(this, LuperHelp_.class);
+      startActivity(intent);
     }
     if(incomplete) DialogFactory.alert(this,"Incomplete Feature",
         "That button hasn't been hooked up to anything.");
@@ -280,63 +278,63 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   }
 
   class RecordButton extends Button {
-      boolean mStartRecording = true;
+    boolean mStartRecording = true;
 
-      OnClickListener clicker = new OnClickListener() {
-          public void onClick(View v) {
-              onRecord(mStartRecording);
-              if (mStartRecording) {
-                  setText("Stop recording");
-              } else {
-                  setText("Start recording");
-              }
-              mStartRecording = !mStartRecording;
-          }
-      };
-
-      public RecordButton(Context ctx) {
-          super(ctx);
+    OnClickListener clicker = new OnClickListener() {
+      public void onClick(View v) {
+        onRecord(mStartRecording);
+        if (mStartRecording) {
+          setText("Stop recording");
+        } else {
           setText("Start recording");
-          setOnClickListener(clicker);
+        }
+        mStartRecording = !mStartRecording;
       }
+    };
+
+    public RecordButton(Context ctx) {
+      super(ctx);
+      setText("Start recording");
+      setOnClickListener(clicker);
+    }
   }
 
   private void onRecord(boolean start) {
 
-      if (start) {
-          startRecording();
-      } else {
-          stopRecording();
-      }
+    if (start) {
+      startRecording();
+    } else {
+      stopRecording();
+    }
   }
 
   private void startRecording() {
-  	//Sets the name of the file when you start recording as opposed to when you click "Audio Record Test" from the main screen
-      mFileName = Environment.getExternalStorageDirectory()+"/LuperApp/Clips";
-      mFileName += "/clip_" + System.currentTimeMillis() +".3gp";
+    //Sets the name of the file when you start recording as opposed to when you click "Audio Record Test" from the main screen
+    mFileName = Environment.getExternalStorageDirectory()+"/LuperApp/Clips";
+    mFileName += "/clip_" + System.currentTimeMillis() +".3gp";
 
-      mRecorder = new MediaRecorder();
-      mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-      mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-      mRecorder.setOutputFile(mFileName);
+    mRecorder = new MediaRecorder();
+    mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+    mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+    mRecorder.setOutputFile(mFileName);
 
-      mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+    mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
-      try {
-          mRecorder.prepare();
-      } catch (IOException e) {
-      	System.out.println(e.toString());
-          Log.e(LOG_TAG, "prepare() failed2");
-      }
+    try {
+      mRecorder.prepare();
+    } catch (IOException e) {
+      System.out.println(e.toString());
+      Log.e(LOG_TAG, "prepare() failed2");
+    }
 
-      mRecorder.start();
+    mRecorder.start();
   }
 
   private void stopRecording() {
-      mRecorder.stop();
-      mRecorder.release();
-      fileSelected.setText(mFileName);
-      mRecorder = null;
+    mRecorder.stop();
+    mRecorder.release();
+    fileSelected.setText(mFileName);
+    mRecorder = null;
   }
 
   @UiThread
