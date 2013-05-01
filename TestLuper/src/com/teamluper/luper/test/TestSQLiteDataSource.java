@@ -192,7 +192,6 @@ public class TestSQLiteDataSource extends ActivityInstrumentationTestCase2<Luper
 		assertEquals("file path should be testFilePath", "testFilePath", file.getClientFilePath());
 		datasource.deleteAudioFile(file.getId());
 		datasource.deleteUser(1234567890);
-		assertNull(datasource.getUserById(1234567890));
 	}
 	
 	/**
@@ -232,7 +231,7 @@ public class TestSQLiteDataSource extends ActivityInstrumentationTestCase2<Luper
 		Sequence seq = datasource.createSequence(user, "testSequence");
 		Track track = datasource.createTrack(seq);
 		AudioFile file = datasource.createAudioFile(user, "testFilePath");
-		Clip clip = datasource.createClip(track, file, 0);
+		Clip clip = datasource.createClip(track, file, 0, 0);
 		assertNotNull(clip);
 		assertEquals("ownerUserID should be same as userID", user.getId(), clip.getOwnerUserID());
 		assertEquals("parentTrackID should be same as trackID", track.getId(), clip.getParentTrackID());
@@ -252,7 +251,7 @@ public class TestSQLiteDataSource extends ActivityInstrumentationTestCase2<Luper
 		Sequence seq = datasource.createSequence(user, "testSequence");
 		Track track = datasource.createTrack(seq);
 		AudioFile file = datasource.createAudioFile(user, "testFilePath");
-		Clip clip = datasource.createClip(track, file, 0);
+		Clip clip = datasource.createClip(track, file, 0, 0);
 		long clipID = clip.getId();
 		Clip clip2 = datasource.getClipById(clipID);
 		assertNotNull(clip2);
@@ -271,7 +270,7 @@ public class TestSQLiteDataSource extends ActivityInstrumentationTestCase2<Luper
 		Sequence seq = datasource.createSequence(user, "testSequence");
 		Track track = datasource.createTrack(seq);
 		AudioFile file = datasource.createAudioFile(user, "testFilePath");
-		Clip clip = datasource.createClip(track, file, 0);
+		Clip clip = datasource.createClip(track, file, 0, 0);
 		long clipID = clip.getId();
 		datasource.deleteClip(clipID);
 		assertNull(datasource.getUserById(clipID));
