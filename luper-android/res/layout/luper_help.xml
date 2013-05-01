@@ -2,6 +2,8 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
+              android:paddingLeft="20px"
+              android:paddingRight="20px"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent">
 
@@ -27,11 +29,44 @@
             android:id="@+id/help_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="4"
-            android:paddingTop="20px"
-            android:paddingLeft="20px"
-            android:paddingRight="20px"
             android:layout_gravity="center_horizontal"
-            android:text="Hey! I see you are confused! Let me clarify some shtuff for you!" />
+            android:paddingTop="20px"
+            android:text="Hey, you seem confused. Let me clarify some stuff for you." />
+
+
+    <TextView
+            android:id="@+id/help_text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="40px"
+            android:textStyle="bold"
+            android:text="Creating a new project" />
+
+
+    <TextView
+            android:id="@+id/help_text3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10px"
+            android:text="To create a new project, click the + New Project button next to logout. Enter a name for it and press okay. Congrats! A new project has been created! You can go into the Projects tab and click on the name of the new project you just created to edit it." />
+
+
+    <TextView
+            android:id="@+id/help_add_clip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="40px"
+            android:textStyle="bold"
+            android:text="Adding Clips/Tracks" />
+
+
+    <TextView
+            android:id="@+id/help_add_clip2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10px"
+            android:text="To add a clip, you must have a track already created to add it to. If not, create a new track by clicking new + Add Track in the project editor. A new track should be created at the bottom of the screen. Simply click the + button to add a clip." />
+
+
 
 </LinearLayout>

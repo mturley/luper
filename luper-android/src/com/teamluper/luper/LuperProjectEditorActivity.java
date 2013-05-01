@@ -3,6 +3,7 @@ package com.teamluper.luper;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.media.AudioManager;
@@ -13,7 +14,6 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
@@ -263,10 +263,10 @@ public class LuperProjectEditorActivity extends SherlockActivity {
           0));
 
       custom.addView(ll,
-          new LinearLayout.LayoutParams(
-              ViewGroup.LayoutParams.WRAP_CONTENT,
-              ViewGroup.LayoutParams.WRAP_CONTENT,
-              0));
+              new LinearLayout.LayoutParams(
+                      ViewGroup.LayoutParams.WRAP_CONTENT,
+                      ViewGroup.LayoutParams.WRAP_CONTENT,
+                      0));
       custom.addView(ll2,
         new LinearLayout.LayoutParams(
           ViewGroup.LayoutParams.MATCH_PARENT,
@@ -277,14 +277,14 @@ public class LuperProjectEditorActivity extends SherlockActivity {
         .setTitle("Record or Browse?")
         .setView(custom)
         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-          public void onClick(DialogInterface dialog, int whichButton) {
-            //want it to pass a new clip back to the editor panel and add it to the screen
-          }
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //want it to pass a new clip back to the editor panel and add it to the screen
+            }
         })
         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-          public void onClick(DialogInterface dialog, int whichButton) {
-            // Do nothing.
-          }
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Do nothing.
+            }
         })
         .show();
     }
@@ -321,7 +321,9 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     }
     if(item.getItemId() == R.id.editor_help) {
       // TODO
-      incomplete = true;
+      //incomplete = true;
+        Intent intent = new Intent(this, LuperHelp_.class);
+        startActivity(intent);
     }
     if(incomplete) DialogFactory.alert(this,"Incomplete Feature",
         "That button hasn't been hooked up to anything.");

@@ -12,7 +12,7 @@ import android.graphics.Color;
 public class ColorChipButton extends Button {
 
 private static final String TAG = "ColorClipButton";
-private static final float PIXELS_PER_MILLISECOND = 0.5f;
+private static final float PIXELS_PER_MILLISECOND = 0.1f;
 
   //the clip that is associated with this CCB
   Clip associated;
@@ -58,6 +58,7 @@ private static final float PIXELS_PER_MILLISECOND = 0.5f;
                 public void go(String value) {
                   int val= Integer.parseInt(value);
                   associated.setStartTime(val);
+                    moveClip();
                 }
               }
             );
@@ -92,10 +93,11 @@ private static final float PIXELS_PER_MILLISECOND = 0.5f;
       }).show();
   }
 
+  public void moveClip(){
+      this.invalidate();
+  }
   //this method will determine where the clip should be placed, based on its start time
   public void init(){
-    //this.setX(this.getStartTime() + 50);
-    //this.setWidth((this.getStartTime() + 50) + this.getLength()/10);
     this.setX(this.getStartTime()*PIXELS_PER_MILLISECOND + 100);
     this.setWidth(Math.round(this.getLength()*PIXELS_PER_MILLISECOND) + 100);
     this.setHeight(140);
