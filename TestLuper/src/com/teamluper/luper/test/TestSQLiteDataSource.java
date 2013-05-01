@@ -326,7 +326,7 @@ public class TestSQLiteDataSource extends ActivityInstrumentationTestCase2<Luper
 	 * Create 2 sequences, fetch a list of all sequences from the database.
 	 * Note that the database has a dummy project hardcoded, so one sequence already
 	 * exists in the sequence table and the size of returned list will be 3 and not 2.
-	 * Check that list size is 2, and sequences on the list are the same as created ones
+	 * Check that list size is 3, and sequences on the list are the same as created ones
 	 */
 	public void testGetAllSequences(){
 		User user = datasource.createUser(1234567890, "testUser", "testUser@mail.com");
@@ -335,7 +335,7 @@ public class TestSQLiteDataSource extends ActivityInstrumentationTestCase2<Luper
 		List<Sequence> list = datasource.getAllSequences();
 		
 		assertNotNull(list);
-		assertEquals("size of list should be 2", 3, list.size());
+		assertEquals("size of list should be 3", 3, list.size());
 		assertEquals("IDs of seq1 and first sequence on the list should be the same", seq1.getId(), list.get(1).getId());
 		assertEquals("IDs of seq2 and second sequence on the list should be the same", seq2.getId(), list.get(2).getId());
 		
