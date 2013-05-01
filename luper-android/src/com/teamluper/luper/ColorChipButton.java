@@ -99,8 +99,12 @@ public class ColorChipButton extends Button {
               DialogFactory.prompt(getContext(), "Number of times to Lüp this clip", "",
                   new Lambda.StringCallback() {
                     public void go(String value) {
-                      int val = Integer.parseInt(value);
-                      associated.setLoopCount(val);
+                      if(TrackView.isNumeric(value)) {
+                        int val = Integer.parseInt(value);
+                        associated.setLoopCount(val);
+                      } else {
+                        DialogFactory.alert(getContext(),"Oops!","That's not a valid number!");
+                      }
                     }
                   }
               );

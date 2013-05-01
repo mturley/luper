@@ -285,7 +285,7 @@ public class TrackView extends RelativeLayout {
     this.startTimeSetter = time;
   }
 
-  public boolean isNumeric(String s) {
+  public static boolean isNumeric(String s) {
     return s.matches("[-+]?\\d*\\.?\\d+");
   }
 

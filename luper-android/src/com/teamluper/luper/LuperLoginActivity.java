@@ -1,9 +1,13 @@
 package com.teamluper.luper;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 //import android.util.Log;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -112,7 +116,18 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
     mTabsAdapter.addTab(bar.newTab().setText(""+"Register"),
       TabRegisterFragment_.class, null);
 
+    try {
+      PackageInfo info = getPackageManager().getPackageInfo(
+        "com.teamluper.luper",
+        PackageManager.GET_SIGNATURES);
+      for (android.content.pm.Signature signature : info.signatures) {
+        MessageDigest md = MessageDigest.getInstance("SHA");
+        md.update(signature.toByteArray());
+        Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+      }
+    } catch (Exception e) {
 
+    }
   }
 
   @Override
