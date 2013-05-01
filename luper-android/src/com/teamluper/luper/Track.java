@@ -9,6 +9,8 @@ package com.teamluper.luper;
 
 import java.util.ArrayList;
 
+import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import com.androidlearner.widget.DragThing;
 
@@ -23,8 +25,6 @@ public class Track {
 	private boolean isLocked;
 	private String playbackOptions;
 	private boolean isDirty; // dirty = contains unsynced changes
-
-  private TrackView associatedView = null;
 
   // what's going on with these??
 	DragThing deMovingTxt;
@@ -55,6 +55,7 @@ public class Track {
 
   public void addAssociatedView(View view) {
     this.associatedViews.add(view);
+    Log.i("luper","TRACK ASSOCIATED VIEWS SIZE: "+this.associatedViews.size());
   }
   public void removeAssociatedView(View view) {
     this.associatedViews.remove(view);
@@ -64,7 +65,20 @@ public class Track {
   }
   public void invalidateAssociatedViews() {
     for(View v : this.associatedViews) {
-      v.invalidate();
+      if(TrackView.class.isInstance(v)) {
+        ((TrackView) v).render();
+      }
+      v.requestLayout();
+      v.refreshDrawableState();
+      if (Looper.myLooper() != null && Looper.myLooper() == Looper.getMainLooper()) {
+        // we're in the main-thread / UI Thread.
+        Log.i("luper", "INVALIDATE CALLING");
+        v.invalidate();
+      } else {
+        // we're in a background thread.
+        Log.i("luper", "POSTINVALIDATE CALLING");
+        v.postInvalidate();
+      }
     }
   }
 

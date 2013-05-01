@@ -1,6 +1,8 @@
 package com.teamluper.luper;
 
 import android.media.MediaPlayer;
+import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -66,6 +68,7 @@ public class Clip {
 
   public void addAssociatedView(View view) {
     this.associatedViews.add(view);
+    Log.i("luper", "TRACK ASSOCIATED VIEWS SIZE: " + this.associatedViews.size());
   }
   public void removeAssociatedView(View view) {
     this.associatedViews.remove(view);
@@ -75,7 +78,18 @@ public class Clip {
   }
   public void invalidateAssociatedViews() {
     for(View v : this.associatedViews) {
-      v.invalidate();
+      if(ColorChipButton.class.isInstance(v)) {
+        ((ColorChipButton) v).render();
+      }
+      v.requestLayout();
+      v.refreshDrawableState();
+      if (Looper.myLooper() != null && Looper.myLooper() == Looper.getMainLooper()) {
+        // we're in the main-thread / UI Thread.
+        v.invalidate();
+      } else {
+        // we're in a background thread.
+        v.postInvalidate();
+      }
     }
   }
 
@@ -208,10 +222,10 @@ public class Clip {
     for(View trackview : this.parentTrack.getAssociatedViews()) {
       if(TrackView.class.isInstance(trackview)) { // is this really a TrackView?
         // remove any and all colorchips associated with this clip
+        TrackView tv = ((TrackView) trackview);
         for(View clipview : this.associatedViews) {
-          ((TrackView) trackview).removeView(clipview);
+          tv.removeView(clipview);
         }
-        trackview.invalidate();
       }
     }
     return true;

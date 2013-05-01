@@ -27,6 +27,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Environment;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,7 +89,6 @@ public class TrackView extends RelativeLayout {
     super(context);
     editorActivity = context;
     associated = track;
-    track.addAssociatedView(this);
     this.dataSource = dataSource;
     deMovingTxt = (DragThing) findViewById(R.id.detext);
     init();
@@ -116,8 +116,11 @@ public class TrackView extends RelativeLayout {
     }
   };
 
+  public void render() {
+    init();
+  }
 
-
+  @UiThread
   public void init(){
     mPlayer = new MediaPlayer();
     //LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
@@ -127,6 +130,9 @@ public class TrackView extends RelativeLayout {
 
 //		add a linear layout to the left side that will have a playtrack button
 //		as well as a button to add a clip to this track
+
+    if(this.getChildCount() != 0) this.removeAllViews();
+
     LinearLayout trackControl = new LinearLayout(this.getContext());
     trackControl.setOrientation(LinearLayout.VERTICAL);
 
@@ -164,7 +170,9 @@ public class TrackView extends RelativeLayout {
         for(int i = 0; i < this.associated.clips.size(); i++){
 
         	//System.out.println("Here " + this.associated.getClips().get(i).begin);
-        	chip = new ColorChipButton(this.getContext(), this.associated.getClips().get(i));
+          Clip c = this.associated.getClips().get(i);
+          chip = new ColorChipButton(this.getContext(), c);
+          c.addAssociatedView(chip);
         	System.out.println("Chips x pos " + chip.associated.begin);
             this.addView(chip);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -274,7 +282,9 @@ public class TrackView extends RelativeLayout {
     newClip.parentTrack = track;
     track.clips.add(newClip);
     ColorChipButton newButton = new ColorChipButton(this.getContext(), newClip);
+    newClip.addAssociatedView(newButton);
     this.addView(newButton);
+    this.invalidateSafely();
   }
   class RecordButton extends Button {
     boolean mStartRecording = true;
@@ -392,6 +402,17 @@ public class TrackView extends RelativeLayout {
     } catch (Exception e) {
       //handle interrupted exceptions in a different way
       Log.e(LOG_TAG, "TRACK PLAYBACK FAILED");
+    }
+  }
+
+  public void invalidateSafely() {
+    this.requestLayout();
+    if (Looper.myLooper() != null && Looper.myLooper() == Looper.getMainLooper()) {
+      // we're in the main-thread / UI Thread.
+      this.invalidate();
+    } else {
+      // we're in a background thread.
+      this.postInvalidate();
     }
   }
 

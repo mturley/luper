@@ -11,6 +11,7 @@ import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -165,32 +166,29 @@ public class LuperProjectEditorActivity extends SherlockActivity {
 //
 //    base.setOrientation(LinearLayout.VERTICAL);
 
-    int tracksTraversed = 0;
-    int clipsTraversed = 0;
     // RENDERING ROUTINE STARTS HERE
-    if(sequence.isReady()) {
+    if(sequence.isReady() && base != null) {
+      if(base.getChildCount() != 0) base.removeAllViews();
       // draw stuff in it
       for(Track track : sequence.tracks) {
         RelativeLayout tracklayout = new RelativeLayout(this);
         TrackView tv = new TrackView(this, track, dataSource);
+        track.addAssociatedView(tv);
         tracklayout.addView(tv);
-        //tv.addView(deClip);
         base.addView(tracklayout,
             new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        tracksTraversed++;
-        ColorChipButton chip;
         for(Clip clip : track.clips) {
           // render the clip
-        	chip = new ColorChipButton(this, clip);
+          ColorChipButton chip = new ColorChipButton(this, clip);
+          clip.addAssociatedView(chip);
         	tv.addView(chip);
-          clipsTraversed++;
         }
       }
     }
-    vert.invalidate();
+    base.invalidate();
     //setContentView(vert);
   }
 
@@ -239,6 +237,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     if(item.getItemId() == R.id.editor_add_track) {
     	Track addTrack = dataSource.createTrack(sequence);
     	TrackView addTrackView = new TrackView(this, addTrack, dataSource);
+      addTrack.addAssociatedView(addTrackView);
     	base.addView(addTrackView);
     }
     if(item.getItemId() == R.id.editor_volume) {
@@ -274,9 +273,34 @@ public class LuperProjectEditorActivity extends SherlockActivity {
         Intent intent = new Intent(this, LuperHelp_.class);
         startActivity(intent);
     }
+    if(item.getItemId() == R.id.invalidateTrackViews) {
+      invalidateTrackViews();
+    }
+    if(item.getItemId() == R.id.invalidateClipViews) {
+      invalidateClipViews();
+    }
+    if(item.getItemId() == R.id.callRender) {
+      render();
+    }
     if(incomplete) DialogFactory.alert(this,"Incomplete Feature",
         "That button hasn't been hooked up to anything.");
     return super.onOptionsItemSelected(item);
+  }
+
+  @UiThread
+  public void invalidateTrackViews() {
+    for(Track t : sequence.tracks) {
+      t.invalidateAssociatedViews();
+    }
+  }
+
+  @UiThread
+  public void invalidateClipViews() {
+    for(Track t : sequence.tracks) {
+      for(Clip c: t.clips) {
+        c.invalidateAssociatedViews();
+      }
+    }
   }
 
   class RecordButton extends Button {

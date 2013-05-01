@@ -1,6 +1,7 @@
 package com.teamluper.luper;
 
 import android.media.MediaPlayer;
+import android.os.Looper;
 import android.view.View;
 
 import java.io.FileDescriptor;
@@ -58,7 +59,15 @@ public class AudioFile {
   }
   public void invalidateAssociatedViews() {
     for(View v : this.associatedViews) {
-      v.invalidate();
+      v.requestLayout();
+      v.refreshDrawableState();
+      if (Looper.myLooper() != null && Looper.myLooper() == Looper.getMainLooper()) {
+        // we're in the main-thread / UI Thread.
+        v.invalidate();
+      } else {
+        // we're in a background thread.
+        v.postInvalidate();
+      }
     }
   }
 

@@ -16,18 +16,21 @@ public class TabHomeFragment extends Fragment {
   User activeUser = null;
 
   @Override
+
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    dataSource = ((LuperMainActivity) getActivity()).getDataSource();
-    activeUser = dataSource.getActiveUser();
   }
 
   @Override
   public View onCreateView(LayoutInflater infl, ViewGroup vg, Bundle state) {
     if(vg == null) return null;
     View v = infl.inflate(R.layout.tab_home_layout, vg, false);
-    if(activeUser != null) {
-      ((TextView) v.findViewById(R.id.mainWelcome)).setText("Welcome to Lüper, "+activeUser.getUsername()+"!");
+    dataSource = ((LuperMainActivity) getActivity()).getDataSource();
+    if(dataSource != null) {
+      activeUser = dataSource.getActiveUser();
+      if(activeUser != null) {
+        ((TextView) v.findViewById(R.id.mainWelcome)).setText("Welcome to Lüper, "+activeUser.getUsername()+"!");
+      }
     }
     return v;
   }

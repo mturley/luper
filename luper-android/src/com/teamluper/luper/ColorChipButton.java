@@ -3,12 +3,15 @@ package com.teamluper.luper;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Looper;
 import android.view.View;
 import android.widget.*;
 import java.util.Random;
 import android.graphics.Color;
+import com.googlecode.androidannotations.annotations.EView;
+import com.googlecode.androidannotations.annotations.UiThread;
 
-
+@EView
 public class ColorChipButton extends Button {
 
 private static final String TAG = "ColorClipButton";
@@ -23,7 +26,6 @@ private static final float PIXELS_PER_MILLISECOND = 0.3f;
   public ColorChipButton(Context context, Clip clip){
     super(context);
     associated = clip;
-    clip.addAssociatedView(this);
     mColor = clip.getColor();
     init();
     setOnClickListener(clicker);
@@ -70,8 +72,8 @@ private static final float PIXELS_PER_MILLISECOND = 0.3f;
               "again by using the Browse button in the Add Clip dialog.", new Lambda.BooleanCallback() {
               @Override
               public void go(boolean pressedYes) {
-                if(pressedYes) {
-                  if(!c.deleteFromProject()) {
+                if (pressedYes) {
+                  if (!c.deleteFromProject()) {
                     DialogFactory.alert(getContext(), "Error", "Failed to delete clip");
                   }
                 }
@@ -125,10 +127,13 @@ private static final float PIXELS_PER_MILLISECOND = 0.3f;
         }).show();
   }
 
-  public void moveClip(){
-      this.invalidate();
+  public void render() {
+    init();
   }
+
   //this method will determine where the clip should be placed, based on its start time
+
+  @UiThread
   public void init(){
     this.setX(this.getStartTime()*PIXELS_PER_MILLISECOND + 100);
     this.setWidth(Math.round(this.getLength()*PIXELS_PER_MILLISECOND) + 100);
@@ -157,15 +162,9 @@ private static final float PIXELS_PER_MILLISECOND = 0.3f;
   public void setColor(int color) {
     mColor = color;
     this.setBackgroundColor(mColor);
-    invalidate();
+    this.invalidateSafely();
   }
-  public void setRandColor() {
-    // DEPRECATED... calls to this should be removed, the clip colors are set at creation time.
-    // although, we should also make it possible for the user to change clip colors.
-    //mColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-    //this.setBackgroundColor(mColor);
-    //invalidate();
-  }
+
   //	when you click the button this method is activated. currently it only shows the length of
 //	the clip. eventually it should allow you to modify things about the clip
   public void promptDialog(){
@@ -183,6 +182,17 @@ private static final float PIXELS_PER_MILLISECOND = 0.3f;
         }
       })
       .show();
+  }
+
+  public void invalidateSafely() {
+    this.requestLayout();
+    if (Looper.myLooper() != null && Looper.myLooper() == Looper.getMainLooper()) {
+      // we're in the main-thread / UI Thread.
+      this.invalidate();
+    } else {
+      // we're in a background thread.
+      this.postInvalidate();
+    }
   }
 
 }
