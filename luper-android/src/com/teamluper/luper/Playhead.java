@@ -35,9 +35,17 @@ public class Playhead extends LinearLayout {
     init();
   }
 
+  public float getCurrentTime(){
+    return currentTime;
+  }
+
+  public void setCurrentTime(float x){
+    currentTime = x;
+  }
+
   public void init(){
-      currentTime = 100;
-      mpaint.setColor(lineColor);
+    currentTime = 50;
+    mpaint.setColor(lineColor);
 //      this.setX(this.getStartTime());
 //      this.setY(5000);
 //      this.setWidth(this.getStartTime() + this.getLength());
@@ -57,9 +65,9 @@ public class Playhead extends LinearLayout {
     currentTime=mPlayer.getCurrentPosition();
   }
 
-
+  @Override
   public void onDraw(Canvas canvas) {
-      canvas.drawLine(currentTime, STARTY, currentTime, ENDY, mpaint);
-     invalidate();
+    canvas.drawLine(currentTime, STARTY, currentTime, ENDY, mpaint);
+    invalidate();
   }
 }
