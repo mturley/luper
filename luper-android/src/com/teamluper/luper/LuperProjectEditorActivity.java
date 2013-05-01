@@ -234,11 +234,13 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   public boolean onOptionsItemSelected(MenuItem item) {
     boolean incomplete = false;
     if(item.getItemId() == R.id.editor_play) {
-      if(!isPaused) {
-        base.startPlayback(0);
-      } else {
-        base.startPlayback();
-        resumeAllMediaPlayers();
+      if(sequence.tracks.size() > 0) {
+        if(!isPaused) {
+          base.startPlayback(0);
+        } else {
+          base.startPlayback();
+          resumeAllMediaPlayers();
+        }
       }
 
       /*
