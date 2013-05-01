@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.graphics.*;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.widget.LinearLayout;
 
 //Libraries for Media Player Listening
@@ -22,10 +23,11 @@ public class Playhead extends LinearLayout {
   private final float ENDY = 5000;
 
   private int currentTimeMS; // time we are at w/r/t the beginning of the whole project
-  private int startTimeMS;   // what the value of currentTimeMS was when playback() was called
-  private long playbackTimestamp; // what the system clock time was when playback() was called
+  private int startTimeMS;   // what the value of currentTimeMS was when startPlayback() was called
+  private long playbackTimestamp; // what the system clock time was when startPlayback() was called
   private float xPosition;   // pixel value representation of currentTimeMS
 
+  ScheduledExecutorService playbackClock = null;
   Handler monitorHandler;
 
   //PAINT ASSOCIATED WITH THE PLAYHEAD
@@ -50,6 +52,7 @@ public class Playhead extends LinearLayout {
   public float getXPosition() { return xPosition; }
   public void setXPosition(float x) {
     xPosition = x;
+    Log.i("luper","PLAYHEAD IS MOVING TO X POSITION: "+x);
   }
 
   public int getCurrentTimeMS() { return currentTimeMS; }
@@ -74,24 +77,25 @@ public class Playhead extends LinearLayout {
   }
 
   private void updateTime() {
-    long elapsedMS = (System.nanoTime() - playbackTimestamp) * 1000000;
-    setXPosition((elapsedMS + startTimeMS) * PPM);
+    long elapsedMS = (System.nanoTime() - playbackTimestamp) / 1000000;
+    setCurrentTimeMS((int) (elapsedMS + startTimeMS));
     this.invalidate();
   }
 
-  public void playback(int startTime) {
+  public void startPlayback(int startTime) {
     this.setCurrentTimeMS(startTime);
-    playback();
+    startPlayback();
   }
 
-  public void playback() {
+  public void startPlayback() {
     startTimeMS = currentTimeMS;
     playbackTimestamp = System.nanoTime();
 
-    ScheduledExecutorService myScheduledExecutorService = Executors.newScheduledThreadPool(1);
+    if(isPlaying()) stopPlayback();
+    playbackClock = Executors.newScheduledThreadPool(1);
 
-    myScheduledExecutorService.scheduleWithFixedDelay(
-        new Runnable(){
+    playbackClock.scheduleWithFixedDelay(
+        new Runnable() {
           @Override
           public void run() {
             monitorHandler.sendMessage(monitorHandler.obtainMessage());
@@ -99,6 +103,15 @@ public class Playhead extends LinearLayout {
         1, //initialDelay
         1, //delay
         TimeUnit.MILLISECONDS);
+  }
+
+  public void stopPlayback() {
+    playbackClock.shutdown();
+    playbackClock = null;
+  }
+
+  public boolean isPlaying() {
+    return playbackClock != null;
   }
 
   @Override

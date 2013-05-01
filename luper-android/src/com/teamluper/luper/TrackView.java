@@ -111,7 +111,7 @@ public class TrackView extends RelativeLayout {
   //TODO: Implement the listener for the play button, so we can play a track
   OnClickListener playClicker = new OnClickListener(){
     public void onClick(View v){
-      startPlayingTrack(); //need track playback but track class + audio hook-up not working yet; this does work though
+      startPlayingTrack(); //need track startPlayback but track class + audio hook-up not working yet; this does work though
     }
   };
 
@@ -410,7 +410,7 @@ public class TrackView extends RelativeLayout {
     startPlayingTrackInBackground();
   }
 
-  @Background // doesn't actually run them in parallel - might be related to the sleep call in track playback
+  @Background // doesn't actually run them in parallel - might be related to the sleep call in track startPlayback
   public void startPlayingTrackInBackground() {
     //mPlayer = new MediaPlayer();
     ArrayList<Clip> clips = associated.getClips();
@@ -424,7 +424,7 @@ public class TrackView extends RelativeLayout {
 
   @Background
   public void playClipInBackground(Clip c) {
-    // if mPlayer is null we probably stopped playback before it was done, so abort.
+    // if mPlayer is null we probably stopped startPlayback before it was done, so abort.
     mPlayer = new MediaPlayer(); //this NEEDS to happen here instead of in the start playing track method
     if(mPlayer == null) return;
     String clipFileName = c.getAudioFile().getClientFilePath();
@@ -432,7 +432,7 @@ public class TrackView extends RelativeLayout {
       mPlayer.setDataSource(clipFileName);
       mPlayer.prepare();
       mPlayer.start();
-      //playhead.playback();
+      //playhead.startPlayback();
     } catch (Exception e) {
       //handle interrupted exceptions in a different way
       Log.e(LOG_TAG, "TRACK PLAYBACK FAILED");
