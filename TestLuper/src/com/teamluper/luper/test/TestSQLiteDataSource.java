@@ -1,5 +1,6 @@
 package com.teamluper.luper.test;
 
+import java.util.List;
 import com.teamluper.luper.*;
 import android.test.ActivityInstrumentationTestCase2;
 
@@ -52,7 +53,7 @@ public class TestSQLiteDataSource extends ActivityInstrumentationTestCase2<Luper
 		assertEquals("userID should be 123456787", "1234567890", ""+user.getId());
 		assertEquals("username should be testUser", "testUser", user.getUsername());
 		assertEquals("email should be testUser@mail.com", "testUser@mail.com", user.getEmail());
-		datasource.deleteUser(1234567890);
+		datasource.deleteUser(user.getId());
 	}
 	
 	/**
@@ -65,7 +66,7 @@ public class TestSQLiteDataSource extends ActivityInstrumentationTestCase2<Luper
 		User user2 = datasource.getUserById(userID);
 		assertNotNull(user2);
 		assertEquals("IDs of user and user2 should be the same", userID, user2.getId());
-		datasource.deleteUser(1234567890);
+		datasource.deleteUser(user.getId());
 	}
 	
 	/**
@@ -78,7 +79,21 @@ public class TestSQLiteDataSource extends ActivityInstrumentationTestCase2<Luper
 		User user2 = datasource.getUserByEmail(email);
 		assertNotNull(user2);
 		assertEquals("emails of user and user2 should be the same", email, user2.getEmail());
-		datasource.deleteUser(1234567890);
+		datasource.deleteUser(user.getId());
+	}
+	
+	/**
+	 * Create a user, try fetching the entry with a query (in this case by username)
+	 * and make sure the original user and fetched one are the same
+	 */
+	public void testGetUserWhere(){
+		User user = datasource.createUser(1234567890, "testUser", "testUser@mail.com");		
+		User user2 = datasource.getUserWhere("username = '" + user.getUsername() + "'");
+		assertNotNull(user2);
+		assertEquals("IDs of user and user2 should be the same", user.getId(), user2.getId());
+		assertEquals("usernames of user and user2 should be the same", user.getUsername(), user2.getUsername());
+		assertEquals("emails of user and user2 should be the same", user.getEmail(), user2.getEmail());
+		datasource.deleteUser(user.getId());
 	}
 	
 	/**
@@ -92,6 +107,33 @@ public class TestSQLiteDataSource extends ActivityInstrumentationTestCase2<Luper
 	}
 	
 	/**
+	 * Create a user, make the user active, get active user from the database,
+	 * make sure the returned user is the sae as original one
+	 */
+	public void testGetSetActiveUser(){
+		User user = datasource.createUser(1234567890, "testUser", "testUser@mail.com");
+		datasource.setActiveUser(user);
+		User user2 = datasource.getActiveUser();
+		assertNotNull(user2);
+		assertEquals("IDs of user and user2 should be the same", user.getId(), user2.getId());
+		assertEquals("usernames of user and user2 should be the same", user.getUsername(), user2.getUsername());
+		assertEquals("emails of user and user2 should be the same", user.getEmail(), user2.getEmail());
+		datasource.deleteUser(user.getId());		
+	}
+	
+	/**
+	 * Create a user, call logoutActive User,
+	 * fetch active user and make use null is returned
+	 */
+	public void testLogoutActiveUser(){
+		User user = datasource.createUser(1234567890, "testUser", "testUser@mail.com");
+		datasource.logoutActiveUser();
+		User user2 = datasource.getActiveUser();
+		assertNull(user2);
+		datasource.deleteUser(user.getId());
+	}
+	
+	/**
 	 * Create a sequence and make sure that the entry has correct owner user ID
 	 * and title
 	 */
@@ -102,7 +144,7 @@ public class TestSQLiteDataSource extends ActivityInstrumentationTestCase2<Luper
 		assertEquals("userOwnerID should be same as userID", user.getId(), seq.getOwnerUserID());
 		assertEquals("title should be testSequence", "testSequence", seq.getTitle());
 		datasource.deleteSequence(seq.getId());
-		datasource.deleteUser(1234567890);
+		datasource.deleteUser(user.getId());
 	}
 	
 	/**
@@ -117,7 +159,7 @@ public class TestSQLiteDataSource extends ActivityInstrumentationTestCase2<Luper
 		assertNotNull(seq2);
 		assertEquals("IDs of seq and seq2 should be the same", seqID, seq2.getId());
 		datasource.deleteSequence(seq.getId());
-		datasource.deleteUser(1234567890);
+		datasource.deleteUser(user.getId());
 	}
 	
 	/**
@@ -130,7 +172,7 @@ public class TestSQLiteDataSource extends ActivityInstrumentationTestCase2<Luper
 		long seqID = seq.getId();
 		datasource.deleteSequence(seqID);
 		assertNull(datasource.getUserById(seqID));
-		datasource.deleteUser(1234567890);
+		datasource.deleteUser(user.getId());
 	}
 	
 	/**
@@ -146,7 +188,7 @@ public class TestSQLiteDataSource extends ActivityInstrumentationTestCase2<Luper
 		assertEquals("parentSequenceID should be same as sequenceID", seq.getId(), track.getParentSequenceID());
 		datasource.deleteTrack(track.getId());
 		datasource.deleteSequence(seq.getId());
-		datasource.deleteUser(1234567890);
+		datasource.deleteUser(user.getId());
 	}
 	
 	/**
@@ -163,7 +205,7 @@ public class TestSQLiteDataSource extends ActivityInstrumentationTestCase2<Luper
 		assertEquals("IDs of track and track2 should be the same", trackID, track2.getId());
 		datasource.deleteTrack(track.getId());
 		datasource.deleteSequence(seq.getId());
-		datasource.deleteUser(1234567890);
+		datasource.deleteUser(user.getId());
 	}
 	
 	/**
@@ -177,7 +219,7 @@ public class TestSQLiteDataSource extends ActivityInstrumentationTestCase2<Luper
 		datasource.deleteTrack(trackID);
 		assertNull(datasource.getUserById(trackID));
 		datasource.deleteSequence(seq.getId());
-		datasource.deleteUser(1234567890);
+		datasource.deleteUser(user.getId());
 	}
 	
 	/**
@@ -191,7 +233,7 @@ public class TestSQLiteDataSource extends ActivityInstrumentationTestCase2<Luper
 		assertEquals("userOwnerID should be same as userID", user.getId(), file.getOwnerUserID());
 		assertEquals("file path should be testFilePath", "testFilePath", file.getClientFilePath());
 		datasource.deleteAudioFile(file.getId());
-		datasource.deleteUser(1234567890);
+		datasource.deleteUser(user.getId());
 	}
 	
 	/**
@@ -206,7 +248,7 @@ public class TestSQLiteDataSource extends ActivityInstrumentationTestCase2<Luper
 		assertNotNull(file2);
 		assertEquals("IDs of file and file2 should be the same", fileID, file2.getId());
 		datasource.deleteAudioFile(file.getId());
-		datasource.deleteUser(1234567890);
+		datasource.deleteUser(user.getId());
 	}
 	
 	/**
@@ -219,7 +261,7 @@ public class TestSQLiteDataSource extends ActivityInstrumentationTestCase2<Luper
 		long fileID = file.getId();
 		datasource.deleteAudioFile(fileID);
 		assertNull(datasource.getUserById(fileID));
-		datasource.deleteUser(1234567890);
+		datasource.deleteUser(user.getId());
 	}
 	
 	/**
@@ -239,7 +281,7 @@ public class TestSQLiteDataSource extends ActivityInstrumentationTestCase2<Luper
 		datasource.deleteClip(clip.getId());
 		datasource.deleteTrack(track.getId());
 		datasource.deleteSequence(seq.getId());
-		datasource.deleteUser(1234567890);
+		datasource.deleteUser(user.getId());
 	}
 	
 	/**
@@ -259,7 +301,7 @@ public class TestSQLiteDataSource extends ActivityInstrumentationTestCase2<Luper
 		datasource.deleteClip(clip.getId());
 		datasource.deleteTrack(track.getId());
 		datasource.deleteSequence(seq.getId());
-		datasource.deleteUser(1234567890);
+		datasource.deleteUser(user.getId());
 	}
 	
 	/**
@@ -276,7 +318,100 @@ public class TestSQLiteDataSource extends ActivityInstrumentationTestCase2<Luper
 		assertNull(datasource.getUserById(clipID));
 		datasource.deleteTrack(track.getId());
 		datasource.deleteSequence(seq.getId());
-		datasource.deleteUser(1234567890);
+		datasource.deleteUser(user.getId());
+	}
+	
+	
+	/**
+	 * Create 2 sequences, fetch a list of all sequences from the database.
+	 * Note that the database has a dummy project hardcoded, so one sequence already
+	 * exists in the sequence table and the size of returned list will be 3 and not 2.
+	 * Check that list size is 2, and sequences on the list are the same as created ones
+	 */
+	public void testGetAllSequences(){
+		User user = datasource.createUser(1234567890, "testUser", "testUser@mail.com");
+		Sequence seq1 = datasource.createSequence(user, "testSequence1");
+		Sequence seq2 = datasource.createSequence(user, "testSequence2");
+		List<Sequence> list = datasource.getAllSequences();
+		
+		assertNotNull(list);
+		assertEquals("size of list should be 2", 3, list.size());
+		assertEquals("IDs of seq1 and first sequence on the list should be the same", seq1.getId(), list.get(1).getId());
+		assertEquals("IDs of seq2 and second sequence on the list should be the same", seq2.getId(), list.get(2).getId());
+		
+		datasource.deleteSequence(seq1.getId());
+		datasource.deleteSequence(seq2.getId());
+		datasource.deleteUser(user.getId());
+	}
+	
+	/**
+	 * Create 2 tracks with the same parent sequence, 
+	 * fetch a list of all tracks from the database by the parent sequence ID,
+	 * check that list size is 2, and tracks on the list are the same as created ones
+	 */
+	public void testGetTrackBySequenceId(){
+		User user = datasource.createUser(1234567890, "testUser", "testUser@mail.com");
+		Sequence seq = datasource.createSequence(user, "testSequence");
+		Track track1 = datasource.createTrack(seq);
+		Track track2 = datasource.createTrack(seq);
+		
+		List<Track> list = datasource.getTracksBySequenceId(seq.getId());
+		assertNotNull(list);
+		assertEquals("size of list should be 2", 2, list.size());
+		assertEquals("IDs of track1 and first track on the list should be the same", track1.getId(), list.get(0).getId());
+		assertEquals("IDs of track2 and second track on the list should be the same", track2.getId(), list.get(1).getId());
+		
+		datasource.deleteTrack(track1.getId());
+		datasource.deleteTrack(track2.getId());
+		datasource.deleteSequence(seq.getId());
+		datasource.deleteUser(user.getId());		
+	}
+	
+	/**
+	 * Create 2 clips with the same parent track, 
+	 * fetch a list of all clips from the database by the parent track ID,
+	 * check that list size is 2, and clips on the list are the same as created ones
+	 */
+	public void testGetClipsByTrackId(){
+		User user = datasource.createUser(1234567890, "testUser", "testUser@mail.com");
+		Sequence seq = datasource.createSequence(user, "testSequence");
+		Track track = datasource.createTrack(seq);
+		AudioFile file = datasource.createAudioFile(user, "testFilePath");
+		Clip clip1 = datasource.createClip(track, file, 0, 0);
+		Clip clip2 = datasource.createClip(track, file, 0, 0);
+		
+		List<Clip> list = datasource.getClipsByTrackId(track.getId());
+		assertNotNull(list);
+		assertEquals("size of list should be 2", 2, list.size());
+		assertEquals("IDs of clip1 and first clip on the list should be the same", clip1.getId(), list.get(0).getId());
+		assertEquals("IDs of clip2 and second clip on the list should be the same", clip2.getId(), list.get(1).getId());
+		
+		datasource.deleteClip(clip1.getId());
+		datasource.deleteClip(clip2.getId());
+		datasource.deleteTrack(track.getId());
+		datasource.deleteSequence(seq.getId());
+		datasource.deleteUser(user.getId());
+	}
+	
+	/**
+	 * Create 2 audio files with the same owner user, 
+	 * fetch a list of all audio files from the database by the owner user ID,
+	 * check that list size is 2, and audio files on the list are the same as created ones
+	 */
+	public void testGetAudioFilesByUserId(){
+		User user = datasource.createUser(1234567890, "testUser", "testUser@mail.com");
+		AudioFile file1 = datasource.createAudioFile(user, "testFilePath1");
+		AudioFile file2 = datasource.createAudioFile(user, "testFilePath2");
+		
+		AudioFile[] arr = datasource.getAudioFilesByUserId(user.getId());
+		assertNotNull(arr);
+		assertEquals("size of list should be 2", 2, arr.length);
+		assertEquals("IDs of file1 and first audio file on the list should be the same", file1.getId(), arr[0].getId());
+		assertEquals("IDs of file2 and second audio file on the list should be the same", file2.getId(), arr[1].getId());
+		
+		datasource.deleteAudioFile(file1.getId());
+		datasource.deleteAudioFile(file2.getId());
+		datasource.deleteUser(user.getId());
 	}
 
 }
