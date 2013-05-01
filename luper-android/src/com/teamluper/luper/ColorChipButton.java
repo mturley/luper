@@ -12,7 +12,7 @@ import android.graphics.Color;
 public class ColorChipButton extends Button {
 
 private static final String TAG = "ColorClipButton";
-private static final float PIXELS_PER_MILLISECOND = 0.1f;
+private static final float PIXELS_PER_MILLISECOND = 0.3f;
 
   //the clip that is associated with this CCB
   Clip associated;
@@ -58,7 +58,6 @@ private static final float PIXELS_PER_MILLISECOND = 0.1f;
                 public void go(String value) {
                   int val= Integer.parseInt(value);
                   associated.setStartTime(val);
-                    moveClip();
                 }
               }
             );
