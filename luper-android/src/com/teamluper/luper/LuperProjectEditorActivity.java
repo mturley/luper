@@ -175,7 +175,16 @@ public class LuperProjectEditorActivity extends SherlockActivity {
           // render the clip
           ColorChipButton chip = new ColorChipButton(this, clip);
           clip.addAssociatedView(chip);
-        	tv.addView(chip);
+        	tv.addView(chip);      //trying to get luping -cs
+//          int lup = clip.getLoopCount();
+//          if(lup >= 1){
+//            for(int j = 1; j <= lup; j++){
+//              Clip temp = clip;
+//              chip = new ColorChipButton(this, temp);
+//              chip.associated.setStartTime(clip.getStartTime() + (clip.getDurationMS() * j) + 100);
+//              tv.addView(chip);
+//        }
+//      }
         }
       }
     }

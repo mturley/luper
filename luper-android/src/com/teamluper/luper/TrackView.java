@@ -182,6 +182,18 @@ public class TrackView extends RelativeLayout {
       c.addAssociatedView(chip);
       System.out.println("Chips x pos " + chip.associated.begin);
       this.addView(chip);
+
+      //trying to get luping -cs
+//      int lup = c.getLoopCount();
+//      if(lup >= 1){
+//        for(int j = 1; j <= lup; j++){
+//          Clip temp = c;
+//          chip = new ColorChipButton(this.getContext(), temp);
+//          chip.associated.setStartTime(c.getStartTime() + (c.getDurationMS() * j));
+//          this.addView(chip);
+//        }
+//      }
+
       LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
         ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
       this.setLayoutParams(params);
@@ -290,18 +302,17 @@ public class TrackView extends RelativeLayout {
   }
 
   public void startTimePrompt(){
-    DialogFactory.prompt(getContext(),"Enter a start time or add it to the end of the track by entering nothing.","",
+    DialogFactory.prompt(getContext(), "Enter a start time or add it to the end of the track by entering nothing.", "",
         new Lambda.StringCallback() {
           public void go(String value) {
-            if(value.isEmpty()){
-              int val = associated.findLastClipTime()+25;
+            if (value.isEmpty()) {
+              int val = associated.findLastClipTime() + 25;
               clipMaker(associated, lastRecordedFile, val);
-            }
-            else if(isNumeric(value)) {
+            } else if (isNumeric(value)) {
               int val = Integer.parseInt(value);
               clipMaker(associated, lastRecordedFile, val);
             } else {
-              DialogFactory.alert(getContext(),"Oops!","That isn't a valid start time.");
+              DialogFactory.alert(getContext(), "Oops!", "That isn't a valid start time.");
             }
           }
         }

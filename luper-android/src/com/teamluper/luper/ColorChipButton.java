@@ -95,7 +95,7 @@ public class ColorChipButton extends Button {
                   }
               );
 
-            } else if (items[item].equals("Loop Count")) {
+            } else if (items[item].equals("Lüp Count")) {
               DialogFactory.prompt(getContext(), "Number of times to Lüp this clip", "",
                   new Lambda.StringCallback() {
                     public void go(String value) {
@@ -103,7 +103,7 @@ public class ColorChipButton extends Button {
                         int val = Integer.parseInt(value);
                         associated.setLoopCount(val);
                       } else {
-                        DialogFactory.alert(getContext(),"Oops!","That's not a valid number!");
+                        DialogFactory.alert(getContext(),"üps!","That's not a valid number!");
                       }
                     }
                   }
@@ -125,9 +125,13 @@ public class ColorChipButton extends Button {
         lengthView.setText("Length: " + this.associated.getDurationMS() + " ms");
         TextView startTimeView = new TextView(this.getContext());
         startTimeView.setText("Start Time: " + this.associated.getStartTime() + " ms");
+        TextView lupCountView = new TextView(this.getContext());
+        lupCountView.setText("Lüp Count: " + this.associated.getLoopCount());
 
-            detailLayout.addView(lengthView);
+
+        detailLayout.addView(lengthView);
         detailLayout.addView(startTimeView);
+        detailLayout.addView(lupCountView);
 
             new AlertDialog.Builder(getContext())
                 .setTitle("Clip Details")
