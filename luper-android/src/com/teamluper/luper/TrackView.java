@@ -88,7 +88,7 @@ public class TrackView extends RelativeLayout {
 		super(context);
     editorActivity = context;
 		associated = track;
-    track.setAssociatedView(this);
+    track.addAssociatedView(this);
 		this.dataSource = dataSource;
 		deMovingTxt = (DragThing) findViewById(R.id.detext);
 		init();
@@ -120,7 +120,6 @@ public class TrackView extends RelativeLayout {
 
 	public void init(){
 		mPlayer = new MediaPlayer();
-
         //LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
         //        LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         //layoutParams.setMargins(5, 0, 5, 0);
@@ -139,15 +138,17 @@ public class TrackView extends RelativeLayout {
 		ImageButton addClipButton = new ImageButton(this.getContext());
 		addClipButton.setImageResource(R.drawable.add);
 		addClipButton.setOnClickListener(addClipClicker);
+        addClipButton.setBackgroundColor(Color.parseColor("#e2dfd8"));
 		trackControl.addView(addClipButton);
 
 //		create the playButton then set its image to play and add it to the trackControl
 		ImageButton playButton = new ImageButton(this.getContext());
 		playButton.setImageResource(R.drawable.play);
 		playButton.setOnClickListener(playClicker);
+        playButton.setBackgroundColor(Color.parseColor("#e2dfd8"));
 		trackControl.addView(playButton);
 
-        trackControl.setBackgroundColor(Color.parseColor("#e2dfd8"));
+        //trackControl.setBackgroundColor(Color.parseColor("#000000"));
 
 
 		this.addView(trackControl);

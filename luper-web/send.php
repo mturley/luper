@@ -41,7 +41,7 @@ header('Location: index-mobile.php');
 
 	$message = " $todays_date [EST] \n	From: $name ($email)\n	Message: $content \n ";
 	$from = "From: $email\r\n";
-	mail($email, $subject, $message, $from);
+	mail('teamluper@gmail.com', $subject, $message, $from);
 
 ?>
 
