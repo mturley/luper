@@ -320,11 +320,13 @@ public class LuperProjectEditorActivity extends SherlockActivity {
 
   public void playNextClipIfExistsAtTime(int timeMS) {
     for(Track t : sequence.tracks) {
-      int nextStartTime = t.nextClip.getStartTime();
-      if(nextStartTime < timeMS) {
-        t.nextClip = null;
-        // todo factor all the playback stuff into the Track instead of the TrackView.
-        t.trackView.playPreparedClip();
+      if(t.nextClip != null) {
+        int nextStartTime = t.nextClip.getStartTime();
+        if(nextStartTime < timeMS) {
+          t.nextClip = null;
+          // todo factor all the playback stuff into the Track instead of the TrackView.
+          t.trackView.playPreparedClip();
+        }
       }
     }
   }

@@ -95,6 +95,10 @@ public class Playhead extends LinearLayout {
     startTimeMS = currentTimeMS;
     playbackTimestamp = System.nanoTime();
 
+    for(Track t : ((LuperProjectEditorActivity) this.context).sequence.tracks) {
+      t.prepareNextClip(startTimeMS);
+    }
+
     if(isPlaying()) stopPlayback();
     playbackClock = Executors.newScheduledThreadPool(1);
 
