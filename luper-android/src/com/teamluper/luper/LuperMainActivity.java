@@ -160,7 +160,7 @@ public class LuperMainActivity extends SherlockFragmentActivity {
               intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
               intent.putExtra("luperLoggingOutFlag", true);
               a.startActivity(intent);
-              DialogFactory.toastMessage(a, "Logged out. Thanks for using Lüper!");
+              DialogFactory.toastMessage(a, "Logged out. Thanks for using Luper!");
               a.finish();
             }
           }

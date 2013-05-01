@@ -26,6 +26,12 @@ public class DragThing extends TextView{
 	}
 	//returns the position
 	public int[] getCurrent(){ return current ; }
+	
+	//returns prevx
+	public int getPrevx(){return prevx;}
+	
+	//returns prevy
+	public int getPrevy(){return prevy;}
 
 
 	@Override

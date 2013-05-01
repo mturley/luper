@@ -62,7 +62,7 @@ public class TabRegisterFragment extends Fragment {
     Activity a = getActivity();
     if(!LuperMainActivity.deviceIsOnline(a)) {
       DialogFactory.alert(a, "Registration Failed!", "You are not connected to the internet! " +
-        "You must be online to register or log in.  Once logged in, however, you can use Lüper while offline.");
+        "You must be online to register or log in.  Once logged in, however, you can use Luper while offline.");
     }
 
     EditText editEmail     = (EditText) a.findViewById(R.id.register_email);

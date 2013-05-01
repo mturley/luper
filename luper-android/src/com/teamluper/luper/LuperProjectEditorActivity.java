@@ -52,7 +52,8 @@ public class LuperProjectEditorActivity extends SherlockActivity {
   private AudioManager audioManager;
   private ScrollView vert;
   private HorizontalScrollView horz;
-  private Playhead base;
+  //private LinearLayout base1;
+  private DragThingPlayhead base;
   public Playhead playhead;
 
     DragThingPlayhead theplayhead;
@@ -72,7 +73,8 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     super.onCreate(icicle);
     vert = new ScrollView(this);
     horz = new HorizontalScrollView(this);
-    base = new Playhead(this);
+    base = new DragThingPlayhead(this);
+
 
       //LinearLayout top = new LinearLayout(this);
       TextView a = new TextView(this);
@@ -84,16 +86,7 @@ public class LuperProjectEditorActivity extends SherlockActivity {
 
     base.setId(1337);
 
-    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-              LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
-    base.setLayoutParams(params);
-      Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.line);
-      BitmapDrawable bitmapDrawable = new BitmapDrawable(bmp);
-      bitmapDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
-      base.setBackgroundDrawable(bitmapDrawable);
-    // base.setBackgroundColor(Color.parseColor("#e2dfd8"));
 
-    base.setOrientation(LinearLayout.VERTICAL);
     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
 
@@ -141,6 +134,21 @@ public class LuperProjectEditorActivity extends SherlockActivity {
     bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS); // Gives us Tabs!
 
     //base.addView(theplayhead);
+    DragThingPlayhead.LayoutParams params = new DragThingPlayhead.LayoutParams(
+        ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+    base.setLayoutParams(params);
+    Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.line);
+    BitmapDrawable bitmapDrawable = new BitmapDrawable(bmp);
+    bitmapDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
+    horz.setBackgroundDrawable(bitmapDrawable);
+    base.setOrientation(LinearLayout.VERTICAL);
+
+//    ll2.addView(fileSelected,
+//        new LinearLayout.LayoutParams(
+//            ViewGroup.LayoutParams.FILL_PARENT,
+//            ViewGroup.LayoutParams.FILL_PARENT,
+//            0));
+
     horz.addView(base);
     vert.addView(horz);
     setContentView(vert);
@@ -255,10 +263,10 @@ public class LuperProjectEditorActivity extends SherlockActivity {
           0));
 
       custom.addView(ll,
-        new LinearLayout.LayoutParams(
-          ViewGroup.LayoutParams.WRAP_CONTENT,
-          ViewGroup.LayoutParams.WRAP_CONTENT,
-          0));
+          new LinearLayout.LayoutParams(
+              ViewGroup.LayoutParams.WRAP_CONTENT,
+              ViewGroup.LayoutParams.WRAP_CONTENT,
+              0));
       custom.addView(ll2,
         new LinearLayout.LayoutParams(
           ViewGroup.LayoutParams.MATCH_PARENT,

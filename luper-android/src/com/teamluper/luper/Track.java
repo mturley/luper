@@ -151,15 +151,6 @@ public class Track {
 		return this.clips;
 	}
 
-  /*DEPRECATE OR DELETE
-	public void createPBList()
-	{
-		for(int i = 0; i < clips.size(); i++)
-		{
-			playBackList[i]=clips.get(i).name;
-		}
-	}*/
-
 	//gets the track length by calculating the length of all the clips it contains
 	public long getTrackLength()
 	{
