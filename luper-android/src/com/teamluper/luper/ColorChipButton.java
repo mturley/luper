@@ -76,6 +76,18 @@ private static final float PIXELS_PER_MILLISECOND = 0.5f;
           } else if (items[item].equals("Cancel")) {
             // does nothing and will never do anything
           }
+          //sets the loop count
+          if (items[item].equals("Set Loop Count")) {
+            DialogFactory.prompt(getContext(),"Set Loop Count","",
+                new Lambda.StringCallback() {
+                  public void go(String value) {
+                    int val= Integer.parseInt(value);
+                    associated.setLoopCount(val);
+                  }
+                }
+            );
+          }
+
         }
       }).show();
   }
