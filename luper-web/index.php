@@ -12,15 +12,15 @@ header('Location: index-mobile.php');
   <body>
 
   <div id="container">
-    // include
+    <?php include("header.php"); ?>
   	<div align="center" id="content">
       <div class="halfcolumn">
         <img src="luper.png" />
-        <h1>Beta Release (4/2/2013)</h1>
-        <a id="downloadlink" href="download/LuperBeta.apk">
+        <h1>1.0 Release (5/1/2013)</h1>
+        <a id="downloadlink" href="download/Luper-1.0.apk">
           <img src="ic_launcher.png" id="appicon"><br />
           <strong>Click to Download</strong><br />
-          LuperBeta.apk
+          Luper-1.0.apk
         </a>
         <br /><br /><br />
         <h2 class="darkred">NOTE: Your device must be set to allow installation of applications from "Unknown Sources" (found in Settings > Security)</h2>
@@ -45,16 +45,8 @@ header('Location: index-mobile.php');
         <div class="bigindent">
           <h1>Luper Project Documentation:</h1>
           <h2>
-            <a href="https://docs.google.com/document/d/1_9iY-CbKjMrHwbM1HPnjRyZs-nU5rbPeuXvCtY9m0FI/edit">
-            Click Here to read the Beta Release Notes
-            </a>
-            <br />
-            <a href="https://docs.google.com/document/d/1zzYt0WOMM9ZO24DtscgJJ3vRmZ808cYjxcJRq_FCwLQ/edit">
-            Click Here to read the Requirements Specification (updated 4/2)
-            </a>
-            <br />
-            <a href="https://docs.google.com/document/d/1_pbSkRCXVBt0ycZDsRQcn6zgjMj9KoIOc83PRVLPSoc/edit">
-            Click Here to read the Design Specification (updated 4/2)
+            <a href="https://drive.google.com/folderview?id=0B-gQRT6Fwsvvaml0RE80NlY4YnM">
+            Click Here to read the 1.0 Release Notes and related documents on Google Drive.
             </a>
           </h2>
         </div>

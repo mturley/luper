@@ -6,11 +6,7 @@
   <body>
 
   <div id="container">
-    <div id="header">
-      <button type="button"><a href="/">Home (Beta Release)</a></button>
-      <button type="button" class="active"><a href="alpha.html">Archived Alpha Release</a></button>
-      <button type="button"><a href="download/LuperBeta.apk">Download Beta APK</a></button>
-    </div>
+    <?php include("header.php"); ?>
   	<div align="center" id="content">
       <div class="halfcolumn">
         <img src="luper.png" />

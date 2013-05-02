@@ -12,14 +12,9 @@ header('Location: index-mobile.php');
   <body>
 
   <div id="container">
-    <div id="header">
-      <button type="button" class="active"><a href="/">Home (Beta Release)</a></button>
-      <button type="button"><a href="alpha.html">Archived Alpha Release</a></button>
-      <button type="button"><a href="download/LuperBeta.apk">Download Beta APK</a></button>
-      <button type="button"><a href="feedback.php">Feedback</a></button>
-    </div>
+    <?php include("header.php"); ?>
   	<div align="center" id="content">
-        <h1><font color="darkred">Feedback Form</font></h1><br/>
+        <h1>Feedback Form</h1><br/>
 		<form action="send.php" method="post">
 			<table><tr><td align="right">
 			Name: </td><td align="right" width="310px">  <input name="name" class="inputSize" type="text"/>
