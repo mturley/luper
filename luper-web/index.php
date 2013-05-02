@@ -9,7 +9,7 @@
 
 <html>
   <head>
-    <title>Luper</title>
+    <title>Lüper</title>
     <link rel='stylesheet' href='style.css' />
   </head>
   <body>
@@ -32,7 +32,7 @@
         <br />
         <h1>Installation Instructions</h1>
         <ol class="leftalign">
-          <li>Navigate to this page (TeamLuper.com) in your Android device's browser.</li>
+          <li>Navigate to this page (TeamLüper.com) in your Android device's browser.</li>
           <li>Download Luper-1.0.apk directly to your device by touching the icon at left.</li>
           <li>When the download is complete, pull down your notifications pane and touch the Luper-1.0.apk Download Complete notification.  You will be prompted to install the application.</li>
         </ol>
@@ -57,7 +57,7 @@
 	  </div>
   </div>
   <div id="footer">
-    <p><strong>Team Luper is:</strong> Ben Foster, Brad Bullman, Cameron Smith, Eric Smith, Mike Turley, Josh Chudy, Steve Donahue, Sofya Vorotnikova, Xian Chen</p>
+    <p><strong>Team Lüper is:</strong> Ben Foster, Brad Bullman, Cameron Smith, Eric Smith, Mike Turley, Josh Chudy, Steve Donahue, Sofya Vorotnikova, Xian Chen</p>
   </div>
   </body>
 </html>

@@ -1,13 +1,14 @@
 <html>
   <head>
-    <title>Luper mobile site</title>
+    <title>Lüper mobile site</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel='stylesheet' href='style.css' />
   </head>
   <body>
     <div id="container" align="center">
       <div id="header">
-        <h1>Luper 1.0 Release</h1>
+        <img src="luper.png" /><br />
+        1.0 Release
       </div>
       <div id="content">
         <h2 class="tap"><a href="/download/Luper-1.0.apk">Tap to Download:<br /><img src="ic_launcher.png" /><br />Luper-1.0.apk</a></h2>
