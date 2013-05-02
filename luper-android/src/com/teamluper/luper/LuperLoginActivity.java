@@ -48,7 +48,7 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
   ViewPager mViewPager;
   TabsAdapter mTabsAdapter;
 
-  private static TabLoginFragment_ loginFragment;
+  public TabLoginFragment loginFragment = null;
 
   // Facebook Login Session
   private Session session;
@@ -87,10 +87,6 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
     // connect to the database
     dataSource = new SQLiteDataSource(this);
     dataSource.open();
-
-    if(savedInstanceState == null) {
-    	loginFragment = new TabLoginFragment_();
-    }
 
     boolean loggingOut = getIntent().getBooleanExtra("luperLoggingOutFlag", false);
     if(loggingOut) {
@@ -211,6 +207,7 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
       // at this point existingUser has either been fetched or created and is valid, so we just log in with it.
       if(existingUser != null) {
         dataSource.setActiveUser(existingUser);
+        if(loginFragment != null) loginFragment.showProgressSpinner(true);
         startMainActivity();
       } else {
         facebookLoginFailure();

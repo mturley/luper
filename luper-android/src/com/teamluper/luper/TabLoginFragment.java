@@ -62,9 +62,10 @@ public class TabLoginFragment extends Fragment {
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
-      super.onCreate(savedInstanceState);
-      uiHelper = new UiLifecycleHelper(getActivity(), callback);
-      uiHelper.onCreate(savedInstanceState);
+    super.onCreate(savedInstanceState);
+    ((LuperLoginActivity) getActivity()).loginFragment = this;
+    uiHelper = new UiLifecycleHelper(getActivity(), callback);
+    uiHelper.onCreate(savedInstanceState);
   }
 
   @Override
@@ -376,6 +377,10 @@ public class TabLoginFragment extends Fragment {
       hash = sha256(hash); // hashity hash
     }
     return hash;
+  }
+
+  public void showProgressSpinner(boolean show) {
+    showProgress(show);
   }
 
   /**
