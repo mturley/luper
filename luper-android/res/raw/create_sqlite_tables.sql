@@ -66,22 +66,3 @@ create table Clips (
   foreign key (parentTrackID) references Tracks (_id),
   foreign key (audioFileID)   references Files (_id)
 );
-
-insert into Users VALUES (1, 'anonymous', 'foo@bar.baz', 0, "{}", 0);
-insert into Files (_id, ownerUserID, clientFilePath, fileFormat, isReadyOnClient, isReadyOnServer, isDirty)
-           VALUES (1, 1,          '',             '',         0,               0,               0);
-insert into Sequences (_id, ownerUserID, title, isDirty) VALUES (1, 1, 'A Simple Beat', 0);
-insert into Tracks (_id, ownerUserID, parentSequenceID, isMuted, isLocked, isDirty)
-            VALUES (1,   1,          1,                0,       0,        0);
-insert into Tracks (_id, ownerUserID, parentSequenceID, isMuted, isLocked, isDirty)
-            VALUES (2,   1,          1,                0,       0,        0);
-insert into Tracks (_id, ownerUserID, parentSequenceID, isMuted, isLocked, isDirty)
-            VALUES (3,   1,          1,                0,       0,        0);
-insert into Clips (ownerUserID, parentTrackID, audioFileID, startTime, durationMS, loopCount, color, isLocked, isDirty)
-           VALUES (1,           1,             1,           200,       300,        1,         0,     0,        0);
-insert into Clips (ownerUserID, parentTrackID, audioFileID, startTime, durationMS, loopCount, color, isLocked, isDirty)
-           VALUES (1,           1,             1,           600,       200,        1,         0,     0,        0);
-insert into Clips (ownerUserID, parentTrackID, audioFileID, startTime, durationMS, loopCount, color, isLocked, isDirty)
-           VALUES (1,           2,             1,           0,         300,        1,         0,     0,        0);
-insert into Clips (ownerUserID, parentTrackID, audioFileID, startTime, durationMS, loopCount, color, isLocked, isDirty)
-           VALUES (1,           3,             1,           400,       500,        1,         0,     0,        0);

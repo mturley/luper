@@ -93,7 +93,11 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
     }
 
     boolean loggingOut = getIntent().getBooleanExtra("luperLoggingOutFlag", false);
-    if(!loggingOut) checkForExistingLogin();
+    if(loggingOut) {
+      // TODO force a log out of facebook before it can jump back to the login screen
+    } else {
+      checkForExistingLogin();
+    }
 
     // disable the software keyboard at first, keeps it from covering up the facebook login button.
     // ALWAYS_HIDDEN isn't what it sounds like, the user can still tap text fields to open the keyboard.
@@ -185,8 +189,11 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
       User existingUser = dataSource.getUserByEmail(email);
       if(existingUser == null) {
         // no user found on the phone with this email, let's check the server...
-        JSONObject userFromServer = new JSONObject(restClient.fetchUserByEmail(email));
-        existingUser = dataSource.createUser(userFromServer.getLong("_id"),userFromServer.getString("username"),email);
+        String json = restClient.fetchUserByEmail(email);
+        JSONObject userFromServer = new JSONObject(json);
+        if(userFromServer.has("_id")) {
+          existingUser = dataSource.createUser(userFromServer.getLong("_id"),userFromServer.getString("username"),email);
+        }
       }
       // if existingUser is STILL null, we have no account at all with this email, time to register.
       if(existingUser == null) {
