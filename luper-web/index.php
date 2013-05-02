@@ -30,14 +30,14 @@ header('Location: index-mobile.php');
         <h1>Installation Instructions</h1>
         <ol class="leftalign">
           <li>Navigate to this page (TeamLuper.com) in your Android device's browser.</li>
-          <li>Download LuperBeta.apk directly to your device by touching the icon at left.</li>
-          <li>When the download is complete, pull down your notifications pane and touch the LuperBeta.apk Download Complete notification.  You will be prompted to install the application.</li>
+          <li>Download Luper-1.0.apk directly to your device by touching the icon at left.</li>
+          <li>When the download is complete, pull down your notifications pane and touch the Luper-1.0.apk Download Complete notification.  You will be prompted to install the application.</li>
         </ol>
         <h2>OR</h2>
         <ol class="leftalign">
-          <li>Download LuperBeta.apk on your PC and copy it to your Android device's storage.</li>
+          <li>Download Luper-1.0.apk on your PC and copy it to your Android device's storage.</li>
           <li>Make sure you have a File Manager application on your device, such as <a href="https://play.google.com/store/apps/details?id=com.metago.astro&hl=en">ASTRO (available on Google Play)</a></li>
-          <li>Using your File Manager, navigate to and open the LuperBeta.apk file.  You will be prompted to install the application.</li>
+          <li>Using your File Manager, navigate to and open the Luper-1.0.apk file.  You will be prompted to install the application.</li>
         </ol>
       </div>
       <div class="fullcolumn alignleft">
