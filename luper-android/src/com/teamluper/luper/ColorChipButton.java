@@ -18,6 +18,8 @@ public class ColorChipButton extends Button {
   private static final String TAG = "ColorClipButton";
   public static final float PIXELS_PER_MILLISECOND = TrackView.PIXELS_PER_MILLISECOND;
 
+  public int loopIndex = 0;
+
   //the clip that is associated with this CCB
   Clip associated;
   int mColor;
@@ -27,6 +29,14 @@ public class ColorChipButton extends Button {
   public ColorChipButton(Context context, Clip clip){
     super(context);
     associated = clip;
+    mColor = clip.getColor();
+    init();
+    setOnClickListener(clicker);
+  }
+  public ColorChipButton(Context context, Clip clip, int loopIndex) {
+    super(context);
+    associated = clip;
+    this.loopIndex = loopIndex;
     mColor = clip.getColor();
     init();
     setOnClickListener(clicker);
@@ -80,7 +90,7 @@ public class ColorChipButton extends Button {
         }).show();
   }
   public void showEditDialog(){
-    final CharSequence[] items = {"Start Time", "Loop Count", "Cancel"};
+    final CharSequence[] items = {"Start Time", "Lüp Count", "Cancel"};
     new AlertDialog.Builder(getContext())
         .setTitle("Clip Edit Options")
         .setItems(items, new DialogInterface.OnClickListener() {
@@ -153,11 +163,17 @@ public class ColorChipButton extends Button {
 
   @UiThread
   public void init(){
-    this.setX(this.getStartTime()*PIXELS_PER_MILLISECOND + TrackView.LEFT_MARGIN);
-    this.setWidth(Math.round(this.getLength()*PIXELS_PER_MILLISECOND));
+    this.setX((this.getStartTime() + (this.loopIndex * this.getLength()))
+      * PIXELS_PER_MILLISECOND + TrackView.LEFT_MARGIN);
+    this.setWidth(Math.round(this.getLength() * PIXELS_PER_MILLISECOND));
     this.setHeight(140);
     //this.setPadding(0, 20, 0, 0);
-    this.setBackgroundColor(mColor);
+    if(this.loopIndex == 0) {
+      this.setBackgroundColor(mColor);
+    } else {
+      // if this is a "loop clone" clip, i.e. not the first iteration of that clip, then lower the opacity.
+      this.setBackgroundColor(Color.argb(90, Color.red(mColor), Color.green(mColor), Color.blue(mColor)));
+    }
   }
 
   public void displayStats(){

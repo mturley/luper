@@ -170,12 +170,20 @@ public class LuperProjectEditorActivity extends SherlockActivity {
             new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
-
+      }
+    }
+/*
         for(Clip clip : track.clips) {
           // render the clip
           ColorChipButton chip = new ColorChipButton(this, clip);
           clip.addAssociatedView(chip);
         	tv.addView(chip);      //trying to get luping -cs
+          if(clip.getLoopCount() > 1) {
+            for(int i=1; i<=clip.getLoopCount(); i++) {
+              ColorChipButton loopChip = new ColorChipButton(this, clip, i);
+              tv.addView(loopChip);
+            }
+          }*/
 //          int lup = clip.getLoopCount();
 //          if(lup >= 1){
 //            for(int j = 1; j <= lup; j++){
@@ -185,9 +193,6 @@ public class LuperProjectEditorActivity extends SherlockActivity {
 //              tv.addView(chip);
 //        }
 //      }
-        }
-      }
-    }
     base.invalidate();
     //setContentView(vert);
   }

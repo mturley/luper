@@ -30,6 +30,8 @@ public class Clip {
   public AudioFile audioFile = null;
   public Track parentTrack = null;
 
+  public int remainingLoops;
+
   // references to any views depending on this data, so we can invalidate them automatically on set___ calls.
   public ArrayList<View> associatedViews = null;
 
@@ -54,6 +56,7 @@ public class Clip {
 	  this.startTime = startTime;
 	  this.durationMS = durationMS;
 	  this.loopCount = loopCount;
+    this.remainingLoops = loopCount;
     this.color = color;
 	  this.isLocked = isLocked;
 	  this.playbackOptions = playbackOptions;
@@ -97,6 +100,11 @@ public class Clip {
   Clip(String Cname) {
     dataSource = null;
   }
+
+  public void resetLoop() {
+    this.remainingLoops = this.loopCount;
+  }
+
 
   // mike's database getters and setters.
   // TODO migrate all above stuff to use the below fields, setters, and getters
