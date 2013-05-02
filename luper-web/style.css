@@ -22,12 +22,6 @@ h1, h2 {
 	color: rgb(177,0,0);
 }
 
-#container {
-	width: 80%;
-	min-width: 930px;
-	margin: auto;
-}
-
 #content {
 	margin: 15px 0;
 	background:#e6e2d9;
@@ -137,5 +131,13 @@ ol.leftalign {
         width: 98%;
         min-width: 98%;
         padding: 0 15px;
+    }
+}
+
+@media all and (min-device-width: 931px) {
+    #container {
+        width: 80%;
+        min-width: 930px;
+        margin: auto;
     }
 }
