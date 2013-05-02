@@ -1,5 +1,5 @@
 <?php
-
+  echo '<div style="opacity: 0">'.$_SERVER['PHP_SELF'].'</div>';
 function button($url, $label) {
   echo '<button type="button" ';
   if($_SERVER['PHP_SELF'] == $url) echo 'class="active"';
