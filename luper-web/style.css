@@ -135,5 +135,6 @@ ol.leftalign {
 
     #container {
         width: 98%;
+        min-width: 98%;
     }
 }
