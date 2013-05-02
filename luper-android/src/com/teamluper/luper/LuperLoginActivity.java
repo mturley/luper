@@ -185,8 +185,11 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
       User existingUser = dataSource.getUserByEmail(email);
       if(existingUser == null) {
         // no user found on the phone with this email, let's check the server...
-        JSONObject userFromServer = new JSONObject(restClient.fetchUserByEmail(email));
-        existingUser = dataSource.createUser(userFromServer.getLong("_id"),userFromServer.getString("username"),email);
+        String json = restClient.fetchUserByEmail(email);
+        if(json != "{}") {
+          JSONObject userFromServer = new JSONObject(json);
+          existingUser = dataSource.createUser(userFromServer.getLong("_id"),userFromServer.getString("username"),email);
+        }
       }
       // if existingUser is STILL null, we have no account at all with this email, time to register.
       if(existingUser == null) {
