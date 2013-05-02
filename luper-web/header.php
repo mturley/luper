@@ -17,3 +17,13 @@ function button($url, $label) {
     button("/feedback.php","Feedback");
   ?>
 </div>
+
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script>
+  $(function() {
+    // turn off the underlines in the links and make the entire button clickable instead
+    $("#header").find("button").click(function() {
+      document.location = $(this).find("a").attr("href");
+    }).css("cursor","hand").find("a").css("text-decoration","none");
+  });
+</script>
