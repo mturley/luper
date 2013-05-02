@@ -93,7 +93,11 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
     }
 
     boolean loggingOut = getIntent().getBooleanExtra("luperLoggingOutFlag", false);
-    if(!loggingOut) checkForExistingLogin();
+    if(loggingOut) {
+      // TODO force a log out of facebook before it can jump back to the login screen
+    } else {
+      checkForExistingLogin();
+    }
 
     // disable the software keyboard at first, keeps it from covering up the facebook login button.
     // ALWAYS_HIDDEN isn't what it sounds like, the user can still tap text fields to open the keyboard.
