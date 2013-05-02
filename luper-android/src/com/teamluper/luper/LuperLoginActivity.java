@@ -177,6 +177,11 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
     }
   }
 
+  @Background
+  public String fetchUserJSONByEmail(String email) {
+    return restClient.fetchUserByEmail(email);
+  }
+
   @UiThread
   // to be called by the facebook callback biznaz when a user has successfully logged in.
   // must pass a valid email for the database to track this user
@@ -185,7 +190,7 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
       User existingUser = dataSource.getUserByEmail(email);
       if(existingUser == null) {
         // no user found on the phone with this email, let's check the server...
-        JSONObject userFromServer = new JSONObject(restClient.fetchUserByEmail(email));
+        JSONObject userFromServer = new JSONObject(fetchUserJSONByEmail(email));
         existingUser = dataSource.createUser(userFromServer.getLong("_id"),userFromServer.getString("username"),email);
       }
       // if existingUser is STILL null, we have no account at all with this email, time to register.
@@ -197,7 +202,7 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
         String responseJSON = restClient.registerNewAccount(request.toString());
         JSONObject response = new JSONObject(responseJSON);
         if(response.getBoolean("success")) {
-          JSONObject userFromServer = new JSONObject(restClient.fetchUserByEmail(email));
+          JSONObject userFromServer = new JSONObject(fetchUserJSONByEmail(email));
           existingUser = dataSource.createUser(userFromServer.getLong("_id"),userFromServer.getString("username"),email);
         }
       }
