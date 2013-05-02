@@ -1,5 +1,5 @@
 <?php
-  echo '<div style="opacity: 0">'.$_SERVER['PHP_SELF'].'</div>';
+
 function button($url, $label) {
   echo '<button type="button" ';
   if($_SERVER['PHP_SELF'] == $url) echo 'class="active"';
@@ -10,10 +10,10 @@ function button($url, $label) {
 
 <div id="header">
   <?php
-    button("index.php","Home (1.0 Release)");
-    button("beta.php","Archived Beta");
-    button("alpha.php","Archived Alpha");
-    button("download/Luper-1.0.apk","Download APK");
-    button("feedback.php","Feedback");
+    button("/index.php","Home (1.0 Release)");
+    button("/beta.php","Archived Beta");
+    button("/alpha.php","Archived Alpha");
+    button("/download/Luper-1.0.apk","Download APK");
+    button("/feedback.php","Feedback");
   ?>
 </div>
