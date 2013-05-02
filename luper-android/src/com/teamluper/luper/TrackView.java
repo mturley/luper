@@ -174,36 +174,20 @@ public class TrackView extends RelativeLayout {
     ColorChipButton chip;
     //this.associated.putClip(clip1);
     //this.associated.putClip(clip2);
-    for(int i = 0; i < this.associated.clips.size(); i++){
+    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+      ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+    this.setLayoutParams(params);
 
-      //System.out.println("Here " + this.associated.getClips().get(i).begin);
-      Clip c = this.associated.getClips().get(i);
+    for(Clip c : this.associated.clips) {
       chip = new ColorChipButton(this.getContext(), c);
       c.addAssociatedView(chip);
-      System.out.println("Chips x pos " + chip.associated.begin);
       this.addView(chip);
-
-      //trying to get luping -cs
-//      int lup = c.getLoopCount();
-//      if(lup >= 1){
-//        for(int j = 1; j <= lup; j++){
-//          Clip temp = c;
-//          chip = new ColorChipButton(this.getContext(), temp);
-//          chip.associated.setStartTime(c.getStartTime() + (c.getDurationMS() * j));
-//          this.addView(chip);
-//        }
-//      }
-
-      LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-      this.setLayoutParams(params);
-      Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.line);
-      BitmapDrawable bitmapDrawable = new BitmapDrawable(bmp);
-      bitmapDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
-      //this.setBackgroundDrawable(bitmapDrawable);
-      //this.setBackgroundColor(Color.parseColor("#e2dfd8"));
-      //this.setBackgroundColor(Color.TRANSPARENT);
-      //this.addView(deMovingTxt);
+      if(c.getLoopCount() > 1) {
+        for(int i=1; i<=c.getLoopCount(); i++) {
+          ColorChipButton loopChip = new ColorChipButton(getContext(), c, i);
+          this.addView(loopChip);
+        }
+      }
     }
   }
 
@@ -422,18 +406,28 @@ public class TrackView extends RelativeLayout {
     playPreparedClip(null);
   }
 
-  // later on will also take a startTime parameter (current playhead time)
+  // plays the prepared clip immediately, without regard to timing.
+  // since there is no timing logic in here, we must call it exactly when we want the clip to start.
+  // this also sets up a listener for when the clip is finished playing, where it identifies and prepares the next clip.
   @Background
   public void playPreparedClip(final Clip optionalNextClip) {
     try {
+      this.preparedClip.resetLoop();
       final Track t = associated;
       final Clip justPlayedClip = this.preparedClip;
       mPlayer.start();
       mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
         public void onCompletion(MediaPlayer mp) {
-          if(optionalNextClip == null && t.nextClip != null) {
+          // when a clip finishes playing, we check conditions to do a number of things:
+          if(justPlayedClip.getLoopCount() > 1 && justPlayedClip.remainingLoops > 0) {
+            // if this is a loop which has more loops to go, decrement and start playing it again.+
+            justPlayedClip.remainingLoops--;
+            mp.start();
+          } else if(optionalNextClip == null && t.nextClip != null) {
+            // if there is no specific clip to prepare, just progress to the track's next clip.
             t.prepareNextClip(t.nextClip.getStartTime()+10);
           } else if(optionalNextClip != null) {
+            // if this was called with a specific next clip to prepare, prepare it.
             t.trackView.prepareClip(optionalNextClip);
           } else {
             // we've played the last clip!
