@@ -1,11 +1,14 @@
-CS320 Spring 2013 Software Engineering Project: Luper
+CS320 Spring 2013 Software Engineering Project: Lüper
 =====================================================
 
-This is the source code for the Luper android application and
+This is the source code for the Lüper android application and
 accompanying database server and web client.
 
-Alpha Release Deadline: March 5, 2013
--------------------------------------
+Lüper is an audio editing app for Android with cloud sync capabilities and social features.
+
+Annotated Source Documentation
+==============================
+If you are reading this README at [www.teamluper.com/docs/](http://www.teamluper.com/docs/) rather than on github, you are looking at a generated webpage version of our source code with the comments aligned on the left side of the screen and the code stripped of comments on the right.  You can use the Jump To... menu in the upper right to switch from file to file.
 
 Contributing Developers: Getting Started
 ========================================
@@ -21,9 +24,3 @@ Contributing Developers: Getting Started
 5. Right-click on Luper in the projects list and Run As -> Android Application
 
 6. Create a new AVD if you haven't already, or connect a device to ADB.  The app will compile, install and launch in the emulator or on your ADB-connected device.
-
-
-Changelog:
-==========
-
-2/22/13: Created Hello World Android app to build on.
