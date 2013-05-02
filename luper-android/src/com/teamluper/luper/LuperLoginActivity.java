@@ -177,7 +177,7 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
     }
   }
 
-  @UiThread
+  @Background
   // to be called by the facebook callback biznaz when a user has successfully logged in.
   // must pass a valid email for the database to track this user
   public void completeFacebookLogin(String email, String name) {
@@ -206,11 +206,16 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
         dataSource.setActiveUser(existingUser);
         startMainActivity();
       } else {
-        DialogFactory.alert(this, "Error logging in", "completeFacebookLogin isn't working.");
+        facebookLoginFailure();
       }
     } catch (JSONException e) {
-      e.printStackTrace();
+      Log.e("luper", "JSONEXCEPTION WHEN DOING COMPLETEFACEBOOKLOGIN", e);
     }
+  }
+
+  @UiThread
+  public void facebookLoginFailure() {
+    DialogFactory.alert(this, "Error logging in", "completeFacebookLogin isn't working.");
   }
 
   @UiThread
