@@ -95,6 +95,9 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
     boolean loggingOut = getIntent().getBooleanExtra("luperLoggingOutFlag", false);
     if(loggingOut) {
       // TODO force a log out of facebook before it can jump back to the login screen
+    	if(Session.getActiveSession().isOpened()) {
+    		Session.getActiveSession().closeAndClearTokenInformation();
+    	}
     } else {
       checkForExistingLogin();
     }
