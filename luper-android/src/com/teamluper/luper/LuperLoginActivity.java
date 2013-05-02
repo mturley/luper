@@ -48,7 +48,7 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
   ViewPager mViewPager;
   TabsAdapter mTabsAdapter;
 
-  private static TabLoginFragment_ loginFragment;
+  public TabLoginFragment loginFragment = null;
 
   // Facebook Login Session
   private Session session;
@@ -87,10 +87,6 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
     // connect to the database
     dataSource = new SQLiteDataSource(this);
     dataSource.open();
-
-    if(savedInstanceState == null) {
-    	loginFragment = new TabLoginFragment_();
-    }
 
     boolean loggingOut = getIntent().getBooleanExtra("luperLoggingOutFlag", false);
     if(loggingOut) {
@@ -188,6 +184,7 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
   // to be called by the facebook callback biznaz when a user has successfully logged in.
   // must pass a valid email for the database to track this user
   public void completeFacebookLogin(String email, String name) {
+    if(loginFragment != null) loginFragment.showProgressSpinner(true);
     try {
       User existingUser = dataSource.getUserByEmail(email);
       if(existingUser == null) {
@@ -225,6 +222,7 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
 
   @UiThread
   public void facebookLoginFailure() {
+    if(loginFragment != null) loginFragment.showProgressSpinner(false);
     DialogFactory.alert(this, "Error logging in", "completeFacebookLogin isn't working.");
   }
 
