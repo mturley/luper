@@ -151,9 +151,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="10px"
-            android:text="To add a sound from your phone, go into the Project Editor and add a clip. Rather than recording a new clip, click the Browse button. Simply select sound file you want to add to the Project Editor. ">
+            android:text="To add a sound from your phone, go into the Project Editor and add a clip. Rather than recording a new clip, click the Browse button. Simply select sound file you want to add to the Project Editor. "/>
         
- 
-    </TextView>
+        
+     <TextView
+            android:id="@+id/help_webby"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="70px"
+            android:textStyle="italic"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:text="For additional questions, please refer to our website: teamluper.com and the feedback form."/>
+        
+     <TextView
+            android:id="@+id/help_luper"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10px"
+            android:textStyle="italic"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:text="-Team Lüper" />
+        
 </LinearLayout>
 </ScrollView>
