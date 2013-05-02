@@ -7,7 +7,7 @@
   <body>
     <div id="container" align="center">
       <div id="header">
-        <img src="luper.png" /><br />
+        <img src="luper.png" style="width: 90%"/><br />
         1.0 Release
       </div>
       <div id="content">
