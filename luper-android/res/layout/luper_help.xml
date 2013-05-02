@@ -88,6 +88,72 @@
             android:paddingTop="10px"
             android:text="Simple. Click the clip to be edited and a dialog window will be displayed. Select your desired option" />
 
+     <TextView
+            android:id="@+id/help_loop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="40px"
+            android:textStyle="bold"
+            android:text="Looping a clip" />
+     
+     
+    <TextView
+            android:id="@+id/help_loop2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10px"
+            android:text="To loop a clip go into Clip Options (by clicking on the clip) and selecting Edit --> Loop Count. Enter the number of times you would like the clip to loop over in playback"/>
+    
+    
+     <TextView
+            android:id="@+id/help_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="40px"
+            android:textStyle="bold"
+            android:text="Deleting a clip" />
+     
+     
 
+    <TextView
+            android:id="@+id/help_delete2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10px"
+            android:text="Click on the click to be deleted. It should bring up a options dialog. To delete the clip select delete from that list. The clip should be removed from the screen."/>
+    
+    
+    <TextView
+            android:id="@+id/help_record"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="40px"
+            android:textStyle="bold"
+            android:text="Recording a sound" />
+
+    <TextView
+            android:id="@+id/help_record2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10px"
+            android:text="To record a sound, or a clip go into a Project Editor and click the add button in the track view. You should be prompted with a dialog box. Simply click the Record button and the Stop Recording when you are finished. "/>
+    
+    <TextView
+            android:id="@+id/help_browse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="40px"
+            android:textStyle="bold"
+            android:text="Adding an existing file" />
+
+    <TextView
+            android:id="@+id/help_browse2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10px"
+            android:text="To add a sound from your phone, go into the Project Editor and add a clip. Rather than recording a new clip, click the Browse button. Simply select sound file you want to add to the Project Editor. ">
+        
+ 
+    </TextView>
 </LinearLayout>
 </ScrollView>
