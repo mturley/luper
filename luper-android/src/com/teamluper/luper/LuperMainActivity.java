@@ -130,6 +130,11 @@ public class LuperMainActivity extends SherlockFragmentActivity {
 
     return super.onCreateOptionsMenu(menu);
   }
+  
+  public void startHelp(View view) {
+	  Intent intent = new Intent(this, LuperHelp_.class);
+	  startActivity(intent);
+  }
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {

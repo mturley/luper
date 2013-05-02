@@ -33,7 +33,7 @@ public class TabHomeFragment extends Fragment {
     if(dataSource != null) {
       activeUser = dataSource.getActiveUser();
       if(activeUser != null) {
-        ((TextView) v.findViewById(R.id.mainWelcome)).setText("Welcome to LÃ¼per, "+activeUser.getUsername()+"!");
+        ((TextView) v.findViewById(R.id.mainWelcome)).setText("Welcome to Lüper, "+activeUser.getUsername()+"!");
       }
     }
 
@@ -44,6 +44,11 @@ public class TabHomeFragment extends Fragment {
     startActivity(intent);*/
 
     return v;
+  }
+  
+  public void startHelp(View view) {
+	  Intent intent = new Intent(getActivity(), LuperHelp_.class);
+	  getActivity().startActivity(intent);
   }
 
 }

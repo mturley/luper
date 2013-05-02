@@ -43,4 +43,14 @@
             android:layout_marginTop="10dp" 
             />
 
+    <Button
+        android:id="@+id/click_tutorial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="21dp"
+        android:onClick="startHelp"
+        android:text="@string/start_tutorial" />
+
 </RelativeLayout>
