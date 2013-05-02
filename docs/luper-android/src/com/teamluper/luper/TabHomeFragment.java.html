@@ -34,12 +34,12 @@
     <span class="k">if</span><span class="o">(</span><span class="n">dataSource</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
       <span class="n">activeUser</span> <span class="o">=</span> <span class="n">dataSource</span><span class="o">.</span><span class="na">getActiveUser</span><span class="o">();</span>
       <span class="k">if</span><span class="o">(</span><span class="n">activeUser</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-        <span class="o">((</span><span class="n">TextView</span><span class="o">)</span> <span class="n">v</span><span class="o">.</span><span class="na">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">mainWelcome</span><span class="o">)).</span><span class="na">setText</span><span class="o">(</span><span class="s">&quot;Welcome to L�per, &quot;</span><span class="o">+</span><span class="n">activeUser</span><span class="o">.</span><span class="na">getUsername</span><span class="o">()+</span><span class="s">&quot;!&quot;</span><span class="o">);</span>
+        <span class="o">((</span><span class="n">TextView</span><span class="o">)</span> <span class="n">v</span><span class="o">.</span><span class="na">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">mainWelcome</span><span class="o">)).</span><span class="na">setText</span><span class="o">(</span><span class="s">&quot;Welcome to Luper, &quot;</span><span class="o">+</span><span class="n">activeUser</span><span class="o">.</span><span class="na">getUsername</span><span class="o">()+</span><span class="s">&quot;!&quot;</span><span class="o">);</span>
       <span class="o">}</span>
     <span class="o">}</span></pre></div></td></tr><tr id="section-2"><td class="docs"><div class="pilwrap"><a href="#section-2" class="pilcrow">&#182;</a></div><div class="dox"><div class="summary"><p>tring video_path = "<a href='http://www.youtube.com/watch?v=fpo58HKmZXs'>http://www.youtube.com/watch?v=fpo58HKmZXs</a>";<br />    Uri uri = Uri.parse(video_path);<br />    uri = Uri.parse("vnd.youtube:"  + uri.getQueryParameter("v"));<br />    Intent intent = new Intent(Intent.ACTION_VIEW, uri);<br />    startActivity(intent);</p></div><div class="body"></div></div>
 </td><td class="code"><div class="highlight"><pre>    <span class="k">return</span> <span class="n">v</span><span class="o">;</span>
   <span class="o">}</span>
-  
+
   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">startHelp</span><span class="o">(</span><span class="n">View</span> <span class="n">view</span><span class="o">)</span> <span class="o">{</span>
     <span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">(</span><span class="n">getActivity</span><span class="o">(),</span> <span class="n">LuperHelp_</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
     <span class="n">getActivity</span><span class="o">().</span><span class="na">startActivity</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span>
@@ -47,4 +47,4 @@
 
 <span class="o">}</span>
 
-</pre></div></td></tr></tbody></table><div id="generated">generated Thu May 02 2013 02:15:15 GMT+0000 (UTC)  </div><div id="projectname"><a href="../../../../../index.html">Luper</a></div></div></body></html>
+</pre></div></td></tr></tbody></table><div id="generated">generated Thu May 02 2013 03:29:31 GMT+0000 (UTC)  </div><div id="projectname"><a href="../../../../../index.html">Luper</a></div></div></body></html>

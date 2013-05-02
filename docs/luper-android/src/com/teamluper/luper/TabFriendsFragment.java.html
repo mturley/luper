@@ -7,15 +7,70 @@
 <span class="kn">import</span> <span class="nn">android.view.View</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">android.view.ViewGroup</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">android.widget.RelativeLayout</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.googlecode.androidannotations.annotations.EFragment</span><span class="o">;</span>
-
-<span class="nd">@EFragment</span>
+<span class="kn">import</span> <span class="nn">com.googlecode.androidannotations.annotations.EFragment</span><span class="o">;</span></pre></div></td></tr><tr id="section-2"><td class="docs"><div class="pilwrap"><a href="#section-2" class="pilcrow">&#182;</a></div><p>almost renders Friends from the facebook login</p>
+</td><td class="code"><div class="highlight"><pre><span class="nd">@EFragment</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">TabFriendsFragment</span> <span class="kd">extends</span> <span class="n">Fragment</span> <span class="o">{</span>
   <span class="nd">@Override</span>
   <span class="kd">public</span> <span class="n">View</span> <span class="nf">onCreateView</span><span class="o">(</span><span class="n">LayoutInflater</span> <span class="n">infl</span><span class="o">,</span> <span class="n">ViewGroup</span> <span class="n">vg</span><span class="o">,</span> <span class="n">Bundle</span> <span class="n">state</span><span class="o">)</span> <span class="o">{</span>
     <span class="k">if</span><span class="o">(</span><span class="n">vg</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
     <span class="k">return</span> <span class="o">(</span><span class="n">RelativeLayout</span><span class="o">)</span><span class="n">infl</span><span class="o">.</span><span class="na">inflate</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">tab_friends_layout</span><span class="o">,</span> <span class="n">vg</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
-  <span class="o">}</span>
-<span class="o">}</span>
+  <span class="o">}</span></pre></div></td></tr><tr id="section-3"><td class="docs"><div class="pilwrap"><a href="#section-3" class="pilcrow">&#182;</a></div><p>private Session userSession;
+   FragmentManager fManager;
+   FragmentTransaction fTrans;
+   private FriendPickerFragment friendPickerFragment;
+   public static final Uri FRIEND_PICKER = Uri.parse("picker://friend");</p>
+</td><td class="code"><div class="highlight"><pre></pre></div></td></tr><tr id="section-4"><td class="docs"><div class="pilwrap"><a href="#section-4" class="pilcrow">&#182;</a></div><p>private void onSessionStateChange(final Session session, SessionState sessionState, Exception ex){
+     if(session != null &amp;&amp; session.isOpened()){
+       getUserData(session);
+     }
+   }</p>
 
-</pre></div></td></tr></tbody></table><div id="generated">generated Thu May 02 2013 02:15:14 GMT+0000 (UTC)  </div><div id="projectname"><a href="../../../../../index.html">Luper</a></div></div></body></html>
+<p>private void getUserData(final Session session){
+     Request request = Request.newMeRequest(session,
+         new Request.GraphUserCallback() {
+           @Override
+           public void onCompleted(GraphUser user, Response response) {
+             if(user != null &amp;&amp; session == Session.getActiveSession()){
+               //pictureView.setProfileId(user.getId());
+               //userName.setText(user.getName());
+               getFriends();</p>
+
+<pre><code>         }
+         if(response.getError() !=null){
+
+         }
+       }
+     });
+ request.executeAsync();
+</code></pre>
+
+<p>}</p>
+
+<p>private void getFriends(){
+     Session activeSession = Session.getActiveSession();
+     if(activeSession.getState().isOpened()){
+       Request friendRequest = Request.newMyFriendsRequest(activeSession,
+           new Request.GraphUserListCallback(){
+             @Override
+             public void onCompleted(List<GraphUser> users,
+                                     Response response) {
+               Log.i("INFO", response.toString());</p>
+
+<pre><code>         }
+       });
+   Bundle params = new Bundle();
+   params.putString("fields", "id, name, picture");
+   friendRequest.setParameters(params);
+   friendRequest.executeAsync();
+ }
+</code></pre>
+
+<p>}</p>
+
+<p>// @Override
+   public void onCreate(Bundle savedInstanceState){</p>
+
+<p>}</p>
+</td><td class="code"><div class="highlight"><pre><span class="o">}</span>
+
+</pre></div></td></tr></tbody></table><div id="generated">generated Thu May 02 2013 03:29:30 GMT+0000 (UTC)  </div><div id="projectname"><a href="../../../../../index.html">Luper</a></div></div></body></html>
