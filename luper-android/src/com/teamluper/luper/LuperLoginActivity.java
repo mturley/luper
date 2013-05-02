@@ -181,6 +181,7 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
   // to be called by the facebook callback biznaz when a user has successfully logged in.
   // must pass a valid email for the database to track this user
   public void completeFacebookLogin(String email, String name) {
+    if(loginFragment != null) loginFragment.showProgressSpinner(true);
     try {
       User existingUser = dataSource.getUserByEmail(email);
       if(existingUser == null) {
@@ -207,7 +208,6 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
       // at this point existingUser has either been fetched or created and is valid, so we just log in with it.
       if(existingUser != null) {
         dataSource.setActiveUser(existingUser);
-        if(loginFragment != null) loginFragment.showProgressSpinner(true);
         startMainActivity();
       } else {
         facebookLoginFailure();
@@ -219,6 +219,7 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
 
   @UiThread
   public void facebookLoginFailure() {
+    if(loginFragment != null) loginFragment.showProgressSpinner(false);
     DialogFactory.alert(this, "Error logging in", "completeFacebookLogin isn't working.");
   }
 
