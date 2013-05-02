@@ -154,10 +154,6 @@ public class LuperLoginActivity extends SherlockFragmentActivity {
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-    if(item.getItemId() == R.id.action_forgot_password) {
-      Intent intent = new Intent(this, LuperForgotPasswordActivity_.class);
-      startActivity(intent);
-    }
     return true;
   }
 
