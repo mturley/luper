@@ -33,7 +33,10 @@
     <string name="editor_volume">Volume</string>
     <string name="editor_help">Help</string>
     <string name="get_started">Log into Facebook to use Luper</string>
+
     <string name="app_id">568749619823694</string>
+    
+    
     <string name="devtoolsexplanation">
         This is Lüper 1.0.
         </string>
