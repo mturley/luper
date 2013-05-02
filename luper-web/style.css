@@ -127,3 +127,13 @@ ol.leftalign {
 	height:200px;
 	font-size:13pt;
 }
+
+@media all and (max-device-width: 930px) {
+    a {
+        text-decoration: underline;
+    }
+
+    #container {
+        width: 98%;
+    }
+}
