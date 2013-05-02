@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
+import com.facebook.SessionLoginBehavior;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
@@ -62,9 +63,10 @@ public class TabLoginFragment extends Fragment {
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
-      super.onCreate(savedInstanceState);
-      uiHelper = new UiLifecycleHelper(getActivity(), callback);
-      uiHelper.onCreate(savedInstanceState);
+    super.onCreate(savedInstanceState);
+    ((LuperLoginActivity) getActivity()).loginFragment = this;
+    uiHelper = new UiLifecycleHelper(getActivity(), callback);
+    uiHelper.onCreate(savedInstanceState);
   }
 
   @Override
@@ -136,6 +138,10 @@ public class TabLoginFragment extends Fragment {
 
     // Give facebook loginbutton email permissions
     LoginButton authButton = (LoginButton) v.findViewById(R.id.authButton);
+    // TODO - help luper use facebook app without failing. until then
+    // This line should prevent Luper from launching the facebook app for login,
+    // and use the web splash instead. 
+    authButton.setLoginBehavior(SessionLoginBehavior.SUPPRESS_SSO);
     authButton.setFragment(this);
     authButton.setReadPermissions(Arrays.asList("email"));
 
@@ -376,6 +382,10 @@ public class TabLoginFragment extends Fragment {
       hash = sha256(hash); // hashity hash
     }
     return hash;
+  }
+
+  public void showProgressSpinner(boolean show) {
+    showProgress(show);
   }
 
   /**
