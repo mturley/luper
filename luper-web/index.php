@@ -42,8 +42,8 @@ header('Location: index-mobile.php');
       </div>
       <div class="fullcolumn alignleft">
         <br />
-        <div class="bigindent">
-          <h1>Luper Project Documentation:</h1>
+        <div>
+          <h1>Project Documentation:</h1>
           <h2>
             <a href="https://drive.google.com/folderview?id=0B-gQRT6Fwsvvaml0RE80NlY4YnM">
             Click Here to read the 1.0 Release Notes and related documents on Google Drive.
