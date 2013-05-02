@@ -58,7 +58,7 @@ public class TabLoginFragment extends Fragment {
   @RestService
   LuperRestClient rest;
 
-  private static final int HASH_COUNT = 10000;
+  private static final int HASH_COUNT = 100;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
