@@ -9,7 +9,7 @@
 
 <html>
   <head>
-    <title>Lüper</title>
+    <title>Luper</title>
     <link rel='stylesheet' href='style.css' />
   </head>
   <body>
