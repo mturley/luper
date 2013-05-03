@@ -130,6 +130,7 @@ ol.leftalign {
     #container {
         width: 90%;
         min-width: 90%;
+        text-align: center;
     }
 }
 
