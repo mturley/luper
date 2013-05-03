@@ -128,9 +128,8 @@ ol.leftalign {
     }
 
     #container {
-        width: 98%;
-        min-width: 98%;
-        padding: 0 15px;
+        width: 90%;
+        min-width: 90%;
     }
 }
 
